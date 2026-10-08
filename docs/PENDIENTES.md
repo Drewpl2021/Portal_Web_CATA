@@ -1,6 +1,6 @@
 # Estado del portal CATA y pendientes
 
-**Última sesión:** 2026-10-07 al 2026-10-08.
+**Última actualización:** 2026-10-08.
 
 ## Lo que se hizo
 
@@ -55,19 +55,20 @@
 - axe (reglas WCAG 2.2 AA): 0 violaciones en 7 escenarios, en escritorio y en móvil.
 - Un revisor independiente aprobó los arreglos de la última ronda.
 
+## Resuelto el 2026-10-08
+
+- **El build de producción falla sin `VITE_API_URL`.** `npm run build` se detiene con un mensaje que explica cómo definir la variable. `npm run build:demo` genera a propósito una versión con los datos de prueba, aunque el entorno tenga `VITE_API_URL`. Con la API configurada, el build no incluye los JSON de prueba.
+- **Servidor de desarrollo.** `npm run dev` arranca sin errores con la configuración actual y sirve la portada en http://localhost:5173/ sin errores de consola.
+
 ## Pendientes
 
-1. **El build de producción debe fallar sin `VITE_API_URL`.** Hoy solo muestra una advertencia y genera un sitio que usa los datos de prueba. Hay que cambiar `PW_Frontend/vite.config.ts` para que `vite build` termine con error si la variable está vacía, y dejar un modo explícito para builds de prueba (por ejemplo `--mode prueba`). Después, actualizar la nota de `PRODUCT.md` y la sección 4 de este archivo.
-2. **El servidor de desarrollo de Vite quedó en mal estado.** Al cambiar `vite.config.ts` (a las 12:22 a. m. del 2026-10-08), su registro mostró «server restart failed». Siguió respondiendo con la configuración anterior. Se detuvo al cerrar la sesión. Al retomar:
-   - Levantarlo de nuevo con `npm run dev` en `PW_Frontend/`.
-   - Confirmar que arranca sin errores con la configuración actual, que usa `loadEnv` y necesita `@types/node`, ya instalado.
-3. **Confirmar el emblema con el colegio.** El archivo oficial lleva la cinta «1971 – 2022». Hay que saber si sigue vigente y pedir una versión en SVG. Archivos: `PW_Frontend/public/brand/`.
-4. **Prueba manual con teclado y lector de pantalla.** axe no cubre todo WCAG 2.2 AA. Falta revisar a mano:
+1. **Confirmar el emblema con el colegio.** El archivo oficial lleva la cinta «1971 – 2022». Hay que saber si sigue vigente y pedir una versión en SVG. Archivos: `PW_Frontend/public/brand/`.
+2. **Prueba manual con teclado y lector de pantalla.** axe no cubre todo WCAG 2.2 AA. Falta revisar a mano:
    - El recorrido con Tab por toda la página, con foco visible y sin quedar tapado.
    - Abrir y cerrar el formulario de WhatsApp, y que el foco llegue al primer campo.
    - Que los errores del formulario se anuncien.
    - La lectura con NVDA (Windows) y TalkBack (Android) de las placas, las imágenes y los estados de carga y error.
-5. **Entregar el contrato al equipo de RR.HH.** Enviar `docs/API_CONTRACT.md` y `docs/api-contract.schema.json`. Acordar con ellos:
+3. **Entregar el contrato al equipo de RR.HH.** Enviar `docs/API_CONTRACT.md` y `docs/api-contract.schema.json`. Acordar con ellos:
    - la URL base
    - el dominio de pruebas para CORS
    - quién avisa cuando el contrato cambie
@@ -78,4 +79,4 @@
 
 ## Siguiente paso
 
-Hacer el **pendiente 1**: que el build de producción falle sin `VITE_API_URL`. Es un cambio pequeño, evita publicar datos de prueba por error, y conviene hacerlo antes de cualquier despliegue. En la misma sesión, levantar de nuevo el servidor de desarrollo (pendiente 2) y hacer la prueba manual con teclado (pendiente 4). En paralelo, el colegio puede entregar el contrato a RR.HH. (pendiente 5) y confirmar el emblema (pendiente 3).
+Hacer la **prueba manual con teclado y lector de pantalla** (pendiente 2), con el servidor de desarrollo en marcha. En paralelo, el colegio puede entregar el contrato a RR.HH. (pendiente 3) y confirmar el emblema (pendiente 1).

@@ -1,0 +1,54 @@
+{
+  "data": [
+    {
+      "id": "central",
+      "nombre": "Sede Central",
+      "direccion": "Jr. Moquegua N° 852",
+      "referencia": "Frente al Mercado Internacional Túpac Amaru",
+      "distrito": "Juliaca, San Román, Puno",
+      "telefono": {
+        "numero": "+5151325096",
+        "visible": "051 325096"
+      },
+      "nota": null,
+      "foto": null,
+      "mapaUrl": null
+    },
+    {
+      "id": "inicial",
+      "nombre": "Sede CATA Inicial",
+      "direccion": "Jr. Raúl Porras B. N° 287",
+      "referencia": "Esquina con Jr. San Martín",
+      "distrito": "Juliaca, San Román, Puno",
+      "telefono": null,
+      "nota": null,
+      "foto": null,
+      "mapaUrl": null
+    },
+    {
+      "id": "jerusalen",
+      "nombre": "Sede CATA Jerusalén",
+      "direccion": "Titiline Independencia N° 2, Urb. Jerusalem",
+      "referencia": "Puente Independencia, salida a Huancané",
+      "distrito": "San Miguel, San Román, Puno",
+      "telefono": {
+        "numero": "+51937489399",
+        "visible": "937 489 399"
+      },
+      "nota": "Nivel primaria.",
+      "foto": null,
+      "mapaUrl": null
+    },
+    {
+      "id": "oasis",
+      "nombre": "Sede CATA Oasis",
+      "direccion": "Av. Modesto Borda s/n, Carretera a Coata km 2.5",
+      "referencia": "Chilla",
+      "distrito": "Caracoto, San Román, Puno",
+      "telefono": null,
+      "nota": "Biohuertos y talleres de alimentación saludable, arte y pintura, y música.",
+      "foto": null,
+      "mapaUrl": null
+    }
+  ]
+}

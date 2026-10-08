@@ -1,0 +1,29 @@
+/*
+  Colores provisionales muestreados del emblema oficial (emblema-cata.png):
+  azul claro #00afef (letras COLEGIO ADVENTISTA), azul emblema #3e4095 (anillo).
+  El dorado de los laureles es un degradado metálico; se usa #f0b92b hasta el Manual de Identidad.
+*/
+:root {
+  --azul-claro: #00afef;
+  --azul-emblema: #3e4095;
+  --dorado: #f0b92b;
+  --blanco: #ffffff;
+
+  /* Derivados del emblema para texto y superficies, no colores nuevos */
+  --tinta: #10184a;
+  --tinta-suave: #3b4470;
+  --azul-claro-lavado: #e8f5fc;
+  --azul-emblema-lavado: #c9cdf2;
+  --rojo-emblema: #d52b34;
+  --rojo-texto: #a3161f;
+
+  --font-rotulo: 'Big Shoulders Display', 'Barlow', system-ui, sans-serif;
+  --font-texto: 'Barlow', system-ui, sans-serif;
+
+  --gutter: clamp(16px, 4vw, 48px);
+  --ancho: 1240px;
+  --radio-placa: 10px;
+  --linea: 8px;
+
+  --ease-salida: cubic-bezier(0.16, 1, 0.3, 1);
+}

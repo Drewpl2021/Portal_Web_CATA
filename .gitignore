@@ -1,0 +1,30 @@
+# Dependencias
+node_modules/
+vendor/
+
+# Builds
+dist/
+build/
+*.tsbuildinfo
+
+# Variables de entorno (la plantilla sí se versiona)
+.env
+.env.*
+!.env.example
+
+# Configuración local de Claude Code
+.claude/settings.local.json
+
+# Binario de impeccable: se descarga solo en el primer uso
+.claude/skills/impeccable/scripts/bin/
+
+# Artefactos generados por impeccable
+.impeccable/review/
+.impeccable/questions/
+.impeccable/config.local.json
+
+# Registros y sistema
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db

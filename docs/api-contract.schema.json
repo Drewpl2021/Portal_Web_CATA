@@ -1,0 +1,1160 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "API pública del portal CATA v1 (docs/API_CONTRACT.md)",
+  "description": "Cuerpo de respuesta 200 de cada endpoint. Generado desde PW_Frontend/src/api/esquemas.ts; no editar a mano.",
+  "definitions": {
+    "GET /v1/sitio": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "nombre": {
+              "type": "string"
+            },
+            "nombreCorto": {
+              "type": "string"
+            },
+            "subtitulo": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "ciudad": {
+              "type": "string"
+            },
+            "anioFundacion": {
+              "type": "integer"
+            },
+            "telefono": {
+              "type": "object",
+              "properties": {
+                "numero": {
+                  "type": "string",
+                  "pattern": "^\\+\\d{8,15}$"
+                },
+                "visible": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "numero",
+                "visible"
+              ],
+              "additionalProperties": false
+            },
+            "whatsapp": {
+              "type": "object",
+              "properties": {
+                "numero": {
+                  "type": "string",
+                  "pattern": "^\\+\\d{8,15}$"
+                },
+                "visible": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "numero",
+                "visible"
+              ],
+              "additionalProperties": false
+            },
+            "direccion": {
+              "type": "object",
+              "properties": {
+                "linea": {
+                  "type": "string"
+                },
+                "referencia": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "distrito": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "linea",
+                "referencia",
+                "distrito"
+              ],
+              "additionalProperties": false
+            },
+            "portalAcademicoUrl": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uri",
+                  "pattern": "^https:\\/\\/"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "promotora": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "nombre",
+            "nombreCorto",
+            "subtitulo",
+            "ciudad",
+            "anioFundacion",
+            "telefono",
+            "whatsapp",
+            "direccion",
+            "portalAcademicoUrl",
+            "promotora"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "GET /v1/portada/rutas": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "familias": {
+              "type": "object",
+              "properties": {
+                "nombre": {
+                  "type": "string"
+                },
+                "bajada": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "paradas": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "etiqueta": {
+                        "type": "string"
+                      },
+                      "detalle": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "destino": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "tipo": {
+                                "type": "string",
+                                "const": "seccion"
+                              },
+                              "seccion": {
+                                "type": "string",
+                                "enum": [
+                                  "quienes-somos",
+                                  "niveles",
+                                  "sedes",
+                                  "noticias",
+                                  "contacto"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "tipo",
+                              "seccion"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "tipo": {
+                                "type": "string",
+                                "const": "url"
+                              },
+                              "url": {
+                                "type": "string",
+                                "format": "uri",
+                                "pattern": "^https:\\/\\/"
+                              },
+                              "externo": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "tipo",
+                              "url",
+                              "externo"
+                            ],
+                            "additionalProperties": false
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "etiqueta",
+                      "detalle",
+                      "destino"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 1,
+                  "maxItems": 4
+                },
+                "accion": {
+                  "type": "object",
+                  "properties": {
+                    "etiqueta": {
+                      "type": "string"
+                    },
+                    "detalle": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "mensajeWhatsapp": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "etiqueta",
+                    "detalle",
+                    "mensajeWhatsapp"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "nombre",
+                "bajada",
+                "paradas",
+                "accion"
+              ],
+              "additionalProperties": false
+            },
+            "comunidad": {
+              "type": "object",
+              "properties": {
+                "nombre": {
+                  "type": "string"
+                },
+                "bajada": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "paradas": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "etiqueta": {
+                        "type": "string"
+                      },
+                      "detalle": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "destino": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "tipo": {
+                                "type": "string",
+                                "const": "seccion"
+                              },
+                              "seccion": {
+                                "type": "string",
+                                "enum": [
+                                  "quienes-somos",
+                                  "niveles",
+                                  "sedes",
+                                  "noticias",
+                                  "contacto"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "tipo",
+                              "seccion"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "tipo": {
+                                "type": "string",
+                                "const": "url"
+                              },
+                              "url": {
+                                "type": "string",
+                                "format": "uri",
+                                "pattern": "^https:\\/\\/"
+                              },
+                              "externo": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "tipo",
+                              "url",
+                              "externo"
+                            ],
+                            "additionalProperties": false
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "etiqueta",
+                      "detalle",
+                      "destino"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 1,
+                  "maxItems": 4
+                },
+                "terminal": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "etiqueta": {
+                          "type": "string"
+                        },
+                        "detalle": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "destino": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "tipo": {
+                                  "type": "string",
+                                  "const": "seccion"
+                                },
+                                "seccion": {
+                                  "type": "string",
+                                  "enum": [
+                                    "quienes-somos",
+                                    "niveles",
+                                    "sedes",
+                                    "noticias",
+                                    "contacto"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "tipo",
+                                "seccion"
+                              ],
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "tipo": {
+                                  "type": "string",
+                                  "const": "url"
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "format": "uri",
+                                  "pattern": "^https:\\/\\/"
+                                },
+                                "externo": {
+                                  "type": "boolean"
+                                }
+                              },
+                              "required": [
+                                "tipo",
+                                "url",
+                                "externo"
+                              ],
+                              "additionalProperties": false
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "etiqueta",
+                        "detalle",
+                        "destino"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "nombre",
+                "bajada",
+                "paradas",
+                "terminal"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "familias",
+            "comunidad"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "GET /v1/avisos/vigente": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "titulo": {
+                  "type": "string"
+                },
+                "texto": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "imagen": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "url": {
+                          "type": "string",
+                          "format": "uri",
+                          "pattern": "^https:\\/\\/"
+                        },
+                        "alt": {
+                          "type": "string"
+                        },
+                        "ancho": {
+                          "anyOf": [
+                            {
+                              "type": "integer",
+                              "exclusiveMinimum": 0
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "alto": {
+                          "anyOf": [
+                            {
+                              "type": "integer",
+                              "exclusiveMinimum": 0
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "url",
+                        "alt",
+                        "ancho",
+                        "alto"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "enlace": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "etiqueta": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string",
+                          "format": "uri",
+                          "pattern": "^https:\\/\\/"
+                        },
+                        "externo": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "etiqueta",
+                        "url",
+                        "externo"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "vigenteDesde": {
+                  "type": "string",
+                  "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}(:\\d{2})?(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})$"
+                },
+                "vigenteHasta": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}(:\\d{2})?(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "titulo",
+                "texto",
+                "imagen",
+                "enlace",
+                "vigenteDesde",
+                "vigenteHasta"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "GET /v1/quienes-somos": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "titulo": {
+              "type": "string"
+            },
+            "parrafos": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 1,
+              "maxItems": 6
+            },
+            "foto": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "format": "uri",
+                      "pattern": "^https:\\/\\/"
+                    },
+                    "alt": {
+                      "type": "string"
+                    },
+                    "ancho": {
+                      "anyOf": [
+                        {
+                          "type": "integer",
+                          "exclusiveMinimum": 0
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "alto": {
+                      "anyOf": [
+                        {
+                          "type": "integer",
+                          "exclusiveMinimum": 0
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "url",
+                    "alt",
+                    "ancho",
+                    "alto"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "simbolos": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  },
+                  "significado": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "nombre",
+                  "significado"
+                ],
+                "additionalProperties": false
+              },
+              "maxItems": 8
+            }
+          },
+          "required": [
+            "titulo",
+            "parrafos",
+            "foto",
+            "simbolos"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "GET /v1/niveles": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "titulo": {
+              "type": "string"
+            },
+            "propuestaUrl": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uri",
+                  "pattern": "^https:\\/\\/"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "nombre": {
+                    "type": "string"
+                  },
+                  "rango": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sede": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "reconocimiento": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "foto": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "url": {
+                            "type": "string",
+                            "format": "uri",
+                            "pattern": "^https:\\/\\/"
+                          },
+                          "alt": {
+                            "type": "string"
+                          },
+                          "ancho": {
+                            "anyOf": [
+                              {
+                                "type": "integer",
+                                "exclusiveMinimum": 0
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "alto": {
+                            "anyOf": [
+                              {
+                                "type": "integer",
+                                "exclusiveMinimum": 0
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "url",
+                          "alt",
+                          "ancho",
+                          "alto"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "id",
+                  "nombre",
+                  "rango",
+                  "sede",
+                  "reconocimiento",
+                  "foto"
+                ],
+                "additionalProperties": false
+              },
+              "maxItems": 4
+            }
+          },
+          "required": [
+            "titulo",
+            "propuestaUrl",
+            "items"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "GET /v1/sedes": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "nombre": {
+                "type": "string"
+              },
+              "direccion": {
+                "type": "string"
+              },
+              "referencia": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "distrito": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "telefono": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "numero": {
+                        "type": "string",
+                        "pattern": "^\\+\\d{8,15}$"
+                      },
+                      "visible": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "numero",
+                      "visible"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "nota": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "foto": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "url": {
+                        "type": "string",
+                        "format": "uri",
+                        "pattern": "^https:\\/\\/"
+                      },
+                      "alt": {
+                        "type": "string"
+                      },
+                      "ancho": {
+                        "anyOf": [
+                          {
+                            "type": "integer",
+                            "exclusiveMinimum": 0
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "alto": {
+                        "anyOf": [
+                          {
+                            "type": "integer",
+                            "exclusiveMinimum": 0
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "url",
+                      "alt",
+                      "ancho",
+                      "alto"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "mapaUrl": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "^https:\\/\\/"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "nombre",
+              "direccion",
+              "referencia",
+              "distrito",
+              "telefono",
+              "nota",
+              "foto",
+              "mapaUrl"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 8
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "GET /v1/noticias": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "slug": {
+                "type": "string",
+                "pattern": "^[a-z0-9-]+$"
+              },
+              "tipo": {
+                "type": "string",
+                "enum": [
+                  "noticia",
+                  "comunicado"
+                ]
+              },
+              "titulo": {
+                "type": "string"
+              },
+              "resumen": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "fecha": {
+                "type": "string",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+              },
+              "foto": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "url": {
+                        "type": "string",
+                        "format": "uri",
+                        "pattern": "^https:\\/\\/"
+                      },
+                      "alt": {
+                        "type": "string"
+                      },
+                      "ancho": {
+                        "anyOf": [
+                          {
+                            "type": "integer",
+                            "exclusiveMinimum": 0
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "alto": {
+                        "anyOf": [
+                          {
+                            "type": "integer",
+                            "exclusiveMinimum": 0
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "url",
+                      "alt",
+                      "ancho",
+                      "alto"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "enlace": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "etiqueta": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri",
+                        "pattern": "^https:\\/\\/"
+                      },
+                      "externo": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "etiqueta",
+                      "url",
+                      "externo"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "slug",
+              "tipo",
+              "titulo",
+              "resumen",
+              "fecha",
+              "foto",
+              "enlace"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "meta": {
+          "type": "object",
+          "properties": {
+            "pagina": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "limite": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 24
+            },
+            "total": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "pagina",
+            "limite",
+            "total"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "data",
+        "meta"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "GET /v1/grados": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "nivel": {
+                "type": "string"
+              },
+              "opciones": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1,
+                "maxItems": 8
+              }
+            },
+            "required": [
+              "nivel",
+              "opciones"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  }
+}

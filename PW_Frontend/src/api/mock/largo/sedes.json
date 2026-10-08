@@ -1,0 +1,144 @@
+{
+  "data": [
+    {
+      "id": "sede-1",
+      "nombre": "Sede CATA Complejo Educativo Oasis del Ministerio",
+      "direccion": "Avenida Modesto Borda sin número, Carretera salida a Coata kilómetro 2.5",
+      "referencia": "A la altura del puente Independencia, salida a Huancané, frente al grifo",
+      "distrito": "Juliaca, San Román, Puno",
+      "telefono": {
+        "numero": "+5151325096",
+        "visible": "051 325096"
+      },
+      "nota": "Biohuertos y talleres de preparación de alimentos saludables, arte y pintura, música y un futuro espacio de innovación Maker Space.",
+      "foto": {
+        "url": "https://medios.prueba.cata.edu.pe/sede-central.svg",
+        "alt": "Foto de prueba: fachada de la Sede Central",
+        "ancho": 1200,
+        "alto": 900
+      },
+      "mapaUrl": null
+    },
+    {
+      "id": "sede-2",
+      "nombre": "Sede CATA Jerusalén Urbanización Jerusalem Cacachi",
+      "direccion": "Avenida Modesto Borda sin número, Carretera salida a Coata kilómetro 2.5",
+      "referencia": "A la altura del puente Independencia, salida a Huancané, frente al grifo",
+      "distrito": "Juliaca, San Román, Puno",
+      "telefono": null,
+      "nota": "Biohuertos y talleres de preparación de alimentos saludables, arte y pintura, música y un futuro espacio de innovación Maker Space.",
+      "foto": {
+        "url": "https://medios.prueba.cata.edu.pe/sede-inicial.svg",
+        "alt": "Foto de prueba: entrada de la Sede CATA Inicial",
+        "ancho": 1200,
+        "alto": 900
+      },
+      "mapaUrl": null
+    },
+    {
+      "id": "sede-3",
+      "nombre": "Sede CATA Complejo Educativo Oasis del Ministerio",
+      "direccion": "Avenida Modesto Borda sin número, Carretera salida a Coata kilómetro 2.5",
+      "referencia": "A la altura del puente Independencia, salida a Huancané, frente al grifo",
+      "distrito": "San Miguel, San Román, Puno",
+      "telefono": {
+        "numero": "+51937489399",
+        "visible": "937 489 399"
+      },
+      "nota": "Biohuertos y talleres de preparación de alimentos saludables, arte y pintura, música y un futuro espacio de innovación Maker Space.",
+      "foto": {
+        "url": "https://medios.prueba.cata.edu.pe/sede-jerusalen.svg",
+        "alt": "Foto de prueba: patio de la Sede CATA Jerusalén",
+        "ancho": 1200,
+        "alto": 900
+      },
+      "mapaUrl": null
+    },
+    {
+      "id": "sede-4",
+      "nombre": "Sede CATA Jerusalén Urbanización Jerusalem Cacachi",
+      "direccion": "Avenida Modesto Borda sin número, Carretera salida a Coata kilómetro 2.5",
+      "referencia": "A la altura del puente Independencia, salida a Huancané, frente al grifo",
+      "distrito": "Caracoto, San Román, Puno",
+      "telefono": null,
+      "nota": "Biohuertos y talleres de preparación de alimentos saludables, arte y pintura, música y un futuro espacio de innovación Maker Space.",
+      "foto": {
+        "url": "https://medios.prueba.cata.edu.pe/sede-oasis.svg",
+        "alt": "Foto de prueba: biohuerto de la Sede CATA Oasis",
+        "ancho": 1200,
+        "alto": 900
+      },
+      "mapaUrl": null
+    },
+    {
+      "id": "sede-5",
+      "nombre": "Sede CATA Complejo Educativo Oasis del Ministerio",
+      "direccion": "Avenida Modesto Borda sin número, Carretera salida a Coata kilómetro 2.5",
+      "referencia": "A la altura del puente Independencia, salida a Huancané, frente al grifo",
+      "distrito": "Juliaca, San Román, Puno",
+      "telefono": {
+        "numero": "+5151325096",
+        "visible": "051 325096"
+      },
+      "nota": "Biohuertos y talleres de preparación de alimentos saludables, arte y pintura, música y un futuro espacio de innovación Maker Space.",
+      "foto": {
+        "url": "https://medios.prueba.cata.edu.pe/sede-central.svg",
+        "alt": "Foto de prueba: fachada de la Sede Central",
+        "ancho": 1200,
+        "alto": 900
+      },
+      "mapaUrl": null
+    },
+    {
+      "id": "sede-6",
+      "nombre": "Sede CATA Jerusalén Urbanización Jerusalem Cacachi",
+      "direccion": "Avenida Modesto Borda sin número, Carretera salida a Coata kilómetro 2.5",
+      "referencia": "A la altura del puente Independencia, salida a Huancané, frente al grifo",
+      "distrito": "Juliaca, San Román, Puno",
+      "telefono": null,
+      "nota": "Biohuertos y talleres de preparación de alimentos saludables, arte y pintura, música y un futuro espacio de innovación Maker Space.",
+      "foto": {
+        "url": "https://medios.prueba.cata.edu.pe/sede-inicial.svg",
+        "alt": "Foto de prueba: entrada de la Sede CATA Inicial",
+        "ancho": 1200,
+        "alto": 900
+      },
+      "mapaUrl": null
+    },
+    {
+      "id": "sede-7",
+      "nombre": "Sede CATA Complejo Educativo Oasis del Ministerio",
+      "direccion": "Avenida Modesto Borda sin número, Carretera salida a Coata kilómetro 2.5",
+      "referencia": "A la altura del puente Independencia, salida a Huancané, frente al grifo",
+      "distrito": "San Miguel, San Román, Puno",
+      "telefono": {
+        "numero": "+51937489399",
+        "visible": "937 489 399"
+      },
+      "nota": "Biohuertos y talleres de preparación de alimentos saludables, arte y pintura, música y un futuro espacio de innovación Maker Space.",
+      "foto": {
+        "url": "https://medios.prueba.cata.edu.pe/sede-jerusalen.svg",
+        "alt": "Foto de prueba: patio de la Sede CATA Jerusalén",
+        "ancho": 1200,
+        "alto": 900
+      },
+      "mapaUrl": null
+    },
+    {
+      "id": "sede-8",
+      "nombre": "Sede CATA Jerusalén Urbanización Jerusalem Cacachi",
+      "direccion": "Avenida Modesto Borda sin número, Carretera salida a Coata kilómetro 2.5",
+      "referencia": "A la altura del puente Independencia, salida a Huancané, frente al grifo",
+      "distrito": "Caracoto, San Román, Puno",
+      "telefono": null,
+      "nota": "Biohuertos y talleres de preparación de alimentos saludables, arte y pintura, música y un futuro espacio de innovación Maker Space.",
+      "foto": {
+        "url": "https://medios.prueba.cata.edu.pe/sede-oasis.svg",
+        "alt": "Foto de prueba: biohuerto de la Sede CATA Oasis",
+        "ancho": 1200,
+        "alto": 900
+      },
+      "mapaUrl": null
+    }
+  ]
+}

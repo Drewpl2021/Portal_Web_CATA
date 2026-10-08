@@ -1,0 +1,24 @@
+{
+  "data": {
+    "nombre": "Colegio Adventista Túpac Amaru",
+    "nombreCorto": "CATA",
+    "subtitulo": "Inicial · Primaria · Secundaria",
+    "ciudad": "Juliaca",
+    "anioFundacion": 1971,
+    "telefono": {
+      "numero": "+5151325096",
+      "visible": "051 325096"
+    },
+    "whatsapp": {
+      "numero": "+51986322833",
+      "visible": "986 322 833"
+    },
+    "direccion": {
+      "linea": "Jr. Moquegua N° 852",
+      "referencia": "Frente al Mercado Internacional Túpac Amaru",
+      "distrito": "Juliaca, San Román, Puno"
+    },
+    "portalAcademicoUrl": "https://cata.icrmedu.com/Academico/Paginas/Login.aspx",
+    "promotora": "Asociación Educativa Colegio Adventista Túpac Amaru"
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "data": {
+    "familias": {
+      "nombre": "Familias que quieren conocer el colegio",
+      "bajada": "Conoce nuestra historia, nuestros niveles y todas las sedes, y pide información sin ningún compromiso.",
+      "paradas": [
+        {
+          "id": "f1",
+          "etiqueta": "Quiénes somos y misión",
+          "detalle": "Más de cincuenta años educando en Juliaca",
+          "destino": {
+            "tipo": "seccion",
+            "seccion": "quienes-somos"
+          }
+        },
+        {
+          "id": "f2",
+          "etiqueta": "Niveles educativos",
+          "detalle": "Inicial, primaria y secundaria completa",
+          "destino": {
+            "tipo": "seccion",
+            "seccion": "niveles"
+          }
+        },
+        {
+          "id": "f3",
+          "etiqueta": "Nuestras sedes",
+          "detalle": "Cuatro sedes en la provincia de San Román",
+          "destino": {
+            "tipo": "seccion",
+            "seccion": "sedes"
+          }
+        },
+        {
+          "id": "f4",
+          "etiqueta": "Propuesta educativa",
+          "detalle": "Metodología por niveles y talleres",
+          "destino": {
+            "tipo": "url",
+            "url": "https://cata.edu.pe/new_propuestaeducativa/",
+            "externo": true
+          }
+        }
+      ],
+      "accion": {
+        "etiqueta": "Solicitar información ahora",
+        "detalle": "Te respondemos por WhatsApp el mismo día",
+        "mensajeWhatsapp": "Hola, mi nombre es {nombre}. Quisiera recibir información sobre la admisión para {grado} en el Colegio Adventista Túpac Amaru, incluyendo requisitos, fechas y costos."
+      }
+    },
+    "comunidad": {
+      "nombre": "Comunidad educativa del colegio CATA",
+      "bajada": "Comunicados oficiales, noticias de todas las sedes y accesos directos para familias, alumnos y docentes.",
+      "paradas": [
+        {
+          "id": "c1",
+          "etiqueta": "Noticias y comunicados",
+          "detalle": "Lo último publicado por el colegio",
+          "destino": {
+            "tipo": "seccion",
+            "seccion": "noticias"
+          }
+        },
+        {
+          "id": "c2",
+          "etiqueta": "Matrícula 2027",
+          "detalle": "Requisitos, cronograma y documentos",
+          "destino": {
+            "tipo": "url",
+            "url": "https://cata.edu.pe/new_matricula/",
+            "externo": true
+          }
+        },
+        {
+          "id": "c3",
+          "etiqueta": "Contacto y ubicación",
+          "detalle": "Teléfono, WhatsApp y dirección",
+          "destino": {
+            "tipo": "seccion",
+            "seccion": "contacto"
+          }
+        },
+        {
+          "id": "c4",
+          "etiqueta": "Sedes del colegio",
+          "detalle": "Direcciones y cómo llegar",
+          "destino": {
+            "tipo": "seccion",
+            "seccion": "sedes"
+          }
+        }
+      ],
+      "terminal": {
+        "id": "c5",
+        "etiqueta": "Portal académico iCRM",
+        "detalle": "Notas, asistencia y tareas en línea",
+        "destino": {
+          "tipo": "url",
+          "url": "https://cata.icrmedu.com/Academico/Paginas/Login.aspx",
+          "externo": true
+        }
+      }
+    }
+  }
+}

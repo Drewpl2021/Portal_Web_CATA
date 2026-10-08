@@ -1,0 +1,24 @@
+{
+  "data": {
+    "nombre": "Colegio Particular Adventista Túpac Amaru de la Ciudad de Juliaca",
+    "nombreCorto": "CATA",
+    "subtitulo": "Educación inicial, primaria y secundaria con cosmovisión cristiana desde mil novecientos setenta y uno",
+    "ciudad": "Juliaca",
+    "anioFundacion": 1971,
+    "telefono": {
+      "numero": "+5151325096",
+      "visible": "051 325096"
+    },
+    "whatsapp": {
+      "numero": "+51986322833",
+      "visible": "986 322 833"
+    },
+    "direccion": {
+      "linea": "Jirón Moquegua número 852, cercado de la ciudad de Juliaca",
+      "referencia": "Frente al Mercado Internacional Túpac Amaru, a media cuadra de la avenida principal",
+      "distrito": "Juliaca, provincia de San Román, departamento de Puno"
+    },
+    "portalAcademicoUrl": "https://cata.icrmedu.com/Academico/Paginas/Login.aspx",
+    "promotora": "Asociación Educativa Colegio Adventista Túpac Amaru, promotora reconocida por R.D. N° 4609-DREP-2000"
+  }
+}

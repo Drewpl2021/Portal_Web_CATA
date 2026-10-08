@@ -1,0 +1,494 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-08T12:00:00.000Z",
+  "title": "Design System: Colegio Adventista Túpac Amaru (CATA)",
+  "extensions": {
+    "colorMeta": {
+      "azul-claro": {
+        "role": "primary",
+        "displayName": "Azul Claro Emblema",
+        "canonical": "#00afef",
+        "tonalRamp": [
+          "#000d17",
+          "#01283a",
+          "#004662",
+          "#0d668b",
+          "#188bbc",
+          "#0eb2f2",
+          "#8fd5fc",
+          "#ddf2ff"
+        ],
+        "provisional": "Muestreado del emblema PNG oficial; pendiente del Manual de Identidad."
+      },
+      "azul-emblema": {
+        "role": "primary",
+        "displayName": "Azul Rey Emblema",
+        "canonical": "#3e4095",
+        "tonalRamp": [
+          "#080031",
+          "#1b0f63",
+          "#323285",
+          "#4d52a9",
+          "#6e76d0",
+          "#919bf9",
+          "#bec6fd",
+          "#eaedff"
+        ],
+        "provisional": "Muestreado del emblema PNG oficial; pendiente del Manual de Identidad."
+      },
+      "dorado": {
+        "role": "secondary",
+        "displayName": "Dorado Laurel",
+        "canonical": "#f0b92b",
+        "tonalRamp": [
+          "#120900",
+          "#302200",
+          "#523c00",
+          "#76590b",
+          "#a07a15",
+          "#ce9c0c",
+          "#f9c138",
+          "#ffedc7"
+        ],
+        "provisional": "Muestreado del emblema PNG oficial; pendiente del Manual de Identidad."
+      },
+      "blanco": {
+        "role": "neutral",
+        "displayName": "Blanco",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#1f1f1f",
+          "#3b3b3b",
+          "#575757",
+          "#767676",
+          "#959595",
+          "#b6b6b6",
+          "#d8d8d8",
+          "#ffffff"
+        ]
+      },
+      "tinta": {
+        "role": "neutral",
+        "displayName": "Tinta",
+        "canonical": "#10184a",
+        "tonalRamp": [
+          "#030131",
+          "#141e50",
+          "#2e3b70",
+          "#4a5a92",
+          "#6b7db8",
+          "#8fa2df",
+          "#b8c9fc",
+          "#e8eeff"
+        ]
+      },
+      "tinta-suave": {
+        "role": "neutral",
+        "displayName": "Tinta Suave",
+        "canonical": "#3b4470",
+        "tonalRamp": [
+          "#05042a",
+          "#191f48",
+          "#333c67",
+          "#505a88",
+          "#727dae",
+          "#95a2d4",
+          "#bbc8fc",
+          "#e9eeff"
+        ]
+      },
+      "azul-claro-lavado": {
+        "role": "neutral",
+        "displayName": "Lavado Celeste",
+        "canonical": "#e8f5fc",
+        "tonalRamp": [
+          "#050c11",
+          "#1c262b",
+          "#374247",
+          "#546065",
+          "#778288",
+          "#9ba7ad",
+          "#c0cdd4",
+          "#e4f1f8"
+        ]
+      },
+      "azul-emblema-lavado": {
+        "role": "neutral",
+        "displayName": "Lavado Lila",
+        "canonical": "#c9cdf2",
+        "tonalRamp": [
+          "#080720",
+          "#1f213c",
+          "#3a3d5b",
+          "#585b7b",
+          "#7a7d9f",
+          "#9ea2c5",
+          "#c4c7ec",
+          "#ebedfe"
+        ]
+      },
+      "rojo-emblema": {
+        "role": "neutral",
+        "displayName": "Rojo Emblema",
+        "canonical": "#d52b34",
+        "tonalRamp": [
+          "#200001",
+          "#4b0006",
+          "#7a0a15",
+          "#b0091f",
+          "#e0383d",
+          "#fb7570",
+          "#feb5af",
+          "#ffe8e6"
+        ]
+      },
+      "rojo-texto": {
+        "role": "neutral",
+        "displayName": "Rojo Texto",
+        "canonical": "#a3161f",
+        "tonalRamp": [
+          "#200000",
+          "#4b0106",
+          "#7c000f",
+          "#aa1f25",
+          "#d44b48",
+          "#ff726b",
+          "#fdb6af",
+          "#ffe9e6"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Nombre de ruta",
+        "purpose": "El nombre enorme de cada placa de ruta; mayúsculas."
+      },
+      "display-cierre": {
+        "displayName": "Título de cierre",
+        "purpose": "Título de la placa de cierre; interlineado 1.1 para que el «¿» no choque."
+      },
+      "headline": {
+        "displayName": "Título de rótulo",
+        "purpose": "Títulos de sección y del aviso en azul emblema o blanco; mayúsculas."
+      },
+      "title": {
+        "displayName": "Etiqueta de parada",
+        "purpose": "Paradas, botón dorado, sedes, títulos de noticia, mensajes de error y vacío; mayúsculas."
+      },
+      "body-lead": {
+        "displayName": "Bajada",
+        "purpose": "Bajada de placa, máximo 30ch."
+      },
+      "body": {
+        "displayName": "Texto",
+        "purpose": "Texto corrido, 60-70ch."
+      },
+      "label": {
+        "displayName": "Etiqueta",
+        "purpose": "Campos, accesos, enlaces de sede y pie, línea de firma de noticias."
+      }
+    },
+    "shadows": [
+      {
+        "name": "levante-dorado",
+        "value": "0 8px 18px -10px rgb(16 24 74 / 0.55)",
+        "purpose": "Botón «Solicitar información» en reposo."
+      },
+      {
+        "name": "levante-dorado-hover",
+        "value": "0 12px 22px -10px rgb(16 24 74 / 0.6)",
+        "purpose": "Botón dorado al pasar el cursor."
+      },
+      {
+        "name": "panel-desplegado",
+        "value": "0 14px 30px -18px rgb(16 24 74 / 0.6)",
+        "purpose": "Panel blanco del formulario dentro de la placa."
+      },
+      {
+        "name": "filete-placa-emblema",
+        "value": "inset 0 0 0 10px #3e4095, inset 0 0 0 13px #ffffff",
+        "purpose": "Filete pintado de la placa de sedes; no es elevación."
+      },
+      {
+        "name": "filete-placa-clara",
+        "value": "inset 0 0 0 10px #00afef, inset 0 0 0 13px #10184a",
+        "purpose": "Filete pintado de la placa de cierre; no es elevación."
+      },
+      {
+        "name": "filete-aviso",
+        "value": "inset 0 0 0 3px #3e4095, inset 0 0 0 10px #ffffff, inset 0 0 0 12px #3e4095",
+        "purpose": "Doble anillo pintado de la placa de aviso; no es elevación."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-salida",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Trazo de la línea, paradas, despliegue del panel y botón dorado."
+      },
+      {
+        "name": "trazar",
+        "value": "620ms, escalonado 150ms por parada",
+        "purpose": "La línea de ruta se traza una vez al cargar (vertical en teléfono)."
+      },
+      {
+        "name": "parada",
+        "value": "420ms, scale(0.5) a 1",
+        "purpose": "Cada parada aparece al paso de la línea."
+      },
+      {
+        "name": "retardo-placa-emblema",
+        "value": "260ms",
+        "purpose": "La segunda placa arranca después de la primera."
+      },
+      {
+        "name": "abrir",
+        "value": "360ms, opacidad y translateY(-8px)",
+        "purpose": "Despliegue del panel del formulario."
+      },
+      {
+        "name": "estado",
+        "value": "160ms ease",
+        "purpose": "Hover de accesos, paradas y botón."
+      },
+      {
+        "name": "latido",
+        "value": "1.4s ease-in-out infinite, opacidad a 0.45",
+        "purpose": "Esqueleto de carga; se apaga con prefers-reduced-motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "tablet",
+        "value": "1080px"
+      },
+      {
+        "name": "telefono",
+        "value": "760px"
+      }
+    ],
+    "focus": [
+      {
+        "name": "foco-claro",
+        "value": "outline: 3px solid #10184a; outline-offset: 3px",
+        "purpose": "Fondos claros (blanco, azul claro, lavados)."
+      },
+      {
+        "name": "foco-emblema",
+        "value": "outline: 3px solid #ffffff; outline-offset: 3px",
+        "purpose": "Placa azul emblema, placa de sedes, pie y franja de datos de prueba."
+      }
+    ],
+    "imageRatios": [
+      {
+        "name": "sede",
+        "value": "4 / 3"
+      },
+      {
+        "name": "nivel",
+        "value": "3 / 2"
+      },
+      {
+        "name": "quienes-somos",
+        "value": "4 / 5"
+      },
+      {
+        "name": "noticia",
+        "value": "3 / 2"
+      },
+      {
+        "name": "aviso",
+        "value": "sin recorte"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botón Solicitar información",
+      "kind": "button",
+      "refersTo": "accion-dorada",
+      "description": "La única acción dorada: abre el formulario y lo envía.",
+      "html": "<button class=\"ds-accion-dorada\">Solicitar información <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></button>",
+      "css": ".ds-accion-dorada{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:10px 20px;border:0;border-radius:6px;background:#f0b92b;color:#10184a;font-family:'Big Shoulders Display','Barlow',system-ui,sans-serif;font-weight:800;font-size:1.4rem;line-height:1;text-transform:uppercase;letter-spacing:.01em;box-shadow:0 8px 18px -10px rgb(16 24 74 / .55);cursor:pointer;transition:transform 160ms cubic-bezier(.16,1,.3,1),box-shadow 160ms ease,background-color 160ms ease}.ds-accion-dorada:hover{background:#f6c84a;box-shadow:0 12px 22px -10px rgb(16 24 74 / .6)}.ds-accion-dorada:active{transform:translateY(1px)}.ds-accion-dorada:focus-visible{outline:3px solid #10184a;outline-offset:3px}"
+    },
+    {
+      "name": "Acceso de contacto",
+      "kind": "button",
+      "refersTo": "acceso-contacto",
+      "description": "Acceso de teléfono o WhatsApp en la cabecera.",
+      "html": "<a class=\"ds-acceso\" href=\"#\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z\"/></svg><span>Teléfono</span></a>",
+      "css": ".ds-acceso{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border:2px solid #3e4095;border-radius:6px;font-family:'Barlow',system-ui,sans-serif;font-weight:600;color:#3e4095;text-decoration:none;transition:background-color 160ms ease,color 160ms ease}.ds-acceso:hover{background:#3e4095;color:#fff}.ds-acceso:focus-visible{outline:3px solid #10184a;outline-offset:3px;border-radius:4px}"
+    },
+    {
+      "name": "Campo del formulario",
+      "kind": "input",
+      "refersTo": "campo",
+      "description": "Campo de texto del formulario de solicitud.",
+      "html": "<label class=\"ds-campo\"><span>Celular</span><input placeholder=\"987 654 321\"></label>",
+      "css": ".ds-campo{display:grid;gap:6px;font-family:'Barlow',system-ui,sans-serif;color:#10184a}.ds-campo span{font-weight:600;font-size:.95rem}.ds-campo input{height:52px;padding:0 14px;border:2px solid #10184a;border-radius:6px;background:#fff;font:inherit;font-size:1.0625rem;color:#10184a}.ds-campo input::placeholder{color:#5d6488}.ds-campo input:focus-visible{outline:3px solid #10184a;outline-offset:1px}"
+    },
+    {
+      "name": "Placa de ruta clara",
+      "kind": "custom",
+      "refersTo": "placa-claro",
+      "description": "Placa esmaltada azul claro con letra de tinta, filete y línea de paradas.",
+      "html": "<section class=\"ds-placa\"><div class=\"ds-placa__marco\"><h2 class=\"ds-placa__nombre\">Familias que nos conocen</h2><ol class=\"ds-ruta\"><li class=\"ds-parada\"><a href=\"#\"><span class=\"ds-punto\"></span><span class=\"ds-etiqueta\">Quiénes somos</span></a></li><li class=\"ds-parada\"><a href=\"#\"><span class=\"ds-punto\"></span><span class=\"ds-etiqueta\">Niveles</span></a></li><li class=\"ds-parada ds-parada--fin\"><a href=\"#\"><span class=\"ds-punto ds-punto--fin\"></span><span class=\"ds-etiqueta\">Sedes</span></a></li></ol></div></section>",
+      "css": ".ds-placa{border-radius:10px;background:#00afef;color:#10184a;font-family:'Barlow',system-ui,sans-serif}.ds-placa__marco{margin:10px;padding:28px 32px;border:3px solid #10184a;border-radius:6px}.ds-placa__nombre{margin:0;font-family:'Big Shoulders Display','Barlow',system-ui,sans-serif;font-weight:900;font-size:3.4rem;line-height:.86;text-transform:uppercase}.ds-ruta{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);margin:28px 0 0;padding:0;list-style:none}.ds-parada{position:relative;padding-right:16px}.ds-parada:not(.ds-parada--fin)::before{content:'';position:absolute;top:14px;left:13px;width:100%;height:8px;background:#10184a}.ds-parada a{position:relative;display:flex;flex-direction:column;gap:6px;color:inherit;text-decoration:none}.ds-punto{position:relative;z-index:1;display:block;width:26px;height:26px;margin:5px 0 17px;border:6px solid #10184a;border-radius:50%;background:#00afef;box-sizing:border-box;transition:background-color 160ms ease,transform 200ms cubic-bezier(.16,1,.3,1)}.ds-punto--fin{width:36px;height:36px;margin:0 0 12px;background:#10184a}.ds-etiqueta{font-family:'Big Shoulders Display','Barlow',system-ui,sans-serif;font-weight:800;font-size:1.4rem;line-height:1;text-transform:uppercase}.ds-parada a:hover .ds-punto{background:#10184a;transform:scale(1.12)}.ds-parada a:hover .ds-etiqueta{text-decoration:underline;text-decoration-thickness:3px}.ds-parada a:focus-visible{outline:3px solid #10184a;outline-offset:3px;border-radius:4px}"
+    },
+    {
+      "name": "Placa de ruta emblema",
+      "kind": "custom",
+      "refersTo": "placa-emblema",
+      "description": "Placa azul emblema con letra blanca y foco blanco.",
+      "html": "<section class=\"ds-placa-e\"><div class=\"ds-placa-e__marco\"><h2 class=\"ds-placa-e__nombre\">Comunidad CATA</h2><p class=\"ds-placa-e__bajada\">Comunicados, noticias y portal académico.</p><a class=\"ds-placa-e__enlace\" href=\"#\">Portal académico</a></div></section>",
+      "css": ".ds-placa-e{border-radius:10px;background:#3e4095;color:#fff;font-family:'Barlow',system-ui,sans-serif}.ds-placa-e__marco{margin:10px;padding:28px 32px;border:3px solid #fff;border-radius:6px}.ds-placa-e__nombre{margin:0;font-family:'Big Shoulders Display','Barlow',system-ui,sans-serif;font-weight:900;font-size:3.4rem;line-height:.86;text-transform:uppercase}.ds-placa-e__bajada{margin:12px 0 0;font-weight:500;font-size:1.125rem;line-height:1.4;color:#c9cdf2}.ds-placa-e__enlace{display:inline-block;margin-top:16px;font-family:'Big Shoulders Display','Barlow',system-ui,sans-serif;font-weight:800;font-size:1.4rem;text-transform:uppercase;color:#fff}.ds-placa-e__enlace:focus-visible{outline:3px solid #fff;outline-offset:3px;border-radius:4px}"
+    },
+    {
+      "name": "Título de rótulo",
+      "kind": "custom",
+      "refersTo": "headline",
+      "description": "Título de sección en rótulo 900 azul emblema.",
+      "html": "<h2 class=\"ds-titulo\">Comunicados</h2>",
+      "css": ".ds-titulo{margin:0;font-family:'Big Shoulders Display','Barlow',system-ui,sans-serif;font-weight:900;font-size:3.2rem;line-height:.92;text-transform:uppercase;color:#3e4095}"
+    },
+    {
+      "name": "Placa de aviso",
+      "kind": "card",
+      "refersTo": "placa-aviso",
+      "description": "El único aviso vigente bajo las placas de ruta; nunca carrusel.",
+      "html": "<section class=\"ds-aviso\"><div class=\"ds-aviso__texto\"><h2 class=\"ds-aviso__titulo\">Matrícula 2027 abierta</h2><p>Las familias pueden reservar su vacante hasta el 15 de diciembre.</p><a class=\"ds-aviso__enlace\" href=\"#\">Ver requisitos <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></a></div></section>",
+      "css": ".ds-aviso{padding:36px;border-radius:10px;background:#fff;color:#10184a;font-family:'Barlow',system-ui,sans-serif;font-size:1.0625rem;line-height:1.6;box-shadow:inset 0 0 0 3px #3e4095,inset 0 0 0 10px #fff,inset 0 0 0 12px #3e4095}.ds-aviso__texto{display:grid;justify-items:start;gap:12px;max-width:60ch}.ds-aviso__titulo{margin:0;font-family:'Big Shoulders Display','Barlow',system-ui,sans-serif;font-weight:900;font-size:2.6rem;line-height:.95;text-transform:uppercase;text-wrap:balance;hyphens:auto;color:#3e4095}.ds-aviso p{margin:0}.ds-aviso__enlace{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-weight:600;color:#3e4095;text-underline-offset:.2em;text-decoration-thickness:2px}.ds-aviso__enlace:focus-visible{outline:3px solid #10184a;outline-offset:3px;border-radius:4px}"
+    },
+    {
+      "name": "Botón Reintentar",
+      "kind": "button",
+      "refersTo": "boton-reintentar",
+      "description": "Botón secundario del estado de error; hereda el color de la placa.",
+      "html": "<button class=\"ds-reintentar\" type=\"button\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8\"/><path d=\"M21 3v5h-5\"/></svg> Reintentar</button>",
+      "css": ".ds-reintentar{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border:2px solid currentColor;border-radius:6px;background:transparent;color:#10184a;font-family:'Barlow',system-ui,sans-serif;font-weight:600;font-size:1.0625rem;cursor:pointer;transition:background-color 160ms ease}.ds-reintentar:hover{background:color-mix(in srgb,currentColor 12%,transparent)}.ds-reintentar:focus-visible{outline:3px solid #10184a;outline-offset:3px;border-radius:4px}"
+    },
+    {
+      "name": "Estado de carga",
+      "kind": "custom",
+      "refersTo": "body",
+      "description": "Esqueleto de sección en currentColor al 14%, con latido que se apaga con movimiento reducido.",
+      "html": "<div class=\"ds-cargando\" role=\"status\"><span class=\"ds-oculto\">Cargando las noticias…</span><span class=\"ds-cargando__titulo\" aria-hidden=\"true\"></span><span class=\"ds-cargando__linea\" aria-hidden=\"true\"></span><span class=\"ds-cargando__linea\" aria-hidden=\"true\"></span><span class=\"ds-cargando__linea\" aria-hidden=\"true\"></span></div>",
+      "css": ".ds-cargando{display:grid;gap:14px;padding-block:8px;color:#10184a}.ds-oculto{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.ds-cargando__titulo,.ds-cargando__linea{display:block;height:18px;border-radius:4px;background:color-mix(in srgb,currentColor 14%,transparent);animation:ds-latido 1.4s ease-in-out infinite}.ds-cargando__titulo{width:70%;height:56px;margin-bottom:10px}.ds-cargando__linea:nth-child(odd){width:92%}.ds-cargando__linea:last-child{width:60%}@keyframes ds-latido{50%{opacity:.45}}@media (prefers-reduced-motion:reduce){.ds-cargando__titulo,.ds-cargando__linea{animation:none}}"
+    },
+    {
+      "name": "Noticia",
+      "kind": "card",
+      "refersTo": "title",
+      "description": "Título primero y firma debajo; sin antetítulo.",
+      "html": "<article class=\"ds-noticia\"><h3 class=\"ds-noticia__titulo\">Inicio del segundo bimestre</h3><p class=\"ds-noticia__firma\"><span class=\"ds-noticia__tipo\">Comunicado</span><span aria-hidden=\"true\">·</span><time datetime=\"2026-10-05\">5 de octubre de 2026</time></p><p class=\"ds-noticia__resumen\">Las clases se reanudan el lunes en las cuatro sedes.</p></article>",
+      "css": ".ds-noticia{display:grid;justify-items:start;gap:8px;max-width:70ch;padding:24px 0;border-top:3px solid #3e4095;border-bottom:1px solid #c9cdf2;font-family:'Barlow',system-ui,sans-serif;font-size:1.0625rem;line-height:1.6;color:#10184a}.ds-noticia p{margin:0}.ds-noticia__titulo{margin:0;font-family:'Big Shoulders Display','Barlow',system-ui,sans-serif;font-weight:800;font-size:1.6rem;line-height:1.05;text-transform:uppercase;text-wrap:balance;hyphens:auto}.ds-noticia__firma{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;font-size:.95rem;font-weight:600;font-variant-numeric:tabular-nums;color:#3b4470}.ds-noticia__tipo{color:#3e4095}.ds-noticia__resumen{color:#3b4470}"
+    },
+    {
+      "name": "Franja de datos de prueba",
+      "kind": "custom",
+      "refersTo": "franja-prueba",
+      "description": "Franja superior visible solo con los datos locales de prueba.",
+      "html": "<aside class=\"ds-prueba\" aria-label=\"Datos de prueba\"><button type=\"button\" aria-expanded=\"false\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M10 2v7.31\"/><path d=\"M14 9.3V1.99\"/><path d=\"M8.5 2h7\"/><path d=\"M14 9.3a6.5 6.5 0 1 1-4 0\"/><path d=\"M5.52 16h12.96\"/></svg> Datos de prueba · Típico</button></aside>",
+      "css": ".ds-prueba{padding:6px 32px;background:#10184a;color:#fff;font-family:'Barlow',system-ui,sans-serif;font-size:.9rem}.ds-prueba button{display:inline-flex;align-items:center;gap:8px;min-height:32px;padding:0;border:0;background:none;color:inherit;font:inherit;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:.2em}.ds-prueba button:focus-visible{outline:3px solid #fff;outline-offset:3px;border-radius:4px}"
+    },
+    {
+      "name": "Pie",
+      "kind": "nav",
+      "refersTo": "pie",
+      "description": "Franja de tinta al cierre de la página.",
+      "html": "<footer class=\"ds-pie\"><p>© Colegio Adventista Túpac Amaru.</p><a href=\"#\">Portal académico</a></footer>",
+      "css": ".ds-pie{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 32px;padding:28px 32px;background:#10184a;color:#c9cdf2;font-family:'Barlow',system-ui,sans-serif;font-size:.95rem}.ds-pie p{margin:0}.ds-pie a{font-weight:600;color:#fff}.ds-pie a:focus-visible{outline:3px solid #fff;outline-offset:3px;border-radius:4px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "El tablero de ruta de Juliaca",
+    "overview": "El portal se pinta como los letreros de las combis de Juliaca: placas esmaltadas a todo el ancho, nombres de ruta enormes en letra de rótulo condensada y una línea de recorrido gruesa con paradas circulares. Cada público tiene su línea; cada destino es una parada. Las sedes del colegio son paradas reales y los niveles (Inicial, Primaria, Secundaria) se leen como una línea con una parada por nivel.\n\nLa densidad es de letrero, no de folleto: pocas palabras, muy grandes, con la jerarquía hecha por escala. La paleta está cerrada a los tonos del emblema más blanco y la tinta derivada de ellos. El dorado es escaso a propósito: marca una sola acción.\n\nDesde la versión 2 todo texto e imagen llega de una API de solo lectura, con largo variable y fotos que pueden faltar. El sistema lo absorbe sin cambiar de mundo: las fotos son recortes de proporción fija que desaparecen sin dejar hueco, cada sección pinta su propia carga, error y vacío con los materiales de la placa donde vive, y la letra de rótulo parte y separa palabras largas antes que desbordar. Los colores siguen siendo **provisionales**: se muestrearon del PNG oficial del emblema (`emblema-cata.png`) y quedan pendientes del Manual de Identidad; cuando llegue, sus valores reemplazan a los de `tokens.css` sin cambiar los roles. La portada se rechaza explícitamente como carrusel de fotos con «Admisión» y tarjetas por nivel.",
+    "keyCharacteristics": [
+      "Placas a todo el ancho, separadas por un hilo blanco de 12px, con un filete pintado interior.",
+      "Letras de rótulo en mayúsculas (Big Shoulders Display 900/800) sobre texto Barlow.",
+      "La línea de ruta con paradas es el único ornamento.",
+      "Dorado solo para «Solicitar información».",
+      "En teléfonos, todas las líneas se vuelven verticales.",
+      "Las fotos de la API son recortes de proporción fija que, si faltan, no dejan hueco.",
+      "Cada sección es dueña de sus estados: esqueleto, error con «Reintentar» y texto de vacío."
+    ],
+    "rules": [
+      {
+        "name": "La Regla de la Tinta sobre Azul Claro",
+        "body": "Sobre el azul claro se escribe con tinta, nunca con blanco. Es una adaptación de accesibilidad: el blanco sobre `#00afef` da 2.5:1 y falla contraste; la tinta da 6.7:1. Sobre azul emblema se escribe en blanco (8.9:1).",
+        "section": "colors"
+      },
+      {
+        "name": "La Regla del Dorado Único",
+        "body": "El dorado se usa solo para «Solicitar información»: la parada terminal de la línea de familias, el botón de cierre y el botón de enviar del formulario. Ningún otro enlace, foco, estado ni ornamento es dorado; el botón «Reintentar» no lo es.",
+        "section": "colors"
+      },
+      {
+        "name": "La Regla del Foco por Fondo",
+        "body": "El anillo de foco (3px, separado 3px, radio 4px) es tinta sobre fondos claros (blanco, azul claro, lavados) y blanco sobre azul emblema, sobre tinta y sobre la franja de datos de prueba. Nunca dorado. Los campos del formulario lo llevan separado 1px.",
+        "section": "colors"
+      },
+      {
+        "name": "La Regla de los Colores Provisionales",
+        "body": "`azul-claro`, `azul-emblema` y `dorado` son muestras del emblema PNG hasta que llegue el Manual de Identidad. No se aproximan ni se inventan tonos nuevos: todo color adicional se deriva de estos, y los tonos de estado se mezclan con `currentColor` (esqueleto al 14%, hover del botón secundario al 12%) en vez de crear grises.",
+        "section": "colors"
+      },
+      {
+        "name": "La Regla del Rótulo",
+        "body": "Big Shoulders Display solo en 900 o 800 y siempre en mayúsculas; es letra de letrero, no de párrafo. Barlow solo en 400, 500 y 600.",
+        "section": "typography"
+      },
+      {
+        "name": "La Regla de la Escala",
+        "body": "La jerarquía se hace por tamaño y peso. Nada de antetítulos ni etiquetas sobre los títulos: en una noticia el título va primero y la firma («Comunicado · fecha») va debajo. El color sigue al fondo (rótulo azul emblema sobre blanco, tinta sobre azul claro, blanco sobre azul emblema), no marca niveles.",
+        "section": "typography"
+      },
+      {
+        "name": "La Regla del Texto Largo",
+        "body": "Todo rótulo grande lleva `hyphens: auto` y `text-wrap: balance`, y la página entera `overflow-wrap: break-word`: un nombre largo de la API se parte y separa con guion, nunca desborda la placa ni se achica.",
+        "section": "typography"
+      },
+      {
+        "name": "La Regla de la Línea Vertical",
+        "body": "En teléfono ninguna línea corre en horizontal ni se parte en filas: se vuelve vertical y conserva todas sus paradas en orden.",
+        "section": "layout"
+      },
+      {
+        "name": "La Regla del Espacio Sostenido",
+        "body": "Un estado de carga ocupa el lugar de lo que va a llegar: las placas de ruta esperan con un alto mínimo de `clamp(220px, 26vw, 300px)` y el esqueleto lleva un bloque de título y líneas de texto, para que la página no salte al cargar.",
+        "section": "layout"
+      },
+      {
+        "name": "La Regla de la Placa Plana",
+        "body": "Las placas no llevan sombra. Su filete se pinta con borde o con anillos `inset`, nunca con sombra proyectada.",
+        "section": "elevation"
+      },
+      {
+        "name": "La Regla del Único Ornamento",
+        "body": "La línea de recorrido con paradas circulares es el único ornamento del sistema. No se agregan ilustraciones, texturas, degradados, formas de fondo ni iconos decorativos; los iconos (Lucide, en trazo) solo acompañan una acción concreta.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "**Do** escribir con tinta sobre azul claro y con blanco sobre azul emblema.",
+      "**Do** reservar el dorado para «Solicitar información» y su flujo.",
+      "**Do** usar foco de tinta sobre fondos claros y foco blanco sobre azul emblema o tinta (3px, separación de 3px).",
+      "**Do** poner Big Shoulders Display en 900/800 y en mayúsculas; Barlow en 400/500/600.",
+      "**Do** volver verticales todas las líneas en teléfonos (760px o menos).",
+      "**Do** tomar los colores de `tokens.css` y reemplazarlos ahí cuando llegue el Manual de Identidad.",
+      "**Do** mostrar las fotos de la API con la proporción fija de su lugar (sede 4:3, nivel 3:2, Quiénes somos 4:5, noticia 3:2; aviso completo) y retirar el componente si la foto falta o falla.",
+      "**Do** darle a cada sección su esqueleto en `currentColor` al 14%, su error con «Reintentar» y su texto de vacío.",
+      "**Do** poner `hyphens: auto` en todo rótulo grande y dejar el interlineado del título de cierre en 1.1."
+    ],
+    "donts": [
+      "**Don't** poner letra blanca sobre azul claro (2.5:1).",
+      "**Don't** usar dorado en enlaces, foco, divisores, estados ni en otra acción.",
+      "**Don't** agregar ornamentos además de la línea de ruta con paradas.",
+      "**Don't** poner antetítulos o etiquetas sobre los títulos; en noticias, la firma va debajo del título.",
+      "**Don't** inventar tonos fuera de la paleta del emblema, ni aproximar los oficiales.",
+      "**Don't** volver al carrusel de fotos con «Admisión» ni a las tarjetas por nivel.",
+      "**Don't** convertir el aviso en carrusel ni mostrar más de un aviso a la vez.",
+      "**Don't** dejar un marco vacío o un hueco cuando una foto no llega."
+    ]
+  }
+}

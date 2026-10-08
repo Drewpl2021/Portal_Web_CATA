@@ -1,0 +1,77 @@
+{
+  "data": {
+    "familias": {
+      "nombre": "Familias que nos conocen",
+      "bajada": "Conoce el colegio y pide información sin compromiso.",
+      "paradas": [
+        {
+          "id": "f1",
+          "etiqueta": "Quiénes somos",
+          "detalle": "Desde 1971",
+          "destino": {
+            "tipo": "seccion",
+            "seccion": "quienes-somos"
+          }
+        },
+        {
+          "id": "f2",
+          "etiqueta": "Niveles",
+          "detalle": "Inicial, primaria, secundaria",
+          "destino": {
+            "tipo": "seccion",
+            "seccion": "niveles"
+          }
+        },
+        {
+          "id": "f3",
+          "etiqueta": "Sedes",
+          "detalle": "Cuatro en San Román",
+          "destino": {
+            "tipo": "seccion",
+            "seccion": "sedes"
+          }
+        }
+      ],
+      "accion": {
+        "etiqueta": "Solicitar información",
+        "detalle": "Te respondemos por WhatsApp",
+        "mensajeWhatsapp": "Hola, soy {nombre}. Quisiera información sobre {grado} en CATA."
+      }
+    },
+    "comunidad": {
+      "nombre": "Comunidad CATA",
+      "bajada": "Comunicados, noticias y accesos para familias y alumnos.",
+      "paradas": [
+        {
+          "id": "c1",
+          "etiqueta": "Noticias",
+          "detalle": "Lo último del colegio",
+          "destino": {
+            "tipo": "seccion",
+            "seccion": "noticias"
+          }
+        },
+        {
+          "id": "c2",
+          "etiqueta": "Matrícula",
+          "detalle": "Requisitos",
+          "destino": {
+            "tipo": "url",
+            "url": "https://cata.edu.pe/new_matricula/",
+            "externo": true
+          }
+        },
+        {
+          "id": "c3",
+          "etiqueta": "Contacto",
+          "detalle": "Teléfono y WhatsApp",
+          "destino": {
+            "tipo": "seccion",
+            "seccion": "contacto"
+          }
+        }
+      ],
+      "terminal": null
+    }
+  }
+}

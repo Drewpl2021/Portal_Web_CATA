@@ -1,0 +1,18 @@
+# Finales de línea LF en todo el proyecto, sin importar core.autocrlf de cada equipo.
+* text=auto eol=lf
+
+# Scripts de Windows: CRLF
+*.cmd text eol=crlf
+*.bat text eol=crlf
+
+# Binarios
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.exe binary

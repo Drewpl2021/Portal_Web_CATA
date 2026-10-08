@@ -1,6 +1,6 @@
 # Contrato de la API pública del portal CATA
 
-**Versión del contrato:** 1.0 · **Fecha:** 2026-10-08
+**Versión del contrato:** 1.1 · **Fecha:** 2026-10-08 (1.1 agrega `/v1/portada/hero` y el destino `pagina`)
 **Quién la expone:** el módulo «Portal web» del sistema de RR.HH. del colegio.
 **Quién la consume:** el portal público `cata.edu.pe` (React). El portal no tiene login y solo lee.
 
@@ -122,10 +122,13 @@ Toda imagen se envía como objeto, nunca como texto suelto:
 
 ```json
 { "tipo": "seccion", "seccion": "sedes" }
+{ "tipo": "pagina", "ruta": "/matricula" }
 { "tipo": "url", "url": "https://cata.edu.pe/new_matricula/", "externo": true }
 ```
 
 Valores válidos de `seccion`: `"quienes-somos"`, `"niveles"`, `"sedes"`, `"noticias"`, `"contacto"`.
+
+`"pagina"` lleva a otra página del propio portal. `ruta` empieza con `/` y solo usa `a-z`, `0-9`, `-` y `/` (por ejemplo `/matricula`, `/nosotros/mision-y-vision`).
 
 ---
 
@@ -141,6 +144,7 @@ Valores válidos de `seccion`: `"quienes-somos"`, `"niveles"`, `"sedes"`, `"noti
 | `GET /v1/sedes` | `Sede[]` | Sedes |
 | `GET /v1/noticias` | `Noticia[]` + `meta` | Noticias y comunicados |
 | `GET /v1/grados` | `GrupoGrados[]` | Selector de grado de Solicitar información |
+| `GET /v1/portada/hero` | `Hero` | Primera pantalla de Inicio |
 
 Cada sección del portal carga su endpoint por separado. Si uno falla, esa sección muestra su error y el resto sigue funcionando.
 
@@ -437,6 +441,44 @@ Las opciones del selector de grado de Solicitar información, agrupadas por nive
 ```
 
 ---
+
+### 3.9 `GET /v1/portada/hero`
+
+La primera pantalla de la página de Inicio: un título grande, una frase y hasta tres figuras.
+
+| Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
+|---|---|---|---|---|
+| `titulo` | string | no | 70 | Frase principal. Se muestra muy grande: conviene corta. |
+| `bajada` | string \| null | sí | 180 | Frase de apoyo bajo el título. |
+| `figuras` | `FiguraHero[]` | no | 0 a 3 | En orden de importancia. `[]` = hero solo con texto. |
+| `accionPrincipal` | `AccionHero` | no | — | Botón principal. |
+| `accionSecundaria` | `AccionHero` \| null | sí | — | Botón secundario. |
+
+**`FiguraHero`**
+
+| Campo | Tipo | ¿Puede ser null? | Descripción |
+|---|---|---|---|
+| `tipo` | `"recorte"` \| `"foto"` | no | `recorte`: PNG o WebP con **fondo transparente** (una persona u objeto recortado). `foto`: imagen rectangular con fondo. El diseño trata distinto cada tipo. |
+| `imagen` | `Imagen` | no | Recorte: mínimo 800 × 1600 px, vertical. Foto: mínimo 1600 × 1200 px. |
+
+**`AccionHero`**: `etiqueta` (string, máx. 32; dice a dónde lleva) y `destino` (`Destino`).
+
+```json
+{
+  "data": {
+    "titulo": "Mejoramos la experiencia de aprendizaje",
+    "bajada": "Colegio Adventista Túpac Amaru: inicial, primaria y secundaria en cuatro sedes de Juliaca, desde 1971.",
+    "figuras": [
+      { "tipo": "recorte", "imagen": { "url": "https://cata.edu.pe/wp-content/uploads/2023/01/CATA-Matricula_Img_2.png", "alt": "Estudiante con el uniforme del colegio, su mochila y un cuaderno de CATA", "ancho": 500, "alto": 1000 } },
+      { "tipo": "foto", "imagen": { "url": "https://cata.edu.pe/wp-content/uploads/2025/05/Sin-titulo-1200-x-900-px.png", "alt": "Niño con el uniforme del colegio y lentes, sonriendo y abrazando una Santa Biblia", "ancho": 1200, "alto": 900 } }
+    ],
+    "accionPrincipal": { "etiqueta": "Proceso de matrícula", "destino": { "tipo": "pagina", "ruta": "/matricula" } },
+    "accionSecundaria": { "etiqueta": "Conoce la propuesta educativa", "destino": { "tipo": "pagina", "ruta": "/propuesta-educativa" } }
+  }
+}
+```
+
+Las fotos de estudiantes deben contar con la autorización del colegio y de las familias para su publicación.
 
 ## 4. Lo que el portal hace con cada caso
 

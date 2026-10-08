@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import {
   esquemaAviso,
+  esquemaHero,
   esquemaGrados,
   esquemaNiveles,
   esquemaNoticias,
@@ -15,6 +16,7 @@ import {
 const ESQUEMAS = {
   sitio: sobre(esquemaSitio),
   rutas: sobre(esquemaRutas),
+  hero: sobre(esquemaHero),
   aviso: sobre(esquemaAviso),
   'quienes-somos': sobre(esquemaQuienesSomos),
   niveles: sobre(esquemaNiveles),

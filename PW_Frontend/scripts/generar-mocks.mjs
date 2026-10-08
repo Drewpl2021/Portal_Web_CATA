@@ -92,6 +92,20 @@ const rutas = {
   },
 }
 
+// Hero de Inicio: fotos publicadas por el propio colegio en cata.edu.pe (se enlazan, no se copian).
+const UP = 'https://cata.edu.pe/wp-content/uploads/'
+const hero = {
+  titulo: 'Mejoramos la experiencia de aprendizaje',
+  bajada: 'Colegio Adventista Túpac Amaru: inicial, primaria y secundaria en cuatro sedes de Juliaca, desde 1971.',
+  figuras: [
+    { tipo: 'recorte', imagen: { url: UP + '2023/01/CATA-Matricula_Img_2.png', alt: 'Estudiante con el uniforme del colegio, su mochila y un cuaderno de CATA', ancho: 500, alto: 1000 } },
+    { tipo: 'recorte', imagen: { url: UP + '2023/01/CATA-Matricula_Img_1.png', alt: 'Estudiante con el uniforme del colegio y su mochila, haciendo el gesto de pulgar arriba', ancho: 500, alto: 1000 } },
+    { tipo: 'foto', imagen: { url: UP + '2025/05/Sin-titulo-1200-x-900-px.png', alt: 'Niño con el uniforme del colegio y lentes, sonriendo y abrazando una Santa Biblia', ancho: 1200, alto: 900 } },
+  ],
+  accionPrincipal: { etiqueta: 'Proceso de matrícula', destino: { tipo: 'pagina', ruta: '/matricula' } },
+  accionSecundaria: { etiqueta: 'Conoce la propuesta educativa', destino: { tipo: 'pagina', ruta: '/propuesta-educativa' } },
+}
+
 const aviso = {
   id: '15',
   titulo: 'Año académico 2026',
@@ -157,6 +171,7 @@ const lista = (items, limite = 6) => ({ data: items.slice(0, limite), meta: { pa
 escribir('tipico', 'sitio', { data: sitio })
 escribir('tipico', 'rutas', { data: rutas })
 escribir('tipico', 'aviso', { data: aviso })
+escribir('tipico', 'hero', { data: hero })
 escribir('tipico', 'quienes-somos', { data: quienes })
 escribir('tipico', 'niveles', { data: niveles })
 escribir('tipico', 'sedes', { data: sedes })
@@ -171,6 +186,7 @@ escribir('corto', 'rutas', {
     comunidad: { nombre: 'Familias', bajada: null, paradas: [{ id: 'c1', etiqueta: 'Noticias', detalle: null, destino: sec('noticias') }], terminal: null },
   },
 })
+escribir('corto', 'hero', { data: { titulo: 'Bienvenidos', bajada: null, figuras: [], accionPrincipal: { etiqueta: 'Matrícula', destino: { tipo: 'pagina', ruta: '/matricula' } }, accionSecundaria: null } })
 escribir('corto', 'aviso', { data: { id: '1', titulo: 'Matrícula', texto: null, imagen: null, enlace: null, vigenteDesde: '2026-10-01T00:00:00-05:00', vigenteHasta: null } })
 escribir('corto', 'quienes-somos', { data: { titulo: 'Desde 1971.', parrafos: ['Colegio adventista en Juliaca.'], foto: null, simbolos: [{ nombre: 'Llama', significado: 'Luz.' }] } })
 escribir('corto', 'niveles', { data: { titulo: 'Niveles', propuestaUrl: null, items: [{ id: 'i', nombre: 'Inicial', rango: null, sede: null, reconocimiento: null, foto: null }] } })
@@ -217,6 +233,7 @@ escribir('largo', 'rutas', {
     },
   },
 })
+escribir('largo', 'hero', { data: { ...hero, titulo: 'Más de cincuenta años formando estudiantes con excelencia académica y valores cristianos en Juliaca', bajada: 'Colegio Adventista Túpac Amaru: educación inicial, primaria y secundaria con cosmovisión cristiana en cuatro sedes de la provincia de San Román, con talleres de música, arte, biohuertos y alimentación saludable.', accionPrincipal: { etiqueta: 'Conoce el proceso de matrícula 2027', destino: { tipo: 'pagina', ruta: '/matricula' } }, accionSecundaria: { etiqueta: 'Descubre nuestra propuesta educativa por niveles', destino: { tipo: 'pagina', ruta: '/propuesta-educativa' } } } })
 escribir('largo', 'aviso', {
   data: {
     id: '99',
@@ -275,6 +292,7 @@ escribir('largo', 'grados', { data: grados })
 // ── sin-foto: todas las imágenes en null ──
 const sinFoto = (o) => JSON.parse(JSON.stringify(o, (k, v) => (k === 'foto' || k === 'imagen' ? null : v)))
 escribir('sin-foto', 'aviso', { data: sinFoto(aviso) })
+escribir('sin-foto', 'hero', { data: { ...hero, figuras: [] } })
 escribir('sin-foto', 'quienes-somos', { data: sinFoto(quienes) })
 escribir('sin-foto', 'niveles', { data: sinFoto(niveles) })
 escribir('sin-foto', 'sedes', { data: sinFoto(sedes) })
@@ -283,6 +301,7 @@ escribir('sin-foto', 'noticias', lista(sinFoto(noticias)))
 // ── alt-vacio: imágenes decorativas ──
 const altVacio = (o) => JSON.parse(JSON.stringify(o, (k, v) => (k === 'alt' ? '' : v)))
 escribir('alt-vacio', 'aviso', { data: altVacio(aviso) })
+escribir('alt-vacio', 'hero', { data: altVacio(hero) })
 escribir('alt-vacio', 'quienes-somos', { data: altVacio(quienes) })
 escribir('alt-vacio', 'niveles', { data: altVacio(niveles) })
 escribir('alt-vacio', 'sedes', { data: altVacio(sedes) })

@@ -5,12 +5,15 @@ import '@fontsource/big-shoulders-display/900.css'
 import '@fontsource/barlow/400.css'
 import '@fontsource/barlow/500.css'
 import '@fontsource/barlow/600.css'
+import '@fontsource-variable/archivo/wdth.css'
+import '@fontsource-variable/bricolage-grotesque/standard.css'
+import '@fontsource-variable/schibsted-grotesk/index.css'
 import './styles/tokens.css'
 import './styles/base.css'
-import Home from './pages/Home'
+import App from './App'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Home />
+    <App />
   </StrictMode>,
 )

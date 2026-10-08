@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font",
+        "value": "archivo variable",
+        "createdAt": "2026-10-08T15:29:16.917Z",
+        "reason": "Rediseño pedido por el usuario el 2026-10-08: tipografías de las propuestas A/B/C; DESIGN.md se reescribe tras elegir una"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "bricolage grotesque variable",
+        "createdAt": "2026-10-08T15:29:17.054Z",
+        "reason": "Rediseño pedido por el usuario el 2026-10-08: tipografías de las propuestas A/B/C; DESIGN.md se reescribe tras elegir una"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "schibsted grotesk variable",
+        "createdAt": "2026-10-08T15:29:17.214Z",
+        "reason": "Rediseño pedido por el usuario el 2026-10-08: tipografías de las propuestas A/B/C; DESIGN.md se reescribe tras elegir una"
+      }
+    ]
+  }
+}

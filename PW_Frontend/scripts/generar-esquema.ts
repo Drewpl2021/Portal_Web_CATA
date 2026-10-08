@@ -4,6 +4,7 @@ import { writeFileSync } from 'node:fs'
 import { zodToJsonSchema } from 'zod-to-json-schema'
 import {
   esquemaAviso,
+  esquemaHero,
   esquemaGrados,
   esquemaNiveles,
   esquemaNoticias,
@@ -24,6 +25,7 @@ const respuestas = {
   'GET /v1/sedes': sobre(esquemaSedes),
   'GET /v1/noticias': sobrePaginado(esquemaNoticias),
   'GET /v1/grados': sobre(esquemaGrados),
+  'GET /v1/portada/hero': sobre(esquemaHero),
 }
 
 const definitions = Object.fromEntries(
@@ -35,7 +37,7 @@ const definitions = Object.fromEntries(
 
 const documento = {
   $schema: 'http://json-schema.org/draft-07/schema#',
-  title: 'API pública del portal CATA v1 (docs/API_CONTRACT.md)',
+  title: 'API pública del portal CATA v1.1 (docs/API_CONTRACT.md)',
   description: 'Cuerpo de respuesta 200 de cada endpoint. Generado desde PW_Frontend/src/api/esquemas.ts; no editar a mano.',
   definitions,
 }

@@ -10,7 +10,9 @@ export const enlaceMapa = (s: Pick<Sede, 'mapaUrl' | 'direccion' | 'distrito'>) 
   `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([s.direccion, s.distrito].filter(Boolean).join(', '))}`
 
 export function hrefDestino(d: Destino): { href: string; externo: boolean } {
-  return d.tipo === 'seccion' ? { href: `#${d.seccion}`, externo: false } : { href: d.url, externo: d.externo }
+  if (d.tipo === 'seccion') return { href: `#${d.seccion}`, externo: false }
+  if (d.tipo === 'pagina') return { href: d.ruta, externo: false }
+  return { href: d.url, externo: d.externo }
 }
 
 export const atributosExterno = (externo: boolean) => (externo ? { target: '_blank', rel: 'noreferrer' } : {})

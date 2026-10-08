@@ -4,6 +4,7 @@
 import type { z } from 'zod'
 import {
   esquemaAviso,
+  esquemaHero,
   esquemaGrados,
   esquemaNiveles,
   esquemaNoticias,
@@ -17,6 +18,7 @@ import {
 import type {
   Aviso,
   GrupoGrados,
+  Hero,
   ListaNoticias,
   Niveles,
   QuienesSomos,
@@ -30,7 +32,7 @@ const API_URL = (import.meta.env.VITE_API_URL ?? '').trim().replace(/\/+$/, '')
 export const ESCENARIOS = ['tipico', 'corto', 'largo', 'sin-foto', 'alt-vacio', 'vacio', 'error'] as const
 export type Escenario = (typeof ESCENARIOS)[number]
 
-type Recurso = 'sitio' | 'rutas' | 'aviso' | 'quienes-somos' | 'niveles' | 'sedes' | 'noticias' | 'grados'
+type Recurso = 'sitio' | 'rutas' | 'hero' | 'aviso' | 'quienes-somos' | 'niveles' | 'sedes' | 'noticias' | 'grados'
 
 export class ErrorDatos extends Error {
   constructor(
@@ -128,6 +130,10 @@ export async function obtenerSitio(): Promise<Sitio> {
 
 export async function obtenerRutas(): Promise<Rutas> {
   return (await leer('rutas', '/v1/portada/rutas', sobre(esquemaRutas))).data
+}
+
+export async function obtenerHero(): Promise<Hero> {
+  return (await leer('hero', '/v1/portada/hero', sobre(esquemaHero))).data
 }
 
 export async function obtenerAvisoVigente(): Promise<Aviso | null> {

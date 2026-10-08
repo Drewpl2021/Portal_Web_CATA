@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "API pública del portal CATA v1 (docs/API_CONTRACT.md)",
+  "title": "API pública del portal CATA v1.1 (docs/API_CONTRACT.md)",
   "description": "Cuerpo de respuesta 200 de cada endpoint. Generado desde PW_Frontend/src/api/esquemas.ts; no editar a mano.",
   "definitions": {
     "GET /v1/sitio": {
@@ -193,6 +193,24 @@
                             "properties": {
                               "tipo": {
                                 "type": "string",
+                                "const": "pagina"
+                              },
+                              "ruta": {
+                                "type": "string",
+                                "pattern": "^\\/[a-z0-9/-]*$"
+                              }
+                            },
+                            "required": [
+                              "tipo",
+                              "ruta"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "tipo": {
+                                "type": "string",
                                 "const": "url"
                               },
                               "url": {
@@ -317,6 +335,24 @@
                             "properties": {
                               "tipo": {
                                 "type": "string",
+                                "const": "pagina"
+                              },
+                              "ruta": {
+                                "type": "string",
+                                "pattern": "^\\/[a-z0-9/-]*$"
+                              }
+                            },
+                            "required": [
+                              "tipo",
+                              "ruta"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "tipo": {
+                                "type": "string",
                                 "const": "url"
                               },
                               "url": {
@@ -389,6 +425,24 @@
                               "required": [
                                 "tipo",
                                 "seccion"
+                              ],
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "tipo": {
+                                  "type": "string",
+                                  "const": "pagina"
+                                },
+                                "ruta": {
+                                  "type": "string",
+                                  "pattern": "^\\/[a-z0-9/-]*$"
+                                }
+                              },
+                              "required": [
+                                "tipo",
+                                "ruta"
                               ],
                               "additionalProperties": false
                             },
@@ -1148,6 +1202,272 @@
             ],
             "additionalProperties": false
           }
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "GET /v1/portada/hero": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "titulo": {
+              "type": "string"
+            },
+            "bajada": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "figuras": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "tipo": {
+                    "type": "string",
+                    "enum": [
+                      "recorte",
+                      "foto"
+                    ]
+                  },
+                  "imagen": {
+                    "type": "object",
+                    "properties": {
+                      "url": {
+                        "type": "string",
+                        "format": "uri",
+                        "pattern": "^https:\\/\\/"
+                      },
+                      "alt": {
+                        "type": "string"
+                      },
+                      "ancho": {
+                        "anyOf": [
+                          {
+                            "type": "integer",
+                            "exclusiveMinimum": 0
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "alto": {
+                        "anyOf": [
+                          {
+                            "type": "integer",
+                            "exclusiveMinimum": 0
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "url",
+                      "alt",
+                      "ancho",
+                      "alto"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "tipo",
+                  "imagen"
+                ],
+                "additionalProperties": false
+              },
+              "maxItems": 3
+            },
+            "accionPrincipal": {
+              "type": "object",
+              "properties": {
+                "etiqueta": {
+                  "type": "string"
+                },
+                "destino": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "tipo": {
+                          "type": "string",
+                          "const": "seccion"
+                        },
+                        "seccion": {
+                          "type": "string",
+                          "enum": [
+                            "quienes-somos",
+                            "niveles",
+                            "sedes",
+                            "noticias",
+                            "contacto"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "tipo",
+                        "seccion"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "tipo": {
+                          "type": "string",
+                          "const": "pagina"
+                        },
+                        "ruta": {
+                          "type": "string",
+                          "pattern": "^\\/[a-z0-9/-]*$"
+                        }
+                      },
+                      "required": [
+                        "tipo",
+                        "ruta"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "tipo": {
+                          "type": "string",
+                          "const": "url"
+                        },
+                        "url": {
+                          "type": "string",
+                          "format": "uri",
+                          "pattern": "^https:\\/\\/"
+                        },
+                        "externo": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "tipo",
+                        "url",
+                        "externo"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "etiqueta",
+                "destino"
+              ],
+              "additionalProperties": false
+            },
+            "accionSecundaria": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "etiqueta": {
+                      "type": "string"
+                    },
+                    "destino": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "tipo": {
+                              "type": "string",
+                              "const": "seccion"
+                            },
+                            "seccion": {
+                              "type": "string",
+                              "enum": [
+                                "quienes-somos",
+                                "niveles",
+                                "sedes",
+                                "noticias",
+                                "contacto"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "tipo",
+                            "seccion"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "tipo": {
+                              "type": "string",
+                              "const": "pagina"
+                            },
+                            "ruta": {
+                              "type": "string",
+                              "pattern": "^\\/[a-z0-9/-]*$"
+                            }
+                          },
+                          "required": [
+                            "tipo",
+                            "ruta"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "tipo": {
+                              "type": "string",
+                              "const": "url"
+                            },
+                            "url": {
+                              "type": "string",
+                              "format": "uri",
+                              "pattern": "^https:\\/\\/"
+                            },
+                            "externo": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "tipo",
+                            "url",
+                            "externo"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "etiqueta",
+                    "destino"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "titulo",
+            "bajada",
+            "figuras",
+            "accionPrincipal",
+            "accionSecundaria"
+          ],
+          "additionalProperties": false
         }
       },
       "required": [

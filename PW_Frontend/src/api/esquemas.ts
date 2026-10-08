@@ -29,6 +29,7 @@ const enlace = z.object({ etiqueta: texto, url, externo: z.boolean() })
 
 const destino = z.discriminatedUnion('tipo', [
   z.object({ tipo: z.literal('seccion'), seccion: z.enum(SECCIONES) }),
+  z.object({ tipo: z.literal('pagina'), ruta: z.string().regex(/^\/[a-z0-9/-]*$/, 'Ruta interna: /pagina') }),
   z.object({ tipo: z.literal('url'), url, externo: z.boolean() }),
 ])
 
@@ -59,6 +60,14 @@ export const esquemaRutas = z.object({
     accion: z.object({ etiqueta: texto, detalle: textoONulo, mensajeWhatsapp: texto }),
   }),
   comunidad: z.object({ ...rutaBase, terminal: parada.nullable() }),
+})
+
+export const esquemaHero = z.object({
+  titulo: texto,
+  bajada: textoONulo,
+  figuras: z.array(z.object({ tipo: z.enum(['recorte', 'foto']), imagen })).max(3),
+  accionPrincipal: z.object({ etiqueta: texto, destino }),
+  accionSecundaria: z.object({ etiqueta: texto, destino }).nullable(),
 })
 
 export const esquemaAviso = z
@@ -143,6 +152,7 @@ const coincide = <_ extends true>() => {}
 coincide<Igual<z.infer<typeof esquemaSitio>, T.Sitio>>()
 coincide<Igual<z.infer<typeof esquemaRutas>['comunidad']['terminal'], T.Parada | null>>()
 coincide<Igual<z.infer<typeof esquemaAviso>, T.Aviso | null>>()
+coincide<Igual<z.infer<typeof esquemaHero>, T.Hero>>()
 coincide<Igual<z.infer<typeof esquemaQuienesSomos>, T.QuienesSomos>>()
 coincide<Igual<z.infer<typeof esquemaNiveles>, T.Niveles>>()
 coincide<Igual<z.infer<typeof esquemaSedes>, T.Sede[]>>()

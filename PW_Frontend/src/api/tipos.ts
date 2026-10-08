@@ -33,6 +33,7 @@ export type Seccion = (typeof SECCIONES)[number]
 
 export type Destino =
   | { tipo: 'seccion'; seccion: Seccion }
+  | { tipo: 'pagina'; ruta: string }
   | { tipo: 'url'; url: string; externo: boolean }
 
 export interface Direccion {
@@ -87,6 +88,26 @@ export interface RutaComunidad extends RutaBase {
 export interface Rutas {
   familias: RutaFamilias
   comunidad: RutaComunidad
+}
+
+// GET /v1/portada/hero
+export interface FiguraHero {
+  /** recorte: PNG con fondo transparente (persona u objeto). foto: imagen rectangular. */
+  tipo: 'recorte' | 'foto'
+  imagen: Imagen
+}
+
+export interface AccionHero {
+  etiqueta: string
+  destino: Destino
+}
+
+export interface Hero {
+  titulo: string
+  bajada: string | null
+  figuras: FiguraHero[]
+  accionPrincipal: AccionHero
+  accionSecundaria: AccionHero | null
 }
 
 // GET /v1/avisos/vigente

@@ -1,6 +1,6 @@
 # Contrato de la API pública del portal CATA
 
-**Versión del contrato:** 1.1 · **Fecha:** 2026-10-08 (1.1 agrega `/v1/portada/hero` y el destino `pagina`)
+**Versión del contrato:** 1.2 · **Fecha:** 2026-10-08 (1.1 agrega `/v1/portada/hero` y el destino `pagina`; 1.2 agrega `/v1/portada/cifras`)
 **Quién la expone:** el módulo «Portal web» del sistema de RR.HH. del colegio.
 **Quién la consume:** el portal público `cata.edu.pe` (React). El portal no tiene login y solo lee.
 
@@ -145,6 +145,7 @@ Valores válidos de `seccion`: `"quienes-somos"`, `"niveles"`, `"sedes"`, `"noti
 | `GET /v1/noticias` | `Noticia[]` + `meta` | Noticias y comunicados |
 | `GET /v1/grados` | `GrupoGrados[]` | Selector de grado de Solicitar información |
 | `GET /v1/portada/hero` | `Hero` | Primera pantalla de Inicio |
+| `GET /v1/portada/cifras` | `Cifra[]` | Cifras destacadas de Inicio |
 
 Cada sección del portal carga su endpoint por separado. Si uno falla, esa sección muestra su error y el resto sigue funcionando.
 
@@ -479,6 +480,27 @@ La primera pantalla de la página de Inicio: un título grande, una frase y hast
 ```
 
 Las fotos de estudiantes deben contar con la autorización del colegio y de las familias para su publicación.
+
+### 3.10 `GET /v1/portada/cifras`
+
+Cifras destacadas de Inicio. El portal las muestra con un contador que sube hasta el valor al entrar en pantalla. Devuelve `Cifra[]` (0 a 4 elementos) en el orden en que se muestran. `[]` oculta la sección.
+
+| Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
+|---|---|---|---|---|
+| `id` | string | no | — | |
+| `valor` | integer | no | — | Número entero ≥ 0. Solo cifras reales y verificables. |
+| `sufijo` | string \| null | sí | 3 | Signo tras el número, por ejemplo `"+"` o `"%"`. |
+| `etiqueta` | string | no | 60 | Qué cuenta la cifra: «años educando en Juliaca». |
+
+```json
+{
+  "data": [
+    { "id": "anios", "valor": 55, "sufijo": null, "etiqueta": "años educando en Juliaca" },
+    { "id": "sedes", "valor": 4, "sufijo": null, "etiqueta": "sedes en San Román" },
+    { "id": "niveles", "valor": 3, "sufijo": null, "etiqueta": "niveles: inicial, primaria y secundaria" }
+  ]
+}
+```
 
 ## 4. Lo que el portal hace con cada caso
 

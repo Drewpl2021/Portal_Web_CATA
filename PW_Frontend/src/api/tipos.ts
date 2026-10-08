@@ -110,6 +110,16 @@ export interface Hero {
   accionSecundaria: AccionHero | null
 }
 
+// GET /v1/portada/cifras
+export interface Cifra {
+  id: string
+  /** Número entero que se anima al entrar en pantalla. */
+  valor: number
+  /** Signo opcional tras el número: "+", "%". */
+  sufijo: string | null
+  etiqueta: string
+}
+
 // GET /v1/avisos/vigente
 export interface Aviso {
   id: string

@@ -9,7 +9,7 @@ export default function TransicionPagina({ children }: { children: ReactNode }) 
   return (
     <motion.div
       initial={{ opacity: 0, transform: 'translateY(12px)' }}
-      animate={{ opacity: 1, transform: 'translateY(0px)', transitionEnd: { transform: 'none' }, transition: { duration: 0.32, ease: SALIDA } }}
+      animate={{ opacity: 1, transform: 'translateY(0px)', transitionEnd: { transform: 'none' }, transition: { duration: 0.28, ease: SALIDA } }}
       exit={{ opacity: 0, transform: 'translateY(-6px)', transition: { duration: 0.16, ease: SALIDA } }}
     >
       {children}

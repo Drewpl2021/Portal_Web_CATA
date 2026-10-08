@@ -5,6 +5,7 @@ import IndicePropuestas from './propuestas/IndicePropuestas'
 import PropuestaA from './propuestas/a/PropuestaA'
 import PropuestaB from './propuestas/b/PropuestaB'
 import PropuestaC from './propuestas/c/PropuestaC'
+import PropuestaFinal from './final/PropuestaFinal'
 
 // reducedMotion="user": solo quien tiene activado «reducir movimiento» recibe la versión sin desplazamientos.
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
           <Route path="/propuesta-a/*" element={<PropuestaA />} />
           <Route path="/propuesta-b/*" element={<PropuestaB />} />
           <Route path="/propuesta-c/*" element={<PropuestaC />} />
+          <Route path="/propuesta-final/*" element={<PropuestaFinal />} />
         </Routes>
       </BrowserRouter>
     </MotionConfig>

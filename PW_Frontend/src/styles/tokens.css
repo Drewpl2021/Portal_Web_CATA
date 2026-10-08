@@ -1,22 +1,41 @@
 /*
-  Colores provisionales muestreados del emblema oficial (emblema-cata.png):
-  azul claro #00afef (letras COLEGIO ADVENTISTA), azul emblema #3e4095 (anillo).
-  El dorado de los laureles es un degradado metálico; se usa #f0b92b hasta el Manual de Identidad.
+  Paleta oficial del colegio (2026-10-08).
+  · Celeste #0090CD y blanco #FFFFFF dominan (≈ 30 % celeste, 60 % blanco).
+  · Azul marino #212853: textos, cabecera, pie y fondos de contraste.
+  · Dorado #FFBD59: solo acentos (líneas, subrayados, botón ICRM, botones principales). Nunca fondos grandes.
+
+  Contraste (WCAG 2.2 AA):
+  · Blanco sobre celeste 3.6:1 y marino sobre celeste 4.0:1 → solo texto grande (≥ 24 px, o ≥ 18.7 px en negrita).
+  · Texto normal: marino sobre blanco (14:1) o blanco sobre marino (14:1).
+  · Sobre dorado, siempre marino (8.5:1).
 */
 :root {
-  --azul-claro: #00afef;
-  --azul-emblema: #3e4095;
-  --dorado: #f0b92b;
+  --celeste: #0090cd;
   --blanco: #ffffff;
+  --marino: #212853;
+  --dorado: #ffbd59;
 
-  /* Derivados del emblema para texto y superficies, no colores nuevos */
-  --tinta: #10184a;
-  --tinta-suave: #3b4470;
-  --azul-claro-lavado: #e8f5fc;
-  --azul-emblema-lavado: #c9cdf2;
+  /* Derivados para estados y superficies */
+  --marino-suave: #4a5180; /* texto secundario sobre blanco, 7.6:1 */
+  --marino-lavado: #c8cbe0; /* texto secundario sobre marino, 8.8:1 */
+  --celeste-lavado: #e6f4fb; /* fondo suave */
+  --celeste-hondo: #0077ab; /* hover del celeste */
+  --dorado-claro: #ffca7a; /* hover del dorado */
   --rojo-emblema: #d52b34;
   --rojo-texto: #a3161f;
 
+  /* Nombres anteriores, apuntando a la paleta oficial (portada antigua y propuestas) */
+  --azul-claro: var(--celeste);
+  --azul-emblema: var(--marino);
+  --tinta: var(--marino);
+  --tinta-suave: var(--marino-suave);
+  --azul-claro-lavado: var(--celeste-lavado);
+  --azul-emblema-lavado: var(--marino-lavado);
+
+  /* Tipografía del sitio nuevo: Archivo Variable (ancho 125 % y 900 para títulos, 100 % para texto) */
+  --font-display: 'Archivo Variable', system-ui, sans-serif;
+
+  /* Heredadas: solo las usa la portada antigua en / hasta que la reemplace /propuesta-final */
   --font-rotulo: 'Big Shoulders Display', 'Barlow', system-ui, sans-serif;
   --font-texto: 'Barlow', system-ui, sans-serif;
 
@@ -25,5 +44,7 @@
   --radio-placa: 10px;
   --linea: 8px;
 
-  --ease-salida: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Curvas de movimiento (Emil Kowalski) */
+  --ease-salida: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-recorrido: cubic-bezier(0.77, 0, 0.175, 1);
 }

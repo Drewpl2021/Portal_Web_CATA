@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "API pública del portal CATA v1.1 (docs/API_CONTRACT.md)",
+  "title": "API pública del portal CATA v1.2 (docs/API_CONTRACT.md)",
   "description": "Cuerpo de respuesta 200 de cada endpoint. Generado desde PW_Frontend/src/api/esquemas.ts; no editar a mano.",
   "definitions": {
     "GET /v1/sitio": {
@@ -1468,6 +1468,48 @@
             "accionSecundaria"
           ],
           "additionalProperties": false
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "GET /v1/portada/cifras": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "valor": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "sufijo": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "etiqueta": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "valor",
+              "sufijo",
+              "etiqueta"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 4
         }
       },
       "required": [

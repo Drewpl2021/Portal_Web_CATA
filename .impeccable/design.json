@@ -1,494 +1,175 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-08T12:00:00.000Z",
+  "generatedAt": "2026-10-08T00:00:00Z",
   "title": "Design System: Colegio Adventista Túpac Amaru (CATA)",
   "extensions": {
     "colorMeta": {
-      "azul-claro": {
-        "role": "primary",
-        "displayName": "Azul Claro Emblema",
-        "canonical": "#00afef",
-        "tonalRamp": [
-          "#000d17",
-          "#01283a",
-          "#004662",
-          "#0d668b",
-          "#188bbc",
-          "#0eb2f2",
-          "#8fd5fc",
-          "#ddf2ff"
-        ],
-        "provisional": "Muestreado del emblema PNG oficial; pendiente del Manual de Identidad."
-      },
-      "azul-emblema": {
-        "role": "primary",
-        "displayName": "Azul Rey Emblema",
-        "canonical": "#3e4095",
-        "tonalRamp": [
-          "#080031",
-          "#1b0f63",
-          "#323285",
-          "#4d52a9",
-          "#6e76d0",
-          "#919bf9",
-          "#bec6fd",
-          "#eaedff"
-        ],
-        "provisional": "Muestreado del emblema PNG oficial; pendiente del Manual de Identidad."
-      },
-      "dorado": {
-        "role": "secondary",
-        "displayName": "Dorado Laurel",
-        "canonical": "#f0b92b",
-        "tonalRamp": [
-          "#120900",
-          "#302200",
-          "#523c00",
-          "#76590b",
-          "#a07a15",
-          "#ce9c0c",
-          "#f9c138",
-          "#ffedc7"
-        ],
-        "provisional": "Muestreado del emblema PNG oficial; pendiente del Manual de Identidad."
-      },
-      "blanco": {
-        "role": "neutral",
-        "displayName": "Blanco",
-        "canonical": "#ffffff",
-        "tonalRamp": [
-          "#1f1f1f",
-          "#3b3b3b",
-          "#575757",
-          "#767676",
-          "#959595",
-          "#b6b6b6",
-          "#d8d8d8",
-          "#ffffff"
-        ]
-      },
-      "tinta": {
-        "role": "neutral",
-        "displayName": "Tinta",
-        "canonical": "#10184a",
-        "tonalRamp": [
-          "#030131",
-          "#141e50",
-          "#2e3b70",
-          "#4a5a92",
-          "#6b7db8",
-          "#8fa2df",
-          "#b8c9fc",
-          "#e8eeff"
-        ]
-      },
-      "tinta-suave": {
-        "role": "neutral",
-        "displayName": "Tinta Suave",
-        "canonical": "#3b4470",
-        "tonalRamp": [
-          "#05042a",
-          "#191f48",
-          "#333c67",
-          "#505a88",
-          "#727dae",
-          "#95a2d4",
-          "#bbc8fc",
-          "#e9eeff"
-        ]
-      },
-      "azul-claro-lavado": {
-        "role": "neutral",
-        "displayName": "Lavado Celeste",
-        "canonical": "#e8f5fc",
-        "tonalRamp": [
-          "#050c11",
-          "#1c262b",
-          "#374247",
-          "#546065",
-          "#778288",
-          "#9ba7ad",
-          "#c0cdd4",
-          "#e4f1f8"
-        ]
-      },
-      "azul-emblema-lavado": {
-        "role": "neutral",
-        "displayName": "Lavado Lila",
-        "canonical": "#c9cdf2",
-        "tonalRamp": [
-          "#080720",
-          "#1f213c",
-          "#3a3d5b",
-          "#585b7b",
-          "#7a7d9f",
-          "#9ea2c5",
-          "#c4c7ec",
-          "#ebedfe"
-        ]
-      },
-      "rojo-emblema": {
-        "role": "neutral",
-        "displayName": "Rojo Emblema",
-        "canonical": "#d52b34",
-        "tonalRamp": [
-          "#200001",
-          "#4b0006",
-          "#7a0a15",
-          "#b0091f",
-          "#e0383d",
-          "#fb7570",
-          "#feb5af",
-          "#ffe8e6"
-        ]
-      },
-      "rojo-texto": {
-        "role": "neutral",
-        "displayName": "Rojo Texto",
-        "canonical": "#a3161f",
-        "tonalRamp": [
-          "#200000",
-          "#4b0106",
-          "#7c000f",
-          "#aa1f25",
-          "#d44b48",
-          "#ff726b",
-          "#fdb6af",
-          "#ffe9e6"
-        ]
-      }
+      "celeste": { "role": "primary", "displayName": "Celeste CATA", "canonical": "#0090cd", "tonalRamp": ["#00263a", "#003c5a", "#00567f", "#0077ab", "#0090cd", "#4db1e0", "#a6d8ef", "#e6f4fb"] },
+      "blanco": { "role": "primary", "displayName": "Blanco", "canonical": "#ffffff", "tonalRamp": ["#1f2024", "#3a3c44", "#5c5f6a", "#868a96", "#b3b6bf", "#d9dbe1", "#f1f2f5", "#ffffff"] },
+      "marino": { "role": "secondary", "displayName": "Azul marino institucional", "canonical": "#212853", "tonalRamp": ["#0d1022", "#151a38", "#212853", "#323a6b", "#4a5180", "#7c82a8", "#c8cbe0", "#eceef6"] },
+      "dorado": { "role": "tertiary", "displayName": "Dorado de premiación", "canonical": "#ffbd59", "tonalRamp": ["#4a3000", "#7a5000", "#b07812", "#e09f36", "#ffbd59", "#ffca7a", "#ffe0ae", "#fff4e2"] },
+      "marino-suave": { "role": "neutral", "displayName": "Marino suave", "canonical": "#4a5180", "tonalRamp": ["#0d1022", "#151a38", "#212853", "#323a6b", "#4a5180", "#7c82a8", "#c8cbe0", "#eceef6"] },
+      "marino-lavado": { "role": "neutral", "displayName": "Marino lavado", "canonical": "#c8cbe0", "tonalRamp": ["#0d1022", "#151a38", "#212853", "#323a6b", "#4a5180", "#7c82a8", "#c8cbe0", "#eceef6"] },
+      "celeste-lavado": { "role": "neutral", "displayName": "Celeste lavado", "canonical": "#e6f4fb", "tonalRamp": ["#00263a", "#003c5a", "#00567f", "#0077ab", "#0090cd", "#4db1e0", "#a6d8ef", "#e6f4fb"] },
+      "celeste-hondo": { "role": "neutral", "displayName": "Celeste hondo", "canonical": "#0077ab", "tonalRamp": ["#00263a", "#003c5a", "#00567f", "#0077ab", "#0090cd", "#4db1e0", "#a6d8ef", "#e6f4fb"] },
+      "dorado-claro": { "role": "neutral", "displayName": "Dorado claro", "canonical": "#ffca7a", "tonalRamp": ["#4a3000", "#7a5000", "#b07812", "#e09f36", "#ffbd59", "#ffca7a", "#ffe0ae", "#fff4e2"] }
     },
     "typographyMeta": {
-      "display": {
-        "displayName": "Nombre de ruta",
-        "purpose": "El nombre enorme de cada placa de ruta; mayúsculas."
-      },
-      "display-cierre": {
-        "displayName": "Título de cierre",
-        "purpose": "Título de la placa de cierre; interlineado 1.1 para que el «¿» no choque."
-      },
-      "headline": {
-        "displayName": "Título de rótulo",
-        "purpose": "Títulos de sección y del aviso en azul emblema o blanco; mayúsculas."
-      },
-      "title": {
-        "displayName": "Etiqueta de parada",
-        "purpose": "Paradas, botón dorado, sedes, títulos de noticia, mensajes de error y vacío; mayúsculas."
-      },
-      "body-lead": {
-        "displayName": "Bajada",
-        "purpose": "Bajada de placa, máximo 30ch."
-      },
-      "body": {
-        "displayName": "Texto",
-        "purpose": "Texto corrido, 60-70ch."
-      },
-      "label": {
-        "displayName": "Etiqueta",
-        "purpose": "Campos, accesos, enlaces de sede y pie, línea de firma de noticias."
-      }
+      "display": { "displayName": "Display", "purpose": "Titular del hero, blanco sobre celeste, con cortina de izquierda a derecha." },
+      "headline-enorme": { "displayName": "Headline enorme", "purpose": "Título del cierre." },
+      "headline": { "displayName": "Headline", "purpose": "Título de cada sección." },
+      "headline-chico": { "displayName": "Headline chico", "purpose": "Título del aviso vigente." },
+      "cifra": { "displayName": "Cifra", "purpose": "Valores dorados de la franja de cifras, animados con NumberFlow." },
+      "title": { "displayName": "Title", "purpose": "Nombre de cada carril de nivel." },
+      "title-placa": { "displayName": "Title placa", "purpose": "Nombres de sede, noticias placa, subtítulos y títulos del pie (112 %, 850, mayúsculas)." },
+      "label-boton": { "displayName": "Label botón", "purpose": "Texto de botones inclinados e ICRM." },
+      "label-nav": { "displayName": "Label nav", "purpose": "Enlaces del menú principal (87.5 %, mayúsculas)." },
+      "bajada": { "displayName": "Bajada", "purpose": "Bajada del hero; 24 px para poder ir sobre celeste." },
+      "body": { "displayName": "Body", "purpose": "Texto corrido, máx. 60ch, siempre al 100 % de ancho." },
+      "body-meta": { "displayName": "Body meta", "purpose": "Fecha, tipo y detalles en marino suave." }
     },
     "shadows": [
-      {
-        "name": "levante-dorado",
-        "value": "0 8px 18px -10px rgb(16 24 74 / 0.55)",
-        "purpose": "Botón «Solicitar información» en reposo."
-      },
-      {
-        "name": "levante-dorado-hover",
-        "value": "0 12px 22px -10px rgb(16 24 74 / 0.6)",
-        "purpose": "Botón dorado al pasar el cursor."
-      },
-      {
-        "name": "panel-desplegado",
-        "value": "0 14px 30px -18px rgb(16 24 74 / 0.6)",
-        "purpose": "Panel blanco del formulario dentro de la placa."
-      },
-      {
-        "name": "filete-placa-emblema",
-        "value": "inset 0 0 0 10px #3e4095, inset 0 0 0 13px #ffffff",
-        "purpose": "Filete pintado de la placa de sedes; no es elevación."
-      },
-      {
-        "name": "filete-placa-clara",
-        "value": "inset 0 0 0 10px #00afef, inset 0 0 0 13px #10184a",
-        "purpose": "Filete pintado de la placa de cierre; no es elevación."
-      },
-      {
-        "name": "filete-aviso",
-        "value": "inset 0 0 0 3px #3e4095, inset 0 0 0 10px #ffffff, inset 0 0 0 12px #3e4095",
-        "purpose": "Doble anillo pintado de la placa de aviso; no es elevación."
-      }
+      { "name": "tarjeta", "value": "0 22px 40px -22px rgb(33 40 83 / 0.55)", "purpose": "Sombra de tarjeta en un pseudoelemento; al pasar el mouse solo cambia su opacidad (220 ms)." },
+      { "name": "boton-oro", "value": "0 12px 22px -12px rgb(33 40 83 / 0.6)", "purpose": "Bajo la placa dorada principal, en reposo." },
+      { "name": "mega-menu", "value": "0 28px 44px -28px rgb(33 40 83 / 0.6)", "purpose": "Separa el mega menú blanco del contenido." },
+      { "name": "recorte", "value": "drop-shadow(0 20px 26px rgb(33 40 83 / 0.35))", "purpose": "Filtro que asienta a los alumnos recortados sobre el celeste." },
+      { "name": "medalla", "value": "0 0 0 4px #ffbd59, 0 16px 30px -12px rgb(0 0 0 / 0.45)", "purpose": "Aro dorado y sombra de la medalla." }
     ],
     "motion": [
-      {
-        "name": "ease-salida",
-        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
-        "purpose": "Trazo de la línea, paradas, despliegue del panel y botón dorado."
-      },
-      {
-        "name": "trazar",
-        "value": "620ms, escalonado 150ms por parada",
-        "purpose": "La línea de ruta se traza una vez al cargar (vertical en teléfono)."
-      },
-      {
-        "name": "parada",
-        "value": "420ms, scale(0.5) a 1",
-        "purpose": "Cada parada aparece al paso de la línea."
-      },
-      {
-        "name": "retardo-placa-emblema",
-        "value": "260ms",
-        "purpose": "La segunda placa arranca después de la primera."
-      },
-      {
-        "name": "abrir",
-        "value": "360ms, opacidad y translateY(-8px)",
-        "purpose": "Despliegue del panel del formulario."
-      },
-      {
-        "name": "estado",
-        "value": "160ms ease",
-        "purpose": "Hover de accesos, paradas y botón."
-      },
-      {
-        "name": "latido",
-        "value": "1.4s ease-in-out infinite, opacidad a 0.45",
-        "purpose": "Esqueleto de carga; se apaga con prefers-reduced-motion."
-      }
+      { "name": "ease-salida", "value": "cubic-bezier(0.23, 1, 0.32, 1)", "purpose": "Entradas, respuestas al puntero, menús, contadores y transición de página." },
+      { "name": "ease-recorrido", "value": "cubic-bezier(0.77, 0, 0.175, 1)", "purpose": "Cortinas de títulos y fotos." },
+      { "name": "cortina-titulo", "value": "640ms scaleX", "purpose": "El título se revela de izquierda a derecha." },
+      { "name": "cortina-foto", "value": "800ms scaleY + asiento 1200ms desde scale 1.1", "purpose": "Entrada de fotos." },
+      { "name": "escalonado", "value": "60ms entre elementos", "purpose": "Tarjetas y cifras." },
+      { "name": "carriles", "value": "90ms entre elementos, desde translateX(-56px)", "purpose": "Carriles de nivel." },
+      { "name": "contador", "value": "1100ms NumberFlow", "purpose": "Cifras que suben hasta su valor." },
+      { "name": "parallax", "value": "6 %", "purpose": "Fotos grandes; en el hero, franjas 120 px, figuras 50 px y anillo 140°." },
+      { "name": "resorte-puntero", "value": "stiffness 120, damping 18", "purpose": "Los alumnos del hero siguen al mouse." },
+      { "name": "pagina", "value": "280ms entrada, 160ms salida", "purpose": "Transición entre páginas." },
+      { "name": "mega-menu", "value": "220ms entrada, 140ms salida", "purpose": "Apertura y cierre del mega menú." },
+      { "name": "indicador", "value": "spring 220ms, bounce 0", "purpose": "Indicador dorado deslizante del menú." },
+      { "name": "presion", "value": "scale 0.97, 160ms", "purpose": "Respuesta al presionar botones y enlaces." },
+      { "name": "medalla", "value": "40s lineal, solo en pantalla", "purpose": "Giro del nombre alrededor del emblema." }
     ],
     "breakpoints": [
-      {
-        "name": "tablet",
-        "value": "1080px"
-      },
-      {
-        "name": "telefono",
-        "value": "760px"
-      }
-    ],
-    "focus": [
-      {
-        "name": "foco-claro",
-        "value": "outline: 3px solid #10184a; outline-offset: 3px",
-        "purpose": "Fondos claros (blanco, azul claro, lavados)."
-      },
-      {
-        "name": "foco-emblema",
-        "value": "outline: 3px solid #ffffff; outline-offset: 3px",
-        "purpose": "Placa azul emblema, placa de sedes, pie y franja de datos de prueba."
-      }
-    ],
-    "imageRatios": [
-      {
-        "name": "sede",
-        "value": "4 / 3"
-      },
-      {
-        "name": "nivel",
-        "value": "3 / 2"
-      },
-      {
-        "name": "quienes-somos",
-        "value": "4 / 5"
-      },
-      {
-        "name": "noticia",
-        "value": "3 / 2"
-      },
-      {
-        "name": "aviso",
-        "value": "sin recorte"
-      }
+      { "name": "movil", "value": "600px" },
+      { "name": "una-columna", "value": "899px" },
+      { "name": "hamburguesa", "value": "1099px" },
+      { "name": "cabecera-compacta", "value": "1280px" }
     ]
   },
   "components": [
     {
-      "name": "Botón Solicitar información",
+      "name": "Botón dorado",
       "kind": "button",
-      "refersTo": "accion-dorada",
-      "description": "La única acción dorada: abre el formulario y lo envía.",
-      "html": "<button class=\"ds-accion-dorada\">Solicitar información <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></button>",
-      "css": ".ds-accion-dorada{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:10px 20px;border:0;border-radius:6px;background:#f0b92b;color:#10184a;font-family:'Big Shoulders Display','Barlow',system-ui,sans-serif;font-weight:800;font-size:1.4rem;line-height:1;text-transform:uppercase;letter-spacing:.01em;box-shadow:0 8px 18px -10px rgb(16 24 74 / .55);cursor:pointer;transition:transform 160ms cubic-bezier(.16,1,.3,1),box-shadow 160ms ease,background-color 160ms ease}.ds-accion-dorada:hover{background:#f6c84a;box-shadow:0 12px 22px -10px rgb(16 24 74 / .6)}.ds-accion-dorada:active{transform:translateY(1px)}.ds-accion-dorada:focus-visible{outline:3px solid #10184a;outline-offset:3px}"
+      "refersTo": "boton-oro",
+      "description": "Placa dorada inclinada para la acción principal; texto marino.",
+      "html": "<a class=\"ds-boton ds-boton--oro\" href=\"#\"><span class=\"ds-boton__texto\">Proceso de matrícula <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></span></a>",
+      "css": ".ds-boton { position: relative; isolation: isolate; display: inline-flex; align-items: center; justify-content: center; min-height: 56px; padding: 10px 28px; color: #212853; text-decoration: none; font-family: 'Archivo Variable', system-ui, sans-serif; transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-boton::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: 5px; transform: skewX(-12deg); } .ds-boton--oro::before { background: #ffbd59; box-shadow: 0 12px 22px -12px rgb(33 40 83 / 0.6); } .ds-boton__texto { display: inline-flex; align-items: center; gap: 10px; font-stretch: 112%; font-weight: 850; font-size: 1.02rem; letter-spacing: 0.02em; text-transform: uppercase; } .ds-boton__texto svg { transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-boton--oro:hover::before { background: #ffca7a; } .ds-boton:hover .ds-boton__texto svg { transform: translateX(4px); } .ds-boton:active { transform: scale(0.97); } .ds-boton:focus-visible { outline: 3px solid #212853; outline-offset: 6px; border-radius: 4px; }"
     },
     {
-      "name": "Acceso de contacto",
+      "name": "Botón blanco",
       "kind": "button",
-      "refersTo": "acceso-contacto",
-      "description": "Acceso de teléfono o WhatsApp en la cabecera.",
-      "html": "<a class=\"ds-acceso\" href=\"#\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z\"/></svg><span>Teléfono</span></a>",
-      "css": ".ds-acceso{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border:2px solid #3e4095;border-radius:6px;font-family:'Barlow',system-ui,sans-serif;font-weight:600;color:#3e4095;text-decoration:none;transition:background-color 160ms ease,color 160ms ease}.ds-acceso:hover{background:#3e4095;color:#fff}.ds-acceso:focus-visible{outline:3px solid #10184a;outline-offset:3px;border-radius:4px}"
+      "refersTo": "boton-blanco",
+      "description": "Placa blanca inclinada para la acción secundaria, sobre celeste.",
+      "html": "<div style=\"background:#0090cd;padding:24px\"><a class=\"ds-boton-b\" href=\"#\"><span class=\"ds-boton-b__texto\">Contáctanos</span></a></div>",
+      "css": ".ds-boton-b { position: relative; isolation: isolate; display: inline-flex; align-items: center; justify-content: center; min-height: 56px; padding: 10px 28px; color: #212853; text-decoration: none; font-family: 'Archivo Variable', system-ui, sans-serif; transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-boton-b::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: 5px; background: #ffffff; transform: skewX(-12deg); } .ds-boton-b__texto { font-stretch: 112%; font-weight: 850; font-size: 1.02rem; letter-spacing: 0.02em; text-transform: uppercase; } .ds-boton-b:hover::before { background: #e6f4fb; } .ds-boton-b:active { transform: scale(0.97); } .ds-boton-b:focus-visible { outline: 3px solid #ffffff; outline-offset: 6px; border-radius: 4px; }"
     },
     {
-      "name": "Campo del formulario",
-      "kind": "input",
-      "refersTo": "campo",
-      "description": "Campo de texto del formulario de solicitud.",
-      "html": "<label class=\"ds-campo\"><span>Celular</span><input placeholder=\"987 654 321\"></label>",
-      "css": ".ds-campo{display:grid;gap:6px;font-family:'Barlow',system-ui,sans-serif;color:#10184a}.ds-campo span{font-weight:600;font-size:.95rem}.ds-campo input{height:52px;padding:0 14px;border:2px solid #10184a;border-radius:6px;background:#fff;font:inherit;font-size:1.0625rem;color:#10184a}.ds-campo input::placeholder{color:#5d6488}.ds-campo input:focus-visible{outline:3px solid #10184a;outline-offset:1px}"
-    },
-    {
-      "name": "Placa de ruta clara",
-      "kind": "custom",
-      "refersTo": "placa-claro",
-      "description": "Placa esmaltada azul claro con letra de tinta, filete y línea de paradas.",
-      "html": "<section class=\"ds-placa\"><div class=\"ds-placa__marco\"><h2 class=\"ds-placa__nombre\">Familias que nos conocen</h2><ol class=\"ds-ruta\"><li class=\"ds-parada\"><a href=\"#\"><span class=\"ds-punto\"></span><span class=\"ds-etiqueta\">Quiénes somos</span></a></li><li class=\"ds-parada\"><a href=\"#\"><span class=\"ds-punto\"></span><span class=\"ds-etiqueta\">Niveles</span></a></li><li class=\"ds-parada ds-parada--fin\"><a href=\"#\"><span class=\"ds-punto ds-punto--fin\"></span><span class=\"ds-etiqueta\">Sedes</span></a></li></ol></div></section>",
-      "css": ".ds-placa{border-radius:10px;background:#00afef;color:#10184a;font-family:'Barlow',system-ui,sans-serif}.ds-placa__marco{margin:10px;padding:28px 32px;border:3px solid #10184a;border-radius:6px}.ds-placa__nombre{margin:0;font-family:'Big Shoulders Display','Barlow',system-ui,sans-serif;font-weight:900;font-size:3.4rem;line-height:.86;text-transform:uppercase}.ds-ruta{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);margin:28px 0 0;padding:0;list-style:none}.ds-parada{position:relative;padding-right:16px}.ds-parada:not(.ds-parada--fin)::before{content:'';position:absolute;top:14px;left:13px;width:100%;height:8px;background:#10184a}.ds-parada a{position:relative;display:flex;flex-direction:column;gap:6px;color:inherit;text-decoration:none}.ds-punto{position:relative;z-index:1;display:block;width:26px;height:26px;margin:5px 0 17px;border:6px solid #10184a;border-radius:50%;background:#00afef;box-sizing:border-box;transition:background-color 160ms ease,transform 200ms cubic-bezier(.16,1,.3,1)}.ds-punto--fin{width:36px;height:36px;margin:0 0 12px;background:#10184a}.ds-etiqueta{font-family:'Big Shoulders Display','Barlow',system-ui,sans-serif;font-weight:800;font-size:1.4rem;line-height:1;text-transform:uppercase}.ds-parada a:hover .ds-punto{background:#10184a;transform:scale(1.12)}.ds-parada a:hover .ds-etiqueta{text-decoration:underline;text-decoration-thickness:3px}.ds-parada a:focus-visible{outline:3px solid #10184a;outline-offset:3px;border-radius:4px}"
-    },
-    {
-      "name": "Placa de ruta emblema",
-      "kind": "custom",
-      "refersTo": "placa-emblema",
-      "description": "Placa azul emblema con letra blanca y foco blanco.",
-      "html": "<section class=\"ds-placa-e\"><div class=\"ds-placa-e__marco\"><h2 class=\"ds-placa-e__nombre\">Comunidad CATA</h2><p class=\"ds-placa-e__bajada\">Comunicados, noticias y portal académico.</p><a class=\"ds-placa-e__enlace\" href=\"#\">Portal académico</a></div></section>",
-      "css": ".ds-placa-e{border-radius:10px;background:#3e4095;color:#fff;font-family:'Barlow',system-ui,sans-serif}.ds-placa-e__marco{margin:10px;padding:28px 32px;border:3px solid #fff;border-radius:6px}.ds-placa-e__nombre{margin:0;font-family:'Big Shoulders Display','Barlow',system-ui,sans-serif;font-weight:900;font-size:3.4rem;line-height:.86;text-transform:uppercase}.ds-placa-e__bajada{margin:12px 0 0;font-weight:500;font-size:1.125rem;line-height:1.4;color:#c9cdf2}.ds-placa-e__enlace{display:inline-block;margin-top:16px;font-family:'Big Shoulders Display','Barlow',system-ui,sans-serif;font-weight:800;font-size:1.4rem;text-transform:uppercase;color:#fff}.ds-placa-e__enlace:focus-visible{outline:3px solid #fff;outline-offset:3px;border-radius:4px}"
-    },
-    {
-      "name": "Título de rótulo",
-      "kind": "custom",
-      "refersTo": "headline",
-      "description": "Título de sección en rótulo 900 azul emblema.",
-      "html": "<h2 class=\"ds-titulo\">Comunicados</h2>",
-      "css": ".ds-titulo{margin:0;font-family:'Big Shoulders Display','Barlow',system-ui,sans-serif;font-weight:900;font-size:3.2rem;line-height:.92;text-transform:uppercase;color:#3e4095}"
-    },
-    {
-      "name": "Placa de aviso",
-      "kind": "card",
-      "refersTo": "placa-aviso",
-      "description": "El único aviso vigente bajo las placas de ruta; nunca carrusel.",
-      "html": "<section class=\"ds-aviso\"><div class=\"ds-aviso__texto\"><h2 class=\"ds-aviso__titulo\">Matrícula 2027 abierta</h2><p>Las familias pueden reservar su vacante hasta el 15 de diciembre.</p><a class=\"ds-aviso__enlace\" href=\"#\">Ver requisitos <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></a></div></section>",
-      "css": ".ds-aviso{padding:36px;border-radius:10px;background:#fff;color:#10184a;font-family:'Barlow',system-ui,sans-serif;font-size:1.0625rem;line-height:1.6;box-shadow:inset 0 0 0 3px #3e4095,inset 0 0 0 10px #fff,inset 0 0 0 12px #3e4095}.ds-aviso__texto{display:grid;justify-items:start;gap:12px;max-width:60ch}.ds-aviso__titulo{margin:0;font-family:'Big Shoulders Display','Barlow',system-ui,sans-serif;font-weight:900;font-size:2.6rem;line-height:.95;text-transform:uppercase;text-wrap:balance;hyphens:auto;color:#3e4095}.ds-aviso p{margin:0}.ds-aviso__enlace{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-weight:600;color:#3e4095;text-underline-offset:.2em;text-decoration-thickness:2px}.ds-aviso__enlace:focus-visible{outline:3px solid #10184a;outline-offset:3px;border-radius:4px}"
-    },
-    {
-      "name": "Botón Reintentar",
-      "kind": "button",
-      "refersTo": "boton-reintentar",
-      "description": "Botón secundario del estado de error; hereda el color de la placa.",
-      "html": "<button class=\"ds-reintentar\" type=\"button\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8\"/><path d=\"M21 3v5h-5\"/></svg> Reintentar</button>",
-      "css": ".ds-reintentar{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border:2px solid currentColor;border-radius:6px;background:transparent;color:#10184a;font-family:'Barlow',system-ui,sans-serif;font-weight:600;font-size:1.0625rem;cursor:pointer;transition:background-color 160ms ease}.ds-reintentar:hover{background:color-mix(in srgb,currentColor 12%,transparent)}.ds-reintentar:focus-visible{outline:3px solid #10184a;outline-offset:3px;border-radius:4px}"
-    },
-    {
-      "name": "Estado de carga",
-      "kind": "custom",
-      "refersTo": "body",
-      "description": "Esqueleto de sección en currentColor al 14%, con latido que se apaga con movimiento reducido.",
-      "html": "<div class=\"ds-cargando\" role=\"status\"><span class=\"ds-oculto\">Cargando las noticias…</span><span class=\"ds-cargando__titulo\" aria-hidden=\"true\"></span><span class=\"ds-cargando__linea\" aria-hidden=\"true\"></span><span class=\"ds-cargando__linea\" aria-hidden=\"true\"></span><span class=\"ds-cargando__linea\" aria-hidden=\"true\"></span></div>",
-      "css": ".ds-cargando{display:grid;gap:14px;padding-block:8px;color:#10184a}.ds-oculto{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.ds-cargando__titulo,.ds-cargando__linea{display:block;height:18px;border-radius:4px;background:color-mix(in srgb,currentColor 14%,transparent);animation:ds-latido 1.4s ease-in-out infinite}.ds-cargando__titulo{width:70%;height:56px;margin-bottom:10px}.ds-cargando__linea:nth-child(odd){width:92%}.ds-cargando__linea:last-child{width:60%}@keyframes ds-latido{50%{opacity:.45}}@media (prefers-reduced-motion:reduce){.ds-cargando__titulo,.ds-cargando__linea{animation:none}}"
-    },
-    {
-      "name": "Noticia",
-      "kind": "card",
-      "refersTo": "title",
-      "description": "Título primero y firma debajo; sin antetítulo.",
-      "html": "<article class=\"ds-noticia\"><h3 class=\"ds-noticia__titulo\">Inicio del segundo bimestre</h3><p class=\"ds-noticia__firma\"><span class=\"ds-noticia__tipo\">Comunicado</span><span aria-hidden=\"true\">·</span><time datetime=\"2026-10-05\">5 de octubre de 2026</time></p><p class=\"ds-noticia__resumen\">Las clases se reanudan el lunes en las cuatro sedes.</p></article>",
-      "css": ".ds-noticia{display:grid;justify-items:start;gap:8px;max-width:70ch;padding:24px 0;border-top:3px solid #3e4095;border-bottom:1px solid #c9cdf2;font-family:'Barlow',system-ui,sans-serif;font-size:1.0625rem;line-height:1.6;color:#10184a}.ds-noticia p{margin:0}.ds-noticia__titulo{margin:0;font-family:'Big Shoulders Display','Barlow',system-ui,sans-serif;font-weight:800;font-size:1.6rem;line-height:1.05;text-transform:uppercase;text-wrap:balance;hyphens:auto}.ds-noticia__firma{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;font-size:.95rem;font-weight:600;font-variant-numeric:tabular-nums;color:#3b4470}.ds-noticia__tipo{color:#3e4095}.ds-noticia__resumen{color:#3b4470}"
-    },
-    {
-      "name": "Franja de datos de prueba",
-      "kind": "custom",
-      "refersTo": "franja-prueba",
-      "description": "Franja superior visible solo con los datos locales de prueba.",
-      "html": "<aside class=\"ds-prueba\" aria-label=\"Datos de prueba\"><button type=\"button\" aria-expanded=\"false\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M10 2v7.31\"/><path d=\"M14 9.3V1.99\"/><path d=\"M8.5 2h7\"/><path d=\"M14 9.3a6.5 6.5 0 1 1-4 0\"/><path d=\"M5.52 16h12.96\"/></svg> Datos de prueba · Típico</button></aside>",
-      "css": ".ds-prueba{padding:6px 32px;background:#10184a;color:#fff;font-family:'Barlow',system-ui,sans-serif;font-size:.9rem}.ds-prueba button{display:inline-flex;align-items:center;gap:8px;min-height:32px;padding:0;border:0;background:none;color:inherit;font:inherit;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:.2em}.ds-prueba button:focus-visible{outline:3px solid #fff;outline-offset:3px;border-radius:4px}"
-    },
-    {
-      "name": "Pie",
+      "name": "Cabecera con ICRM",
       "kind": "nav",
-      "refersTo": "pie",
-      "description": "Franja de tinta al cierre de la página.",
-      "html": "<footer class=\"ds-pie\"><p>© Colegio Adventista Túpac Amaru.</p><a href=\"#\">Portal académico</a></footer>",
-      "css": ".ds-pie{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 32px;padding:28px 32px;background:#10184a;color:#c9cdf2;font-family:'Barlow',system-ui,sans-serif;font-size:.95rem}.ds-pie p{margin:0}.ds-pie a{font-weight:600;color:#fff}.ds-pie a:focus-visible{outline:3px solid #fff;outline-offset:3px;border-radius:4px}"
+      "refersTo": "cabecera",
+      "description": "Barra marina con filete celeste, indicador dorado bajo el enlace activo y placa ICRM dorada.",
+      "html": "<header class=\"ds-cab\"><span class=\"ds-cab__sigla\">CATA</span><nav class=\"ds-nav\"><a href=\"#\" class=\"ds-nav__enlace\" aria-current=\"page\">Inicio<span class=\"ds-nav__indicador\"></span></a><a href=\"#\" class=\"ds-nav__enlace\">Nosotros</a><a href=\"#\" class=\"ds-nav__enlace\">Matrícula</a></nav><a class=\"ds-icrm\" href=\"#\"><span class=\"ds-icrm__texto\">ICRM <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 7h10v10\"/><path d=\"M7 17 17 7\"/></svg></span></a></header>",
+      "css": ".ds-cab { display: flex; align-items: center; gap: 24px; height: 80px; padding: 0 32px; background: #212853; border-bottom: 4px solid #0090cd; color: #ffffff; font-family: 'Archivo Variable', system-ui, sans-serif; } .ds-cab__sigla { font-stretch: 125%; font-weight: 900; font-size: 1.7rem; } .ds-nav { flex: 1; display: flex; justify-content: center; height: 100%; } .ds-nav__enlace { position: relative; display: inline-flex; align-items: center; padding: 0 12px; font-stretch: 87.5%; font-weight: 700; font-size: 0.95rem; letter-spacing: 0.03em; text-transform: uppercase; color: #ffffff; text-decoration: none; } .ds-nav__enlace[aria-current='page'] { font-weight: 850; } .ds-nav__indicador { position: absolute; left: 8px; right: 8px; bottom: -4px; height: 6px; border-radius: 3px 3px 0 0; background: #ffbd59; } .ds-nav__enlace:focus-visible { outline: 3px solid #ffffff; outline-offset: 3px; border-radius: 4px; } .ds-icrm { position: relative; isolation: isolate; display: inline-flex; align-items: center; min-height: 46px; padding: 0 22px; color: #212853; text-decoration: none; transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-icrm::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: 4px; background: #ffbd59; transform: skewX(-12deg); } .ds-icrm__texto { display: inline-flex; align-items: center; gap: 6px; font-stretch: 112%; font-weight: 850; letter-spacing: 0.04em; text-transform: uppercase; } .ds-icrm__texto svg { transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-icrm:hover::before { background: #ffca7a; } .ds-icrm:hover .ds-icrm__texto svg { transform: translate(2px, -2px); } .ds-icrm:active { transform: scale(0.97); } .ds-icrm:focus-visible { outline: 3px solid #ffffff; outline-offset: 4px; }"
+    },
+    {
+      "name": "Mega menú",
+      "kind": "nav",
+      "refersTo": "mega-menu",
+      "description": "Panel blanco con regla dorada superior y columnas con título celeste.",
+      "html": "<div class=\"ds-mega\"><section><h2 class=\"ds-mega__titulo\">Institución</h2><a class=\"ds-mega__enlace\" href=\"#\">Misión y Visión</a><a class=\"ds-mega__enlace\" href=\"#\" aria-current=\"page\">Reseña histórica</a></section></div>",
+      "css": ".ds-mega { border-top: 4px solid #ffbd59; background: #ffffff; color: #212853; padding: 34px 40px 42px; box-shadow: 0 28px 44px -28px rgb(33 40 83 / 0.6); font-family: 'Archivo Variable', system-ui, sans-serif; } .ds-mega__titulo { margin: 0 0 10px; padding-bottom: 10px; border-bottom: 4px solid #0090cd; font-stretch: 125%; font-weight: 900; font-size: 1.45rem; text-transform: uppercase; color: #0090cd; } .ds-mega__enlace { display: flex; align-items: center; min-height: 40px; font-size: 1.05rem; font-weight: 500; color: #212853; text-decoration: none; transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-mega__enlace[aria-current='page'] { font-weight: 800; color: #0077ab; } .ds-mega__enlace:hover { color: #0077ab; transform: translateX(6px); } .ds-mega__enlace:focus-visible { outline: 3px solid #212853; outline-offset: 3px; border-radius: 4px; }"
+    },
+    {
+      "name": "Carril de nivel",
+      "kind": "custom",
+      "refersTo": "carril-marino",
+      "description": "Placa inclinada marina o blanca con borde dorado, sobre el campo celeste.",
+      "html": "<div style=\"background:#0090cd;padding:24px;display:grid;gap:18px\"><div class=\"ds-carril ds-carril--marino\"><h3 class=\"ds-carril__nombre\">Inicial</h3><div><p class=\"ds-carril__rango\">3, 4 y 5 años</p><p class=\"ds-carril__detalle\">Sede CATA Inicial</p></div></div><div class=\"ds-carril ds-carril--blanco\"><h3 class=\"ds-carril__nombre\">Primaria</h3><div><p class=\"ds-carril__rango\">1.er a 6.º grado</p><p class=\"ds-carril__detalle\">Reconocido en 1971</p></div></div></div>",
+      "css": ".ds-carril { position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(min-content, 0.9fr) minmax(0, 1.2fr); align-items: center; gap: 12px 32px; min-height: 150px; padding: 24px 48px; font-family: 'Archivo Variable', system-ui, sans-serif; } .ds-carril::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: 4px; transform: skewX(-10deg); box-shadow: inset 6px 0 0 #ffbd59; } .ds-carril--marino { color: #ffffff; } .ds-carril--marino::before { background: #212853; } .ds-carril--blanco { color: #212853; } .ds-carril--blanco::before { background: #ffffff; } .ds-carril__nombre { margin: 0; font-stretch: 125%; font-weight: 900; font-size: 2.2rem; line-height: 0.95; text-transform: uppercase; } .ds-carril__rango { margin: 0; font-stretch: 112%; font-weight: 850; font-size: 1.35rem; text-transform: uppercase; } .ds-carril__detalle { margin: 0; } .ds-carril--marino .ds-carril__detalle { color: #c8cbe0; } .ds-carril--blanco .ds-carril__detalle { color: #4a5180; }"
+    },
+    {
+      "name": "Placa de sede",
+      "kind": "card",
+      "refersTo": "placa-sede",
+      "description": "Celeste lavado con regla dorada y foto de corte diagonal; se eleva al pasar el mouse porque tiene acciones.",
+      "html": "<article class=\"ds-sede\"><div class=\"ds-sede__foto\"></div><div class=\"ds-sede__texto\"><h3 class=\"ds-sede__nombre\">Sede Central</h3><p class=\"ds-sede__direccion\">Jr. Moquegua N.º 852</p><p class=\"ds-sede__detalle\">Juliaca, San Román, Puno</p><a class=\"ds-enlace\" href=\"#\">Cómo llegar</a></div></article>",
+      "css": ".ds-sede { position: relative; isolation: isolate; max-width: 300px; overflow: hidden; border-radius: 2px; background: #e6f4fb; color: #212853; font-family: 'Archivo Variable', system-ui, sans-serif; transition: translate 220ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-sede::before { content: ''; position: absolute; inset: 0 0 auto; z-index: 3; height: 5px; background: #ffbd59; } .ds-sede::after { content: ''; position: absolute; inset: 0; z-index: -1; box-shadow: 0 22px 40px -22px rgb(33 40 83 / 0.55); opacity: 0; transition: opacity 220ms ease; } .ds-sede:hover { translate: 0 -4px; } .ds-sede:hover::after { opacity: 1; } .ds-sede__foto { aspect-ratio: 4 / 3; background: #a6d8ef; clip-path: polygon(0 0, 100% 0, 100% 86%, 0 100%); } .ds-sede__texto { display: grid; gap: 6px; padding: 18px 20px 20px; } .ds-sede__nombre { margin: 0; font-stretch: 112%; font-weight: 850; font-size: 1.15rem; text-transform: uppercase; } .ds-sede__direccion { margin: 0; font-weight: 600; } .ds-sede__detalle { margin: 0; font-size: 0.97rem; color: #4a5180; } .ds-enlace { display: inline-flex; align-items: center; min-height: 40px; font-weight: 750; color: #212853; text-decoration: underline; text-decoration-color: #ffbd59; text-decoration-thickness: 3px; text-underline-offset: 0.35em; } .ds-enlace:hover { color: #0077ab; } .ds-enlace:focus-visible { outline: 3px solid #212853; outline-offset: 3px; border-radius: 4px; }"
+    },
+    {
+      "name": "Noticia placa",
+      "kind": "card",
+      "refersTo": "noticia-placa",
+      "description": "Noticia sin foto convertida en placa marina con regla dorada.",
+      "html": "<article class=\"ds-noticia\"><h3 class=\"ds-noticia__titulo\">Horario de atención de secretaría</h3><p class=\"ds-noticia__meta\"><span class=\"ds-noticia__tipo\">Comunicado</span> · 8 de octubre de 2026</p><p class=\"ds-noticia__resumen\">La secretaría atiende de lunes a viernes por la mañana.</p></article>",
+      "css": ".ds-noticia { position: relative; max-width: 320px; display: grid; gap: 8px; padding: 28px 22px 22px; border-radius: 2px; background: #212853; color: #ffffff; box-shadow: inset 0 5px 0 #ffbd59; font-family: 'Archivo Variable', system-ui, sans-serif; transition: translate 220ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-noticia:hover { translate: 0 -4px; } .ds-noticia__titulo { margin: 0; font-stretch: 112%; font-weight: 850; font-size: 1.35rem; line-height: 1.2; text-transform: uppercase; } .ds-noticia__meta { margin: 0; font-size: 0.92rem; color: #c8cbe0; } .ds-noticia__tipo { font-weight: 700; color: #ffbd59; } .ds-noticia__resumen { margin: 0; color: #c8cbe0; }"
+    },
+    {
+      "name": "Franja de cifras",
+      "kind": "custom",
+      "refersTo": "franja-cifras",
+      "description": "Banda marina con cifras doradas sobre filete celeste.",
+      "html": "<ul class=\"ds-cifras\"><li class=\"ds-cifra\"><span class=\"ds-cifra__valor\">55</span><span class=\"ds-cifra__etiqueta\">años educando en Juliaca</span></li><li class=\"ds-cifra\"><span class=\"ds-cifra__valor\">4</span><span class=\"ds-cifra__etiqueta\">sedes en San Román</span></li></ul>",
+      "css": ".ds-cifras { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 32px; margin: 0; padding: 48px 32px; list-style: none; background: #212853; color: #ffffff; font-family: 'Archivo Variable', system-ui, sans-serif; } .ds-cifra { display: grid; gap: 4px; padding-top: 18px; border-top: 4px solid #0090cd; } .ds-cifra__valor { font-stretch: 125%; font-weight: 900; font-size: 4rem; line-height: 0.9; color: #ffbd59; font-variant-numeric: tabular-nums; } .ds-cifra__etiqueta { max-width: 24ch; font-size: 1.12rem; font-weight: 500; line-height: 1.35; }"
+    },
+    {
+      "name": "Divisor de franjas",
+      "kind": "custom",
+      "refersTo": "divisor",
+      "description": "Franjas de camiseta marina, dorada y celeste entre secciones; decorativo.",
+      "html": "<div class=\"ds-divisor\" aria-hidden=\"true\"><span></span><span></span><span></span></div>",
+      "css": ".ds-divisor { position: relative; overflow: hidden; height: 64px; background: #ffffff; } .ds-divisor span { position: absolute; left: -10%; right: -10%; display: block; rotate: -2.2deg; } .ds-divisor span:nth-child(1) { top: 18px; height: 14px; background: #212853; } .ds-divisor span:nth-child(2) { top: 36px; height: 4px; background: #ffbd59; } .ds-divisor span:nth-child(3) { top: 44px; height: 8px; background: #0090cd; }"
     }
   ],
   "narrative": {
-    "northStar": "El tablero de ruta de Juliaca",
-    "overview": "El portal se pinta como los letreros de las combis de Juliaca: placas esmaltadas a todo el ancho, nombres de ruta enormes en letra de rótulo condensada y una línea de recorrido gruesa con paradas circulares. Cada público tiene su línea; cada destino es una parada. Las sedes del colegio son paradas reales y los niveles (Inicial, Primaria, Secundaria) se leen como una línea con una parada por nivel.\n\nLa densidad es de letrero, no de folleto: pocas palabras, muy grandes, con la jerarquía hecha por escala. La paleta está cerrada a los tonos del emblema más blanco y la tinta derivada de ellos. El dorado es escaso a propósito: marca una sola acción.\n\nDesde la versión 2 todo texto e imagen llega de una API de solo lectura, con largo variable y fotos que pueden faltar. El sistema lo absorbe sin cambiar de mundo: las fotos son recortes de proporción fija que desaparecen sin dejar hueco, cada sección pinta su propia carga, error y vacío con los materiales de la placa donde vive, y la letra de rótulo parte y separa palabras largas antes que desbordar. Los colores siguen siendo **provisionales**: se muestrearon del PNG oficial del emblema (`emblema-cata.png`) y quedan pendientes del Manual de Identidad; cuando llegue, sus valores reemplazan a los de `tokens.css` sin cambiar los roles. La portada se rechaza explícitamente como carrusel de fotos con «Admisión» y tarjetas por nivel.",
+    "northStar": "El Día de Olimpiadas",
+    "overview": "El portal se viste como un día de olimpiadas escolares de CATA: franjas diagonales como de camiseta deportiva, alumnos reales al frente, tipografía ancha en mayúsculas y orgullo institucional en forma de medalla. La energía viene de la diagonal y del contraste entre un campo celeste, placas blancas y bloques marinos; el dorado es la cinta de premiación, nunca el campo.\n\nLa página alterna fondos con ritmo de pista: cabecera marina, hero celeste, franja marina de cifras, cuerpo blanco, carriles sobre celeste, noticias sobre celeste lavado, cierre celeste y pie marino. Las piezas se inclinan (placas con `skewX`, cortes en diagonal, franjas rotadas) pero el texto siempre queda recto y legible. Cada sección entra con su propio gesto, y el movimiento se limita a transform y opacity.\n\nLa paleta es la oficial del colegio y es obligatoria. El contenido llega de una API de solo lectura, así que cada componente sostiene textos cortos, típicos y muy largos, imágenes ausentes y secciones vacías.",
     "keyCharacteristics": [
-      "Placas a todo el ancho, separadas por un hilo blanco de 12px, con un filete pintado interior.",
-      "Letras de rótulo en mayúsculas (Big Shoulders Display 900/800) sobre texto Barlow.",
-      "La línea de ruta con paradas es el único ornamento.",
-      "Dorado solo para «Solicitar información».",
-      "En teléfonos, todas las líneas se vuelven verticales.",
-      "Las fotos de la API son recortes de proporción fija que, si faltan, no dejan hueco.",
-      "Cada sección es dueña de sus estados: esqueleto, error con «Reintentar» y texto de vacío."
+      "Celeste y blanco dominan (≈ 30 % celeste, 60 % blanco); marino en cabecera, cifras, carriles y pie; dorado solo como acento.",
+      "Archivo Variable en dos anchos: 125 % y 900 en mayúsculas para títulos, 100 % para el texto.",
+      "Diagonales en todas partes: placas inclinadas, franjas de camiseta, fotos con corte oblicuo.",
+      "Reglas doradas encima de tarjetas, títulos del pie y como borde de los carriles.",
+      "Entradas con cortinas (scaleX/scaleY), barras que crecen y contadores con NumberFlow."
     ],
     "rules": [
-      {
-        "name": "La Regla de la Tinta sobre Azul Claro",
-        "body": "Sobre el azul claro se escribe con tinta, nunca con blanco. Es una adaptación de accesibilidad: el blanco sobre `#00afef` da 2.5:1 y falla contraste; la tinta da 6.7:1. Sobre azul emblema se escribe en blanco (8.9:1).",
-        "section": "colors"
-      },
-      {
-        "name": "La Regla del Dorado Único",
-        "body": "El dorado se usa solo para «Solicitar información»: la parada terminal de la línea de familias, el botón de cierre y el botón de enviar del formulario. Ningún otro enlace, foco, estado ni ornamento es dorado; el botón «Reintentar» no lo es.",
-        "section": "colors"
-      },
-      {
-        "name": "La Regla del Foco por Fondo",
-        "body": "El anillo de foco (3px, separado 3px, radio 4px) es tinta sobre fondos claros (blanco, azul claro, lavados) y blanco sobre azul emblema, sobre tinta y sobre la franja de datos de prueba. Nunca dorado. Los campos del formulario lo llevan separado 1px.",
-        "section": "colors"
-      },
-      {
-        "name": "La Regla de los Colores Provisionales",
-        "body": "`azul-claro`, `azul-emblema` y `dorado` son muestras del emblema PNG hasta que llegue el Manual de Identidad. No se aproximan ni se inventan tonos nuevos: todo color adicional se deriva de estos, y los tonos de estado se mezclan con `currentColor` (esqueleto al 14%, hover del botón secundario al 12%) en vez de crear grises.",
-        "section": "colors"
-      },
-      {
-        "name": "La Regla del Rótulo",
-        "body": "Big Shoulders Display solo en 900 o 800 y siempre en mayúsculas; es letra de letrero, no de párrafo. Barlow solo en 400, 500 y 600.",
-        "section": "typography"
-      },
-      {
-        "name": "La Regla de la Escala",
-        "body": "La jerarquía se hace por tamaño y peso. Nada de antetítulos ni etiquetas sobre los títulos: en una noticia el título va primero y la firma («Comunicado · fecha») va debajo. El color sigue al fondo (rótulo azul emblema sobre blanco, tinta sobre azul claro, blanco sobre azul emblema), no marca niveles.",
-        "section": "typography"
-      },
-      {
-        "name": "La Regla del Texto Largo",
-        "body": "Todo rótulo grande lleva `hyphens: auto` y `text-wrap: balance`, y la página entera `overflow-wrap: break-word`: un nombre largo de la API se parte y separa con guion, nunca desborda la placa ni se achica.",
-        "section": "typography"
-      },
-      {
-        "name": "La Regla de la Línea Vertical",
-        "body": "En teléfono ninguna línea corre en horizontal ni se parte en filas: se vuelve vertical y conserva todas sus paradas en orden.",
-        "section": "layout"
-      },
-      {
-        "name": "La Regla del Espacio Sostenido",
-        "body": "Un estado de carga ocupa el lugar de lo que va a llegar: las placas de ruta esperan con un alto mínimo de `clamp(220px, 26vw, 300px)` y el esqueleto lleva un bloque de título y líneas de texto, para que la página no salte al cargar.",
-        "section": "layout"
-      },
-      {
-        "name": "La Regla de la Placa Plana",
-        "body": "Las placas no llevan sombra. Su filete se pinta con borde o con anillos `inset`, nunca con sombra proyectada.",
-        "section": "elevation"
-      },
-      {
-        "name": "La Regla del Único Ornamento",
-        "body": "La línea de recorrido con paradas circulares es el único ornamento del sistema. No se agregan ilustraciones, texturas, degradados, formas de fondo ni iconos decorativos; los iconos (Lucide, en trazo) solo acompañan una acción concreta.",
-        "section": "shapes"
-      }
+      { "name": "The 30-60 Rule", "body": "Blanco ≈ 60 %, celeste ≈ 30 %, el resto marino y dorado. Si una pantalla se ve marina o dorada, está mal.", "section": "colors" },
+      { "name": "The Gold Ribbon Rule", "body": "El dorado es cinta, nunca campo: líneas, subrayados, reglas, ICRM y botones principales. Jamás un fondo de sección o de tarjeta.", "section": "colors" },
+      { "name": "The Large-On-Celeste Rule", "body": "Blanco sobre celeste da 3.6:1 y marino sobre celeste 4.0:1, así que sobre celeste solo va texto grande (≥ 24 px, o ≥ 18.7 px en negrita). El texto normal va en marino sobre blanco (14:1) o blanco sobre marino (14:1). Sobre dorado el texto es siempre marino (8.5:1).", "section": "colors" },
+      { "name": "The Two Widths Rule", "body": "Títulos al 125 % y 900 en mayúsculas; texto corrido al 100 %. El 112 % es solo para etiquetas en placas y botones, y el 87.5 % solo para el menú principal.", "section": "typography" },
+      { "name": "The No Legacy Faces Rule", "body": "Big Shoulders Display y Barlow quedan para la portada antigua en `/`. Nada nuevo las usa.", "section": "typography" },
+      { "name": "The Shadow-On-Its-Own-Layer Rule", "body": "Las tarjetas nunca animan `box-shadow`; la sombra está en un pseudoelemento y solo cambia su opacidad.", "section": "elevation" }
     ],
     "dos": [
-      "**Do** escribir con tinta sobre azul claro y con blanco sobre azul emblema.",
-      "**Do** reservar el dorado para «Solicitar información» y su flujo.",
-      "**Do** usar foco de tinta sobre fondos claros y foco blanco sobre azul emblema o tinta (3px, separación de 3px).",
-      "**Do** poner Big Shoulders Display en 900/800 y en mayúsculas; Barlow en 400/500/600.",
-      "**Do** volver verticales todas las líneas en teléfonos (760px o menos).",
-      "**Do** tomar los colores de `tokens.css` y reemplazarlos ahí cuando llegue el Manual de Identidad.",
-      "**Do** mostrar las fotos de la API con la proporción fija de su lugar (sede 4:3, nivel 3:2, Quiénes somos 4:5, noticia 3:2; aviso completo) y retirar el componente si la foto falta o falla.",
-      "**Do** darle a cada sección su esqueleto en `currentColor` al 14%, su error con «Reintentar» y su texto de vacío.",
-      "**Do** poner `hyphens: auto` en todo rótulo grande y dejar el interlineado del título de cierre en 1.1."
+      "**Do** mantener celeste y blanco como protagonistas (≈ 30 % y 60 %) y el marino para texto, cabecera, cifras y pie.",
+      "**Do** usar el dorado solo como cinta: líneas, subrayados, reglas superiores, ICRM y botones principales.",
+      "**Do** poner sobre celeste solo texto de 24 px o más, o de 18.7 px o más en negrita; todo lo demás en marino sobre blanco o blanco sobre marino.",
+      "**Do** escribir siempre en marino sobre dorado.",
+      "**Do** titular en Archivo Variable al 125 %, 900 y mayúsculas, y dejar el texto al 100 %.",
+      "**Do** inclinar el fondo de las placas y dejar el texto recto.",
+      "**Do** dar a cada bloque un estado de carga, uno de error con «Reintentar» y uno vacío, o hacerlo desaparecer limpio.",
+      "**Do** animar solo transform y opacity, con las curvas de salida y recorrido.",
+      "**Do** ajustar el color del foco al fondo: marino sobre claro, blanco sobre celeste y marino."
     ],
     "donts": [
-      "**Don't** poner letra blanca sobre azul claro (2.5:1).",
-      "**Don't** usar dorado en enlaces, foco, divisores, estados ni en otra acción.",
-      "**Don't** agregar ornamentos además de la línea de ruta con paradas.",
-      "**Don't** poner antetítulos o etiquetas sobre los títulos; en noticias, la firma va debajo del título.",
-      "**Don't** inventar tonos fuera de la paleta del emblema, ni aproximar los oficiales.",
-      "**Don't** volver al carrusel de fotos con «Admisión» ni a las tarjetas por nivel.",
-      "**Don't** convertir el aviso en carrusel ni mostrar más de un aviso a la vez.",
-      "**Don't** dejar un marco vacío o un hueco cuando una foto no llega."
+      "**Don't** usar el dorado como fondo de una sección o de una tarjeta.",
+      "**Don't** poner texto normal (cuerpo, metas, etiquetas pequeñas) sobre celeste.",
+      "**Don't** usar Big Shoulders Display ni Barlow fuera de la portada antigua en `/`.",
+      "**Don't** animar colores, tamaños, `box-shadow` ni `clip-path`; las sombras cambian solo de opacidad.",
+      "**Don't** esconder el texto corrido antes de que entre en pantalla.",
+      "**Don't** elevar al pasar el mouse una tarjeta que no tiene acciones.",
+      "**Don't** dejar la medalla girando fuera de pantalla ni ningún movimiento continuo sin control.",
+      "**Don't** activar efectos de hover en pantallas táctiles."
     ]
   }
 }

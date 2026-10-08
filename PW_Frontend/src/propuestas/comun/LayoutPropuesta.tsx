@@ -2,6 +2,7 @@ import type { ComponentType } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'motion/react'
 import TransicionPagina from '../../sitio/TransicionPagina'
+import { ProveedorBaseRuta } from '../../sitio/BaseRuta'
 import { tituloDeRuta } from '../../sitio/mapa'
 import { CambiarPropuesta, PaginaPendiente } from '../IndicePropuestas'
 
@@ -20,6 +21,7 @@ export default function LayoutPropuesta({ letra, base, clase, Cabecera, Hero }: 
   const relativa = ubicacion.pathname.slice(base.length) || '/'
 
   return (
+    <ProveedorBaseRuta value={base}>
     <div className={clase}>
       <a className="skip-link" href="#contenido">
         Saltar al contenido
@@ -53,5 +55,6 @@ export default function LayoutPropuesta({ letra, base, clase, Cabecera, Hero }: 
         <CambiarPropuesta actual={letra} />
       </div>
     </div>
+    </ProveedorBaseRuta>
   )
 }

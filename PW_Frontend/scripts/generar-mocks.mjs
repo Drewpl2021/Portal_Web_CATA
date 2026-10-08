@@ -32,11 +32,11 @@ for (const [archivo, [etiqueta, w, h]] of Object.entries(placeholders)) {
   const W = 1200
   const H = Math.round((W * h) / w)
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
-  <defs><pattern id="r" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="28" height="28" fill="#c9cdf2"/><rect width="14" height="28" fill="#bfc4ee"/></pattern></defs>
+  <defs><pattern id="r" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="28" height="28" fill="#d9eef8"/><rect width="14" height="28" fill="#cce8f5"/></pattern></defs>
   <rect width="${W}" height="${H}" fill="url(#r)"/>
   <rect x="${W / 2 - 300}" y="${H / 2 - 70}" width="600" height="140" rx="10" fill="#ffffff"/>
-  <text x="${W / 2}" y="${H / 2 - 8}" text-anchor="middle" font-family="Arial, sans-serif" font-size="40" font-weight="700" fill="#10184a">FOTO DE PRUEBA</text>
-  <text x="${W / 2}" y="${H / 2 + 40}" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" fill="#3b4470">${etiqueta} · ${w}:${h}</text>
+  <text x="${W / 2}" y="${H / 2 - 8}" text-anchor="middle" font-family="Arial, sans-serif" font-size="40" font-weight="700" fill="#212853">FOTO DE PRUEBA</text>
+  <text x="${W / 2}" y="${H / 2 + 40}" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" fill="#4a5180">${etiqueta} · ${w}:${h}</text>
 </svg>
 `
   fs.writeFileSync(path.join(dirImg, `${archivo}.svg`), svg)
@@ -127,7 +127,7 @@ const quienes = {
     'El colegio nació de la Iglesia Adventista del Séptimo Día Villa Hermosa, organizada en 1967 en el barrio Túpac Amaru. Sus familias quisieron una escuela para sus hijos, y en 1971 se reconoció el nivel primaria.',
     'Hoy lo promueve la Asociación Educativa Colegio Adventista Túpac Amaru. Su equipo docente trabaja con la certificadora de calidad SGCE y el colegio mantiene un convenio con la Universidad Peruana Unión.',
   ],
-  foto: img('quienes-somos', 'Foto de prueba: estudiantes del colegio en el patio de la Sede Central'),
+  foto: { url: UP + '2025/05/Sin-titulo-1200-x-900-px.png', alt: 'Niño con el uniforme del colegio y lentes, sonriendo y abrazando una Santa Biblia', ancho: 1200, alto: 900 },
   simbolos: [
     { nombre: 'Las manos abiertas', significado: 'Estar dispuestos a extender la mano a quien más lo necesita.' },
     { nombre: 'La Biblia abierta', significado: 'Enseñar bajo la cosmovisión cristiana basada en la Biblia.' },
@@ -172,6 +172,19 @@ escribir('tipico', 'sitio', { data: sitio })
 escribir('tipico', 'rutas', { data: rutas })
 escribir('tipico', 'aviso', { data: aviso })
 escribir('tipico', 'hero', { data: hero })
+// Cifras reales. Falta el número de alumnos: lo debe dar el colegio.
+escribir('tipico', 'cifras', { data: [
+  { id: 'anios', valor: 55, sufijo: null, etiqueta: 'años educando en Juliaca' },
+  { id: 'sedes', valor: 4, sufijo: null, etiqueta: 'sedes en San Román' },
+  { id: 'niveles', valor: 3, sufijo: null, etiqueta: 'niveles: inicial, primaria y secundaria' },
+] })
+escribir('vacio', 'cifras', { data: [] })
+escribir('largo', 'cifras', { data: [
+  { id: 'anios', valor: 55, sufijo: null, etiqueta: 'años formando estudiantes con valores cristianos en la ciudad de Juliaca' },
+  { id: 'sedes', valor: 4, sufijo: null, etiqueta: 'sedes en la provincia de San Román, departamento de Puno' },
+  { id: 'niveles', valor: 3, sufijo: null, etiqueta: 'niveles educativos completos' },
+  { id: 'convenio', valor: 1, sufijo: null, etiqueta: 'convenio con la Universidad Peruana Unión' },
+] })
 escribir('tipico', 'quienes-somos', { data: quienes })
 escribir('tipico', 'niveles', { data: niveles })
 escribir('tipico', 'sedes', { data: sedes })

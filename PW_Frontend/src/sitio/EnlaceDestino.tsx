@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import type { Destino } from '../api/tipos'
 import { hrefDestino } from '../lib/formato'
+import { useRutaInterna } from './BaseRuta'
 
 // Enlace a cualquier Destino del contrato: páginas internas con el router, URLs externas en otra pestaña.
 export default function EnlaceDestino({
@@ -14,9 +15,10 @@ export default function EnlaceDestino({
   children: ReactNode
 }) {
   const { href, externo } = hrefDestino(destino)
+  const interna = useRutaInterna()
   if (destino.tipo === 'pagina') {
     return (
-      <Link to={href} className={className}>
+      <Link to={interna(href)} className={className}>
         {children}
       </Link>
     )

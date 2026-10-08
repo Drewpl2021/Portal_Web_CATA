@@ -45,7 +45,7 @@ El contenido del portal lo gestiona el propio colegio desde su sistema de RR.HH.
 ## Brand Commitments
 
 - **Logo oficial:** se usa tal cual. Está en `PW_Frontend/public/brand/`, descargado de cata.edu.pe. Falta confirmar si la versión con la cinta «1971 – 2022» es la vigente y conseguir un SVG.
-- **Colores institucionales:** el color principal declarado por el colegio es el azul claro. Los valores en uso (#00afef, #3e4095, #f0b92b) son muestras provisionales del emblema, confirmadas por el usuario el 2026-10-07 para usarse hasta recibir el Manual de Identidad.
+- **Colores institucionales (paleta oficial, 2026-10-08):** celeste #0090CD y blanco #FFFFFF como protagonistas (≈ 30 % celeste, 60 % blanco); azul marino #212853 para textos, cabecera, pie y fondos de contraste; dorado #FFBD59 solo para acentos (líneas, subrayados, botón ICRM, botones principales), nunca para fondos grandes. Sobre celeste solo va texto grande o en negrita; el texto normal va en marino sobre blanco o blanco sobre marino; sobre dorado, texto marino.
 
 ## Evidence on Hand
 

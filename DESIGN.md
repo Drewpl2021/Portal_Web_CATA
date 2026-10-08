@@ -1,334 +1,373 @@
 ---
 name: Colegio Adventista Túpac Amaru (CATA)
-description: Portal institucional pintado como un tablero de ruta de las combis de Juliaca.
+description: Portal institucional pintado como un día de olimpiadas escolares, con la paleta oficial celeste, blanco, marino y dorado.
 colors:
-  azul-claro: "#00afef"
-  azul-emblema: "#3e4095"
-  dorado: "#f0b92b"
+  celeste: "#0090cd"
   blanco: "#ffffff"
-  tinta: "#10184a"
-  tinta-suave: "#3b4470"
-  azul-claro-lavado: "#e8f5fc"
-  azul-emblema-lavado: "#c9cdf2"
-  rojo-emblema: "#d52b34"
-  rojo-texto: "#a3161f"
+  marino: "#212853"
+  dorado: "#ffbd59"
+  marino-suave: "#4a5180"
+  marino-lavado: "#c8cbe0"
+  celeste-lavado: "#e6f4fb"
+  celeste-hondo: "#0077ab"
+  dorado-claro: "#ffca7a"
 typography:
   display:
-    fontFamily: "Big Shoulders Display, Barlow, system-ui, sans-serif"
-    fontSize: "clamp(2.9rem, 6vw, 5.25rem)"
+    fontFamily: "Archivo Variable, system-ui, sans-serif"
+    fontSize: "clamp(1.85rem, 4.3vw, 4.25rem)"
     fontWeight: 900
-    lineHeight: 0.86
-    letterSpacing: "-0.005em"
-  display-cierre:
-    fontFamily: "Big Shoulders Display, Barlow, system-ui, sans-serif"
-    fontSize: "clamp(2.9rem, 7.4vw, 6rem)"
+    lineHeight: 0.96
+    letterSpacing: "-0.01em"
+    fontVariation: "'wdth' 125"
+  headline-enorme:
+    fontFamily: "Archivo Variable, system-ui, sans-serif"
+    fontSize: "clamp(2.5rem, 6.4vw, 5.6rem)"
     fontWeight: 900
-    lineHeight: 1.1
+    lineHeight: 0.98
+    fontVariation: "'wdth' 125"
   headline:
-    fontFamily: "Big Shoulders Display, Barlow, system-ui, sans-serif"
-    fontSize: "clamp(2.4rem, 5.2vw, 4.5rem)"
+    fontFamily: "Archivo Variable, system-ui, sans-serif"
+    fontSize: "clamp(2rem, 4.2vw, 3.6rem)"
     fontWeight: 900
-    lineHeight: 0.92
+    lineHeight: 0.98
+    fontVariation: "'wdth' 125"
+  headline-chico:
+    fontFamily: "Archivo Variable, system-ui, sans-serif"
+    fontSize: "clamp(1.6rem, 3vw, 2.4rem)"
+    fontWeight: 900
+    lineHeight: 0.98
+    fontVariation: "'wdth' 125"
+  cifra:
+    fontFamily: "Archivo Variable, system-ui, sans-serif"
+    fontSize: "clamp(3.2rem, 6vw, 5.4rem)"
+    fontWeight: 900
+    lineHeight: 0.9
+    fontFeature: "'tnum'"
+    fontVariation: "'wdth' 125"
   title:
-    fontFamily: "Big Shoulders Display, Barlow, system-ui, sans-serif"
-    fontSize: "clamp(1.3rem, 1.9vw, 1.65rem)"
-    fontWeight: 800
-    lineHeight: 1
-    letterSpacing: "0.01em"
-  body-lead:
-    fontFamily: "Barlow, system-ui, sans-serif"
-    fontSize: "1.125rem"
+    fontFamily: "Archivo Variable, system-ui, sans-serif"
+    fontSize: "clamp(1.7rem, 2.8vw, 2.6rem)"
+    fontWeight: 900
+    lineHeight: 0.95
+    fontVariation: "'wdth' 125"
+  title-placa:
+    fontFamily: "Archivo Variable, system-ui, sans-serif"
+    fontSize: "1.15rem"
+    fontWeight: 850
+    lineHeight: 1.15
+    fontVariation: "'wdth' 112"
+  label-boton:
+    fontFamily: "Archivo Variable, system-ui, sans-serif"
+    fontSize: "1.02rem"
+    fontWeight: 850
+    lineHeight: 1.15
+    letterSpacing: "0.02em"
+    fontVariation: "'wdth' 112"
+  label-nav:
+    fontFamily: "Archivo Variable, system-ui, sans-serif"
+    fontSize: "0.95rem"
+    fontWeight: 700
+    letterSpacing: "0.03em"
+    fontVariation: "'wdth' 87.5"
+  bajada:
+    fontFamily: "Archivo Variable, system-ui, sans-serif"
+    fontSize: "1.5rem"
     fontWeight: 500
-    lineHeight: 1.4
+    lineHeight: 1.35
+    fontVariation: "'wdth' 100"
   body:
-    fontFamily: "Barlow, system-ui, sans-serif"
-    fontSize: "1.0625rem"
+    fontFamily: "Archivo Variable, system-ui, sans-serif"
+    fontSize: "1.12rem"
+    fontWeight: 400
+    lineHeight: 1.65
+    fontVariation: "'wdth' 100"
+  body-meta:
+    fontFamily: "Archivo Variable, system-ui, sans-serif"
+    fontSize: "0.92rem"
     fontWeight: 400
     lineHeight: 1.6
-  label:
-    fontFamily: "Barlow, system-ui, sans-serif"
-    fontSize: "0.95rem"
-    fontWeight: 600
+    fontVariation: "'wdth' 100"
 rounded:
-  placa: "10px"
-  control: "6px"
-  panel: "8px"
-  foco: "4px"
-  parada: "50%"
+  placa-tarjeta: "2px"
+  placa: "4px"
+  boton: "5px"
+  foto: "8px"
+  medalla: "50%"
 spacing:
   gutter: "clamp(16px, 4vw, 48px)"
   ancho: "1240px"
-  linea: "8px"
-  entre-placas: "12px"
-  filete: "10px"
+  seccion: "clamp(72px, 10vw, 128px)"
+  cabeza-seccion: "clamp(32px, 4vw, 48px)"
+  rejilla: "20px"
+  cabecera: "80px"
+  cabecera-movil: "68px"
 components:
-  placa-claro:
-    backgroundColor: "{colors.azul-claro}"
-    textColor: "{colors.tinta}"
-    rounded: "{rounded.placa}"
-  placa-emblema:
-    backgroundColor: "{colors.azul-emblema}"
+  cabecera:
+    backgroundColor: "{colors.marino}"
     textColor: "{colors.blanco}"
-    rounded: "{rounded.placa}"
-  placa-aviso:
-    backgroundColor: "{colors.blanco}"
-    textColor: "{colors.tinta}"
-    rounded: "{rounded.placa}"
-    padding: "clamp(26px, 3.4vw, 44px)"
-  accion-dorada:
+    height: "{spacing.cabecera}"
+  boton-icrm:
     backgroundColor: "{colors.dorado}"
-    textColor: "{colors.tinta}"
-    typography: "{typography.title}"
-    rounded: "{rounded.control}"
-    padding: "10px 20px"
-    height: "52px"
-  accion-dorada-hover:
-    backgroundColor: "#f6c84a"
-  accion-dorada-disabled:
-    backgroundColor: "#f3cd70"
-  acceso-contacto:
+    textColor: "{colors.marino}"
+    typography: "{typography.label-boton}"
+    rounded: "{rounded.placa}"
+    padding: "0 22px"
+    height: "46px"
+  boton-icrm-hover:
+    backgroundColor: "{colors.dorado-claro}"
+    textColor: "{colors.marino}"
+  boton-oro:
+    backgroundColor: "{colors.dorado}"
+    textColor: "{colors.marino}"
+    typography: "{typography.label-boton}"
+    rounded: "{rounded.boton}"
+    padding: "10px 28px"
+    height: "56px"
+  boton-oro-hover:
+    backgroundColor: "{colors.dorado-claro}"
+    textColor: "{colors.marino}"
+  boton-blanco:
     backgroundColor: "{colors.blanco}"
-    textColor: "{colors.azul-emblema}"
-    typography: "{typography.label}"
-    rounded: "{rounded.control}"
-    padding: "0 14px"
-    height: "44px"
-  acceso-contacto-hover:
-    backgroundColor: "{colors.azul-emblema}"
+    textColor: "{colors.marino}"
+    typography: "{typography.label-boton}"
+    rounded: "{rounded.boton}"
+    padding: "10px 28px"
+    height: "56px"
+  boton-blanco-hover:
+    backgroundColor: "{colors.celeste-lavado}"
+    textColor: "{colors.marino}"
+  mega-menu:
+    backgroundColor: "{colors.blanco}"
+    textColor: "{colors.marino}"
+  menu-movil:
+    backgroundColor: "{colors.marino}"
     textColor: "{colors.blanco}"
-  boton-reintentar:
-    typography: "{typography.label}"
-    rounded: "{rounded.control}"
-    padding: "0 18px"
-    height: "44px"
-  campo:
-    backgroundColor: "{colors.blanco}"
-    textColor: "{colors.tinta}"
-    typography: "{typography.body}"
-    rounded: "{rounded.control}"
-    padding: "0 14px"
-    height: "52px"
-  panel-formulario:
-    backgroundColor: "{colors.blanco}"
-    textColor: "{colors.tinta}"
-    rounded: "{rounded.panel}"
-    padding: "clamp(20px, 3vw, 32px)"
-  imagen:
-    backgroundColor: "{colors.azul-claro-lavado}"
-    rounded: "{rounded.control}"
-  parada:
-    rounded: "{rounded.parada}"
-    size: "26px"
-  parada-terminal:
-    rounded: "{rounded.parada}"
-    size: "36px"
-  parada-nivel:
-    rounded: "{rounded.parada}"
-    size: "22px"
-  franja-prueba:
-    backgroundColor: "{colors.tinta}"
+  carril-marino:
+    backgroundColor: "{colors.marino}"
     textColor: "{colors.blanco}"
-    padding: "6px clamp(16px, 4vw, 48px)"
+    rounded: "{rounded.placa}"
+    padding: "24px clamp(28px, 4vw, 56px)"
+  carril-blanco:
+    backgroundColor: "{colors.blanco}"
+    textColor: "{colors.marino}"
+    rounded: "{rounded.placa}"
+    padding: "24px clamp(28px, 4vw, 56px)"
+  placa-sede:
+    backgroundColor: "{colors.celeste-lavado}"
+    textColor: "{colors.marino}"
+    rounded: "{rounded.placa-tarjeta}"
+    padding: "18px 20px 20px"
+  tarjeta-noticia:
+    backgroundColor: "{colors.blanco}"
+    textColor: "{colors.marino}"
+    rounded: "{rounded.placa-tarjeta}"
+    padding: "20px 22px 22px"
+  noticia-placa:
+    backgroundColor: "{colors.marino}"
+    textColor: "{colors.blanco}"
+    rounded: "{rounded.placa-tarjeta}"
+    padding: "28px 22px 22px"
+  franja-cifras:
+    backgroundColor: "{colors.marino}"
+    textColor: "{colors.dorado}"
+    typography: "{typography.cifra}"
   pie:
-    backgroundColor: "{colors.tinta}"
-    textColor: "{colors.azul-emblema-lavado}"
-    padding: "28px clamp(16px, 4vw, 48px)"
+    backgroundColor: "{colors.marino}"
+    textColor: "{colors.marino-lavado}"
 ---
 
 # Design System: Colegio Adventista Túpac Amaru (CATA)
 
 ## Overview
 
-**Creative North Star: "El tablero de ruta de Juliaca"**
+**Creative North Star: "El Día de Olimpiadas"**
 
-El portal se pinta como los letreros de las combis de Juliaca: placas esmaltadas a todo el ancho, nombres de ruta enormes en letra de rótulo condensada y una línea de recorrido gruesa con paradas circulares. Cada público tiene su línea; cada destino es una parada. Las sedes del colegio son paradas reales y los niveles (Inicial, Primaria, Secundaria) se leen como una línea con una parada por nivel.
+El portal se viste como un día de olimpiadas escolares de CATA: franjas diagonales como de camiseta deportiva, alumnos reales al frente, tipografía ancha en mayúsculas y orgullo institucional en forma de medalla. La energía viene de la diagonal y del contraste entre un campo celeste, placas blancas y bloques marinos; el dorado es la cinta de premiación, nunca el campo.
 
-La densidad es de letrero, no de folleto: pocas palabras, muy grandes, con la jerarquía hecha por escala. La paleta está cerrada a los tonos del emblema más blanco y la tinta derivada de ellos. El dorado es escaso a propósito: marca una sola acción.
+La página alterna fondos con ritmo de pista: cabecera marina, hero celeste, franja marina de cifras, cuerpo blanco, carriles sobre celeste, noticias sobre celeste lavado, cierre celeste y pie marino. Las piezas se inclinan (placas con `skewX`, cortes en diagonal, franjas rotadas) pero el texto siempre queda recto y legible. Cada sección entra con su propio gesto, y el movimiento se limita a transform y opacity.
 
-Desde la versión 2 todo texto e imagen llega de una API de solo lectura, con largo variable y fotos que pueden faltar. El sistema lo absorbe sin cambiar de mundo: las fotos son recortes de proporción fija que desaparecen sin dejar hueco, cada sección pinta su propia carga, error y vacío con los materiales de la placa donde vive, y la letra de rótulo parte y separa palabras largas antes que desbordar. Los colores siguen siendo **provisionales**: se muestrearon del PNG oficial del emblema (`emblema-cata.png`) y quedan pendientes del Manual de Identidad; cuando llegue, sus valores reemplazan a los de `tokens.css` sin cambiar los roles. La portada se rechaza explícitamente como carrusel de fotos con «Admisión» y tarjetas por nivel.
+La paleta es la oficial del colegio y es obligatoria. El contenido llega de una API de solo lectura, así que cada componente sostiene textos cortos, típicos y muy largos, imágenes ausentes y secciones vacías.
 
 **Key Characteristics:**
-- Placas a todo el ancho, separadas por un hilo blanco de 12px, con un filete pintado interior.
-- Letras de rótulo en mayúsculas (Big Shoulders Display 900/800) sobre texto Barlow.
-- La línea de ruta con paradas es el único ornamento.
-- Dorado solo para «Solicitar información».
-- En teléfonos, todas las líneas se vuelven verticales.
-- Las fotos de la API son recortes de proporción fija que, si faltan, no dejan hueco.
-- Cada sección es dueña de sus estados: esqueleto, error con «Reintentar» y texto de vacío.
+- Celeste y blanco dominan (≈ 30 % celeste, 60 % blanco); marino en cabecera, cifras, carriles y pie; dorado solo como acento.
+- Archivo Variable en dos anchos: 125 % y 900 en mayúsculas para títulos, 100 % para el texto.
+- Diagonales en todas partes: placas inclinadas, franjas de camiseta, fotos con corte oblicuo.
+- Reglas doradas encima de tarjetas, títulos del pie y como borde de los carriles.
+- Entradas con cortinas (scaleX/scaleY), barras que crecen y contadores con NumberFlow.
 
 ## Colors
 
-Paleta cerrada a los tonos del emblema: dos azules de placa, un dorado de acción y una tinta azul muy oscura para leer; todo lo demás deriva de ellos.
+Cuatro colores oficiales y cinco derivados para estados y superficies; nada más.
 
 ### Primary
-- **Azul Claro Emblema** (`azul-claro`): fondo de la placa de familias y de la placa de cierre; muestreado de las letras «COLEGIO ADVENTISTA» del emblema. También el divisor de 2px entre los símbolos del emblema, el relleno de las paradas de nivel y el fondo de la selección de texto. Provisional.
-- **Azul Rey Emblema** (`azul-emblema`): fondo de la placa de la comunidad y de la placa de sedes; muestreado del anillo del emblema. Sobre blanco es el color de los títulos de rótulo, del título y el doble anillo del aviso, del nombre en la cabecera, de los accesos de contacto, de los enlaces con flecha, de la marca «Comunicado» en la línea de firma, del filete superior de 3px de la lista de noticias y de la línea de niveles. Provisional.
+- **Celeste CATA** (celeste): el campo. Fondo del hero, de la sección de niveles y del cierre; reglas de 4 px bajo la cabecera, sobre cada cifra y bajo los títulos del mega menú. Sobre él solo va texto grande.
+- **Blanco** (blanco): la superficie dominante. Fondo de las secciones de contenido, de los carriles claros, del mega menú y de las tarjetas de noticia.
 
 ### Secondary
-- **Dorado Laurel** (`dorado`): solo la acción «Solicitar información» y su flujo (la parada terminal dorada, el botón de cierre y el botón «Escribir por WhatsApp» del formulario). Los laureles del emblema son un degradado metálico; este valor es una muestra media provisional.
+- **Azul marino institucional** (marino): el color del texto y de los bloques de contraste. Cabecera fija, menú móvil, franja de cifras, carriles oscuros, noticias sin foto y pie completo.
+
+### Tertiary
+- **Dorado de premiación** (dorado): solo acentos. Indicador deslizante del menú, placa ICRM, botones principales, regla superior del mega menú y de las noticias, barra corta de las placas de sede y de los símbolos, borde izquierdo de los carriles, subrayado de los enlaces sueltos, cifras sobre marino, anillo de la medalla y línea del divisor.
 
 ### Neutral
-- **Blanco** (`blanco`): fondo de página y de la placa de aviso, letras sobre azul emblema y sobre la franja de datos de prueba, panel del formulario.
-- **Tinta** (`tinta`): texto de cuerpo, letras de rótulo sobre azul claro, trazo de la línea en la placa clara, foco sobre fondos claros, pie y franja de datos de prueba.
-- **Tinta Suave** (`tinta-suave`): texto secundario sobre blanco o lavado (lemas, línea de firma, resúmenes, rango y sede de cada nivel).
-- **Lavado Celeste** (`azul-claro-lavado`): fondo de la franja de niveles, fondo de espera de toda imagen y esqueleto del nombre en la cabecera.
-- **Lavado Lila** (`azul-emblema-lavado`): texto secundario sobre azul emblema y sobre tinta; filete fino de 1px entre noticias.
-- **Rojo Emblema** (`rojo-emblema`): solo el borde de un campo inválido.
-- **Rojo Texto** (`rojo-texto`): mensajes de error del formulario.
+- **Marino suave** (marino-suave): texto secundario sobre blanco o celeste lavado (7.6:1).
+- **Marino lavado** (marino-lavado): texto secundario sobre marino (8.8:1); color base del pie.
+- **Celeste lavado** (celeste-lavado): fondo de las placas de sede, de la sección de noticias, del fondo de imágenes mientras cargan y del hover del botón blanco.
+- **Celeste hondo** (celeste-hondo): hover de enlaces y enlace actual del mega menú.
+- **Dorado claro** (dorado-claro): hover de la placa ICRM y del botón dorado.
 
 ### Named Rules
-**La Regla de la Tinta sobre Azul Claro.** Sobre el azul claro se escribe con tinta, nunca con blanco. Es una adaptación de accesibilidad: el blanco sobre `#00afef` da 2.5:1 y falla contraste; la tinta da 6.7:1. Sobre azul emblema se escribe en blanco (8.9:1).
 
-**La Regla del Dorado Único.** El dorado se usa solo para «Solicitar información»: la parada terminal de la línea de familias, el botón de cierre y el botón de enviar del formulario. Ningún otro enlace, foco, estado ni ornamento es dorado; el botón «Reintentar» no lo es.
+**The 30-60 Rule.** Blanco ≈ 60 %, celeste ≈ 30 %, el resto marino y dorado. Si una pantalla se ve marina o dorada, está mal.
 
-**La Regla del Foco por Fondo.** El anillo de foco (3px, separado 3px, radio 4px) es tinta sobre fondos claros (blanco, azul claro, lavados) y blanco sobre azul emblema, sobre tinta y sobre la franja de datos de prueba. Nunca dorado. Los campos del formulario lo llevan separado 1px.
+**The Gold Ribbon Rule.** El dorado es cinta, nunca campo: líneas, subrayados, reglas, ICRM y botones principales. Jamás un fondo de sección o de tarjeta.
 
-**La Regla de los Colores Provisionales.** `azul-claro`, `azul-emblema` y `dorado` son muestras del emblema PNG hasta que llegue el Manual de Identidad. No se aproximan ni se inventan tonos nuevos: todo color adicional se deriva de estos, y los tonos de estado se mezclan con `currentColor` (esqueleto al 14%, hover del botón secundario al 12%) en vez de crear grises.
+**The Large-On-Celeste Rule.** Blanco sobre celeste da 3.6:1 y marino sobre celeste 4.0:1, así que sobre celeste solo va texto grande (≥ 24 px, o ≥ 18.7 px en negrita). El texto normal va en marino sobre blanco (14:1) o blanco sobre marino (14:1). Sobre dorado el texto es siempre marino (8.5:1).
 
 ## Typography
 
-**Display Font:** Big Shoulders Display (con Barlow y system-ui de respaldo)
-**Body Font:** Barlow (con system-ui de respaldo)
+**Display Font:** Archivo Variable al 125 % de ancho (con system-ui, sans-serif)
+**Body Font:** Archivo Variable al 100 % de ancho (con system-ui, sans-serif)
 
-**Character:** Letra de rótulo condensada y pesada, siempre en mayúsculas, como los nombres de ruta pintados; Barlow, de la misma familia gótica de señalética, sostiene el texto corrido sin competir.
+**Character:** Una sola familia variable que cambia de ancho según el papel: ancha, negra y en mayúsculas como un dorsal para titular; normal y tranquila para leer. Big Shoulders Display y Barlow son heredadas y solo las usa la portada antigua en `/`; ninguna superficie nueva las usa.
 
 ### Hierarchy
-- **Display** (900, `clamp(2.9rem, 6vw, 5.25rem)`, 0.86, mayúsculas): el nombre de ruta de cada placa.
-- **Display de cierre** (900, `clamp(2.9rem, 7.4vw, 6rem)`, 1.1, mayúsculas): el título de la placa de cierre. Su interlineado es más abierto que el del display para que el signo «¿» no choque con la línea siguiente.
-- **Headline** (900, `clamp(2.4rem, 5.2vw, 4.5rem)`, 0.92, mayúsculas): títulos de sección en azul emblema sobre blanco o lavado, o en blanco sobre la placa de sedes. El título del aviso usa el mismo peso a `clamp(1.8rem, 3.4vw, 2.9rem)` y 0.95.
-- **Nombre de nivel** (900, `clamp(2.2rem, 3.6vw, 3.2rem)`, 0.95, mayúsculas, azul emblema): el nombre de cada nivel es el texto grande de su parada; debajo va el rango en Barlow 600 a 1.2rem.
-- **Title** (800, `clamp(1.3rem, 1.9vw, 1.65rem)`, 1, mayúsculas): etiquetas de parada, botón dorado (1.4rem), nombres de sede (`clamp(1.45rem, 2vw, 1.8rem)`), títulos de noticia (`clamp(1.4rem, 2.2vw, 1.75rem)`, 1.05), título del panel, mensaje de error de sección y de lista vacía (1.6rem, 1.1).
-- **Body lead** (Barlow 500, 1.125rem, 1.4): la bajada de cada placa, a 30ch como máximo.
-- **Body** (Barlow 400, 1.0625rem, 1.6): texto corrido, con un máximo de 60–70ch (62ch en Quiénes somos, 70ch en noticias, 60ch en aviso y estados).
-- **Label** (Barlow 600, 0.95rem): etiquetas de campo, accesos de contacto, enlaces de sede y del pie, y la línea de firma de las noticias («Comunicado · fecha», con cifras tabulares).
+- **Display** (900, 125 %, clamp(1.85rem, 4.3vw, 4.25rem), 0.96, mayúsculas, `text-wrap: balance`): titular del hero, blanco sobre celeste.
+- **Headline enorme** (900, 125 %, clamp(2.5rem, 6.4vw, 5.6rem), 0.98, mayúsculas): título del cierre.
+- **Headline** (900, 125 %, clamp(2rem, 4.2vw, 3.6rem), 0.98, mayúsculas): título de cada sección; la variante chica (clamp(1.6rem, 3vw, 2.4rem)) para el aviso.
+- **Cifra** (900, 125 %, clamp(3.2rem, 6vw, 5.4rem), 0.9, números tabulares): valores de la franja de cifras, en dorado.
+- **Title** (900, 125 %, clamp(1.7rem, 2.8vw, 2.6rem), 0.95, mayúsculas): nombre de cada carril de nivel.
+- **Title placa** (850, 112 %, 1.15rem a 1.35rem, mayúsculas): nombre de sede, título de noticia placa, subtítulos, títulos del pie.
+- **Label botón** (850, 112 %, 1.02rem, 0.02em, mayúsculas): texto de botones e ICRM.
+- **Label nav** (700, 87.5 %, 0.95rem, 0.03em, mayúsculas): enlaces del menú principal; el activo sube a 850.
+- **Bajada** (500, 100 %, 1.5rem, 1.35, máx. 30ch): la bajada del hero; es texto grande para poder ir sobre celeste.
+- **Body** (400, 100 %, 1.12rem, 1.65, máx. 60ch): párrafos de Quiénes somos y del aviso.
+- **Body meta** (400, 0.92rem a 0.97rem): fecha y tipo de noticia, detalle de sede; en marino suave.
 
 ### Named Rules
-**La Regla del Rótulo.** Big Shoulders Display solo en 900 o 800 y siempre en mayúsculas; es letra de letrero, no de párrafo. Barlow solo en 400, 500 y 600.
 
-**La Regla de la Escala.** La jerarquía se hace por tamaño y peso. Nada de antetítulos ni etiquetas sobre los títulos: en una noticia el título va primero y la firma («Comunicado · fecha») va debajo. El color sigue al fondo (rótulo azul emblema sobre blanco, tinta sobre azul claro, blanco sobre azul emblema), no marca niveles.
+**The Two Widths Rule.** Títulos al 125 % y 900 en mayúsculas; texto corrido al 100 %. El 112 % es solo para etiquetas en placas y botones, y el 87.5 % solo para el menú principal.
 
-**La Regla del Texto Largo.** Todo rótulo grande lleva `hyphens: auto` y `text-wrap: balance`, y la página entera `overflow-wrap: break-word`: un nombre largo de la API se parte y separa con guion, nunca desborda la placa ni se achica.
+**The No Legacy Faces Rule.** Big Shoulders Display y Barlow quedan para la portada antigua en `/`. Nada nuevo las usa.
 
 ## Layout
 
-Las placas ocupan todo el ancho de la ventana, con un margen lateral de `clamp(8px, 1.4vw, 20px)` y 12px entre una y otra, como letreros apilados. El orden es: franja de datos de prueba (solo con datos locales), cabecera, las dos placas de ruta, la placa de aviso, Quiénes somos, la franja de niveles, la placa de sedes, noticias, la placa de cierre y el pie. El contenido corrido vive en una columna de 1240px con medianil `clamp(16px, 4vw, 48px)` y respira con `clamp(72px, 10vw, 136px)` arriba. La línea de ruta reparte sus paradas en columnas iguales; la cabeza de cada placa pone el nombre a la izquierda y la bajada (30ch) alineada abajo a la derecha.
+Contenido centrado a un máximo de 1240 px más dos márgenes laterales de clamp(16px, 4vw, 48px). Cada sección tiene clamp(72px, 10vw, 128px) arriba y abajo, y 32 a 48 px entre la cabeza de sección y su contenido. Las rejillas de tarjetas son `auto-fit` con mínimos de 240 px (sedes), 280 px (noticias) y 220 px (cifras) y 20 px de separación, de modo que se reacomodan solas según la cantidad que mande la API.
 
-Las fotos acompañan al texto sin mandar: en Quiénes somos van a la derecha en una columna más angosta (1.3fr / 0.85fr); en noticias, a la derecha entre 180 y 280px; en el aviso, a la izquierda (1.6fr / 1fr); en sedes y niveles, debajo del nombre de cada parada. Sin foto, la columna desaparece y el texto toma el ancho.
+El hero ocupa la altura de la ventana menos la cabecera, en dos columnas (1.18fr texto, 0.82fr figuras); sin figuras pasa a una sola columna. Quiénes somos pone una foto 4:5 fija (sticky) a la izquierda y el texto a la derecha. Los carriles son filas a lo ancho: nombre, datos y, si hay, foto.
 
-Hasta 1080px el formulario pasa a dos columnas, el aviso a una y las sedes a una cuadrícula de 2 × 2. **En teléfonos (760px o menos) las líneas se vuelven verticales:** la línea de ruta, la línea de niveles y la línea de sedes corren hacia abajo, con el punto a la izquierda y el texto a su derecha; las fotos pasan arriba del texto en Quiénes somos y noticias; los accesos de la cabecera se reducen a íconos de 44px y la cabeza de la placa pasa a una columna.
+Puntos de quiebre: 1280 px (se oculta el nombre largo en la cabecera, el pie pasa a dos columnas), 1099 px (el menú se vuelve hamburguesa), 899 px (hero, carriles, aviso y Quiénes somos a una columna; la inclinación de los carriles baja de -10° a -4°), 600 px (cabecera de 68 px, ICRM pasa al menú móvil, botones a lo ancho, pie a una columna).
 
-**La Regla de la Línea Vertical.** En teléfono ninguna línea corre en horizontal ni se parte en filas: se vuelve vertical y conserva todas sus paradas en orden.
+**Proporciones de imagen:** foto de Quiénes somos 4:5; placa de sede 4:3; foto de noticia y de carril 3:2; foto de respaldo del hero 4:3; recortes de alumnos y aviso en su proporción natural. Sin imagen, o si no carga, el bloque de imagen desaparece sin dejar hueco.
 
-**La Regla del Espacio Sostenido.** Un estado de carga ocupa el lugar de lo que va a llegar: las placas de ruta esperan con un alto mínimo de `clamp(220px, 26vw, 300px)` y el esqueleto lleva un bloque de título y líneas de texto, para que la página no salte al cargar.
+**Estados de sección:** al cargar, un esqueleto de barras con un latido de opacidad y un texto oculto «Cargando …» con `role="status"`; si falla, el mensaje «No pudimos cargar …», una ayuda y un botón «Reintentar» con `role="alert"`, sin tumbar el resto de la página; vacío, una frase que dice cuándo llegará el contenido (y en noticias, teléfono y WhatsApp). Las secciones complementarias (cifras, aviso) se ocultan si no hay datos o fallan.
 
 ## Elevation & Depth
 
-El sistema es plano: la profundidad la dan las placas de color, no las sombras. Solo dos piezas se levantan, con sombras suaves teñidas de tinta: el botón dorado y el panel del formulario que se despliega dentro de la placa.
+Sistema plano con capas de color; la profundidad viene de la superposición de placas, franjas y recortes, no de sombras. Las pocas sombras son difusas, teñidas de marino y con desplazamiento vertical negativo, y en las tarjetas viven en una capa aparte de la que solo cambia la opacidad.
 
 ### Shadow Vocabulary
-- **Levante dorado** (`box-shadow: 0 8px 18px -10px rgb(16 24 74 / 0.55)`; al pasar el cursor `0 12px 22px -10px rgb(16 24 74 / 0.6)`): solo el botón «Solicitar información» y sus hermanos dorados.
-- **Panel desplegado** (`box-shadow: 0 14px 30px -18px rgb(16 24 74 / 0.6)`): el panel blanco del formulario.
+- **Sombra de tarjeta** (`box-shadow: 0 22px 40px -22px rgb(33 40 83 / 0.55)`): aparece al pasar el mouse sobre una tarjeta (opacidad 0 a 1 en 220 ms).
+- **Sombra del botón dorado** (`box-shadow: 0 12px 22px -12px rgb(33 40 83 / 0.6)`): en reposo, bajo la placa dorada.
+- **Sombra del mega menú** (`box-shadow: 0 28px 44px -28px rgb(33 40 83 / 0.6)`): separa el panel blanco del contenido.
+- **Sombra de recorte** (`filter: drop-shadow(0 20px 26px rgb(33 40 83 / 0.35))`): asienta a los alumnos recortados sobre el celeste.
+- **Medalla** (`box-shadow: 0 0 0 4px #ffbd59, 0 16px 30px -12px rgb(0 0 0 / 0.45)`): aro dorado y sombra propia.
 
 ### Named Rules
-**La Regla de la Placa Plana.** Las placas no llevan sombra. Su filete se pinta con borde o con anillos `inset`, nunca con sombra proyectada.
+
+**The Shadow-On-Its-Own-Layer Rule.** Las tarjetas nunca animan `box-shadow`; la sombra está en un pseudoelemento y solo cambia su opacidad.
 
 ## Shapes
 
-Esquinas apenas redondeadas de placa esmaltada (10px) y controles de 6px. Toda placa lleva un filete pintado:
-- **Placa de ruta:** un trazo de 3px en el color de su letra, a 10px del canto, dibujado como borde de 6px de radio.
-- **Placas de sedes y cierre:** el mismo trazo de 3px, como doble anillo `inset` (10px del color de fondo y 3px del color de la letra).
-- **Placa de aviso:** al ser blanca sobre blanco, su doble anillo `inset` marca también el canto: 3px de azul emblema en el borde, 7px de blanco y una segunda línea de 2px de azul emblema.
+Lenguaje de placas inclinadas: el fondo se inclina (`skewX(-12deg)` en botones e ICRM, `-10deg` en carriles, `-8deg` en la placa celeste tras la foto de Quiénes somos) y el texto queda recto encima. Las fotos de sede se cortan en diagonal por abajo (`clip-path: polygon(0 0, 100% 0, 100% 86%, 0 100%)`) y las de carril como paralelogramo (`polygon(10% 0, 100% 0, 90% 100%, 0 100%)`). Las franjas del hero, del cierre y del divisor van rotadas (-11°, -6°, -2.2°).
 
-El filete es parte de la placa, no un ornamento. Las paradas son círculos perfectos con aro grueso (6px) y la línea que las une mide 8px. En la línea de niveles, las paradas miden 22px con aro de 5px y la línea mide 6px.
-
-Las imágenes llevan esquinas de 6px (10px la foto de Quiénes somos, que se lee como una placa) y se recortan con `object-fit: cover` a una proporción fija por lugar: sede 4:3, nivel 3:2, Quiénes somos 4:5 y noticia 3:2. El aviso es la excepción: su imagen se muestra entera, sin recorte, porque suele ser una pieza gráfica con texto.
-
-**La Regla del Único Ornamento.** La línea de recorrido con paradas circulares es el único ornamento del sistema. No se agregan ilustraciones, texturas, degradados, formas de fondo ni iconos decorativos; los iconos (Lucide, en trazo) solo acompañan una acción concreta.
+Esquinas casi rectas: 2 px en tarjetas de sede y noticia, 4 px en carriles e ICRM, 5 px en botones, 8 px en fotos y símbolos. El único círculo es la medalla (y el anillo del emblema).
 
 ## Components
 
-### Placa de ruta
-Letrero a todo el ancho con nombre enorme, bajada y la línea de paradas-enlace.
-- **Tonos:** clara (`azul-claro`, letra y trazo en tinta) y emblema (`azul-emblema`, letra y trazo blancos, detalle en lavado lila, foco blanco).
-- **Filete:** borde de 3px en el color del trazo, a 10px del canto, radio 6px; relleno interior `clamp(22px, 3vw, 40px) clamp(18px, 4vw, 56px)`.
-- **Línea:** paradas de 26px con aro de 6px y fondo del color de la placa; parada terminal de 36px rellena. Al pasar el cursor, la parada se rellena, crece al 112% y la etiqueta se subraya con 3px. Un destino externo lleva una flecha diagonal junto a la etiqueta.
-- **Movimiento:** al cargar, la línea se traza una vez de izquierda a derecha (tramos de 620ms, paradas de 420ms, 150ms de escalonado, `cubic-bezier(0.16, 1, 0.3, 1)`); la placa emblema arranca 260ms después. En teléfono el trazo baja en vertical. Sin animación con `prefers-reduced-motion`.
-- **Estados:** mientras carga, cada placa conserva su color y su filete y muestra el esqueleto dentro. Si la carga falla, queda solo la placa clara con el error y «Reintentar».
+### Buttons
+Placas de premiación: firmes, inclinadas, con texto marino.
+- **Shape:** fondo en paralelogramo (`skewX(-12deg)`, esquina de 5 px); texto recto encima.
+- **Dorado (principal):** fondo dorado, texto marino 850 al 112 % en mayúsculas, alto mínimo 56 px, relleno 10 px 28 px, flecha al final. Hover: dorado claro al instante y la flecha avanza 4 px.
+- **Blanco (secundario):** fondo blanco, texto marino. Hover: celeste lavado al instante.
+- **Press:** escala 0.97 en 160 ms.
+- **Focus:** contorno de 3 px a 6 px de distancia.
+- **Reintentar:** borde de 2 px del color actual, esquina 6 px, alto 44 px; solo en estados de error.
+- Por debajo de 600 px los botones ocupan todo el ancho.
 
-### Placa de aviso
-Un único aviso vigente, bajo las placas de ruta. Nunca es un carrusel ni rota entre avisos.
-- **Fondo:** blanco con el doble anillo pintado en azul emblema (ver Shapes), radio de 10px, relleno `clamp(26px, 3.4vw, 44px)`.
-- **Contenido:** título de rótulo 900 en azul emblema, texto en tinta (60ch) y un enlace con flecha; la imagen, si la hay, va completa a la izquierda.
-- **Estados:** es complementaria. Si no hay aviso vigente, si carga o si falla, la placa no aparece y la portada no deja hueco.
+### Enlaces sueltos
+Texto marino 750 con subrayado dorado de 3 px a 0.35em y flecha; hover a celeste hondo y la flecha avanza 4 px. En celeste van en blanco a 1.2rem.
 
-### Botón dorado («Solicitar información»)
-- **Shape:** esquinas de 6px, alto mínimo de 52px, padding 10px 20px, sin borde.
-- **Color:** fondo dorado, letra tinta en rótulo 800 a 1.4rem (1.25rem en teléfono dentro de la línea), mayúsculas, con flecha.
-- **Hover / Active / Disabled:** fondo más claro y sombra un poco mayor; se hunde 1px al presionar; fondo pálido y cursor de progreso mientras está ocupado.
-- **Focus:** anillo de tinta de 3px, separado 3px.
-- **Comportamiento:** como parada terminal de la línea de familias, despliega el formulario dentro de la misma placa y cambia su flecha por una equis. El botón de la placa de cierre abre el mismo panel y lleva la página hasta él.
+### Navigation
+- **Cabecera:** barra marina fija de 80 px (68 px en móvil) con un filete celeste de 4 px abajo; emblema, sigla CATA (900 al 125 %), nombre del colegio en marino lavado y menú centrado en mayúsculas.
+- **Indicador:** una pestaña dorada de 6 px que se desliza bajo el enlace señalado o activo con un resorte sin rebote de 220 ms.
+- **ICRM:** placa dorada inclinada con texto marino y flecha diagonal; abre el portal académico en otra pestaña. Hover: dorado claro y la flecha se mueve 2 px en diagonal. Foco en blanco.
+- **Mega menú (Nosotros):** panel blanco a lo ancho con regla dorada de 4 px arriba, tres columnas con título celeste grande subrayado en celeste y enlaces marinos; entra en 220 ms y sale en 140 ms; los grupos se escalonan 50 ms. Hover: el enlace pasa a celeste hondo y se corre 6 px.
+- **Menú móvil:** panel marino a pantalla completa con enlaces de 56 px en 900 al 125 %, subgrupos con su título y la placa ICRM al final; el actual va en dorado.
 
-### Formulario de WhatsApp
-Panel blanco con radio de 8px y la sombra de panel desplegado, dentro de la placa de familias, con título en rótulo 800. Pide solo nombre y grado, y el botón dorado «Escribir por WhatsApp» abre la conversación con el mensaje armado en otra pestaña; no envía datos a ningún servidor. Debajo, una nota en tinta suave lo explica y, después de enviar, ofrece un enlace por si la pestaña no se abrió. El formulario va en una fila (nombre, grado, botón) en escritorio, en dos columnas en tablet y en una en teléfono.
+### Héroe
+Campo celeste con titular blanco enorme, tres barras inclinadas que crecen (dorada 62 %, blanca 42 %, marina 22 %), bajada de 24 px y dos botones. A la derecha, dos alumnos recortados delante del anillo del emblema (círculo marino de trazo 12 y uno blanco punteado) y la medalla abajo a la izquierda; franjas marina, blanca y marina cruzan el fondo a -11°. Si no hay recortes se usa una foto 4:3 con marco blanco de 8 px girada -3°; si no hay nada, el hero queda solo con el texto.
 
-### Inputs / Fields
-- **Style:** borde de tinta de 2px, radio de 6px, alto de 52px, fondo blanco; placeholder en tinta atenuada (`#5d6488`). El select lleva su propio chevrón en tinta.
-- **Grado:** es un select agrupado por nivel. Mientras la lista carga, queda deshabilitado con «Cargando grados…»; si la lista falla, el campo pasa a un texto libre con un ejemplo como placeholder, para que la familia lo escriba.
-- **Focus:** anillo de tinta de 3px separado 1px.
-- **Error:** borde rojo emblema y mensaje en rojo texto debajo; el foco va al primer campo con error.
+### Medalla
+Disco marino con el emblema al 52 %, aro dorado de 4 px y el nombre del colegio (y «desde el año») girando en dorado alrededor en 40 s. Decorativa (`aria-hidden`). Gira solo mientras está en pantalla. Aparece en el hero y en el pie.
 
-### Estados de sección
-Cada sección carga lo suyo y maneja sus propios estados, sin tumbar al resto de la página. Los estados se pintan con el color de letra de la placa donde viven (tinta sobre azul claro y blanco, blanco sobre azul emblema).
-- **Carga:** un esqueleto de barras de 18px (el título, de `clamp(40px, 6vw, 72px)`) con radio de 4px, en `currentColor` al 14%, con un latido de opacidad de 1.4s que se apaga con `prefers-reduced-motion`. El lector de pantalla oye «Cargando …».
-- **Error:** un mensaje en rótulo 800 («No pudimos cargar …»), una ayuda en Barlow y el botón secundario «Reintentar».
-- **Vacío:** un texto en Barlow 500 a 1.15rem que dice qué falta y cuándo llegará («se publicará pronto»). En noticias, el vacío ofrece además el teléfono y el WhatsApp.
+### Divisor de franjas
+Franjas de camiseta entre secciones: marina de 14 px, dorada de 4 px y celeste de 8 px, rotadas -2.2°, en una banda de 64 px. Variante lavada cuando la sección siguiente es celeste lavado. Decorativo.
 
-### Botón secundario («Reintentar»)
-Contorno de 2px en `currentColor`, radio de 6px, alto de 44px, Barlow 600 con un ícono de recarga; al pasar el cursor se rellena con `currentColor` al 12%. Hereda el color de la placa, así que funciona sobre blanco, azul claro y azul emblema sin variantes.
+### Carriles de nivel
+Filas de pista sobre el campo celeste: placas inclinadas que alternan marino (texto blanco) y blanco (texto marino), con borde dorado de 6 px a la izquierda. Nombre del nivel en 900 al 125 %, rango en 850 al 112 %, detalle en marino lavado o marino suave, y foto 3:2 en paralelogramo si existe.
 
-### Imagen de la API
-Las imágenes llegan como `{url, alt}`. Un alt vacío marca la imagen como decorativa. El componente fija la proporción del lugar y recorta con `cover` sobre un fondo de lavado celeste (en la placa de sedes, blanco al 12%); si no hay imagen o falla la carga, el componente desaparece y no deja marco vacío. Las fotos debajo del pliegue cargan en diferido.
+### Placas de sede
+Fondo celeste lavado, barra dorada corta (56 × 5 px) arriba a la izquierda, sobre la foto, foto 4:3 con corte diagonal abajo, nombre en mayúsculas, dirección en 600, detalle en marino suave y acciones «Cómo llegar» y teléfono como enlaces sueltos.
 
-### Accesos de contacto (cabecera)
-- **Style:** contorno de 2px en azul emblema, radio de 6px, alto de 44px, Barlow 600 con ícono.
-- **Hover:** se rellena de azul emblema con letra blanca (160ms).
-- **Mobile:** solo el ícono, en un cuadrado de 44px.
+### Tarjetas de noticia
+Fondo blanco con regla dorada de 5 px arriba, foto 3:2, título 800, meta (tipo y fecha) en marino suave con «Comunicado» destacado, resumen y enlace. Sin foto, la noticia se vuelve placa marina: título en mayúsculas al 112 %, meta y resumen en marino lavado, tipo en dorado.
 
-### Línea de niveles y línea de sedes
-Las mismas paradas, aplicadas al contenido:
-- **Niveles:** sobre lavado celeste, con trazo azul emblema y paradas de 22px rellenas de azul claro. Cada parada lleva el nombre del nivel como texto grande, el rango, la sede o el reconocimiento en tinta suave, y la foto debajo.
-- **Sedes:** sobre la placa azul emblema, con trazo y aros blancos. Cada sede lleva el nombre, la foto, la dirección y los enlaces «Cómo llegar» y teléfono. Con más de cuatro sedes, la línea se reparte en filas de cuatro.
+### Franja de cifras
+Banda marina con cada cifra sobre un filete celeste de 4 px, valor dorado en 900 al 125 % que sube con NumberFlow y etiqueta blanca. El número animado es `aria-hidden`; el valor real se lee en un texto oculto. Si no hay cifras, la banda no aparece.
 
-En teléfonos ambas líneas se vuelven verticales.
+### Símbolos del emblema
+Recuadros blancos con borde de 2 px celeste lavado y un tramo dorado de 44 px arriba a la izquierda; nombre en mayúsculas y significado en marino suave.
 
-### Noticias
-Una lista bajo un filete de 3px en azul emblema, con filetes de 1px en lavado lila entre noticias. Cada noticia lleva primero el título en rótulo 800 y debajo la firma en Barlow 600 a 0.95rem en tinta suave: el tipo («Comunicado» en azul emblema, «Noticia» en tinta suave), un punto medio y la fecha. Después van el resumen y un enlace con flecha. No hay antetítulo sobre el título.
+### Pie
+Bloque marino completo: medalla, nombre, ICRM, y columnas cuyos títulos en mayúsculas llevan una raya dorada de 36 × 3 px. Enlaces blancos con subrayado dorado al pasar el mouse; base con filete blanco al 14 %.
 
-### Franja de datos de prueba
-Una franja de tinta en el borde superior, encima de la cabecera, visible siempre que la página lea los datos locales de prueba, para que nadie los confunda con contenido publicado. Lleva letra blanca a 0.9rem y un botón subrayado con ícono que despliega un selector de escenario y una nota en lavado lila. Foco blanco. Con la API real, no aparece.
+### Foco
+Contorno de 3 px, a 3 px de distancia, esquina 4 px. Marino sobre fondos claros (blanco, celeste lavado, carriles blancos, mega menú); blanco sobre celeste y marino (cabecera, hero, niveles, cierre, carriles marinos, noticias placa, pie). El enlace «Saltar al contenido» va por encima de la cabecera fija (capa 100 frente a 50) y el desplazamiento a anclas deja libre la altura de la cabecera más 16 px.
 
-### Navegación y pie
-La cabecera es una barra fina sin menú: emblema de 64px (52px en teléfono), el nombre del colegio en rótulo 900 en azul emblema, el lema en tinta suave y los accesos de contacto. Mientras carga, el nombre se reemplaza por una barra de lavado celeste. El pie es una franja de tinta con letra en lavado lila y enlaces blancos en 600.
+### Motion
+- Solo se animan transform y opacity. Las cortinas usan scaleX o scaleY; los cambios de color al pasar el mouse son instantáneos.
+- Curvas: salida `cubic-bezier(0.23, 1, 0.32, 1)` para entradas y respuestas; recorrido `cubic-bezier(0.77, 0, 0.175, 1)` para cortinas.
+- Entrada propia por sección: cortina del título de izquierda a derecha (640 ms); foto con cortina del color del fondo (800 ms) y asiento desde 1.1 (1200 ms); tarjetas y cifras escalonadas cada 60 ms; carriles desde la izquierda cada 90 ms; barras que crecen. Las tarjetas y los carriles llevan texto, así que solo se desplazan (sin opacidad): el texto corrido nunca empieza oculto.
+- El texto corrido nunca empieza oculto; la bajada del hero solo se desliza.
+- Contadores con NumberFlow (1100 ms, curva de salida).
+- Parallax suave de 6 % en fotos grandes; en el hero, las franjas bajan 120 px, las figuras 50 px y el anillo gira 140° con el scroll.
+- Los alumnos siguen al puntero con un resorte (rigidez 120, amortiguación 18), solo con mouse.
+- Transición de página: 280 ms al entrar, 160 ms al salir. Mega menú: 220 ms al entrar, 140 ms al salir.
+- Movimiento al pasar el mouse solo con puntero fino; solo se elevan (4 px) las tarjetas con acciones (sedes, noticias); las informativas solo ganan sombra.
+- La medalla gira solo mientras está en pantalla.
+- Sin JavaScript todo se ve desde el inicio: los estados ocultos dependen de una clase que la página pone antes del primer pintado.
+- «Reducir movimiento» se respeta solo para quien lo activa: se quitan desplazamientos, giros, cortinas, parallax y el resorte; se mantienen los fundidos.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** escribir con tinta sobre azul claro y con blanco sobre azul emblema.
-- **Do** reservar el dorado para «Solicitar información» y su flujo.
-- **Do** usar foco de tinta sobre fondos claros y foco blanco sobre azul emblema o tinta (3px, separación de 3px).
-- **Do** poner Big Shoulders Display en 900/800 y en mayúsculas; Barlow en 400/500/600.
-- **Do** volver verticales todas las líneas en teléfonos (760px o menos).
-- **Do** tomar los colores de `tokens.css` y reemplazarlos ahí cuando llegue el Manual de Identidad.
-- **Do** mostrar las fotos de la API con la proporción fija de su lugar (sede 4:3, nivel 3:2, Quiénes somos 4:5, noticia 3:2; aviso completo) y retirar el componente si la foto falta o falla.
-- **Do** darle a cada sección su esqueleto en `currentColor` al 14%, su error con «Reintentar» y su texto de vacío.
-- **Do** poner `hyphens: auto` en todo rótulo grande y dejar el interlineado del título de cierre en 1.1.
+- **Do** mantener celeste y blanco como protagonistas (≈ 30 % y 60 %) y el marino para texto, cabecera, cifras y pie.
+- **Do** usar el dorado solo como cinta: líneas, subrayados, reglas superiores, ICRM y botones principales.
+- **Do** poner sobre celeste solo texto de 24 px o más, o de 18.7 px o más en negrita; todo lo demás en marino sobre blanco o blanco sobre marino.
+- **Do** escribir siempre en marino sobre dorado.
+- **Do** titular en Archivo Variable al 125 %, 900 y mayúsculas, y dejar el texto al 100 %.
+- **Do** inclinar el fondo de las placas y dejar el texto recto.
+- **Do** dar a cada bloque un estado de carga, uno de error con «Reintentar» y uno vacío, o hacerlo desaparecer limpio.
+- **Do** animar solo transform y opacity, con las curvas de salida y recorrido.
+- **Do** ajustar el color del foco al fondo: marino sobre claro, blanco sobre celeste y marino.
 
 ### Don't:
-- **Don't** poner letra blanca sobre azul claro (2.5:1).
-- **Don't** usar dorado en enlaces, foco, divisores, estados ni en otra acción.
-- **Don't** agregar ornamentos además de la línea de ruta con paradas.
-- **Don't** poner antetítulos o etiquetas sobre los títulos; en noticias, la firma va debajo del título.
-- **Don't** inventar tonos fuera de la paleta del emblema, ni aproximar los oficiales.
-- **Don't** volver al carrusel de fotos con «Admisión» ni a las tarjetas por nivel.
-- **Don't** convertir el aviso en carrusel ni mostrar más de un aviso a la vez.
-- **Don't** dejar un marco vacío o un hueco cuando una foto no llega.
+- **Don't** usar el dorado como fondo de una sección o de una tarjeta.
+- **Don't** poner texto normal (cuerpo, metas, etiquetas pequeñas) sobre celeste.
+- **Don't** usar Big Shoulders Display ni Barlow fuera de la portada antigua en `/`.
+- **Don't** animar colores, tamaños, `box-shadow` ni `clip-path`; las sombras cambian solo de opacidad.
+- **Don't** esconder el texto corrido antes de que entre en pantalla.
+- **Don't** elevar al pasar el mouse una tarjeta que no tiene acciones.
+- **Don't** dejar la medalla girando fuera de pantalla ni ningún movimiento continuo sin control.
+- **Don't** activar efectos de hover en pantallas táctiles.

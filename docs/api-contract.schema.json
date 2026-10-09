@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "API pública del portal CATA 2.7 (docs/API_CONTRACT.md)",
+  "title": "API pública del portal CATA 2.8 (docs/API_CONTRACT.md)",
   "description": "Cuerpo de respuesta 200 de cada endpoint. Generado desde PW_Frontend/src/api/esquemas.ts; no editar a mano.",
   "definitions": {
     "GET /v1/sitio": {
@@ -3556,6 +3556,488 @@
             "logros"
           ],
           "additionalProperties": false
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "GET /v1/propuesta-educativa/pilares": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "introduccion": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "titulo": {
+                      "type": "string"
+                    },
+                    "parrafos": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "minItems": 1,
+                      "maxItems": 6
+                    }
+                  },
+                  "required": [
+                    "titulo",
+                    "parrafos"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "cifras": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "valor": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "sufijo": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "etiqueta": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "valor",
+                  "sufijo",
+                  "etiqueta"
+                ],
+                "additionalProperties": false
+              },
+              "maxItems": 4
+            },
+            "pilares": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "titulo": {
+                    "type": "string"
+                  },
+                  "texto": {
+                    "type": "string"
+                  },
+                  "puntos": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 8
+                  }
+                },
+                "required": [
+                  "id",
+                  "titulo",
+                  "texto",
+                  "puntos"
+                ],
+                "additionalProperties": false
+              },
+              "maxItems": 8
+            }
+          },
+          "required": [
+            "introduccion",
+            "cifras",
+            "pilares"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "GET /v1/propuesta-educativa/niveles": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "nombre": {
+                "type": "string"
+              },
+              "rango": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "descripcion": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "maxItems": 6
+              },
+              "rasgos": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "maxItems": 8
+              },
+              "talleres": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "titulo": {
+                      "type": "string"
+                    },
+                    "texto": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "titulo",
+                    "texto"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 12
+              },
+              "foto": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "url": {
+                        "type": "string",
+                        "format": "uri",
+                        "pattern": "^https:\\/\\/"
+                      },
+                      "alt": {
+                        "type": "string"
+                      },
+                      "ancho": {
+                        "anyOf": [
+                          {
+                            "type": "integer",
+                            "exclusiveMinimum": 0
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "alto": {
+                        "anyOf": [
+                          {
+                            "type": "integer",
+                            "exclusiveMinimum": 0
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "url",
+                      "alt",
+                      "ancho",
+                      "alto"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "nombre",
+              "rango",
+              "descripcion",
+              "rasgos",
+              "talleres",
+              "foto"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 6
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "GET /v1/propuesta-educativa/academia": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "titulo": {
+              "type": "string"
+            },
+            "descripcion": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "aclaracion": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "universidades": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "nombre": {
+                    "type": "string"
+                  },
+                  "ciclos": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "nombre": {
+                          "type": "string"
+                        },
+                        "turno": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "modalidades": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "enum": [
+                              "presencial",
+                              "virtual"
+                            ]
+                          },
+                          "minItems": 1,
+                          "maxItems": 2
+                        },
+                        "precio": {
+                          "anyOf": [
+                            {
+                              "type": "number",
+                              "minimum": 0
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "precioVirtual": {
+                          "anyOf": [
+                            {
+                              "type": "number",
+                              "minimum": 0
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "inicio": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "fin": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "nombre",
+                        "turno",
+                        "modalidades",
+                        "precio",
+                        "precioVirtual",
+                        "inicio",
+                        "fin"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "minItems": 1,
+                    "maxItems": 12
+                  }
+                },
+                "required": [
+                  "id",
+                  "nombre",
+                  "ciclos"
+                ],
+                "additionalProperties": false
+              },
+              "maxItems": 8
+            }
+          },
+          "required": [
+            "titulo",
+            "descripcion",
+            "aclaracion",
+            "universidades"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "GET /v1/propuesta-educativa/plataformas": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "nombre": {
+                "type": "string"
+              },
+              "descripcion": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "funciones": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "titulo": {
+                      "type": "string"
+                    },
+                    "texto": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "titulo",
+                    "texto"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 8
+              },
+              "enlace": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "etiqueta": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri",
+                        "pattern": "^https:\\/\\/"
+                      },
+                      "externo": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "etiqueta",
+                      "url",
+                      "externo"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "aclaracion": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "nombre",
+              "descripcion",
+              "funciones",
+              "enlace",
+              "aclaracion"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 8
         }
       },
       "required": [

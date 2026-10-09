@@ -1,4 +1,4 @@
-// Tipos del contrato de la API pública del portal (docs/API_CONTRACT.md, v2.7).
+// Tipos del contrato de la API pública del portal (docs/API_CONTRACT.md, v2.8).
 // Todos los campos llegan siempre; los opcionales valen null.
 
 /** Fecha ISO 8601 sin hora: "2026-10-08". */
@@ -478,6 +478,75 @@ export interface Logros {
   bajada: string | null
   cifras: Cifra[]
   logros: Logro[]
+}
+
+// GET /v1/propuesta-educativa/pilares
+export interface Pilar {
+  id: string
+  titulo: string
+  texto: string
+  /** Aspectos del pilar, si los tiene: «Espiritual», «Mental»… [] = ninguno. */
+  puntos: string[]
+}
+
+export interface PilaresPropuesta {
+  introduccion: { titulo: string; parrafos: string[] } | null
+  cifras: Cifra[]
+  pilares: Pilar[]
+}
+
+// GET /v1/propuesta-educativa/niveles
+export interface TallerNivel {
+  titulo: string
+  texto: string | null
+}
+
+export interface NivelPropuesta {
+  id: string
+  nombre: string
+  rango: string | null
+  /** Párrafos. [] = sin descripción. */
+  descripcion: string[]
+  /** Rasgos breves: «Formación de valores». */
+  rasgos: string[]
+  talleres: TallerNivel[]
+  foto: Imagen | null
+}
+
+// GET /v1/propuesta-educativa/academia
+export const MODALIDADES_CICLO = ['presencial', 'virtual'] as const
+export type ModalidadCiclo = (typeof MODALIDADES_CICLO)[number]
+
+export interface CicloAcademia {
+  id: string
+  nombre: string
+  turno: string | null
+  modalidades: ModalidadCiclo[]
+  /** Precio en soles. null = no publicado. */
+  precio: number | null
+  /** Precio de la modalidad virtual, en soles. null = no publicado o no aplica. */
+  precioVirtual: number | null
+  inicio: Fecha | null
+  fin: Fecha | null
+}
+
+export interface Academia {
+  titulo: string
+  descripcion: string | null
+  /** Aviso visible para toda la academia: «Precios y fechas por actualizar». */
+  aclaracion: string | null
+  universidades: { id: string; nombre: string; ciclos: CicloAcademia[] }[]
+}
+
+// GET /v1/propuesta-educativa/plataformas
+export interface Plataforma {
+  id: string
+  nombre: string
+  descripcion: string | null
+  /** Qué ofrece y a quién: «Docentes», «Padres de familia»… */
+  funciones: { titulo: string; texto: string }[]
+  enlace: Enlace | null
+  aclaracion: string | null
 }
 
 // Sobres de respuesta

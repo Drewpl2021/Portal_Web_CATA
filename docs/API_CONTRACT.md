@@ -1,6 +1,8 @@
 # Contrato de la API pública del portal CATA
 
-**Versión del contrato:** 2.7 · **Fecha:** 2026-10-09
+**Versión del contrato:** 2.8 · **Fecha:** 2026-10-09
+
+**Cambios de la 2.8:** cuatro endpoints nuevos para el cuerpo de Propuesta Educativa (§3.23 a §3.26): `pilares`, `niveles`, `academia` y `plataformas`, bajo `/v1/propuesta-educativa/`.
 
 **Cambios de la 2.7:** cada `Logro` (§3.22) suma `fuente` (de dónde sale el dato, con enlace si es público) y `aclaracion` (aviso visible sobre un dato incompleto, como «Año por confirmar»). El filtro por año pasa a ser por década.
 
@@ -190,6 +192,10 @@ Valores válidos de `seccion`: `"quienes-somos"`, `"niveles"`, `"sedes"`, `"noti
 | `GET /v1/nosotros/paginas/{slug}` | `PaginaContenido` | Cada subpágina de Nosotros, armada con bloques (`404` si no existe) |
 | `GET /v1/docentes` | `Docentes` | Personal docente por nivel (página Personal Docente) |
 | `GET /v1/logros` | `Logros` | Página Logros: cabecera, cifras y logros |
+| `GET /v1/propuesta-educativa/pilares` | `PilaresPropuesta` | Cifras, introducción y pilares de Propuesta Educativa |
+| `GET /v1/propuesta-educativa/niveles` | `NivelPropuesta[]` | Propuesta de cada nivel: descripción, rasgos y talleres |
+| `GET /v1/propuesta-educativa/academia` | `Academia` | Academia preuniversitaria: universidades y ciclos |
+| `GET /v1/propuesta-educativa/plataformas` | `Plataforma[]` | Plataformas digitales (iCRM, EVA) |
 
 Cada sección del portal carga su endpoint por separado. Si uno falla, esa sección muestra su error y el resto sigue funcionando.
 
@@ -834,6 +840,33 @@ La página Logros. El portal muestra arriba los logros con `destacado: true`, lu
 
 **Solo logros confirmados por el colegio.** El módulo debe publicar únicamente logros que el colegio haya verificado; los que vengan de otras fuentes se confirman antes (ver `docs/PENDIENTES.md`).
 
+### 3.23 `GET /v1/propuesta-educativa/pilares`
+
+| Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
+|---|---|---|---|---|
+| `introduccion` | `{ titulo, parrafos }` \| null | sí | — | Texto previo a los pilares (`titulo` máx. 60; 1 a 6 párrafos). |
+| `cifras` | `Cifra[]` | no | 0 a 4 | Como §3.9; se muestran en la franja marina bajo la cabecera. **Solo cifras reales.** |
+| `pilares` | `{ id, titulo, texto, puntos }[]` | no | 0 a 8 | `titulo` máx. 60, `texto` máx. 400, `puntos` (0 a 8, máx. 30 cada uno): aspectos del pilar, como «Espiritual». |
+
+### 3.24 `GET /v1/propuesta-educativa/niveles`
+
+Devuelve `NivelPropuesta[]` (0 a 6): `id`, `nombre` (máx. 40), `rango` (string \| null), `descripcion` (0 a 6 párrafos), `rasgos` (0 a 8 frases breves, máx. 50), `talleres` (0 a 12: `titulo` máx. 50 y `texto` string \| null, máx. 200) y `foto` (`Imagen` \| null, 3:2). El portal los muestra como los carriles de Inicio.
+
+### 3.25 `GET /v1/propuesta-educativa/academia`
+
+| Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
+|---|---|---|---|---|
+| `titulo` | string | no | 60 | «Academia preuniversitaria». |
+| `descripcion` | string \| null | sí | 240 | |
+| `aclaracion` | string \| null | sí | 80 | Aviso visible para toda la academia: «Precios y fechas por actualizar». |
+| `universidades` | `{ id, nombre, ciclos }[]` | no | 0 a 8 | El portal ofrece un filtro por universidad (`?universidad=unsa`). `[]` = «Los ciclos se publicarán pronto». |
+
+**`CicloAcademia`**: `id`, `nombre` (máx. 40), `turno` (string \| null), `modalidades` (`"presencial"` y/o `"virtual"`, al menos una), `precio` y `precioVirtual` (número en soles \| null), `inicio` y `fin` (fecha \| null). **Precios y fechas solo si están vigentes:** si no, `null`; el portal no muestra esos datos.
+
+### 3.26 `GET /v1/propuesta-educativa/plataformas`
+
+Devuelve `Plataforma[]` (0 a 8): `id`, `nombre` (máx. 40), `descripcion` (string \| null, máx. 300), `funciones` (0 a 8: `titulo` máx. 40 y `texto` máx. 200, qué ofrece a quién), `enlace` (`Enlace` \| null) y `aclaracion` (string \| null: «Descripción por confirmar»).
+
 ## 4. Lo que el portal hace con cada caso
 
 Esto sirve para que el módulo sepa qué pasa con lo que publica.
@@ -869,5 +902,5 @@ Esto sirve para que el módulo sepa qué pasa con lo que publica.
 El portal trae datos de prueba que cumplen este contrato en `PW_Frontend/src/api/mock/`. Sirven de **ejemplos completos** de cada respuesta: el módulo puede compararse con ellos.
 
 - `tipico/`: contenido real del colegio.
-- Escenarios que solo cambian algunos archivos: `corto/`, `largo/`, `sin-foto/`, `alt-vacio/` y `vacio/`. El carrusel tiene 3 banners en `tipico/`, 1 en `corto/`, 6 en `largo/` y ninguno en `vacio/`. Matrícula tiene datos en `tipico/`, `corto/`, `largo/` y `vacio/`, y su cabecera además en `sin-foto/` y `alt-vacio/`. En `tipico/`, los requisitos, documentos y pasos son los de los afiches de cata.edu.pe; el año es el de los afiches publicados (2026), las fechas son de prueba y las vacantes dicen «consultar». Contacto tiene datos en todos los escenarios. En `tipico/`, sedes y redes son las de cata.edu.pe; el colegio no publica correos ni horarios, así que van vacíos, y los mapas son búsquedas de cada dirección, que el colegio debe reemplazar por las de «Insertar un mapa». Proyectos tiene datos en los seis escenarios; los detalles se guardan como `proyecto--{slug}.json`. En `tipico/`, los dos proyectos y sus textos son los que publica cata.edu.pe (Gastronomía e Industrias Alimentarias, y Robótica, Impresiones 3D y Computación); las fotos son de prueba, y niveles, estado y fecha van vacíos porque no están publicados. Nosotros tiene datos en los seis escenarios; las subpáginas se guardan como `nosotros-pagina--{slug}.json`. En `tipico/`, las siete páginas de Institución usan los textos y fotos de cata.edu.pe, salvo el árbol del organigrama, que es de prueba y lo dice (el publicado es un diseño de Canva). El himno no tiene audio publicado; `largo/` trae un tono de prueba para el reproductor. Gestión y Documentos enlazan a los diseños de Canva y a la hoja de cálculo que publica cata.edu.pe; `largo/instrumentos-de-gestion` trae archivos de prueba con peso. El personal docente es de prueba en todos los escenarios (el colegio aún no envía la lista). En Logros, `tipico/` trae solo los seis reconocimientos institucionales que publica cata.edu.pe; `largo/` suma los logros encontrados en otras fuentes, marcados «por verificar» con su fuente.
+- Escenarios que solo cambian algunos archivos: `corto/`, `largo/`, `sin-foto/`, `alt-vacio/` y `vacio/`. El carrusel tiene 3 banners en `tipico/`, 1 en `corto/`, 6 en `largo/` y ninguno en `vacio/`. Matrícula tiene datos en `tipico/`, `corto/`, `largo/` y `vacio/`, y su cabecera además en `sin-foto/` y `alt-vacio/`. En `tipico/`, los requisitos, documentos y pasos son los de los afiches de cata.edu.pe; el año es el de los afiches publicados (2026), las fechas son de prueba y las vacantes dicen «consultar». Contacto tiene datos en todos los escenarios. En `tipico/`, sedes y redes son las de cata.edu.pe; el colegio no publica correos ni horarios, así que van vacíos, y los mapas son búsquedas de cada dirección, que el colegio debe reemplazar por las de «Insertar un mapa». Proyectos tiene datos en los seis escenarios; los detalles se guardan como `proyecto--{slug}.json`. En `tipico/`, los dos proyectos y sus textos son los que publica cata.edu.pe (Gastronomía e Industrias Alimentarias, y Robótica, Impresiones 3D y Computación); las fotos son de prueba, y niveles, estado y fecha van vacíos porque no están publicados. Nosotros tiene datos en los seis escenarios; las subpáginas se guardan como `nosotros-pagina--{slug}.json`. En `tipico/`, las siete páginas de Institución usan los textos y fotos de cata.edu.pe, salvo el árbol del organigrama, que es de prueba y lo dice (el publicado es un diseño de Canva). El himno no tiene audio publicado; `largo/` trae un tono de prueba para el reproductor. Gestión y Documentos enlazan a los diseños de Canva y a la hoja de cálculo que publica cata.edu.pe; `largo/instrumentos-de-gestion` trae archivos de prueba con peso. El personal docente es de prueba en todos los escenarios (el colegio aún no envía la lista). En Propuesta Educativa, `tipico/` usa los textos de cata.edu.pe (los cuatro pilares, la educación adventista, los niveles, las universidades y ciclos de la academia y el iCRM); los precios y fechas de la academia, que son de 2022-2023, solo están en `largo/`, como datos de prueba. En Logros, `tipico/` trae solo los seis reconocimientos institucionales que publica cata.edu.pe; `largo/` suma los logros encontrados en otras fuentes, marcados «por verificar» con su fuente.
 - Las pruebas automáticas (`npm test` en `PW_Frontend/`) validan todos esos archivos contra este contrato.

@@ -1157,4 +1157,146 @@ escribir('sin-foto', 'logros', { data: logrosTipico })
 escribir('alt-vacio', 'logros', { data: logrosTipico })
 escribir('vacio', 'logros', { data: { ...logrosTipico, bajada: null, cifras: [], logros: [] } })
 
+
+// ── Propuesta Educativa (cuerpo) ──
+// Textos de cata.edu.pe: los 4 pilares (imágenes de new_propuestaeducativa), «Educ. Adventista» y los niveles (páginas
+// inicial, primaria, secundaria y propuesta-pedagogica), la academia (new_academia) y el iCRM (sistema-academico).
+// NO se usa el PDF informativo enlazado en esa página: es una plantilla de Innova Schools (ver docs/PENDIENTES.md).
+// Se corrigieron solo erratas evidentes («empendedor», «medio ambientes», «lo mas íntimo»).
+const pilaresPropuesta = {
+  introduccion: {
+    titulo: 'Educación adventista',
+    parrafos: ['La estructuración de los contenidos es flexible, para que cada docente pueda organizarlos de acuerdo con su realidad y situación, de manera de respetar la organización curricular de la institución educativa. Los libros de texto y otros materiales incluyen el desarrollo de las competencias y habilidades previstas por las políticas educativas de cada país, mientras que animan a los estudiantes a desarrollar el pensamiento creativo, la madurez y la sensibilidad cristiana para tomar las decisiones correctas para su futuro, ya sea que prosigan al nivel superior de enseñanza universitaria o se sumerjan en el mercado de trabajo.'],
+  },
+  // Cifras que salen de lo publicado: los cuatro pilares, los tres niveles y las tres universidades de la academia
+  cifras: [
+    { id: 'pilares', valor: 4, sufijo: null, etiqueta: 'pilares de la propuesta educativa' },
+    { id: 'niveles', valor: 3, sufijo: null, etiqueta: 'niveles: inicial, primaria y secundaria' },
+    { id: 'universidades', valor: 3, sufijo: null, etiqueta: 'universidades en la academia preuniversitaria' },
+  ],
+  pilares: [
+    { id: 'b-learning', titulo: 'Enfoque B-Learning', texto: 'Contamos con docentes mentores con una cultura de evaluación continua a través de nuestro sistema B-Learning que permite el monitoreo del desarrollo de las habilidades a lo largo de la vida estudiantil.', puntos: [] },
+    { id: 'liderazgo', titulo: 'Liderazgo de servicio', texto: 'Nuestro compromiso es formar líderes que no se vendan ni se compren, que sean sinceros y honrados en lo más íntimo de sus almas y que se mantengan de parte de la justicia aunque se desplomen los cielos.', puntos: [] },
+    { id: 'integral', titulo: 'Desarrollo integral', texto: 'Preparar al estudiante para una vida de servicio a través del desarrollo armonioso de las facultades físicas, mentales, espirituales y sociales. Y para lograrlo contamos con un centro de monitoreo de los aprendizajes que Ud. como padre observará a lo largo de los 13 años.', puntos: ['Espiritual', 'Mental', 'Físico', 'Social'] },
+    { id: 'experiencias', titulo: 'Modelado en experiencias prácticas', texto: 'El docente mentor guía a los estudiantes en el desarrollo de diversos talleres para la vida, proyectos tecnológicos, proyectos de estilo de vida saludable, proyectos de STEAM y proyectos de emprendimiento logrando vivir experiencias vivenciales para toda la vida.', puntos: [] },
+  ],
+}
+const nivelesPropuesta = [
+  {
+    id: 'inicial',
+    nombre: 'Inicial',
+    rango: '3 a 5 años',
+    descripcion: [
+      'Pasos iniciales para presentar las bases de la construcción del saber. La Educación Infantil es la primera etapa de la Educación Básica y objetiva el desarrollo integral del niño, en sus aspectos físico, afectivo, intelectual, lingüístico y social, en asociación con la familia y la comunidad. Dividido en tres períodos lectivos (del primero al tercero) para niños de 3 a 5 años.',
+      'En este nivel, desarrollamos las capacidades afectivas, motrices, sociales y cognitivas que permiten al niño desenvolverse de manera asertiva.',
+    ],
+    rasgos: ['Ambiente estimulante para los niños'],
+    talleres: [],
+    foto: img('nivel-inicial', 'Foto de prueba: niños de inicial en su aula'),
+  },
+  {
+    id: 'primaria',
+    nombre: 'Primaria',
+    rango: '1.er a 6.º grado',
+    descripcion: [
+      'Brindamos una Educación Personalizada, con una plana docente altamente capacitado.',
+      'Los preparamos para que sean personas capaces de responder a las exigencias de un mundo globalizado.',
+    ],
+    rasgos: ['Exclusiva plana docente', 'Enseñanza especializada en ciencias', 'Círculo de estudios', 'Formación de valores'],
+    talleres: [
+      { titulo: 'Círculo Matemático', texto: 'Con horarios adicionales para estudiantes que tienen afinidad por dicha área desde el tercer grado de primaria.' },
+      { titulo: 'Taller de Inglés', texto: 'Para estudiantes que quieren profundizar sus conocimientos de este importante idioma.' },
+      { titulo: 'Taller de Oratoria', texto: 'Para mejorar la expresión y lograr mayor confianza en nuestros estudiantes.' },
+      { titulo: 'Taller Musical', texto: 'Para estimular aún más el área artística y la creatividad de nuestros estudiantes a través de la música con un departamento musical totalmente equipado.' },
+    ],
+    foto: img('nivel-primaria', 'Foto de prueba: estudiantes de primaria leyendo'),
+  },
+  {
+    id: 'secundaria',
+    nombre: 'Secundaria',
+    rango: '1.er a 5.º año',
+    descripcion: [
+      'Cuenta con un programa de nivel avanzado para los estudiantes del nivel secundario. A partir del desarrollo de un análisis crítico de la educación, nuestra currícula busca desarrollar personas líderes, con alto potencial académico y formado en valores. Ello orienta nuestra educación secundaria a alumnos egresados con pleno uso de sus potencialidades académicas no solo para ingresar a la universidad sino también para el desarrollo social y cultural de nuestro país.',
+      'Afianzamos el talento creativo y emprendedor de nuestros alumnos, estimulando en ellos la investigación, práctica de valores sociales y conservación del medio ambiente.',
+    ],
+    rasgos: [],
+    talleres: [],
+    foto: img('nivel-secundaria', 'Foto de prueba: estudiantes de secundaria en el laboratorio'),
+  },
+]
+// Academia: universidades, ciclos, turno y modalidades de cata.edu.pe. Los precios y fechas publicados son de 2022-2023:
+// en «tipico» van en null; en «largo» se usan como datos de prueba.
+const ciclo = (id, nombre, virtual, precio = null, precioVirtual = null, inicio = null, fin = null) => ({ id, nombre, turno: 'Mañana', modalidades: virtual ? ['presencial', 'virtual'] : ['presencial'], precio, precioVirtual, inicio, fin })
+const academiaTipico = {
+  titulo: 'Academia preuniversitaria',
+  descripcion: 'Ciclos de preparación para el examen de admisión de tres universidades nacionales.',
+  aclaracion: 'Precios y fechas por actualizar',
+  universidades: [
+    { id: 'una-puno', nombre: 'Universidad Nacional del Altiplano de Puno', ciclos: [ciclo('una-verano', 'Verano', true), ciclo('una-intensivo', 'Intensivo', false), ciclo('una-repaso', 'Repaso', true)] },
+    { id: 'unsa', nombre: 'Universidad Nacional de San Agustín', ciclos: [ciclo('unsa-repaso', 'Repaso', true), ciclo('unsa-verano', 'Verano', true), ciclo('unsa-semestral', 'Repaso semestral', true)] },
+    { id: 'unaj', nombre: 'Universidad Nacional de Juliaca', ciclos: [ciclo('unaj-repaso', 'Repaso', true)] },
+  ],
+}
+const academiaLargo = {
+  ...academiaTipico,
+  descripcion: textoLargo,
+  aclaracion: 'Datos de prueba: precios y fechas publicados en 2022-2023',
+  universidades: [
+    { id: 'una-puno', nombre: 'Universidad Nacional del Altiplano de Puno', ciclos: [ciclo('una-verano', 'Verano', true, 440, 250, '2023-01-02', '2023-02-18'), ciclo('una-intensivo', 'Intensivo', false, 170, null, '2022-10-24', '2023-02-25'), ciclo('una-repaso', 'Repaso', true, 450, 250, '2023-01-02', '2023-02-11')] },
+    { id: 'unsa', nombre: 'Universidad Nacional de San Agustín', ciclos: [ciclo('unsa-repaso', 'Repaso', true, 550, 250, '2023-01-02', '2023-02-25'), ciclo('unsa-verano', 'Verano', true, 440, 250, '2023-01-02', '2023-02-18'), ciclo('unsa-semestral', 'Repaso semestral', true, 450, 250, '2023-01-02', '2023-02-11')] },
+    { id: 'unaj', nombre: 'Universidad Nacional de Juliaca', ciclos: [ciclo('unaj-repaso', 'Repaso', true, 550, 250, '2023-01-02', '2023-02-25')] },
+    { id: 'prueba', nombre: 'Universidad de prueba con un nombre muy largo para comprobar el ajuste del filtro y de las fichas', ciclos: Array.from({ length: 6 }, (_, i) => ciclo(`p${i}`, `Ciclo de prueba ${i + 1} con nombre largo`, i % 2 === 0, 1200 + i, i % 2 === 0 ? 900 : null, '2027-01-04', '2027-03-26')) },
+  ],
+}
+const ICRM_URL = 'https://cata.icrmedu.com/Academico/Paginas/Login.aspx'
+const plataformas = [
+  {
+    id: 'icrm',
+    nombre: 'iCRM Educativo',
+    descripcion: 'Programación anual, unidades, sesiones con recursos digitales alineadas al currículo, todo en un mismo entorno virtual que el iCRM Educativo pone a disposición del docente y estudiante para un aprendizaje autónomo.',
+    funciones: [
+      { titulo: 'Docentes', texto: 'El iCRM Educativo le permite a cada docente personalizar y evaluar las sesiones del día a día.' },
+      { titulo: 'Académico', texto: 'Con el iCRM Educativo tienes el currículo, planificación anual, monitoreo del progreso académico, etc.' },
+      { titulo: 'Padres de familia', texto: 'El iCRM Educativo recopila los datos del progreso de cada estudiante y la presenta al padre o tutor.' },
+      { titulo: 'Estudiantes', texto: 'Los estudiantes ejecutan sus sesiones virtuales con evaluaciones y retroalimentación automatizadas.' },
+    ],
+    enlace: { etiqueta: 'Entrar al iCRM', url: ICRM_URL, externo: true },
+    aclaracion: null,
+  },
+  { id: 'eva-student', nombre: 'EVA Student', descripcion: null, funciones: [], enlace: null, aclaracion: 'Descripción por confirmar' },
+  { id: 'planificador-eva', nombre: 'Planificador Inteligente EVA', descripcion: null, funciones: [], enlace: { etiqueta: 'Ver el Planificador Inteligente EVA', url: 'https://www.canva.com/design/DAGvTPFEMMM/6r3lFiZV0HneNzyyg7cSxw/view', externo: true }, aclaracion: 'Descripción por confirmar' },
+]
+escribir('tipico', 'propuesta-pilares', { data: pilaresPropuesta })
+escribir('tipico', 'propuesta-niveles', { data: nivelesPropuesta })
+escribir('tipico', 'propuesta-academia', { data: academiaTipico })
+escribir('tipico', 'propuesta-plataformas', { data: plataformas })
+
+escribir('corto', 'propuesta-pilares', { data: { introduccion: null, cifras: [], pilares: [{ id: 'p', titulo: 'Servicio', texto: 'Servir.', puntos: [] }] } })
+escribir('corto', 'propuesta-niveles', { data: [{ id: 'i', nombre: 'Inicial', rango: null, descripcion: [], rasgos: [], talleres: [], foto: null }] })
+escribir('corto', 'propuesta-academia', { data: { titulo: 'Academia', descripcion: null, aclaracion: null, universidades: [{ id: 'u', nombre: 'UNAJ', ciclos: [ciclo('c', 'Repaso', false)] }] } })
+escribir('corto', 'propuesta-plataformas', { data: [{ id: 'i', nombre: 'iCRM', descripcion: null, funciones: [], enlace: null, aclaracion: null }] })
+
+escribir('largo', 'propuesta-pilares', { data: {
+  introduccion: { titulo: 'Educación adventista con un título largo para comprobar el ajuste', parrafos: [pilaresPropuesta.introduccion.parrafos[0], textoLargo, textoLargo] },
+  cifras: [...pilaresPropuesta.cifras, { id: 'prueba', valor: 1000, sufijo: '+', etiqueta: 'cifra de prueba con una etiqueta muy larga para comprobar el ajuste' }],
+  pilares: [...pilaresPropuesta.pilares, ...Array.from({ length: 4 }, (_, i) => ({ id: `p${i}`, titulo: `Pilar de prueba número ${i + 1} con un título largo`, texto: textoLargo, puntos: i % 2 ? [] : ['Punto de prueba uno', 'Punto de prueba dos con texto largo', 'Tres', 'Cuatro', 'Cinco'] }))],
+} })
+escribir('largo', 'propuesta-niveles', { data: [
+  ...nivelesPropuesta,
+  ...['Talleres de la Sede CATA Oasis', 'Primaria · Sede CATA Jerusalén', 'Nivel de prueba con un nombre largo'].map((nombre, i) => ({ id: `l${i}`, nombre, rango: 'Rango de prueba con texto largo', descripcion: [textoLargo, textoLargo], rasgos: Array.from({ length: 8 }, (_, j) => `Rasgo de prueba ${j + 1}`), talleres: Array.from({ length: 12 }, (_, j) => ({ titulo: `Taller de prueba ${j + 1}`, texto: j % 2 ? null : textoLargo })), foto: i === 1 ? null : img('nivel-primaria', 'Foto de prueba') })),
+] })
+escribir('largo', 'propuesta-academia', { data: academiaLargo })
+escribir('largo', 'propuesta-plataformas', { data: [
+  ...plataformas,
+  ...Array.from({ length: 5 }, (_, i) => ({ id: `pl${i}`, nombre: `Plataforma de prueba número ${i + 1} con nombre largo`, descripcion: textoLargo, funciones: Array.from({ length: 8 }, (_, j) => ({ titulo: `Función ${j + 1}`, texto: 'Texto de prueba de la función.' })), enlace: { etiqueta: 'Enlace de prueba con una etiqueta larga', url: 'https://cata.edu.pe/', externo: true }, aclaracion: i % 2 ? 'Aclaración de prueba larga: dato pendiente de confirmación' : null })),
+] })
+
+escribir('sin-foto', 'propuesta-niveles', { data: sinFoto(nivelesPropuesta) })
+escribir('alt-vacio', 'propuesta-niveles', { data: altVacio(nivelesPropuesta) })
+
+escribir('vacio', 'propuesta-pilares', { data: { introduccion: null, cifras: [], pilares: [] } })
+escribir('vacio', 'propuesta-niveles', { data: [] })
+escribir('vacio', 'propuesta-academia', { data: { ...academiaTipico, descripcion: null, aclaracion: null, universidades: [] } })
+escribir('vacio', 'propuesta-plataformas', { data: [] })
+
 console.log('ok')

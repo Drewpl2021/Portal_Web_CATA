@@ -13,7 +13,11 @@ import {
   esquemaCifras,
   esquemaContacto,
   esquemaDocentes,
+  esquemaAcademia,
   esquemaHero,
+  esquemaNivelesPropuesta,
+  esquemaPilares,
+  esquemaPlataformas,
   esquemaLogros,
   esquemaGrados,
   esquemaNiveles,
@@ -44,7 +48,11 @@ import type {
   Contacto,
   Docentes,
   GrupoGrados,
+  Academia,
   Hero,
+  NivelPropuesta,
+  PilaresPropuesta,
+  Plataforma,
   Logros,
   ListaNoticias,
   Niveles,
@@ -81,6 +89,10 @@ type Recurso =
   | 'nosotros-pagina'
   | 'docentes'
   | 'logros'
+  | 'propuesta-pilares'
+  | 'propuesta-niveles'
+  | 'propuesta-academia'
+  | 'propuesta-plataformas'
 
 export class ErrorDatos extends Error {
   constructor(
@@ -278,4 +290,22 @@ export async function obtenerDocentes(): Promise<Docentes> {
 
 export async function obtenerLogros(): Promise<Logros> {
   return (await leer('logros', '/v1/logros', sobre(esquemaLogros))).data
+}
+
+// Propuesta Educativa (cuerpo)
+
+export async function obtenerPilares(): Promise<PilaresPropuesta> {
+  return (await leer('propuesta-pilares', '/v1/propuesta-educativa/pilares', sobre(esquemaPilares))).data
+}
+
+export async function obtenerNivelesPropuesta(): Promise<NivelPropuesta[]> {
+  return (await leer('propuesta-niveles', '/v1/propuesta-educativa/niveles', sobre(esquemaNivelesPropuesta))).data
+}
+
+export async function obtenerAcademia(): Promise<Academia> {
+  return (await leer('propuesta-academia', '/v1/propuesta-educativa/academia', sobre(esquemaAcademia))).data
+}
+
+export async function obtenerPlataformas(): Promise<Plataforma[]> {
+  return (await leer('propuesta-plataformas', '/v1/propuesta-educativa/plataformas', sobre(esquemaPlataformas))).data
 }

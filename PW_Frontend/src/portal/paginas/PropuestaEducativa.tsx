@@ -1,15 +1,22 @@
+import AcademiaPropuesta from '../secciones/AcademiaPropuesta'
 import CabeceraPropuesta from '../secciones/CabeceraPropuesta'
+import Cierre from '../secciones/Cierre'
+import NivelesPropuesta from '../secciones/NivelesPropuesta'
+import PilaresPropuesta, { CifrasPropuesta } from '../secciones/PilaresPropuesta'
+import PlataformasPropuesta from '../secciones/PlataformasPropuesta'
 
-// Propuesta Educativa: por ahora solo su cabecera. El resto de la página se construye más adelante.
+// Propuesta Educativa: la cabecera con la escena, las cifras, los pilares, los niveles en detalle,
+// las plataformas digitales, la academia preuniversitaria y el cierre. Cada sección carga su endpoint.
 export default function PropuestaEducativa() {
   return (
     <>
       <CabeceraPropuesta />
-      <section className="f-seccion f-proximamente" aria-label="Contenido de la página">
-        <div className="f-seccion__interior">
-          <p className="f-vacio">El detalle de la propuesta educativa por niveles se publicará en esta página.</p>
-        </div>
-      </section>
+      <CifrasPropuesta />
+      <PilaresPropuesta />
+      <NivelesPropuesta />
+      <PlataformasPropuesta />
+      <AcademiaPropuesta />
+      <Cierre />
     </>
   )
 }

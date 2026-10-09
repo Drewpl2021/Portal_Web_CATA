@@ -14,7 +14,7 @@ Public website for the school CATA (Colegio Adventista Túpac Amaru, Juliaca).
 
 ## API contract and data layer
 
-- **Contract:** `docs/API_CONTRACT.md` (v2.7) is the source of truth for every endpoint, field, nullability, date format and image rule. `docs/api-contract.schema.json` is its JSON Schema, generated with `npm run esquema` in `PW_Frontend/`; never edit it by hand. Any change to the contract is agreed with the HR team first and updates both files, the types and the mock data together. Do not invent endpoints in the HR system.
+- **Contract:** `docs/API_CONTRACT.md` (v2.8) is the source of truth for every endpoint, field, nullability, date format and image rule. `docs/api-contract.schema.json` is its JSON Schema, generated with `npm run esquema` in `PW_Frontend/`; never edit it by hand. Any change to the contract is agreed with the HR team first and updates both files, the types and the mock data together. Do not invent endpoints in the HR system.
 - **Types and validation:** `PW_Frontend/src/api/tipos.ts` (TypeScript types) and `PW_Frontend/src/api/esquemas.ts` (zod schemas). A compile-time check asserts both describe the same shapes.
 - **Data layer:** `PW_Frontend/src/api/servicios.ts` is the only place that fetches data. Components call its `obtener*()` functions and never know where data comes from. Every response, local or remote, is validated against the contract; an invalid response becomes that section's error state.
   - `VITE_API_URL` empty: reads the local mock data.
@@ -35,7 +35,8 @@ Public website for the school CATA (Colegio Adventista Túpac Amaru, Juliaca).
 - `PW_Frontend/src/portal/` is the site: `Layout.tsx` (fixed header, page transitions, footer), `paginas/` (one file per page), `secciones/` (page sections), `portal.css`.
 - Inicio (`/`) starts with the **banner carousel** (`GET /v1/portada/banners`). The carousel is used **only on Inicio**; every other page starts with its own header.
 - Propuesta Educativa (`/propuesta-educativa`) starts with the header scene (students in front of the emblem ring, with the medal rotating inside the ring).
-- Every page in the site map is built (Proyectos, Nosotros, Matrícula, Logros, Contacto), with the same design and motion level as Inicio and without a carousel. Propuesta Educativa still shows only its header.
+- Every page in the site map is built, including the body of Propuesta Educativa (pillars, levels, digital platforms and pre-university academy), with the same design and motion level as Inicio and without a carousel.
+- Do not use the «PDF informativo» linked on cata.edu.pe's Propuesta Educativa page: it is an Innova Schools template, not CATA content.
 - Logros publishes only achievements the school has confirmed, each with its `fuente`; unknown data stays `null` (never filled in) and incomplete data carries a visible `aclaracion` («Año por confirmar»). Unconfirmed achievements stay in the `largo` mock, marked «por confirmar» (see `docs/PENDIENTES.md`). The list is grouped and filtered by decade.
 - Nosotros subpages use the reusable content layout `portal/contenido/PaginaContenido.tsx`, which renders the API's list of blocks (`portal/contenido/Bloques.tsx`). A group of subpages goes live by adding it to `GRUPOS_NOSOTROS_PUBLICADOS` in `src/sitio/mapa.ts` (all three groups are live). Personal Docente adds the staff list from `GET /v1/docentes` (`portal/contenido/EquipoDocente.tsx`). Lists with a category filter use the shared `portal/secciones/Filtro.tsx` (selection kept in the URL, hidden with a single option).
 

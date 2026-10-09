@@ -1,7 +1,7 @@
 // Validación en tiempo de ejecución de cada respuesta, según docs/API_CONTRACT.md.
 // Si la API cambia un tipo, la sección muestra su estado de error en vez de romper la página.
 import { z } from 'zod'
-import { CATEGORIAS_BANNER, CATEGORIAS_LOGRO, ESTADOS_PROYECTO, ESTADOS_VACANTE, FORMATOS_ENLACE, PAGINAS_SOLICITUD, REDES, SECCIONES, TIPOS_AUDIO } from './tipos'
+import { CATEGORIAS_BANNER, CATEGORIAS_LOGRO, MODALIDADES_CICLO, ESTADOS_PROYECTO, ESTADOS_VACANTE, FORMATOS_ENLACE, PAGINAS_SOLICITUD, REDES, SECCIONES, TIPOS_AUDIO } from './tipos'
 import type * as T from './tipos'
 
 const texto = z.string()
@@ -337,6 +337,69 @@ export const esquemaLogros = z.object({
     .max(200),
 })
 
+// Propuesta Educativa
+export const esquemaPilares = z.object({
+  introduccion: z.object({ titulo: texto, parrafos: z.array(texto).min(1).max(6) }).nullable(),
+  cifras: esquemaCifras,
+  pilares: z.array(z.object({ id: texto, titulo: texto, texto, puntos: z.array(texto).max(8) })).max(8),
+})
+
+export const esquemaNivelesPropuesta = z
+  .array(
+    z.object({
+      id: texto,
+      nombre: texto,
+      rango: textoONulo,
+      descripcion: z.array(texto).max(6),
+      rasgos: z.array(texto).max(8),
+      talleres: z.array(z.object({ titulo: texto, texto: textoONulo })).max(12),
+      foto: imagen.nullable(),
+    }),
+  )
+  .max(6)
+
+export const esquemaAcademia = z.object({
+  titulo: texto,
+  descripcion: textoONulo,
+  aclaracion: textoONulo,
+  universidades: z
+    .array(
+      z.object({
+        id: texto,
+        nombre: texto,
+        ciclos: z
+          .array(
+            z.object({
+              id: texto,
+              nombre: texto,
+              turno: textoONulo,
+              modalidades: z.array(z.enum(MODALIDADES_CICLO)).min(1).max(2),
+              precio: z.number().nonnegative().nullable(),
+              precioVirtual: z.number().nonnegative().nullable(),
+              inicio: fecha.nullable(),
+              fin: fecha.nullable(),
+            }),
+          )
+          .min(1)
+          .max(12),
+      }),
+    )
+    .max(8),
+})
+
+export const esquemaPlataformas = z
+  .array(
+    z.object({
+      id: texto,
+      nombre: texto,
+      descripcion: textoONulo,
+      funciones: z.array(z.object({ titulo: texto, texto })).max(8),
+      enlace: enlace.nullable(),
+      aclaracion: textoONulo,
+    }),
+  )
+  .max(8)
+
 export const sobre = <S extends z.ZodTypeAny>(data: S) => z.object({ data })
 export const sobrePaginado = <S extends z.ZodTypeAny>(data: S) => z.object({ data, meta: esquemaMeta })
 
@@ -365,3 +428,7 @@ coincide<Igual<z.infer<typeof esquemaNosotros>, T.Nosotros>>()
 coincide<Igual<z.infer<typeof esquemaPaginaContenido>, T.PaginaContenido>>()
 coincide<Igual<z.infer<typeof esquemaDocentes>, T.Docentes>>()
 coincide<Igual<z.infer<typeof esquemaLogros>, T.Logros>>()
+coincide<Igual<z.infer<typeof esquemaPilares>, T.PilaresPropuesta>>()
+coincide<Igual<z.infer<typeof esquemaNivelesPropuesta>, T.NivelPropuesta[]>>()
+coincide<Igual<z.infer<typeof esquemaAcademia>, T.Academia>>()
+coincide<Igual<z.infer<typeof esquemaPlataformas>, T.Plataforma[]>>()

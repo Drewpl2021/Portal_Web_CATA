@@ -13,7 +13,11 @@ import {
   esquemaCifras,
   esquemaContacto,
   esquemaDocentes,
+  esquemaAcademia,
   esquemaHero,
+  esquemaNivelesPropuesta,
+  esquemaPilares,
+  esquemaPlataformas,
   esquemaLogros,
   esquemaGrados,
   esquemaNiveles,
@@ -52,6 +56,10 @@ const respuestas = {
   'GET /v1/nosotros/paginas/{slug}': sobre(esquemaPaginaContenido),
   'GET /v1/docentes': sobre(esquemaDocentes),
   'GET /v1/logros': sobre(esquemaLogros),
+  'GET /v1/propuesta-educativa/pilares': sobre(esquemaPilares),
+  'GET /v1/propuesta-educativa/niveles': sobre(esquemaNivelesPropuesta),
+  'GET /v1/propuesta-educativa/academia': sobre(esquemaAcademia),
+  'GET /v1/propuesta-educativa/plataformas': sobre(esquemaPlataformas),
 }
 
 const definitions = Object.fromEntries(
@@ -63,7 +71,7 @@ const definitions = Object.fromEntries(
 
 const documento = {
   $schema: 'http://json-schema.org/draft-07/schema#',
-  title: 'API pública del portal CATA 2.7 (docs/API_CONTRACT.md)',
+  title: 'API pública del portal CATA 2.8 (docs/API_CONTRACT.md)',
   description: 'Cuerpo de respuesta 200 de cada endpoint. Generado desde PW_Frontend/src/api/esquemas.ts; no editar a mano.',
   definitions,
 }

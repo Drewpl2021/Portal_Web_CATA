@@ -375,6 +375,9 @@ Las tres columnas del mega menú como placas celeste lavado con número (01, 02,
 ### Logros
 Cabecera con el número de logros publicados en la placa, la franja marina de cifras de Inicio (componente `FranjaCifras`), «Destacados» como placas marinas inclinadas con base dorada (categoría, año y nivel en dorado, título en la tipografía ancha y foto opcional con corte inclinado) y la lista con dos filtros (`Filtro`, categoría y década) y un único texto vivo con el resultado. La lista se agrupa por década en secciones con encabezado y número de logros, como los grupos de personas; los que no tienen año van al final, en «Sin año». Cada logro es una placa celeste lavado con regla dorada: el año grande, etiquetas de categoría (dorada) y nivel, título, descripción y, al pie, la aclaración (recuadro discontinuo, «Año por confirmar») y la fuente (con enlace si es pública).
 
+### Cuerpo de Propuesta Educativa
+Solo reutiliza piezas existentes: la franja de cifras (`FranjaCifras`), los pilares como las placas marinas de Misión y Visión (dos por fila, con número, texto y aspectos en etiquetas), los niveles como los carriles de Inicio con descripción, rasgos y talleres, las plataformas como tarjetas de texto con sus funciones y su enlace, y la academia sobre celeste lavado con el aviso de Matrícula, el filtro por universidad (`Filtro`) y cada ciclo en una ficha blanca como las de Contacto.
+
 ### Formulario Solicitar información
 En el cierre celeste: título blanco a la izquierda y el formulario en una placa marina con regla dorada. Campos blancos de 52 px, errores en dorado con ícono, vinculados con `aria-describedby`, y el foco va al primer campo con error. El botón dorado abre WhatsApp con el mensaje armado; no se guarda ningún dato. Es el mismo componente (`SolicitudInformacion`) al final de Matrícula y de Contacto; recibe la página y usa la plantilla de mensaje de esa página.
 

@@ -4558,6 +4558,136 @@ html.f-anim .f-cronograma:not([data-visto])::before {
   }
 }
 
+/* ═════════ Propuesta Educativa: cuerpo ═════════ */
+
+.f-pilares .f-titulo,
+.f-niveles-propuesta .f-titulo,
+.f-plataformas .f-titulo,
+.f-academia .f-titulo {
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.f-pilares__cuerpo {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3rem);
+}
+
+.f-pilares__intro {
+  margin: 0;
+}
+
+/* Cuatro pilares: dos por fila, así ninguno queda solo */
+.f-pilares .f-destacados {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
+}
+
+/* Pilares: las placas de Misión y Visión, con su texto y sus aspectos */
+.f-pilar__texto {
+  margin-top: 0.875rem;
+  line-height: 1.6;
+  color: var(--marino-lavado);
+}
+
+.f-pilar__puntos {
+  margin-top: 1rem;
+}
+
+/* Niveles en detalle: carriles con más texto */
+.f-carril--detalle {
+  align-items: start;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.f-carril__rango--bajo {
+  margin-top: 0.625rem;
+}
+
+.f-carril__datos--detalle {
+  gap: 0.75rem;
+}
+
+.f-carril--blanco .f-meta li {
+  background: var(--celeste-lavado);
+}
+
+.f-carril__subtitulo {
+  margin-top: 0.25rem;
+  font-stretch: 112%;
+  font-weight: 850;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.f-carril__talleres {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.f-carril__talleres li {
+  display: grid;
+  grid-template-columns: 1rem minmax(0, 1fr);
+  gap: 0.5rem;
+  align-items: start;
+  line-height: 1.5;
+}
+
+.f-carril__talleres svg {
+  margin-top: 0.25rem;
+  color: var(--dorado);
+}
+
+.f-carril--blanco .f-carril__talleres svg {
+  color: var(--marino);
+}
+
+/* Funciones de una plataforma y datos de un ciclo */
+.f-funciones {
+  display: grid;
+  gap: 0.625rem;
+}
+
+.f-funciones dt {
+  font-weight: 800;
+}
+
+.f-funciones dd {
+  font-size: 0.97rem;
+  color: var(--marino-suave);
+}
+
+.f-funciones__enlace {
+  margin-top: auto;
+}
+
+/* Academia sobre celeste lavado, con fichas blancas */
+.f-academia {
+  --f-fondo: var(--celeste-lavado);
+}
+
+.f-academia__cuerpo {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.f-academia .f-aviso {
+  margin-bottom: 0;
+  background: var(--blanco);
+}
+
+.f-academia .f-ficha {
+  background: var(--blanco);
+}
+
+.f-fichas--ciclos {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+}
+
+.f-academia .f-grupo-personas + .f-grupo-personas {
+  margin-top: 1.5rem;
+}
+
 /* ═════════ Entradas al hacer scroll ═════════
    El estado inicial oculto solo aplica con html.f-anim (lo activa la página antes del primer pintado).
    Todas las entradas animan solo transform y opacity. */

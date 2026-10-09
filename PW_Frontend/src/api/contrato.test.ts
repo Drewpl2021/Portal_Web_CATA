@@ -10,7 +10,11 @@ import {
   esquemaCifras,
   esquemaContacto,
   esquemaDocentes,
+  esquemaAcademia,
   esquemaHero,
+  esquemaNivelesPropuesta,
+  esquemaPilares,
+  esquemaPlataformas,
   esquemaLogros,
   esquemaGrados,
   esquemaNiveles,
@@ -49,6 +53,10 @@ const ESQUEMAS = {
   'nosotros-pagina': sobre(esquemaPaginaContenido),
   docentes: sobre(esquemaDocentes),
   logros: sobre(esquemaLogros),
+  'propuesta-pilares': sobre(esquemaPilares),
+  'propuesta-niveles': sobre(esquemaNivelesPropuesta),
+  'propuesta-academia': sobre(esquemaAcademia),
+  'propuesta-plataformas': sobre(esquemaPlataformas),
 } as const
 
 const archivos = import.meta.glob<unknown>('./mock/*/*.json', { eager: true, import: 'default' })
@@ -161,6 +169,21 @@ describe('el contrato rechaza respuestas inválidas', () => {
       expect(l.titulo, l.titulo).not.toMatch(/por confirmar/i)
       expect(l.fuente, l.titulo).not.toBeNull()
     }
+  })
+
+  it('rechaza un ciclo de academia sin modalidad o con un precio negativo', () => {
+    const ciclo = { id: 'c', nombre: 'Verano', turno: null, precio: null, precioVirtual: null, inicio: null, fin: null }
+    const base = { titulo: 'Academia', descripcion: null, aclaracion: null }
+    const con = (c: object) => ({ ...base, universidades: [{ id: 'u', nombre: 'U', ciclos: [c] }] })
+    expect(esquemaAcademia.safeParse(con({ ...ciclo, modalidades: [] })).success).toBe(false)
+    expect(esquemaAcademia.safeParse(con({ ...ciclo, modalidades: ['presencial'], precio: -1 })).success).toBe(false)
+    expect(esquemaAcademia.safeParse(con({ ...ciclo, modalidades: ['presencial', 'virtual'] })).success).toBe(true)
+  })
+
+  it('en típico, la academia no publica precios ni fechas desactualizados', () => {
+    const json = JSON.stringify(archivos['./mock/tipico/propuesta-academia.json'])
+    expect(json).not.toMatch(/"precio":\d/)
+    expect(json).not.toMatch(/"inicio":"\d/)
   })
 
   it('rechaza una red social desconocida', () => {

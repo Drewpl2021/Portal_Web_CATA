@@ -21,7 +21,7 @@
 - **Inicio (`/`):**
   - empieza con el **carrusel de novedades** (banners del colegio)
   - siguen cifras, Quiénes somos, Niveles, Sedes, Noticias y el cierre
-- **Propuesta Educativa (`/propuesta-educativa`):** por ahora solo su cabecera con la escena: alumnos delante del anillo del emblema, con la medalla girando dentro.
+- **Propuesta Educativa (`/propuesta-educativa`):** la cabecera con la escena y el cuerpo: cifras, los cuatro pilares, los niveles en detalle (descripción, rasgos y talleres), las plataformas digitales (iCRM, EVA Student, Planificador Inteligente EVA) y la academia preuniversitaria con filtro por universidad.
 - **Matrícula (`/matricula`):**
   - cabecera celeste con la placa del año y un estudiante, y un índice de la página
   - pasos y requisitos en pestañas (estudiantes nuevos y regulares), con los textos reales de los afiches de cata.edu.pe
@@ -56,14 +56,15 @@
   - las composiciones se agrupan en contenedores de proporción fija
 - **Eliminadas:** las propuestas A, B y C y la portada antigua «Tablero de ruta».
 
-### Contrato de la API (versión 2.7)
+### Contrato de la API (versión 2.8)
 
 - `docs/API_CONTRACT.md` y su JSON Schema `docs/api-contract.schema.json` (`npm run esquema`).
+- **Cambios de la 2.8:** cuatro endpoints para el cuerpo de Propuesta Educativa: pilares, niveles, academia y plataformas.
 - **Cambios de la 2.7:** cada logro suma `fuente` y `aclaracion`; el filtro por año pasa a ser por década.
 - **Cambios de la 2.6:** nuevo `GET /v1/logros`.
 - **Cambios de la 2.5:** nuevo `GET /v1/docentes`; los enlaces de documentos suman `peso` y el formato `canva`; nuevo slug `personal-docente`.
 - **Cambios de la 2.4:** nuevos `GET /v1/nosotros` y `GET /v1/nosotros/paginas/{slug}` (página de contenido armada con bloques; `404` si no existe).
-- **Endpoints (22):** sitio, banners, cabecera de Propuesta Educativa, quiénes somos, niveles, sedes, noticias, grados, cifras, cinco de Matrícula (cabecera, procesos, vacantes, fechas y preguntas), solicitud, contacto, proyectos, detalle de proyecto, índice de Nosotros, subpágina de Nosotros, personal docente y logros.
+- **Endpoints (26):** sitio, banners, cabecera de Propuesta Educativa, quiénes somos, niveles, sedes, noticias, grados, cifras, cinco de Matrícula (cabecera, procesos, vacantes, fechas y preguntas), solicitud, contacto, proyectos, detalle de proyecto, índice de Nosotros, subpágina de Nosotros, personal docente, logros y los cuatro de Propuesta Educativa.
 - **Cambios de la 2.3:** nuevos `GET /v1/proyectos` y `GET /v1/proyectos/{slug}` (este responde `404` si no existe); `GET /v1/solicitud` suma `mensajesPorPagina`, una plantilla de WhatsApp por página.
 - **Cambios de la 2.2:** nuevo `GET /v1/contacto`; `Sede` suma `correo`, `horario` y `mapaEmbedUrl`; `GET /v1/matricula/solicitud` pasa a `GET /v1/solicitud`, común a Matrícula y Contacto; se aclara que el año de Matrícula lo define el colegio.
 - **Cambios de la 2.1:** solo agrega los endpoints de Matrícula (§3.10 a §3.15); no cambia ninguno anterior.
@@ -71,9 +72,11 @@
   - nuevo `GET /v1/portada/banners`, que reemplaza el aviso único
   - se eliminan las rutas de la portada antigua y el aviso
   - el hero pasa a `GET /v1/propuesta-educativa/cabecera`
-- **Datos de prueba:** `src/api/mock/`. El carrusel tiene 3 banners en `tipico`, 1 en `corto`, 6 en `largo` y ninguno en `vacio`. Matrícula tiene datos en `tipico`, `corto`, `largo`, `sin-foto` y `vacio` (y su cabecera en `alt-vacio`); el año en `tipico` es 2026, el de los afiches publicados. Contacto, Proyectos, Nosotros y Logros tienen datos en los seis escenarios.
+- **Datos de prueba:** `src/api/mock/`. El carrusel tiene 3 banners en `tipico`, 1 en `corto`, 6 en `largo` y ninguno en `vacio`. Matrícula tiene datos en `tipico`, `corto`, `largo`, `sin-foto` y `vacio` (y su cabecera en `alt-vacio`); el año en `tipico` es 2026, el de los afiches publicados. Contacto, Proyectos, Nosotros, Logros y Propuesta Educativa tienen datos en los seis escenarios.
 
 ### Verificación al cierre
+
+**Propuesta Educativa, cuerpo (2026-10-09):** `npm test` con 205 pruebas (incluye que `tipico` no publique precios ni fechas de la academia). Por pedido, solo: axe y responsivo en 390 y 1920 (típico), sin violaciones ni desplazamiento, y una pasada de teclado (ningún foco tapado; el filtro por universidad se usa con Enter, queda en la dirección y anuncia el resultado; los enlaces externos avisan que se abren en otra pestaña). review-animations: sin movimiento nuevo (solo entradas ya revisadas; el filtro no se anima).
 
 **Logros con los datos confirmados (2026-10-09):** `npm test` con 185 pruebas (en `tipico`, ningún logro «por verificar» ni «por confirmar» y todos con fuente). Por pedido, solo: axe y responsivo en 390 y 1920 (típico), sin violaciones ni desplazamiento, y una pasada de teclado (ningún foco tapado; el filtro de década se usa con Enter, queda en la dirección, se combina con el de categoría y anuncia el resultado; «Todos» lo quita; los enlaces de fuente avisan que se abren en otra pestaña).
 
@@ -108,7 +111,15 @@
 
 ## Pendientes
 
-1. **Contenido de Propuesta Educativa:** es la única página que muestra solo su cabecera. Con el mismo nivel de diseño y animaciones, sin carrusel, y ampliando el contrato.
+1. **Propuesta Educativa: contenido que falta o no se puede usar.**
+   - **El «PDF informativo» que enlaza cata.edu.pe en Propuesta Educativa no es del colegio:** es una plantilla de **Innova Schools** casi sin cambios (habla de «Innova Schools», «Innova Day», «Semana Innova», de una metodología «diseñada junto a la universidad de Berkeley», de grados «9° a 11°», reconocimientos del Foro Económico Mundial a Innova Schools y un teléfono de relleno «(01) 555 5555»). No se usó nada de él. Conviene retirarlo de cata.edu.pe cuanto antes
+   - **Páginas antiguas con plantilla:** «propuesta-pedagogica» (testimonios de una aseguradora y la frase «42 años… una de las organizaciones educativas más grandes del país»), «inicial» (programas Minichef, Teatro y ABC Program con texto de relleno) y «secundaria» (bloques en inglés y de relleno). De ellas solo se tomaron los párrafos propios del colegio
+   - **Programa Edén y Diseña tu Vida:** aparecen como títulos en cata.edu.pe, sin descripción. No se publican hasta tener su texto
+   - **EVA Student y Planificador Inteligente EVA:** se publican con «Descripción por confirmar»; falta qué son y para qué sirven (del Planificador solo hay un diseño en Canva)
+   - **Academia:** los precios y fechas publicados son de 2022-2023 y no se muestran («Precios y fechas por actualizar»). Faltan los vigentes
+   - **Revisar:** el pilar «Desarrollo integral» dice «a lo largo de los 13 años»; inicial (3), primaria (6) y secundaria (5) suman 14. Se dejó tal cual
+   - **Áreas o modelo curricular propio:** cata.edu.pe no lo publica (solo los íconos repetidos «Lógico Matemática, Comunicación, Arte, Matemática» de la página de plantilla). Si el colegio quiere mostrarlo, hay que añadir su sección
+   - **Fotos:** las de los pilares en cata.edu.pe son de banco de imágenes; los niveles usan fotos de prueba. Hacen falta fotos reales (con autorización de las familias)
 2b. **Logros: lo que el colegio debe confirmar.** No se publica; está en el escenario `largo`, marcado «por confirmar», listo para pasar a publicado.
 
    | Qué confirmar | Qué falta | De dónde salió |
@@ -172,4 +183,4 @@
 
 ## Siguiente paso
 
-Revisar Logros y pedir al colegio que confirme los logros por verificar (pendiente 2b). Luego, el contenido de Propuesta Educativa (pendiente 1). En paralelo, el colegio puede confirmar los datos de Matrícula y Contacto (pendientes 2 y 3), aportar el contenido de Proyectos y Nosotros (pendientes 4 y 5), entregar el contrato 2.4 a RR.HH. (pendiente 7) y reunir el material del pendiente 8.
+El mapa del sitio está completo. Revisar Propuesta Educativa y pedir al colegio lo que falta (pendiente 1, en especial retirar el PDF de Innova Schools) y que confirme los logros (pendiente 2b). En paralelo, el colegio puede confirmar los datos de Matrícula y Contacto (pendientes 2 y 3), aportar el contenido de Proyectos y Nosotros (pendientes 4 y 5), entregar el contrato 2.4 a RR.HH. (pendiente 7) y reunir el material del pendiente 8.

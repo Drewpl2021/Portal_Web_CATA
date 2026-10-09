@@ -71,21 +71,31 @@ function Lista({ b }: { b: BloqueDe<'lista'> }) {
   return (
     <div className="f-bloque f-lista f-lista--bloque">
       {b.titulo && <h2 className="f-lista__titulo">{b.titulo}</h2>}
-      <ul className="f-lista__items">
-        {b.items.map((item, i) => (
+      <ItemsVerificados items={b.items} />
+    </div>
+  )
+}
+
+/** Lista con marca de verificación dorada. La usan los bloques, los requisitos de Matrícula y los proyectos. */
+export function ItemsVerificados({ items }: { items: (string | { titulo: string | null; texto: string; fuente?: string | null })[] }) {
+  return (
+    <ul className="f-lista__items">
+      {items.map((item, i) => {
+        const { titulo, texto, fuente } = typeof item === 'string' ? { titulo: null, texto: item, fuente: null } : item
+        return (
           <li key={i}>
             <span className="f-lista__marca" aria-hidden="true">
               <Check size={16} strokeWidth={3} />
             </span>
             <span>
-              {item.titulo && <strong>{item.titulo}: </strong>}
-              {item.texto}
-              {item.fuente && <span className="f-lista__fuente"> ({item.fuente})</span>}
+              {titulo && <strong>{titulo}: </strong>}
+              {texto}
+              {fuente && <span className="f-lista__fuente"> ({fuente})</span>}
             </span>
           </li>
-        ))}
-      </ul>
-    </div>
+        )
+      })}
+    </ul>
   )
 }
 

@@ -6,7 +6,7 @@ import Imagen from '../../components/Imagen'
 import { fechaLegible } from '../../lib/formato'
 import { useRutaInterna } from '../../sitio/BaseRuta'
 
-export const ESTADO_PROYECTO: Record<EstadoProyecto, string> = {
+const ESTADO_PROYECTO: Record<EstadoProyecto, string> = {
   'en-curso': 'En curso',
   proximo: 'Próximamente',
   finalizado: 'Finalizado',

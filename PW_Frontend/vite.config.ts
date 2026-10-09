@@ -1,8 +1,19 @@
-import { defineConfig, loadEnv } from 'vite'
+import { rmSync } from 'node:fs'
+import { resolve } from 'node:path'
+import { defineConfig, loadEnv, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // Modo de build que genera a propósito una versión con los datos de prueba (npm run build:demo).
 const MODO_DEMO = 'demo'
+
+// public/mock tiene las imágenes y el audio de los datos de prueba: solo hacen falta en desarrollo y en la demo.
+const sinMediosDePrueba = (): Plugin => ({
+  name: 'sin-medios-de-prueba',
+  apply: 'build',
+  closeBundle() {
+    rmSync(resolve(__dirname, 'dist/mock'), { recursive: true, force: true })
+  },
+})
 
 export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), 'VITE_')
@@ -26,7 +37,7 @@ export default defineConfig(({ command, mode }) => {
   }
 
   return {
-    plugins: [react()],
+    plugins: [react(), ...(demo ? [] : [sinMediosDePrueba()])],
     // La demo siempre usa los datos locales, aunque el entorno tenga VITE_API_URL.
     define: demo ? { 'import.meta.env.VITE_API_URL': JSON.stringify('') } : {},
   }

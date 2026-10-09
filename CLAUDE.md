@@ -33,6 +33,8 @@ Public website for the school CATA (Colegio Adventista Túpac Amaru, Juliaca).
 ## Site structure
 
 - `PW_Frontend/src/portal/` is the site: `Layout.tsx` (fixed header, page transitions, footer), `paginas/` (one file per page), `secciones/` (page sections), `portal.css`.
+- Inicio is in the main bundle; every other page is loaded on demand with `React.lazy` in `Layout.tsx` (new pages should follow the same pattern).
+- `public/mock` (test images and audio) is removed from production builds by a plugin in `vite.config.ts`; the high-resolution emblem lives in `docs/marca/`, not in `public/`.
 - Inicio (`/`) starts with the **banner carousel** (`GET /v1/portada/banners`). The carousel is used **only on Inicio**; every other page starts with its own header.
 - Propuesta Educativa (`/propuesta-educativa`) starts with the header scene (students in front of the emblem ring, with the medal rotating inside the ring).
 - Every page in the site map is built, including the body of Propuesta Educativa (pillars, levels, digital platforms and pre-university academy), with the same design and motion level as Inicio and without a carousel.

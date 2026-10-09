@@ -1,22 +1,25 @@
-import { useEffect, useLayoutEffect, useRef } from 'react'
+import { lazy, Suspense, useEffect, useLayoutEffect, useRef } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'motion/react'
 import InsigniaPrueba from '../components/InsigniaPrueba'
 import { tituloDeRuta } from '../sitio/mapa'
 import TransicionPagina, { pedirFocoEnPaginaNueva } from '../sitio/TransicionPagina'
 import Cabecera from './Cabecera'
-import Contacto from './paginas/Contacto'
 import Inicio from './paginas/Inicio'
-import Logros from './paginas/Logros'
-import Matricula from './paginas/Matricula'
-import Nosotros from './paginas/Nosotros'
-import NosotrosPagina from './paginas/NosotrosPagina'
 import Pendiente from './paginas/Pendiente'
-import PropuestaEducativa from './paginas/PropuestaEducativa'
-import ProyectoDetalle from './paginas/ProyectoDetalle'
-import Proyectos from './paginas/Proyectos'
+import { CabeceraCargando } from './secciones/CabeceraPagina'
 import Pie from './secciones/Pie'
 import './portal.css'
+
+// Inicio va en el paquete principal; las demás páginas se descargan al visitarlas.
+const Contacto = lazy(() => import('./paginas/Contacto'))
+const Logros = lazy(() => import('./paginas/Logros'))
+const Matricula = lazy(() => import('./paginas/Matricula'))
+const Nosotros = lazy(() => import('./paginas/Nosotros'))
+const NosotrosPagina = lazy(() => import('./paginas/NosotrosPagina'))
+const PropuestaEducativa = lazy(() => import('./paginas/PropuestaEducativa'))
+const ProyectoDetalle = lazy(() => import('./paginas/ProyectoDetalle'))
+const Proyectos = lazy(() => import('./paginas/Proyectos'))
 
 // Estructura de todo el portal: cabecera fija, páginas con transición y pie.
 export default function Layout() {
@@ -58,7 +61,8 @@ export default function Layout() {
   const pagina = (contenido: React.ReactNode, clase?: string) => (
     <TransicionPagina>
       <main id="contenido" tabIndex={-1} className={clase}>
-        {contenido}
+        {/* Mientras llega el código de la página, la misma cabecera de carga que usan las páginas */}
+        <Suspense fallback={<CabeceraCargando />}>{contenido}</Suspense>
       </main>
     </TransicionPagina>
   )

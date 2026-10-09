@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { ArrowLeft, Check } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
 import { ErrorDatos, obtenerProyecto, obtenerProyectos } from '../../api/servicios'
 import type { Proyecto, SeccionProyecto } from '../../api/tipos'
 import Imagen from '../../components/Imagen'
@@ -9,6 +9,7 @@ import { useRutaInterna } from '../../sitio/BaseRuta'
 import { Revelar } from '../movimiento'
 import CabeceraPagina, { CabeceraCargando, CabeceraError } from '../secciones/CabeceraPagina'
 import Cierre from '../secciones/Cierre'
+import { ItemsVerificados } from '../contenido/Bloques'
 import TarjetaProyecto, { MetaProyecto } from '../secciones/TarjetaProyecto'
 
 const volver = { href: '/proyectos', interna: true, etiqueta: 'Todos los proyectos', icono: <ArrowLeft size={20} strokeWidth={2.5} aria-hidden="true" />, estilo: 'blanco' as const }
@@ -127,19 +128,7 @@ function Secciones({ secciones }: { secciones: SeccionProyecto[] }) {
             {grupo.map((lista, i) => (
               <div key={i} className="f-lista" style={{ '--i': i } as CSSProperties}>
                 <h2 className="f-lista__titulo">{lista.titulo}</h2>
-                <ul className="f-lista__items">
-                  {lista.items.map((item, j) => (
-                    <li key={j}>
-                      <span className="f-lista__marca" aria-hidden="true">
-                        <Check size={16} strokeWidth={3} />
-                      </span>
-                      <span>
-                        {item.titulo && <strong>{item.titulo}: </strong>}
-                        {item.texto}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+                <ItemsVerificados items={lista.items} />
               </div>
             ))}
           </Revelar>

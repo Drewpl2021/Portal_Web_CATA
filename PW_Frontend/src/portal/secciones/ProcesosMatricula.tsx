@@ -1,9 +1,10 @@
 import { useId, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react'
-import { Check } from 'lucide-react'
+
 import { obtenerProcesosMatricula } from '../../api/servicios'
 import type { ProcesoMatricula } from '../../api/tipos'
 import { Cargando, ErrorCarga } from '../../components/EstadoSeccion'
 import { useRecurso } from '../../hooks/useRecurso'
+import { ItemsVerificados } from '../contenido/Bloques'
 import { Revelar } from '../movimiento'
 
 // Pasos, requisitos y documentos de cada proceso (estudiantes nuevos, regulares…).
@@ -135,16 +136,7 @@ function Proceso({ proceso, conNombre = true }: { proceso: ProcesoMatricula; con
           {proceso.listas.map((lista, i) => (
             <div key={i} className="f-lista" style={{ '--i': i } as CSSProperties}>
               <h3 className="f-lista__titulo">{lista.titulo}</h3>
-              <ul className="f-lista__items">
-                {lista.items.map((item, j) => (
-                  <li key={j}>
-                    <span className="f-lista__marca" aria-hidden="true">
-                      <Check size={16} strokeWidth={3} />
-                    </span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
+              <ItemsVerificados items={lista.items} />
             </div>
           ))}
         </Revelar>

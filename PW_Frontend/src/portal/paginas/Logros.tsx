@@ -11,7 +11,7 @@ import Cierre from '../secciones/Cierre'
 import { FranjaCifras } from '../secciones/Cifras'
 import Filtro, { useFiltroUrl } from '../secciones/Filtro'
 
-export const CATEGORIA_LOGRO: Record<CategoriaLogro, string> = {
+const CATEGORIA_LOGRO: Record<CategoriaLogro, string> = {
   academico: 'Académico',
   deportivo: 'Deportivo',
   artistico: 'Artístico',

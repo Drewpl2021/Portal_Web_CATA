@@ -4523,6 +4523,10 @@ html.f-anim .f-cronograma:not([data-visto])::before {
 }
 
 .f-logro__fuente a {
+  /* Objetivo de al menos 24 px de alto (WCAG 2.5.8), aunque esté dentro de una frase */
+  display: inline-block;
+  min-height: 1.5rem;
+  line-height: 1.5rem;
   font-weight: 700;
   color: var(--marino);
   text-decoration-color: var(--dorado);

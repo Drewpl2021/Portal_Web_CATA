@@ -76,6 +76,14 @@
 
 ### Verificación al cierre
 
+**Auditoría final de todo el portal (2026-10-09).** 24 páginas: Inicio, Propuesta Educativa, Matrícula, Contacto, Proyectos, un detalle de proyecto, Logros, el índice de Nosotros y sus 16 subpáginas.
+- **axe (WCAG 2.2 AA):** 168 análisis sin violaciones ni desplazamiento horizontal: 390, 768, 1920 y 2560 px en el escenario típico, más movimiento reducido, escenario vacío y escenario de error (1366 px). Una página con errores de JavaScript o sin `h1` cuenta como fallida.
+- **Teclado:** 321 focos revisados en las 24 páginas. «Saltar al contenido» lleva al contenido en todas, ningún foco queda sin contorno ni tapado por la cabecera, y los objetivos miden al menos 24 × 24 px (las tarjetas de documentos son enlaces en toda su superficie).
+- **Pruebas y builds:** 205 pruebas y typecheck pasan. `npm run build` se detiene sin `VITE_API_URL`; con ella compila sin datos de prueba (ni JSON ni `public/mock`); `npm run build:demo` compila con los datos de prueba.
+- **Rendimiento:** el JS inicial bajó de 514 kB (154 kB gzip) a 442 kB (139 kB gzip) al cargar las páginas bajo demanda (cada una, de 2 a 13 kB). CSS: 76 kB (14 kB gzip). Fuente Archivo variable (woff2, solo el subconjunto que pide cada idioma). El favicon pasó de 596 kB a 46 kB.
+- **Código:** 0,5 % de líneas duplicadas (jscpd); ningún archivo sin usar.
+
+
 **Propuesta Educativa, cuerpo (2026-10-09):** `npm test` con 205 pruebas (incluye que `tipico` no publique precios ni fechas de la academia). Por pedido, solo: axe y responsivo en 390 y 1920 (típico), sin violaciones ni desplazamiento, y una pasada de teclado (ningún foco tapado; el filtro por universidad se usa con Enter, queda en la dirección y anuncia el resultado; los enlaces externos avisan que se abren en otra pestaña). review-animations: sin movimiento nuevo (solo entradas ya revisadas; el filtro no se anima).
 
 **Logros con los datos confirmados (2026-10-09):** `npm test` con 185 pruebas (en `tipico`, ningún logro «por verificar» ni «por confirmar» y todos con fuente). Por pedido, solo: axe y responsivo en 390 y 1920 (típico), sin violaciones ni desplazamiento, y una pasada de teclado (ningún foco tapado; el filtro de década se usa con Enter, queda en la dirección, se combina con el de categoría y anuncia el resultado; «Todos» lo quita; los enlaces de fuente avisan que se abren en otra pestaña).
@@ -110,6 +118,16 @@
 - **Builds:** `npm run build` falla sin `VITE_API_URL`; con la API y en `build:demo` compila.
 
 ## Pendientes
+
+0. **De la auditoría final** (no bloquean la publicación):
+   - **JS inicial de 139 kB gzip:** casi todo son librerías que usa Inicio (React, Motion, zod, Embla, NumberFlow). Se podría bajar cargando zod y el carrusel aparte, o cambiando Motion por animaciones CSS donde baste
+   - **La cabecera de Propuesta Educativa y `CabeceraPagina`** repiten la preparación de las franjas y el movimiento con el scroll (unas 10 líneas). Se dejaron así porque son cabeceras distintas
+   - **`useRutaInterna`** ya no antepone ningún prefijo (servía para las propuestas de diseño); se mantiene para no tocar todos los enlaces y puede quitarse en una limpieza
+   - **El JS de producción incluye la constante `MEDIOS_PRUEBA`** (el dominio ficticio de las imágenes de prueba, 36 caracteres), aunque nunca se usa con la API real
+   - **Imágenes reales:** hoy casi todas son de prueba. Cuando lleguen las del colegio, pedirlas en JPEG o WebP de hasta 400 KB (como dice el contrato), porque el portal no las comprime
+   - **Prueba con lector de pantalla** (pendiente 6): axe y el recorrido de teclado no la reemplazan
+   - **Matriz completa de 8 anchos:** esta auditoría usó 390, 768, 1920 y 2560; 360, 1024, 1366 y 3840 se verificaron en las primeras páginas, pero no en las últimas (Logros y el cuerpo de Propuesta Educativa)
+
 
 1. **Propuesta Educativa: contenido que falta o no se puede usar.**
    - **El «PDF informativo» que enlaza cata.edu.pe en Propuesta Educativa no es del colegio:** es una plantilla de **Innova Schools** casi sin cambios (habla de «Innova Schools», «Innova Day», «Semana Innova», de una metodología «diseñada junto a la universidad de Berkeley», de grados «9° a 11°», reconocimientos del Foro Económico Mundial a Innova Schools y un teléfono de relleno «(01) 555 5555»). No se usó nada de él. Conviene retirarlo de cata.edu.pe cuanto antes

@@ -14,7 +14,7 @@ import type { Imagen } from '../api/tipos'
  * Se cumple una sola vez, cuando el elemento entra en pantalla.
  * Sin IntersectionObserver, el contenido se considera visto desde el inicio.
  */
-export function useVisto<T extends Element>(margen = '0px 0px -12% 0px') {
+function useVisto<T extends Element>(margen = '0px 0px -12% 0px') {
   const ref = useRef<T>(null)
   const [visto, setVisto] = useState(false)
   useEffect(() => {

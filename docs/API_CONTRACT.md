@@ -1,6 +1,8 @@
 # Contrato de la API pública del portal CATA
 
-**Versión del contrato:** 2.5 · **Fecha:** 2026-10-08
+**Versión del contrato:** 2.6 · **Fecha:** 2026-10-09
+
+**Cambios de la 2.6:** nuevo `GET /v1/logros` (§3.22): la página Logros, con sus cifras y la lista de logros por categoría y año.
 
 **Cambios de la 2.5:**
 - Nuevo `GET /v1/docentes` (§3.21): el personal docente con su nivel, para la página Personal Docente.
@@ -185,6 +187,7 @@ Valores válidos de `seccion`: `"quienes-somos"`, `"niveles"`, `"sedes"`, `"noti
 | `GET /v1/nosotros` | `Nosotros` | Índice de Nosotros: título, frase y una frase por subpágina |
 | `GET /v1/nosotros/paginas/{slug}` | `PaginaContenido` | Cada subpágina de Nosotros, armada con bloques (`404` si no existe) |
 | `GET /v1/docentes` | `Docentes` | Personal docente por nivel (página Personal Docente) |
+| `GET /v1/logros` | `Logros` | Página Logros: cabecera, cifras y logros |
 
 Cada sección del portal carga su endpoint por separado. Si uno falla, esa sección muestra su error y el resto sigue funcionando.
 
@@ -801,6 +804,32 @@ El personal docente, para la página Personal Docente. El portal lo agrupa por n
 
 **`Docente`**: `id`; `nombre` (máx. 80); `cargo` (máx. 80: cargo o área, «Tutora de 3 años», «Matemática»); `nivel` (`id` de un nivel de la lista; si no existe, la respuesta es inválida); `foto` (`Imagen` \| null, cuadrada, mínimo 400 × 400; sin foto, el portal muestra las iniciales). Publicar la foto de cada docente requiere su autorización de uso de imagen.
 
+### 3.22 `GET /v1/logros`
+
+La página Logros. El portal muestra arriba los logros con `destacado: true`, luego la lista completa, del más reciente al más antiguo (los que no tienen año, al final), con dos filtros que quedan en la dirección: categoría (`?categoria=artistico`) y año (`?anio=2011`). Cada filtro solo ofrece las opciones que tienen logros y no aparece si hay una sola.
+
+| Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
+|---|---|---|---|---|
+| `titulo` | string | no | 60 | «Logros». |
+| `bajada` | string \| null | sí | 200 | |
+| `cifras` | `Cifra[]` | no | 0 a 4 | Igual que `GET /v1/portada/cifras` (§3.9). **Solo cifras reales y verificables.** `[]` = sin franja de cifras. |
+| `logros` | `Logro[]` | no | 0 a 200 | `[]` = «Los logros se publicarán pronto». |
+
+**`Logro`**
+
+| Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
+|---|---|---|---|---|
+| `id` | string | no | — | |
+| `titulo` | string | no | 140 | Qué se logró: «Subcampeón del XIX Concurso Nacional de Bandas Sinfónicas Escolares». |
+| `categoria` | `"academico"` \| `"deportivo"` \| `"artistico"` \| `"institucional"` | no | — | |
+| `anio` | integer \| null | sí | — | 1900 a 2100. `null` = sin año publicado (no se inventa). |
+| `nivel` | string \| null | sí | 60 | Nivel o grupo: «Secundaria», «Banda sinfónica». |
+| `descripcion` | string \| null | sí | 300 | Detalle: concurso, lugar, organizador. |
+| `foto` | `Imagen` \| null | sí | — | 3:2. Si muestra estudiantes, requiere autorización de las familias. |
+| `destacado` | boolean | no | — | `true` = también aparece arriba, en «Destacados». Úsenlo para los logros más importantes (nacionales, por ejemplo). |
+
+**Solo logros confirmados por el colegio.** El módulo debe publicar únicamente logros que el colegio haya verificado; los que vengan de otras fuentes se confirman antes (ver `docs/PENDIENTES.md`).
+
 ## 4. Lo que el portal hace con cada caso
 
 Esto sirve para que el módulo sepa qué pasa con lo que publica.
@@ -820,6 +849,7 @@ Esto sirve para que el módulo sepa qué pasa con lo que publica.
 | Contacto: redes `[]` y `correo: null` | «Las redes del colegio se publicarán pronto». |
 | Proyectos: una sola categoría con proyectos | No aparece el filtro. |
 | Personal docente de un solo nivel | No aparece el filtro. |
+| Logros: filtros sin resultados | «No hay logros con esos filtros» y un botón para verlos todos. |
 | Subpágina de Nosotros sin bloques | «El contenido de esta página se publicará pronto», con el menú del grupo y «Anterior / Siguiente». |
 | Proyecto inexistente (`404`) | «Proyecto no encontrado», con enlace a la lista. Cualquier otro error muestra «Reintentar». |
 | Matrícula: falla `/v1/sitio` | El formulario muestra su error con «Reintentar», porque no tiene el número de WhatsApp. |
@@ -835,5 +865,5 @@ Esto sirve para que el módulo sepa qué pasa con lo que publica.
 El portal trae datos de prueba que cumplen este contrato en `PW_Frontend/src/api/mock/`. Sirven de **ejemplos completos** de cada respuesta: el módulo puede compararse con ellos.
 
 - `tipico/`: contenido real del colegio.
-- Escenarios que solo cambian algunos archivos: `corto/`, `largo/`, `sin-foto/`, `alt-vacio/` y `vacio/`. El carrusel tiene 3 banners en `tipico/`, 1 en `corto/`, 6 en `largo/` y ninguno en `vacio/`. Matrícula tiene datos en `tipico/`, `corto/`, `largo/` y `vacio/`, y su cabecera además en `sin-foto/` y `alt-vacio/`. En `tipico/`, los requisitos, documentos y pasos son los de los afiches de cata.edu.pe; el año es el de los afiches publicados (2026), las fechas son de prueba y las vacantes dicen «consultar». Contacto tiene datos en todos los escenarios. En `tipico/`, sedes y redes son las de cata.edu.pe; el colegio no publica correos ni horarios, así que van vacíos, y los mapas son búsquedas de cada dirección, que el colegio debe reemplazar por las de «Insertar un mapa». Proyectos tiene datos en los seis escenarios; los detalles se guardan como `proyecto--{slug}.json`. En `tipico/`, los dos proyectos y sus textos son los que publica cata.edu.pe (Gastronomía e Industrias Alimentarias, y Robótica, Impresiones 3D y Computación); las fotos son de prueba, y niveles, estado y fecha van vacíos porque no están publicados. Nosotros tiene datos en los seis escenarios; las subpáginas se guardan como `nosotros-pagina--{slug}.json`. En `tipico/`, las siete páginas de Institución usan los textos y fotos de cata.edu.pe, salvo el árbol del organigrama, que es de prueba y lo dice (el publicado es un diseño de Canva). El himno no tiene audio publicado; `largo/` trae un tono de prueba para el reproductor. Gestión y Documentos enlazan a los diseños de Canva y a la hoja de cálculo que publica cata.edu.pe; `largo/instrumentos-de-gestion` trae archivos de prueba con peso. El personal docente es de prueba en todos los escenarios (el colegio aún no envía la lista).
+- Escenarios que solo cambian algunos archivos: `corto/`, `largo/`, `sin-foto/`, `alt-vacio/` y `vacio/`. El carrusel tiene 3 banners en `tipico/`, 1 en `corto/`, 6 en `largo/` y ninguno en `vacio/`. Matrícula tiene datos en `tipico/`, `corto/`, `largo/` y `vacio/`, y su cabecera además en `sin-foto/` y `alt-vacio/`. En `tipico/`, los requisitos, documentos y pasos son los de los afiches de cata.edu.pe; el año es el de los afiches publicados (2026), las fechas son de prueba y las vacantes dicen «consultar». Contacto tiene datos en todos los escenarios. En `tipico/`, sedes y redes son las de cata.edu.pe; el colegio no publica correos ni horarios, así que van vacíos, y los mapas son búsquedas de cada dirección, que el colegio debe reemplazar por las de «Insertar un mapa». Proyectos tiene datos en los seis escenarios; los detalles se guardan como `proyecto--{slug}.json`. En `tipico/`, los dos proyectos y sus textos son los que publica cata.edu.pe (Gastronomía e Industrias Alimentarias, y Robótica, Impresiones 3D y Computación); las fotos son de prueba, y niveles, estado y fecha van vacíos porque no están publicados. Nosotros tiene datos en los seis escenarios; las subpáginas se guardan como `nosotros-pagina--{slug}.json`. En `tipico/`, las siete páginas de Institución usan los textos y fotos de cata.edu.pe, salvo el árbol del organigrama, que es de prueba y lo dice (el publicado es un diseño de Canva). El himno no tiene audio publicado; `largo/` trae un tono de prueba para el reproductor. Gestión y Documentos enlazan a los diseños de Canva y a la hoja de cálculo que publica cata.edu.pe; `largo/instrumentos-de-gestion` trae archivos de prueba con peso. El personal docente es de prueba en todos los escenarios (el colegio aún no envía la lista). En Logros, `tipico/` trae solo los seis reconocimientos institucionales que publica cata.edu.pe; `largo/` suma los logros encontrados en otras fuentes, marcados «por verificar» con su fuente.
 - Las pruebas automáticas (`npm test` en `PW_Frontend/`) validan todos esos archivos contra este contrato.

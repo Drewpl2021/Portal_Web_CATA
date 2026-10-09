@@ -111,7 +111,8 @@ function Listo({ hero, sitio }: { hero: Hero; sitio: Sitio | null }) {
 
         {conEscena && (
           // La escena tiene proporción fija y todo se ubica en % de ella: escala y se mueve como un solo grupo.
-          <motion.div className="f-escena" style={reducir ? undefined : { transform: tEscena }}>
+          // data-sin-barra-redes: por debajo de 90rem de ancho la escena llega al borde; ahí la barra de redes se aparta.
+          <motion.div className="f-escena" data-sin-barra-redes style={reducir ? undefined : { transform: tEscena }}>
             <div className="f-escena__anillo">
               <motion.svg viewBox="0 0 200 200" aria-hidden="true" style={reducir ? undefined : { transform: tAnillo }}>
                 <circle cx="100" cy="100" r="92" />

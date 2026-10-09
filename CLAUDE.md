@@ -14,7 +14,7 @@ Public website for the school CATA (Colegio Adventista Túpac Amaru, Juliaca).
 
 ## API contract and data layer
 
-- **Contract:** `docs/API_CONTRACT.md` (v2.9) is the source of truth for every endpoint, field, nullability, date format and image rule. `docs/api-contract.schema.json` is its JSON Schema, generated with `npm run esquema` in `PW_Frontend/`; never edit it by hand. Any change to the contract is agreed with the HR team first and updates both files, the types and the mock data together. Do not invent endpoints in the HR system.
+- **Contract:** `docs/API_CONTRACT.md` (v2.10) is the source of truth for every endpoint, field, nullability, date format and image rule. `docs/api-contract.schema.json` is its JSON Schema, generated with `npm run esquema` in `PW_Frontend/`; never edit it by hand. Any change to the contract is agreed with the HR team first and updates both files, the types and the mock data together. Do not invent endpoints in the HR system.
 - **Types and validation:** `PW_Frontend/src/api/tipos.ts` (TypeScript types) and `PW_Frontend/src/api/esquemas.ts` (zod schemas). A compile-time check asserts both describe the same shapes.
 - **Data layer:** `PW_Frontend/src/api/servicios.ts` is the only place that fetches data. Components call its `obtener*()` functions and never know where data comes from. Every response, local or remote, is validated against the contract; an invalid response becomes that section's error state.
   - `VITE_API_URL` empty: reads the local mock data.
@@ -32,7 +32,7 @@ Public website for the school CATA (Colegio Adventista Túpac Amaru, Juliaca).
 
 ## Site structure
 
-- `PW_Frontend/src/portal/` is the site: `Layout.tsx` (fixed header, page transitions, footer), `paginas/` (one file per page), `secciones/` (page sections), `portal.css`.
+- `PW_Frontend/src/portal/` is the site: `Layout.tsx` (fixed header, page transitions, footer, and the floating social bar `BarraRedes.tsx`, shown only from 1360 px; social links come from `redes` in `/v1/sitio`), `paginas/` (one file per page), `secciones/` (page sections), `portal.css`.
 - Inicio is in the main bundle; every other page is loaded on demand with `React.lazy` in `Layout.tsx` (new pages should follow the same pattern).
 - `public/mock` (test images and audio) is removed from production builds by a plugin in `vite.config.ts`; the high-resolution emblem lives in `docs/marca/`, not in `public/`.
 - Inicio (`/`) starts with the **banner carousel** (`GET /v1/portada/banners`). The carousel is used **only on Inicio**; every other page starts with its own header.

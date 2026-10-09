@@ -5,6 +5,7 @@ import { useRecurso } from '../../hooks/useRecurso'
 import { enlaceMapa, enlaceTel, enlaceWhatsapp } from '../../lib/formato'
 import { MENU, NOSOTROS } from '../../sitio/mapa'
 import { useRutaInterna } from '../../sitio/BaseRuta'
+import { ListaRedes } from '../BarraRedes'
 import Medalla from '../Medalla'
 
 // Pie completo sobre marino: identidad, contacto, mapa del sitio y accesos.
@@ -94,6 +95,15 @@ export default function PieFinal() {
             </ul>
           ) : (
             <p className="f-pie__nota">{r.estado === 'cargando' ? 'Cargando datos de contacto…' : 'Datos de contacto no disponibles.'}</p>
+          )}
+          {/* Respaldo de la barra flotante: aquí las redes se ven en todos los anchos. */}
+          {sitio && sitio.redes.length > 0 && (
+            <>
+              <h2 className="f-pie__subtitulo" id="f-pie-redes">
+                Síguenos
+              </h2>
+              <ListaRedes redes={sitio.redes} className="f-lista-redes--pie" />
+            </>
           )}
         </div>
       </div>

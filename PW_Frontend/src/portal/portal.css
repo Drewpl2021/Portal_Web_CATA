@@ -5196,3 +5196,294 @@ html.f-anim [data-revelar='carriles']:not([data-visto]) > * {
 .f-pendiente__texto {
   margin-top: 1.5rem;
 }
+
+/* ═════════ Redes sociales: placa, lista (pie y menú móvil) y barra flotante ═════════ */
+
+/* Placa de 44 × 44 px en el color de la marca (4.5:1 o más con el blanco, ver redes.ts),
+   inclinada como el resto de placas del portal; el icono no se inclina. */
+.f-placa-red {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  color: var(--blanco);
+}
+
+.f-placa-red::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 0.25rem;
+  background: var(--marca);
+  transform: skewX(-8deg);
+}
+
+.f-placa-red svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.f-lista-redes {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.f-lista-redes__enlace {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 2.75rem;
+  color: var(--blanco);
+  text-decoration: none;
+  text-underline-offset: 0.3em;
+  text-decoration-color: var(--dorado);
+}
+
+.f-lista-redes__texto {
+  display: grid;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+/* Dato aún no confirmado: se ve tal cual, con borde punteado como en Logros y Plataformas */
+.f-lista-redes__aclaracion,
+.f-red__aclaracion {
+  justify-self: start;
+  margin-top: 0.25rem;
+  padding: 0.0625rem 0.5rem;
+  border: 0.125rem dashed var(--dorado);
+  border-radius: 0.25rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--blanco);
+}
+
+.f-red__aclaracion {
+  margin-top: 0.125rem;
+}
+
+.f-pie .f-pie__subtitulo {
+  margin-top: 2rem;
+}
+
+.f-pie .f-lista-redes__enlace {
+  padding: 0;
+}
+
+.f-movil__redes {
+  margin-top: 2rem;
+}
+
+.f-movil__subtitulo {
+  margin-bottom: 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--marino-lavado);
+}
+
+.f-movil__redes .f-lista-redes {
+  grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr));
+  gap: 0.75rem 1rem;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .f-lista-redes__enlace:hover {
+    text-decoration-line: underline;
+  }
+}
+
+/* Barra flotante. Solo desde 1360 px: ahí el margen lateral de la página (fuera de --ancho)
+   es más ancho que la barra, así que no tapa contenido ni controles. Debajo de ese ancho, las
+   redes están en el menú móvil y en el pie. */
+.f-barra-redes {
+  display: none;
+}
+
+@media (min-width: 1360px) {
+  .f-barra-redes {
+    --foco: var(--marino);
+    position: fixed;
+    top: 50%;
+    right: 0.75rem;
+    z-index: 40;
+    display: block;
+    transform: translateY(-50%);
+    transition:
+      transform 240ms var(--ease-salida),
+      opacity 240ms var(--ease-salida);
+  }
+
+  .f-barra-redes ul {
+    display: grid;
+    gap: 0.375rem;
+  }
+
+  /* Se retira hacia el borde al bajar o cuando pasa por debajo una composición a todo el ancho;
+     vuelve al subir. Con el foco dentro, siempre visible. */
+  .f-barra-redes[data-mostrada][data-oculta]:not(:focus-within) {
+    opacity: 0;
+    transform: translate(calc(100% + 0.75rem), -50%);
+    pointer-events: none;
+  }
+
+  /* Entrada escalonada, una sola vez: espera (en pausa, invisible) a que la barra pueda verse */
+  .f-barra-redes li {
+    animation: f-red-entra 360ms var(--ease-salida) both paused;
+    animation-delay: calc(120ms + var(--i) * 55ms);
+  }
+
+  .f-barra-redes[data-mostrada] li,
+  .f-barra-redes:focus-within li {
+    animation-play-state: running;
+  }
+
+  .f-barra-redes:not([data-mostrada]) {
+    pointer-events: none;
+  }
+
+  .f-barra-redes__enlace {
+    position: relative;
+    display: block;
+    color: var(--blanco);
+    text-decoration: none;
+    outline-color: transparent; /* el anillo va en la placa; esto queda para el modo de alto contraste */
+  }
+
+  .f-barra-redes__placa {
+    transition: transform 140ms var(--ease-salida);
+  }
+
+  /* Anillo blanco y marino: se ve sobre fondos claros, oscuros y fotos */
+  .f-barra-redes__enlace:focus-visible .f-barra-redes__placa::before {
+    box-shadow:
+      0 0 0 0.1875rem var(--blanco),
+      0 0 0 0.375rem var(--marino);
+  }
+
+  .f-barra-redes__enlace:active .f-barra-redes__placa {
+    transform: scale(0.94);
+  }
+
+  /* Dato de prueba: punto dorado en la esquina; el aviso completo se lee en el nombre */
+  .f-barra-redes__placa[data-prueba]::after {
+    content: '';
+    position: absolute;
+    top: -0.1875rem;
+    left: -0.25rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    border: 0.125rem solid var(--marino);
+    border-radius: 50%;
+    background: var(--dorado);
+  }
+
+  /* Nombre de la red: sale desde detrás de la placa hacia la izquierda */
+  .f-barra-redes__nombre {
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    isolation: isolate;
+    /* Puente transparente entre placa y nombre: el mouse pasa de uno al otro sin perder el hover */
+    border-right: 0.375rem solid transparent;
+    display: grid;
+    justify-items: end;
+    padding: 0.4375rem 1rem;
+    font-stretch: 112%;
+    font-weight: 800;
+    font-size: 0.95rem;
+    line-height: 1.2;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translate(0.75rem, -50%);
+    transition:
+      transform 200ms var(--ease-salida),
+      opacity 160ms var(--ease-salida);
+    pointer-events: none;
+  }
+
+  .f-barra-redes__nombre::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: 0.25rem;
+    background: var(--marca);
+    transform: skewX(-8deg);
+  }
+
+  .f-barra-redes__aclaracion {
+    font-weight: 600;
+    font-size: 0.8rem;
+  }
+
+  .f-barra-redes__enlace:focus-visible .f-barra-redes__nombre {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
+
+  .f-barra-redes[data-recogida] .f-barra-redes__nombre {
+    opacity: 0;
+    transform: translate(0.75rem, -50%);
+    pointer-events: none;
+  }
+}
+
+@media (min-width: 1360px) and (hover: hover) and (pointer: fine) {
+  .f-barra-redes:not([data-recogida]) .f-barra-redes__enlace:hover .f-barra-redes__nombre {
+    opacity: 1;
+    transform: translate(0, -50%);
+    pointer-events: auto;
+  }
+}
+
+@keyframes f-red-entra {
+  from {
+    opacity: 0;
+    transform: translateX(1.25rem);
+  }
+}
+
+@keyframes f-red-aparece {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Movimiento reducido: solo cambios de opacidad, sin desplazamientos ni escalas */
+@media (min-width: 1360px) and (prefers-reduced-motion: reduce) {
+  .f-barra-redes li {
+    animation-name: f-red-aparece;
+  }
+
+  .f-barra-redes[data-mostrada][data-oculta]:not(:focus-within) {
+    transform: translateY(-50%);
+  }
+
+  .f-barra-redes__nombre,
+  .f-barra-redes[data-recogida] .f-barra-redes__nombre,
+  .f-barra-redes__enlace:focus-visible .f-barra-redes__nombre {
+    transform: translate(0, -50%);
+  }
+
+  .f-barra-redes__enlace:active .f-barra-redes__placa {
+    transform: none;
+  }
+}
+
+@media (min-width: 1360px) and (prefers-reduced-motion: reduce) and (hover: hover) and (pointer: fine) {
+  .f-barra-redes:not([data-recogida]) .f-barra-redes__enlace:hover .f-barra-redes__nombre {
+    transform: translate(0, -50%);
+  }
+}
+
+@media print {
+  .f-barra-redes {
+    display: none;
+  }
+}

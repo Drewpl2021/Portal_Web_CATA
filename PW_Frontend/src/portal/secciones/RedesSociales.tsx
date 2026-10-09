@@ -1,24 +1,26 @@
 import type { CSSProperties } from 'react'
 import { ArrowUpRight } from 'lucide-react'
-import { obtenerContacto } from '../../api/servicios'
-import type { Red } from '../../api/tipos'
+import { obtenerContacto, obtenerSitio } from '../../api/servicios'
 import { Cargando, ErrorCarga } from '../../components/EstadoSeccion'
 import { useRecurso } from '../../hooks/useRecurso'
 import { Revelar } from '../movimiento'
+import { MARCAS } from '../redes'
 
-const NOMBRE: Record<Red, string> = {
-  facebook: 'Facebook',
-  youtube: 'YouTube',
-  tiktok: 'TikTok',
-  instagram: 'Instagram',
-  x: 'X',
-  linkedin: 'LinkedIn',
-}
-
-// Redes del colegio (y su correo general, si lo hay) como placas marinas inclinadas con el nombre
-// de la red en tipografía ancha. Sin logotipos de terceros: el nombre se lee igual.
+// Redes del colegio (de /v1/sitio, las mismas de la barra flotante y el pie) y su correo general
+// (de /v1/contacto), como placas marinas inclinadas con el nombre de la red en tipografía ancha.
 export default function RedesSociales() {
-  const r = useRecurso('contacto', obtenerContacto)
+  const c = useRecurso('contacto', obtenerContacto)
+  const s = useRecurso('sitio', obtenerSitio)
+  const reintentar = () => {
+    if (c.estado === 'error') c.reintentar()
+    if (s.estado === 'error') s.reintentar()
+  }
+  const r =
+    c.estado === 'error' || s.estado === 'error'
+      ? ({ estado: 'error', reintentar } as const)
+      : c.estado === 'listo' && s.estado === 'listo'
+        ? ({ estado: 'listo', datos: { redes: s.datos.redes, correo: c.datos.correo } } as const)
+        : ({ estado: 'cargando' } as const)
   const vacio = r.estado === 'listo' && r.datos.redes.length === 0 && !r.datos.correo
 
   return (
@@ -35,10 +37,11 @@ export default function RedesSociales() {
         {r.estado === 'listo' && !vacio && (
           <Revelar como="ul" efecto="escalonado" className="f-redes__lista">
             {r.datos.redes.map((red, i) => (
-              <li key={red.url} style={{ '--i': i } as CSSProperties}>
+              <li key={red.red} style={{ '--i': i } as CSSProperties}>
                 <a className="f-red" href={red.url} target="_blank" rel="noreferrer">
-                  <span className="f-red__nombre">{NOMBRE[red.red]}</span>
+                  <span className="f-red__nombre">{MARCAS[red.red].nombre}</span>
                   <span className="f-red__cuenta">{red.cuenta}</span>
+                  {red.aclaracion && <span className="f-red__aclaracion">{red.aclaracion}</span>}
                   <ArrowUpRight className="f-red__flecha" size={26} strokeWidth={2.5} aria-hidden="true" />
                   <span className="visually-hidden"> (se abre en otra pestaña)</span>
                 </a>

@@ -115,7 +115,8 @@ function CarruselListo({ banners }: { banners: Banner[] }) {
       onFocus={() => setRetenido(true)}
       onBlur={alSalirFoco}
     >
-      <div className="f-carrusel__vista" ref={vista}>
+      {/* A todo el ancho: mientras está bajo la barra de redes, la barra se aparta (BarraRedes). */}
+      <div className="f-carrusel__vista" ref={vista} data-sin-barra-redes>
         {/* Mientras avanza solo, los cambios no se anuncian; detenido, se anuncian con cortesía. */}
         <div className="f-carrusel__pista" aria-live={avanza ? 'off' : 'polite'}>
           {banners.map((b, i) => (

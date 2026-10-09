@@ -121,10 +121,11 @@ Los logros que el colegio ya confirmó están publicados. Estos faltan:
 |---|---|---|
 | ☐ | **Número de alumnos** (para las cifras de Inicio) | No se publica porque no lo tenemos. |
 | ☐ | **Emblema vigente**: ¿sigue siendo el de la cinta «1971 – 2022»? | El portal usa ese emblema. |
-| ☐ | **Número de WhatsApp** oficial | La web actual tiene un botón al **956 341 538** y los afiches dicen **986 322 833**; el portal usa el 986 322 833. |
+| ☐ | **Número de WhatsApp** oficial (uno solo) | La web actual muestra **dos números distintos**: un botón al **956 341 538** y los afiches con el **986 322 833**. El portal usa el 986 322 833 en el formulario, en el pie y en el botón de WhatsApp de la barra de redes, donde va marcado «Dato de prueba: número por confirmar». |
+| ☐ | Dirección oficial del canal de **YouTube** | El portal enlaza a youtube.com/@colegiocata828 (el que aparece en la web actual), marcado «Dato de prueba: dirección por confirmar». |
 | ☐ | **Correo** de cada sede y correo general | No están publicados. |
 | ☐ | **Horario de atención** de cada sede | No está publicado. |
-| ☐ | **Redes sociales**: ¿hay Instagram u otras además de Facebook, YouTube y TikTok? | El portal muestra esas tres. |
+| ☐ | **Redes sociales oficiales**: ¿hay Instagram u otras? ¿En qué orden se muestran? | El portal muestra Facebook (facebook.com/colegiocatajuliaca) y TikTok (@colegioadventistacata), ya confirmadas, más YouTube y WhatsApp por confirmar. La lista se puede cambiar desde el sistema de RR.HH. sin tocar el portal. |
 | ☐ | **Convenio con la Universidad Peruana Unión**: ¿sigue vigente? | Se firmó el 16/08/2022 por tres años; el portal lo muestra en Logros. |
 
 ### 3.5 Nosotros
@@ -194,7 +195,7 @@ Estos textos están en el portal, pero **los redactamos o adaptamos nosotros** a
 |---|---|
 | 1. Urgente: errores en cata.edu.pe | 6 |
 | 2. Material (fotos, documentos, autorizaciones) | 20 |
-| 3. Datos a confirmar | 36 |
+| 3. Datos a confirmar | 37 |
 | 4. Textos para revisar y aprobar | 12 |
 
 Gracias. Con esta información, el portal podrá publicarse con contenido real y verificado del colegio.

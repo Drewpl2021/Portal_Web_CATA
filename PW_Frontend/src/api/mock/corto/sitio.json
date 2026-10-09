@@ -22,6 +22,20 @@
       "nombre": "Cubicol",
       "url": "https://cata.cubicol.pe/principal/login"
     },
-    "promotora": null
+    "promotora": null,
+    "redes": [
+      {
+        "red": "facebook",
+        "cuenta": "Colegio CATA Juliaca",
+        "url": "https://www.facebook.com/colegiocatajuliaca/",
+        "aclaracion": null
+      },
+      {
+        "red": "tiktok",
+        "cuenta": "@colegioadventistacata",
+        "url": "https://www.tiktok.com/@colegioadventistacata",
+        "aclaracion": null
+      }
+    ]
   }
 }

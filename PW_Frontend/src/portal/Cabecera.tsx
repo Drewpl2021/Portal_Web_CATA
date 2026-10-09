@@ -7,6 +7,7 @@ import { useRecurso } from '../hooks/useRecurso'
 import { MENU, NOSOTROS, estaActiva } from '../sitio/mapa'
 import { useNavegacion } from '../sitio/useNavegacion'
 import { useRutaInterna } from '../sitio/BaseRuta'
+import { ListaRedes } from './BarraRedes'
 
 const SALIDA = [0.23, 1, 0.32, 1] as const
 const EMBLEMA = '/brand/emblema-cata-192.png'
@@ -28,6 +29,7 @@ export default function Cabecera({ base = '' }: { base?: string }) {
   const sitio = useRecurso('sitio', obtenerSitio)
   // Solo un enlace a la plataforma académica: el portal no replica su inicio de sesión ni pide datos.
   const portal = sitio.estado === 'listo' ? sitio.datos.portalAcademico : null
+  const redes = sitio.estado === 'listo' ? sitio.datos.redes : []
   const relativa = nav.ruta.slice(base.length) || '/'
   const activo = MENU.find((m) => estaActiva(m.ruta, relativa))?.ruta ?? null
   const [senalado, setSenalado] = useState<string | null>(null)
@@ -191,6 +193,13 @@ export default function Cabecera({ base = '' }: { base?: string }) {
                   </span>
                   <span className="visually-hidden"> (se abre en otra pestaña)</span>
                 </a>
+              )}
+              {/* En pantallas sin barra flotante, las redes viven aquí y en el pie. */}
+              {redes.length > 0 && (
+                <div className="f-movil__redes">
+                  <h2 className="f-movil__subtitulo">Síguenos</h2>
+                  <ListaRedes redes={redes} />
+                </div>
               )}
             </nav>
           </motion.div>

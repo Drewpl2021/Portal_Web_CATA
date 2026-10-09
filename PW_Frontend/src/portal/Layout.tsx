@@ -4,6 +4,7 @@ import { AnimatePresence } from 'motion/react'
 import InsigniaPrueba from '../components/InsigniaPrueba'
 import { tituloDeRuta } from '../sitio/mapa'
 import TransicionPagina, { pedirFocoEnPaginaNueva } from '../sitio/TransicionPagina'
+import BarraRedes from './BarraRedes'
 import Cabecera from './Cabecera'
 import Inicio from './paginas/Inicio'
 import Pendiente from './paginas/Pendiente'
@@ -21,7 +22,7 @@ const PropuestaEducativa = lazy(() => import('./paginas/PropuestaEducativa'))
 const ProyectoDetalle = lazy(() => import('./paginas/ProyectoDetalle'))
 const Proyectos = lazy(() => import('./paginas/Proyectos'))
 
-// Estructura de todo el portal: cabecera fija, páginas con transición y pie.
+// Estructura de todo el portal: cabecera fija, páginas con transición, pie y barra de redes.
 export default function Layout() {
   const ubicacion = useLocation()
 
@@ -89,6 +90,7 @@ export default function Layout() {
           </Routes>
         </AnimatePresence>
         <Pie />
+        <BarraRedes />
         <InsigniaPrueba />
       </div>
     </div>

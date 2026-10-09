@@ -29,6 +29,7 @@ import {
   sobre,
   sobrePaginado,
 } from './esquemas'
+import type { Sitio } from './tipos'
 
 const ESQUEMAS = {
   sitio: sobre(esquemaSitio),
@@ -186,9 +187,22 @@ describe('el contrato rechaza respuestas inválidas', () => {
     expect(json).not.toMatch(/"inicio":"\d/)
   })
 
-  it('rechaza una red social desconocida', () => {
-    const contacto = { titulo: 't', bajada: null, figura: null, correo: null }
-    expect(esquemaContacto.safeParse({ ...contacto, redes: [{ red: 'myspace', cuenta: 'c', url: 'https://x.pe' }] }).success).toBe(false)
+  it('redes: rechaza una red desconocida, una repetida y la falta de aclaración', () => {
+    const redes = esquemaSitio.shape.redes
+    const fb = { red: 'facebook', cuenta: 'c', url: 'https://x.pe', aclaracion: null }
+    expect(redes.safeParse([fb]).success).toBe(true)
+    expect(redes.safeParse([{ ...fb, red: 'myspace' }]).success).toBe(false)
+    expect(redes.safeParse([fb, fb]).success).toBe(false)
+    expect(redes.safeParse([{ red: 'facebook', cuenta: 'c', url: 'https://x.pe' }]).success).toBe(false)
+  })
+
+  it('redes: 4 en típico (YouTube y WhatsApp marcadas como prueba), 2 en corto y 0 en vacío', () => {
+    const redes = (e: string) => (archivos[`./mock/${e}/sitio.json`] as { data: Sitio }).data.redes
+    expect(redes('tipico').map((x) => x.red)).toEqual(['facebook', 'tiktok', 'youtube', 'whatsapp'])
+    expect(redes('tipico').filter((x) => x.aclaracion).map((x) => x.red)).toEqual(['youtube', 'whatsapp'])
+    expect(redes('tipico')[0]!.url).toBe('https://www.facebook.com/colegiocatajuliaca/')
+    expect(redes('corto')).toHaveLength(2)
+    expect(redes('vacio')).toHaveLength(0)
   })
 
   it('rechaza un estado de vacante desconocido', () => {

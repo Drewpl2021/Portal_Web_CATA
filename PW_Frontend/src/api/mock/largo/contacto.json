@@ -8,38 +8,6 @@
       "ancho": 500,
       "alto": 1000
     },
-    "correo": "mesa-de-partes-y-atencion-al-padre-de-familia-de-prueba@example.com",
-    "redes": [
-      {
-        "red": "facebook",
-        "cuenta": "Colegio CATA · Colegio Adventista Túpac Amaru de Juliaca",
-        "url": "https://www.facebook.com/catajuliaca/"
-      },
-      {
-        "red": "youtube",
-        "cuenta": "Colegio CATA · Colegio Adventista Túpac Amaru de Juliaca",
-        "url": "https://www.youtube.com/@colegiocata828"
-      },
-      {
-        "red": "tiktok",
-        "cuenta": "@colegioadventistacata · Colegio Adventista Túpac Amaru de Juliaca",
-        "url": "https://www.tiktok.com/@colegioadventistacata"
-      },
-      {
-        "red": "instagram",
-        "cuenta": "Cuenta de prueba",
-        "url": "https://www.instagram.com/"
-      },
-      {
-        "red": "x",
-        "cuenta": "Cuenta de prueba",
-        "url": "https://x.com/"
-      },
-      {
-        "red": "linkedin",
-        "cuenta": "Cuenta de prueba",
-        "url": "https://www.linkedin.com/"
-      }
-    ]
+    "correo": "mesa-de-partes-y-atencion-al-padre-de-familia-de-prueba@example.com"
   }
 }

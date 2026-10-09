@@ -1,6 +1,8 @@
 # Contrato de la API pública del portal CATA
 
-**Versión del contrato:** 2.9 · **Fecha:** 2026-10-09
+**Versión del contrato:** 2.10 · **Fecha:** 2026-10-09
+
+**Cambios de la 2.10:** las redes sociales pasan de `GET /v1/contacto` a `GET /v1/sitio` (§3.1), porque ahora se muestran en todas las páginas (barra flotante, menú móvil y pie) además de en Contacto. `RedSocial` suma la red `"whatsapp"` y el campo `aclaracion`, para marcar a la vista una dirección aún no confirmada. Hasta 8 redes, sin repetir ninguna. `GET /v1/contacto` ya no tiene `redes`.
 
 **Cambios de la 2.9:** en `GET /v1/sitio` (§3.1), `portalAcademicoUrl` pasa a `portalAcademico: { nombre, url }`, para que el botón muestre el nombre de la plataforma (hoy, **Cubicol**; antes, iCRM) sin cambiar el código del portal. El portal solo enlaza a la plataforma: nunca replica su inicio de sesión ni pide usuario o contraseña.
 
@@ -187,7 +189,7 @@ Valores válidos de `seccion`: `"quienes-somos"`, `"niveles"`, `"sedes"`, `"noti
 | `GET /v1/matricula/fechas` | `FechasMatricula` | Cronograma de matrícula |
 | `GET /v1/matricula/preguntas` | `PreguntaFrecuente[]` | Preguntas frecuentes de matrícula |
 | `GET /v1/solicitud` | `SolicitudInformacion` | Textos del formulario Solicitar información (Matrícula y Contacto) |
-| `GET /v1/contacto` | `Contacto` | Cabecera de Contacto, correo general y redes sociales |
+| `GET /v1/contacto` | `Contacto` | Cabecera de Contacto y correo general |
 | `GET /v1/proyectos` | `Proyectos` | Cabecera y lista de Proyectos, con categorías para el filtro |
 | `GET /v1/proyectos/{slug}` | `Proyecto` | Página de detalle de un proyecto (`404` si no existe) |
 | `GET /v1/nosotros` | `Nosotros` | Índice de Nosotros: título, frase y una frase por subpágina |
@@ -201,7 +203,7 @@ Valores válidos de `seccion`: `"quienes-somos"`, `"niveles"`, `"sedes"`, `"noti
 
 Cada sección del portal carga su endpoint por separado. Si uno falla, esa sección muestra su error y el resto sigue funcionando.
 
-**Excepción importante: `/v1/sitio`.** Lo usan la cabecera (nombre y botón del portal académico), el título oculto de Inicio, la medalla, el estado vacío de noticias, el cierre, el formulario «Solicitar información» y la placa de WhatsApp de Contacto (número de WhatsApp) y el pie (contactos y dirección). Si `/v1/sitio` falla, todas esas partes quedan sin datos a la vez. Es el endpoint que más conviene mantener disponible y rápido.
+**Excepción importante: `/v1/sitio`.** Lo usan la cabecera (nombre y botón del portal académico), el título oculto de Inicio, la medalla, el estado vacío de noticias, el cierre, el formulario «Solicitar información» y la placa de WhatsApp de Contacto (número de WhatsApp), el pie (contactos, dirección y redes) y las redes sociales (barra flotante, menú móvil y «Síguenos» de Contacto). Si `/v1/sitio` falla, todas esas partes quedan sin datos a la vez. Es el endpoint que más conviene mantener disponible y rápido.
 
 ---
 
@@ -223,8 +225,11 @@ Datos generales del colegio.
 | `direccion` | `Direccion` | no | — | Dirección principal (ver abajo). |
 | `portalAcademico` | `{ nombre, url }` \| null | sí | — | Plataforma académica externa. `nombre` (máx. 20) es el texto del botón dorado de la cabecera, del menú móvil y del pie («Cubicol»); `url` es su página de inicio de sesión. El portal **solo enlaza** a ella, en otra pestaña: no tiene formulario de acceso. `null` = sin botón. |
 | `promotora` | string \| null | sí | 120 | Texto legal del pie. Ej.: «Asociación Educativa Colegio Adventista Túpac Amaru». |
+| `redes` | `RedSocial[]` | no | 0 a 8 | Redes oficiales del colegio, en el orden en que se muestran: barra flotante en el borde derecho (pantallas anchas), menú móvil, pie y «Síguenos» de Contacto. Cada red aparece una sola vez. `[]` = no aparecen la barra ni «Síguenos» en el pie y el menú. |
 
 **`Direccion`**: `linea` (string, máx. 80), `referencia` (string \| null, máx. 100), `distrito` (string \| null, máx. 80).
+
+**`RedSocial`**: `red` (`"facebook"` \| `"youtube"` \| `"tiktok"` \| `"whatsapp"` \| `"instagram"` \| `"x"` \| `"linkedin"`), `cuenta` (máx. 60: el nombre como se ve en la red), `url` (https; para WhatsApp, `https://wa.me/51…`) y `aclaracion` (string \| null, máx. 80). El portal pone el nombre, el icono y el color de cada red. `aclaracion` se muestra a la vista junto a la red y se lee en su nombre accesible; sirve para publicar una dirección aún no confirmada, por ejemplo «Dato de prueba: dirección por confirmar». Con `null`, la red se muestra sin aviso.
 
 ```json
 {
@@ -238,7 +243,13 @@ Datos generales del colegio.
     "whatsapp": { "numero": "+51986322833", "visible": "986 322 833" },
     "direccion": { "linea": "Jr. Moquegua N° 852", "referencia": "Frente al Mercado Internacional Túpac Amaru", "distrito": "Juliaca, San Román, Puno" },
     "portalAcademico": { "nombre": "Cubicol", "url": "https://cata.cubicol.pe/principal/login" },
-    "promotora": "Asociación Educativa Colegio Adventista Túpac Amaru"
+    "promotora": "Asociación Educativa Colegio Adventista Túpac Amaru",
+    "redes": [
+      { "red": "facebook", "cuenta": "Colegio CATA Juliaca", "url": "https://www.facebook.com/colegiocatajuliaca/", "aclaracion": null },
+      { "red": "tiktok", "cuenta": "@colegioadventistacata", "url": "https://www.tiktok.com/@colegioadventistacata", "aclaracion": null },
+      { "red": "youtube", "cuenta": "Colegio CATA", "url": "https://www.youtube.com/@colegiocata828", "aclaracion": "Dato de prueba: dirección por confirmar" },
+      { "red": "whatsapp", "cuenta": "986 322 833", "url": "https://wa.me/51986322833", "aclaracion": "Dato de prueba: número por confirmar" }
+    ]
   }
 }
 ```
@@ -646,17 +657,14 @@ Textos del formulario «Solicitar información», que aparece al final de Matrí
 
 ### 3.16 `GET /v1/contacto`
 
-La cabecera de la página Contacto, el correo general del colegio y sus redes sociales. Las sedes salen de `GET /v1/sedes` y el WhatsApp de la placa de la cabecera, de `GET /v1/sitio`.
+La cabecera de la página Contacto y el correo general del colegio. Las sedes salen de `GET /v1/sedes`; el WhatsApp de la placa de la cabecera y las redes sociales, de `GET /v1/sitio`.
 
 | Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
 |---|---|---|---|---|
 | `titulo` | string | no | 60 | «Contáctanos». |
 | `bajada` | string \| null | sí | 160 | Una frase bajo el título. |
 | `figura` | `Imagen` \| null | sí | — | Recorte de un estudiante, como en Matrícula (PNG transparente, ≈ 1:2). |
-| `correo` | string \| null | sí | 80 | Correo general. Se muestra junto a las redes. |
-| `redes` | `RedSocial[]` | no | 0 a 6 | En el orden en que se muestran. |
-
-**`RedSocial`**: `red` (`"facebook"` \| `"youtube"` \| `"tiktok"` \| `"instagram"` \| `"x"` \| `"linkedin"`), `cuenta` (máx. 60: el nombre como se ve en la red) y `url` (https). El portal escribe el nombre de la red; no usa logotipos.
+| `correo` | string \| null | sí | 80 | Correo general. Se muestra junto a las redes (que llegan de `GET /v1/sitio`). |
 
 ```json
 {
@@ -664,12 +672,7 @@ La cabecera de la página Contacto, el correo general del colegio y sus redes so
     "titulo": "Contáctanos",
     "bajada": "Cuatro sedes en San Román. Escríbenos por WhatsApp, llámanos o visítanos.",
     "figura": { "url": "https://cata.edu.pe/wp-content/uploads/2023/01/CATA-Matricula_Img_2.png", "alt": "Estudiante con el uniforme del colegio, su mochila y un cuaderno de CATA", "ancho": 500, "alto": 1000 },
-    "correo": null,
-    "redes": [
-      { "red": "facebook", "cuenta": "Colegio CATA", "url": "https://www.facebook.com/catajuliaca/" },
-      { "red": "youtube", "cuenta": "Colegio CATA", "url": "https://www.youtube.com/@colegiocata828" },
-      { "red": "tiktok", "cuenta": "@colegioadventistacata", "url": "https://www.tiktok.com/@colegioadventistacata" }
-    ]
+    "correo": null
   }
 }
 ```
@@ -885,6 +888,7 @@ Esto sirve para que el módulo sepa qué pasa con lo que publica.
 | Banners `[]` | El carrusel no aparece. Con un solo banner, no hay controles ni avance. |
 | Matrícula: un solo proceso | Se muestra sin pestañas. |
 | Contacto: sede sin `mapaEmbedUrl` | En el mapa, esa sede muestra «todavía no tiene un mapa» y el enlace «Cómo llegar». |
+| Sitio: redes `[]` | No aparecen la barra flotante ni «Síguenos» en el pie y el menú móvil. |
 | Contacto: redes `[]` y `correo: null` | «Las redes del colegio se publicarán pronto». |
 | Proyectos: una sola categoría con proyectos | No aparece el filtro. |
 | Personal docente de un solo nivel | No aparece el filtro. |

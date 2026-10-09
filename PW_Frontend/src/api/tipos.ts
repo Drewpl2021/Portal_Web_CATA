@@ -1,4 +1,4 @@
-// Tipos del contrato de la API pública del portal (docs/API_CONTRACT.md, v2.9).
+// Tipos del contrato de la API pública del portal (docs/API_CONTRACT.md, v2.10).
 // Todos los campos llegan siempre; los opcionales valen null.
 
 /** Fecha ISO 8601 sin hora: "2026-10-08". */
@@ -55,6 +55,8 @@ export interface Sitio {
   /** Plataforma académica externa (hoy, Cubicol). El portal solo enlaza a ella; nunca pide usuario ni contraseña. null = sin botón. */
   portalAcademico: PortalAcademico | null
   promotora: string | null
+  /** Redes oficiales del colegio, en el orden en que se muestran (barra flotante, menú móvil, pie y Contacto). */
+  redes: RedSocial[]
 }
 
 export interface PortalAcademico {
@@ -62,6 +64,20 @@ export interface PortalAcademico {
   nombre: string
   /** Página de inicio de sesión de la plataforma (https). */
   url: string
+}
+
+// Redes sociales (dentro de GET /v1/sitio)
+export const REDES = ['facebook', 'youtube', 'tiktok', 'whatsapp', 'instagram', 'x', 'linkedin'] as const
+export type Red = (typeof REDES)[number]
+
+export interface RedSocial {
+  red: Red
+  /** Nombre de la cuenta como se ve en la red: "Colegio CATA". */
+  cuenta: string
+  /** Dirección de la cuenta (https). Para WhatsApp, el enlace https://wa.me/… */
+  url: string
+  /** Aviso visible cuando la dirección aún no está confirmada: "Dato de prueba: dirección por confirmar". */
+  aclaracion: string | null
 }
 
 // GET /v1/portada/banners
@@ -290,16 +306,6 @@ export interface SolicitudInformacion {
 }
 
 // GET /v1/contacto
-export const REDES = ['facebook', 'youtube', 'tiktok', 'instagram', 'x', 'linkedin'] as const
-export type Red = (typeof REDES)[number]
-
-export interface RedSocial {
-  red: Red
-  /** Nombre de la cuenta como se ve en la red: "Colegio CATA". */
-  cuenta: string
-  url: string
-}
-
 export interface Contacto {
   titulo: string
   bajada: string | null
@@ -307,7 +313,6 @@ export interface Contacto {
   figura: Imagen | null
   /** Correo general del colegio. */
   correo: string | null
-  redes: RedSocial[]
 }
 
 // GET /v1/proyectos y GET /v1/proyectos/{slug}

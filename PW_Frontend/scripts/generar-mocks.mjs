@@ -57,6 +57,17 @@ const img = (archivo, alt) => {
 // Plataforma académica: desde 2026, Cubicol (antes, iCRM Educativo, 2020-2025). Solo se enlaza a su inicio de sesión.
 const CUBICOL = { nombre: 'Cubicol', url: 'https://cata.cubicol.pe/principal/login' }
 
+// Redes oficiales: las que enlaza cata.edu.pe. Facebook y TikTok, confirmadas por el colegio.
+// YouTube y WhatsApp aún no: van como datos de prueba, con la aclaración a la vista.
+// cata.edu.pe muestra dos WhatsApp distintos (956 341 538 y 986 322 833); hasta que el colegio
+// diga cuál es, se usa el mismo número que el formulario.
+const REDES_TIPICO = [
+  { red: 'facebook', cuenta: 'Colegio CATA Juliaca', url: 'https://www.facebook.com/colegiocatajuliaca/', aclaracion: null },
+  { red: 'tiktok', cuenta: '@colegioadventistacata', url: 'https://www.tiktok.com/@colegioadventistacata', aclaracion: null },
+  { red: 'youtube', cuenta: 'Colegio CATA', url: 'https://www.youtube.com/@colegiocata828', aclaracion: 'Dato de prueba: dirección por confirmar' },
+  { red: 'whatsapp', cuenta: '986 322 833', url: 'https://wa.me/51986322833', aclaracion: 'Dato de prueba: número por confirmar' },
+]
+
 const sitio = {
   nombre: 'Colegio Adventista Túpac Amaru',
   nombreCorto: 'CATA',
@@ -68,6 +79,7 @@ const sitio = {
   direccion: { linea: 'Jr. Moquegua N° 852', referencia: 'Frente al Mercado Internacional Túpac Amaru', distrito: 'Juliaca, San Román, Puno' },
   portalAcademico: CUBICOL,
   promotora: 'Asociación Educativa Colegio Adventista Túpac Amaru',
+  redes: REDES_TIPICO,
 }
 
 // Cabecera de Propuesta Educativa: fotos publicadas por el propio colegio en cata.edu.pe (se enlazan, no se copian).
@@ -232,7 +244,7 @@ escribir('tipico', 'noticias', lista(noticias))
 escribir('tipico', 'grados', { data: grados })
 
 // ── corto: lo mínimo que el contrato permite ──
-escribir('corto', 'sitio', { data: { ...sitio, subtitulo: null, promotora: null, direccion: { linea: 'Jr. Moquegua 852', referencia: null, distrito: null } } })
+escribir('corto', 'sitio', { data: { ...sitio, redes: REDES_TIPICO.slice(0, 2), subtitulo: null, promotora: null, direccion: { linea: 'Jr. Moquegua 852', referencia: null, distrito: null } } })
 escribir('corto', 'propuesta-cabecera', { data: { titulo: 'Bienvenidos', bajada: null, figuras: [], accionPrincipal: { etiqueta: 'Matrícula', destino: { tipo: 'pagina', ruta: '/matricula' } }, accionSecundaria: null } })
 escribir('corto', 'quienes-somos', { data: { titulo: 'Desde 1971.', parrafos: ['Colegio adventista en Juliaca.'], foto: null, simbolos: [{ nombre: 'Llama', significado: 'Luz.' }] } })
 escribir('corto', 'niveles', { data: { titulo: 'Niveles', propuestaUrl: null, items: [{ id: 'i', nombre: 'Inicial', rango: null, sede: null, reconocimiento: null, foto: null }] } })
@@ -251,6 +263,12 @@ escribir('largo', 'sitio', {
     subtitulo: 'Educación inicial, primaria y secundaria con cosmovisión cristiana desde mil novecientos setenta y uno',
     direccion: { linea: 'Jirón Moquegua número 852, cercado de la ciudad de Juliaca', referencia: 'Frente al Mercado Internacional Túpac Amaru, a media cuadra de la avenida principal', distrito: 'Juliaca, provincia de San Román, departamento de Puno' },
     promotora: 'Asociación Educativa Colegio Adventista Túpac Amaru, promotora reconocida por R.D. N° 4609-DREP-2000',
+    redes: [
+      ...REDES_TIPICO.map((x) => ({ ...x, cuenta: x.cuenta + ' · Colegio Adventista Túpac Amaru', aclaracion: 'Dato de prueba: dirección por confirmar con el área de comunicaciones' })),
+      { red: 'instagram', cuenta: 'Cuenta de prueba', url: 'https://www.instagram.com/', aclaracion: 'Dato de prueba' },
+      { red: 'x', cuenta: 'Cuenta de prueba', url: 'https://x.com/', aclaracion: 'Dato de prueba' },
+      { red: 'linkedin', cuenta: 'Cuenta de prueba', url: 'https://www.linkedin.com/', aclaracion: 'Dato de prueba' },
+    ],
   },
 })
 escribir('largo', 'propuesta-cabecera', { data: { ...hero, titulo: 'Más de cincuenta años formando estudiantes con excelencia académica y valores cristianos en Juliaca', bajada: 'Colegio Adventista Túpac Amaru: educación inicial, primaria y secundaria con cosmovisión cristiana en cuatro sedes de la provincia de San Román, con talleres de música, arte, biohuertos y alimentación saludable.', accionPrincipal: { etiqueta: 'Conoce el proceso de matrícula 2027', destino: { tipo: 'pagina', ruta: '/matricula' } }, accionSecundaria: { etiqueta: 'Descubre nuestra propuesta educativa por niveles', destino: { tipo: 'pagina', ruta: '/propuesta-educativa' } } } })
@@ -324,7 +342,7 @@ escribir('alt-vacio', 'sedes', { data: altVacio(sedes) })
 escribir('alt-vacio', 'noticias', lista(altVacio(noticias)))
 
 // ── vacio: listas vacías y opcionales en null ──
-escribir('vacio', 'sitio', { data: { ...sitio, portalAcademico: null, subtitulo: null, promotora: null } })
+escribir('vacio', 'sitio', { data: { ...sitio, redes: [], portalAcademico: null, subtitulo: null, promotora: null } })
 escribir('vacio', 'quienes-somos', { data: { ...quienes, foto: null, simbolos: [] } })
 escribir('vacio', 'niveles', { data: { titulo: 'Inicial, primaria y secundaria', propuestaUrl: null, items: [] } })
 escribir('vacio', 'sedes', { data: [] })
@@ -482,35 +500,24 @@ escribir('vacio', 'matricula-preguntas', { data: [] })
 escribir('vacio', 'solicitud', { data: { ...solicitud, texto: null, mensajesPorPagina: [] } })
 
 // ── Contacto ──
-// Redes: las que enlaza cata.edu.pe (Facebook, YouTube y TikTok). No publica un correo general.
+// Las redes salen de /v1/sitio. cata.edu.pe no publica un correo general.
 const contacto = {
   titulo: 'Contáctanos',
   bajada: 'Cuatro sedes en San Román. Escríbenos por WhatsApp, llámanos o visítanos.',
   figura: { url: UP + '2023/01/CATA-Matricula_Img_2.png', alt: 'Estudiante con el uniforme del colegio, su mochila y un cuaderno de CATA', ancho: 500, alto: 1000 },
   correo: null,
-  redes: [
-    { red: 'facebook', cuenta: 'Colegio CATA', url: 'https://www.facebook.com/catajuliaca/' },
-    { red: 'youtube', cuenta: 'Colegio CATA', url: 'https://www.youtube.com/@colegiocata828' },
-    { red: 'tiktok', cuenta: '@colegioadventistacata', url: 'https://www.tiktok.com/@colegioadventistacata' },
-  ],
 }
 escribir('tipico', 'contacto', { data: contacto })
-escribir('corto', 'contacto', { data: { titulo: 'Contacto', bajada: null, figura: null, correo: null, redes: [contacto.redes[0]] } })
+escribir('corto', 'contacto', { data: { titulo: 'Contacto', bajada: null, figura: null, correo: null } })
 escribir('largo', 'contacto', { data: {
   ...contacto,
   titulo: 'Contáctanos y visítanos en cualquiera de nuestras cuatro sedes',
   bajada: 'Texto de prueba: cuatro sedes en la provincia de San Román, con atención por WhatsApp, por teléfono, por correo electrónico y de manera presencial en la secretaría de cada sede.',
   correo: 'mesa-de-partes-y-atencion-al-padre-de-familia-de-prueba@example.com',
-  redes: [
-    ...contacto.redes.map((x) => ({ ...x, cuenta: x.cuenta + ' · Colegio Adventista Túpac Amaru de Juliaca' })),
-    { red: 'instagram', cuenta: 'Cuenta de prueba', url: 'https://www.instagram.com/' },
-    { red: 'x', cuenta: 'Cuenta de prueba', url: 'https://x.com/' },
-    { red: 'linkedin', cuenta: 'Cuenta de prueba', url: 'https://www.linkedin.com/' },
-  ],
 } })
 escribir('sin-foto', 'contacto', { data: { ...contacto, figura: null } })
 escribir('alt-vacio', 'contacto', { data: altVacio(contacto) })
-escribir('vacio', 'contacto', { data: { ...contacto, bajada: null, figura: null, correo: null, redes: [] } })
+escribir('vacio', 'contacto', { data: { ...contacto, bajada: null, figura: null, correo: null } })
 
 // ── Proyectos ──
 // Textos: los dos programas que publica cata.edu.pe (programas-de-valor, gastronomia y robotica).

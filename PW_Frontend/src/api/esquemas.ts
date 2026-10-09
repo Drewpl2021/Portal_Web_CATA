@@ -37,6 +37,9 @@ const destino = z.discriminatedUnion('tipo', [
   z.object({ tipo: z.literal('url'), url, externo: z.boolean() }),
 ])
 
+// Hasta 8 redes; una dirección por red. La aclaración marca a la vista los datos aún no confirmados.
+const redSocial = z.object({ red: z.enum(REDES), cuenta: z.string().min(1).max(60), url, aclaracion: z.string().min(1).max(80).nullable() })
+
 export const esquemaSitio = z.object({
   nombre: texto,
   nombreCorto: texto,
@@ -48,6 +51,10 @@ export const esquemaSitio = z.object({
   direccion: z.object({ linea: texto, referencia: textoONulo, distrito: textoONulo }),
   portalAcademico: z.object({ nombre: z.string().min(1).max(20), url }).nullable(),
   promotora: textoONulo,
+  redes: z
+    .array(redSocial)
+    .max(8)
+    .refine((l) => new Set(l.map((x) => x.red)).size === l.length, 'Cada red aparece una sola vez'),
 })
 
 const accion = z.object({ etiqueta: texto, destino })
@@ -247,7 +254,6 @@ export const esquemaContacto = z.object({
   bajada: textoONulo,
   figura: imagen.nullable(),
   correo: correo.nullable(),
-  redes: z.array(z.object({ red: z.enum(REDES), cuenta: texto, url })).max(6),
 })
 
 // Nosotros

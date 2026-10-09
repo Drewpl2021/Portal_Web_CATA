@@ -1,6 +1,6 @@
 # Estado del portal CATA y pendientes
 
-**Última actualización:** 2026-10-08.
+**Última actualización:** 2026-10-09.
 
 ## Estado actual
 
@@ -31,7 +31,7 @@
   - cabecera con la placa de WhatsApp del colegio (enlace) y un estudiante, y un índice de la página
   - fichas de las cuatro sedes: dirección, teléfono, correo, horario, «Cómo llegar» y «Ver en el mapa»
   - mapa de las sedes **bajo pedido**: no se carga nada de Google hasta que la persona pulsa «Mostrar el mapa»
-  - redes del colegio (Facebook, YouTube y TikTok, las que enlaza cata.edu.pe)
+  - redes del colegio (las mismas de la barra de redes, desde `/v1/sitio`)
   - el mismo formulario «Solicitar información» de Matrícula (un solo componente, `SolicitudInformacion`)
 - **Proyectos (`/proyectos` y `/proyectos/{slug}`):**
   - lista con filtro por categoría (la categoría queda en la dirección) y tarjetas con foto, etiquetas, lema y resumen
@@ -45,6 +45,7 @@
   - **Administración** organizada en cinco secciones por área
   - las siete subpáginas de Institución con los textos de cata.edu.pe: Misión y Visión, Reseña Histórica (más una línea de tiempo con sus fechas), Emblema, Himno (letra en texto, partitura y oficio de 1987 con su transcripción), Consejo Directivo (mensaje del presidente y 8 integrantes con foto), Administración (15 personas con foto) y Organigrama
   - layout reutilizable `PaginaContenido` con bloques: la segunda tanda solo necesita añadir su grupo a `GRUPOS_NOSOTROS_PUBLICADOS` (`src/sitio/mapa.ts`) y sus datos
+- **Barra de redes sociales** (en todas las páginas): las redes llegan de `/v1/sitio`, así el colegio las agrega o quita sin tocar el código. Desde 1360 px de ancho, una barra vertical fija en el borde derecho, en el margen que deja la página (no tapa contenido ni controles); al pasar el mouse o con el foco, cada placa muestra el nombre de la red; se retira al bajar y vuelve al subir. Por debajo de 1360 px no hay nada flotante: las redes están en el menú móvil y, en todos los anchos, en el pie («Síguenos»). Cada placa usa el color de su marca con el icono blanco a 4.5:1 o más (YouTube, WhatsApp e Instagram, oscurecidos lo justo).
 - **Foco nunca tapado:** si un elemento enfocado con el teclado queda en parte bajo la cabecera fija, la página se desplaza para mostrarlo.
 - **Componentes compartidos por las páginas internas:** `CabeceraPagina`, `IndicePagina` y `SolicitudInformacion`. El formulario recibe la página (`matricula` o `contacto`) y usa su propio mensaje de WhatsApp.
 - **Foco al navegar:** al cambiar de página dentro del sitio, el foco pasa al contenido de la página nueva para que el lector de pantalla la anuncie (en la primera carga no se mueve).
@@ -56,9 +57,10 @@
   - las composiciones se agrupan en contenedores de proporción fija
 - **Eliminadas:** las propuestas A, B y C y la portada antigua «Tablero de ruta».
 
-### Contrato de la API (versión 2.9)
+### Contrato de la API (versión 2.10)
 
 - `docs/API_CONTRACT.md` y su JSON Schema `docs/api-contract.schema.json` (`npm run esquema`).
+- **Cambios de la 2.10:** las redes pasan de `/v1/contacto` a `/v1/sitio`; `RedSocial` suma `"whatsapp"` y `aclaracion`.
 - **Cambios de la 2.9:** en `/v1/sitio`, `portalAcademicoUrl` pasa a `portalAcademico: { nombre, url }` (Cubicol).
 - **Cambios de la 2.8:** cuatro endpoints para el cuerpo de Propuesta Educativa: pilares, niveles, academia y plataformas.
 - **Cambios de la 2.7:** cada logro suma `fuente` y `aclaracion`; el filtro por año pasa a ser por década.
@@ -126,6 +128,12 @@
    - el texto de la Reseña Histórica (publicado en cata.edu.pe) todavía presenta el iCRM como la plataforma actual («cuenta con una propia plataforma digital como es iCRM educativo…»); el portal lo muestra tal cual hasta que el colegio envíe el texto actualizado
    - acordar con RR.HH. el cambio del contrato 2.9 (`portalAcademico` con nombre y dirección)
 
+0c. **Redes sociales.** Facebook (facebook.com/colegiocatajuliaca) y TikTok (@colegioadventistacata) están confirmadas. Faltan:
+   - la dirección oficial del canal de **YouTube**: hoy se enlaza a youtube.com/@colegiocata828 (el de cata.edu.pe), marcada «Dato de prueba: dirección por confirmar»
+   - el número oficial de **WhatsApp**: cata.edu.pe muestra dos distintos (un botón al 956 341 538 y los afiches con el 986 322 833). El portal usa el 986 322 833 en el formulario, el pie y la barra de redes; en la barra va marcado «Dato de prueba: número por confirmar». Cuando el colegio confirme, actualizar también `whatsapp` de `/v1/sitio`
+   - si hay otras redes (Instagram…) y en qué orden mostrarlas
+   - acordar con RR.HH. el cambio del contrato 2.10 (`redes` en `/v1/sitio`, con `aclaracion`)
+
 0. **De la auditoría final** (no bloquean la publicación):
    - **JS inicial de 139 kB gzip:** casi todo son librerías que usa Inicio (React, Motion, zod, Embla, NumberFlow). Se podría bajar cargando zod y el carrusel aparte, o cambiando Motion por animaciones CSS donde baste
    - **La cabecera de Propuesta Educativa y `CabeceraPagina`** repiten la preparación de las franjas y el movimiento con el scroll (unas 10 líneas). Se dejaron así porque son cabeceras distintas
@@ -192,7 +200,7 @@
    - **PDF accesibles:** todos los PDF que publique el colegio deben tener texto seleccionable, no estar escaneados como imagen. Si alguno está escaneado, hay que pedir la versión original o pasarle OCR antes de publicarlo
    - **Fotos de personas:** las de Consejo Directivo y Administración son las que publica cata.edu.pe; confirmar que el personal está vigente (las de Administración son de 2024)
 6. **Prueba manual con teclado y lector de pantalla** (NVDA en Windows, TalkBack en Android), sobre todo del carrusel, las pestañas de Matrícula, el mapa de Contacto, el filtro de Proyectos, el himno y el organigrama de Nosotros, el formulario y el foco al cambiar de página. axe no cubre todo WCAG 2.2 AA ni puede medir el contraste del texto sobre imágenes; por eso el texto del carrusel va sobre una placa marina sólida.
-7. **Entregar el contrato 2.9 al equipo de RR.HH.** Enviar `docs/API_CONTRACT.md` y `docs/api-contract.schema.json`. Los endpoints de Matrícula, Contacto, Proyectos, Nosotros (con su página de contenido por bloques), Personal Docente y Logros, los campos nuevos de `Sede` y los mensajes por página de `/v1/solicitud` son una propuesta del portal: hay que acordarlos con RR.HH. antes de que los implementen. Además, acordar:
+7. **Entregar el contrato 2.10 al equipo de RR.HH.** Enviar `docs/API_CONTRACT.md` y `docs/api-contract.schema.json`. Los endpoints de Matrícula, Contacto, Proyectos, Nosotros (con su página de contenido por bloques), Personal Docente y Logros, los campos nuevos de `Sede` y los mensajes por página de `/v1/solicitud` son una propuesta del portal: hay que acordarlos con RR.HH. antes de que los implementen. Además, acordar:
    - la URL base
    - el dominio de pruebas para CORS
    - quién avisa cuando el contrato cambie
@@ -208,4 +216,4 @@
 
 ## Siguiente paso
 
-El mapa del sitio está completo. **Enviar al colegio `docs/SOLICITUD_AL_COLEGIO.md`**: reúne, en lenguaje no técnico y con casillas para marcar, todo lo que el colegio debe corregir en cata.edu.pe (empezando por retirar el PDF de Innova Schools), entregar (fotos, documentos, autorizaciones), confirmar (logros, licenciamiento, matrícula, himno, organigrama, docentes, Cubicol…) y aprobar. En paralelo, entregar el contrato 2.9 a RR.HH. (pendiente 7). Cuando el colegio responda, actualizar los datos y marcar aquí lo resuelto.
+El mapa del sitio está completo. **Enviar al colegio `docs/SOLICITUD_AL_COLEGIO.md`**: reúne, en lenguaje no técnico y con casillas para marcar, todo lo que el colegio debe corregir en cata.edu.pe (empezando por retirar el PDF de Innova Schools), entregar (fotos, documentos, autorizaciones), confirmar (logros, licenciamiento, matrícula, himno, organigrama, docentes, Cubicol…) y aprobar. En paralelo, entregar el contrato 2.10 a RR.HH. (pendiente 7). Cuando el colegio responda, actualizar los datos y marcar aquí lo resuelto.

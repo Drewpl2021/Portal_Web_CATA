@@ -208,4 +208,4 @@
 
 ## Siguiente paso
 
-El mapa del sitio está completo. Revisar Propuesta Educativa y pedir al colegio lo que falta (pendiente 1, en especial retirar el PDF de Innova Schools) y que confirme los logros (pendiente 2b). En paralelo, el colegio puede confirmar los datos de Matrícula y Contacto (pendientes 2 y 3), aportar el contenido de Proyectos y Nosotros (pendientes 4 y 5), entregar el contrato 2.4 a RR.HH. (pendiente 7) y reunir el material del pendiente 8.
+El mapa del sitio está completo. **Enviar al colegio `docs/SOLICITUD_AL_COLEGIO.md`**: reúne, en lenguaje no técnico y con casillas para marcar, todo lo que el colegio debe corregir en cata.edu.pe (empezando por retirar el PDF de Innova Schools), entregar (fotos, documentos, autorizaciones), confirmar (logros, licenciamiento, matrícula, himno, organigrama, docentes, Cubicol…) y aprobar. En paralelo, entregar el contrato 2.9 a RR.HH. (pendiente 7). Cuando el colegio responda, actualizar los datos y marcar aquí lo resuelto.

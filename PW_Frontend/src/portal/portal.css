@@ -5334,7 +5334,7 @@ html.f-anim [data-revelar='carriles']:not([data-visto]) > * {
 
   /* Entrada escalonada, una sola vez: espera (en pausa, invisible) a que la barra pueda verse */
   .f-barra-redes li {
-    animation: f-red-entra 360ms var(--ease-salida) both paused;
+    animation: f-red-entra 280ms var(--ease-salida) both paused;
     animation-delay: calc(120ms + var(--i) * 55ms);
   }
 
@@ -5422,15 +5422,18 @@ html.f-anim [data-revelar='carriles']:not([data-visto]) > * {
     font-size: 0.8rem;
   }
 
+  /* Con el teclado (Tab, Escape) el nombre aparece y se recoge al instante: sin animación */
   .f-barra-redes__enlace:focus-visible .f-barra-redes__nombre {
     opacity: 1;
     transform: translate(0, -50%);
+    transition-duration: 0ms;
   }
 
   .f-barra-redes[data-recogida] .f-barra-redes__nombre {
     opacity: 0;
     transform: translate(0.75rem, -50%);
     pointer-events: none;
+    transition-duration: 0ms;
   }
 }
 

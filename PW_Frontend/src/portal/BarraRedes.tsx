@@ -114,7 +114,7 @@ export default function BarraRedes() {
   useEffect(() => {
     if (tapa === false && !bajando) setMostrada(true)
   }, [tapa, bajando])
-  // Escape recoge el nombre que se abrió al pasar el mouse (WCAG 1.4.13); se rearma al salir.
+  // Escape recoge el nombre que se abrió al pasar el mouse (WCAG 1.4.13); se rearma al entrar o salir el mouse, o con el foco.
   const [recogida, setRecogida] = useState(false)
   useEffect(() => {
     const alPulsar = (e: KeyboardEvent) => {
@@ -134,6 +134,7 @@ export default function BarraRedes() {
       data-mostrada={mostrada || undefined}
       data-oculta={bajando || tapa === true || undefined}
       data-recogida={recogida || undefined}
+      onPointerEnter={() => setRecogida(false)}
       onPointerLeave={() => setRecogida(false)}
       onFocus={() => {
         setRecogida(false)

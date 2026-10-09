@@ -21,7 +21,7 @@
 - **Inicio (`/`):**
   - empieza con el **carrusel de novedades** (banners del colegio)
   - siguen cifras, Quiénes somos, Niveles, Sedes, Noticias y el cierre
-- **Propuesta Educativa (`/propuesta-educativa`):** la cabecera con la escena y el cuerpo: cifras, los cuatro pilares, los niveles en detalle (descripción, rasgos y talleres), las plataformas digitales (iCRM, EVA Student, Planificador Inteligente EVA) y la academia preuniversitaria con filtro por universidad.
+- **Propuesta Educativa (`/propuesta-educativa`):** la cabecera con la escena y el cuerpo: cifras, los cuatro pilares, los niveles en detalle (descripción, rasgos y talleres), las plataformas digitales (Cubicol, EVA Student, Planificador Inteligente EVA) y la academia preuniversitaria con filtro por universidad.
 - **Matrícula (`/matricula`):**
   - cabecera celeste con la placa del año y un estudiante, y un índice de la página
   - pasos y requisitos en pestañas (estudiantes nuevos y regulares), con los textos reales de los afiches de cata.edu.pe
@@ -56,9 +56,10 @@
   - las composiciones se agrupan en contenedores de proporción fija
 - **Eliminadas:** las propuestas A, B y C y la portada antigua «Tablero de ruta».
 
-### Contrato de la API (versión 2.8)
+### Contrato de la API (versión 2.9)
 
 - `docs/API_CONTRACT.md` y su JSON Schema `docs/api-contract.schema.json` (`npm run esquema`).
+- **Cambios de la 2.9:** en `/v1/sitio`, `portalAcademicoUrl` pasa a `portalAcademico: { nombre, url }` (Cubicol).
 - **Cambios de la 2.8:** cuatro endpoints para el cuerpo de Propuesta Educativa: pilares, niveles, academia y plataformas.
 - **Cambios de la 2.7:** cada logro suma `fuente` y `aclaracion`; el filtro por año pasa a ser por década.
 - **Cambios de la 2.6:** nuevo `GET /v1/logros`.
@@ -118,6 +119,12 @@
 - **Builds:** `npm run build` falla sin `VITE_API_URL`; con la API y en `build:demo` compila.
 
 ## Pendientes
+
+0b. **Cubicol (desde 2026, reemplaza al iCRM).** El botón dorado de la cabecera, el menú móvil y el pie dice «Cubicol» y lleva a https://cata.cubicol.pe/principal/login (el portal solo enlaza; no pide usuario ni contraseña). Falta:
+   - qué ofrece Cubicol a docentes, área académica, padres de familia y estudiantes: hoy cada uno dice «Por confirmar» en Propuesta Educativa
+   - los meses exactos en que el colegio empezó y dejó el iCRM y en que empezó Cubicol: por ahora solo se tienen los años (iCRM 2020-2025, Cubicol desde 2026), que son los que muestra «Fechas clave» en la Reseña Histórica
+   - el texto de la Reseña Histórica (publicado en cata.edu.pe) todavía presenta el iCRM como la plataforma actual («cuenta con una propia plataforma digital como es iCRM educativo…»); el portal lo muestra tal cual hasta que el colegio envíe el texto actualizado
+   - acordar con RR.HH. el cambio del contrato 2.9 (`portalAcademico` con nombre y dirección)
 
 0. **De la auditoría final** (no bloquean la publicación):
    - **JS inicial de 139 kB gzip:** casi todo son librerías que usa Inicio (React, Motion, zod, Embla, NumberFlow). Se podría bajar cargando zod y el carrusel aparte, o cambiando Motion por animaciones CSS donde baste
@@ -185,7 +192,7 @@
    - **PDF accesibles:** todos los PDF que publique el colegio deben tener texto seleccionable, no estar escaneados como imagen. Si alguno está escaneado, hay que pedir la versión original o pasarle OCR antes de publicarlo
    - **Fotos de personas:** las de Consejo Directivo y Administración son las que publica cata.edu.pe; confirmar que el personal está vigente (las de Administración son de 2024)
 6. **Prueba manual con teclado y lector de pantalla** (NVDA en Windows, TalkBack en Android), sobre todo del carrusel, las pestañas de Matrícula, el mapa de Contacto, el filtro de Proyectos, el himno y el organigrama de Nosotros, el formulario y el foco al cambiar de página. axe no cubre todo WCAG 2.2 AA ni puede medir el contraste del texto sobre imágenes; por eso el texto del carrusel va sobre una placa marina sólida.
-7. **Entregar el contrato 2.6 al equipo de RR.HH.** Enviar `docs/API_CONTRACT.md` y `docs/api-contract.schema.json`. Los endpoints de Matrícula, Contacto, Proyectos, Nosotros (con su página de contenido por bloques), Personal Docente y Logros, los campos nuevos de `Sede` y los mensajes por página de `/v1/solicitud` son una propuesta del portal: hay que acordarlos con RR.HH. antes de que los implementen. Además, acordar:
+7. **Entregar el contrato 2.9 al equipo de RR.HH.** Enviar `docs/API_CONTRACT.md` y `docs/api-contract.schema.json`. Los endpoints de Matrícula, Contacto, Proyectos, Nosotros (con su página de contenido por bloques), Personal Docente y Logros, los campos nuevos de `Sede` y los mensajes por página de `/v1/solicitud` son una propuesta del portal: hay que acordarlos con RR.HH. antes de que los implementen. Además, acordar:
    - la URL base
    - el dominio de pruebas para CORS
    - quién avisa cuando el contrato cambie

@@ -18,7 +18,10 @@
       "referencia": "Frente al Mercado Internacional Túpac Amaru, a media cuadra de la avenida principal",
       "distrito": "Juliaca, provincia de San Román, departamento de Puno"
     },
-    "portalAcademicoUrl": "https://cata.icrmedu.com/Academico/Paginas/Login.aspx",
+    "portalAcademico": {
+      "nombre": "Cubicol",
+      "url": "https://cata.cubicol.pe/principal/login"
+    },
     "promotora": "Asociación Educativa Colegio Adventista Túpac Amaru, promotora reconocida por R.D. N° 4609-DREP-2000"
   }
 }

@@ -1,6 +1,8 @@
 # Contrato de la API pública del portal CATA
 
-**Versión del contrato:** 2.8 · **Fecha:** 2026-10-09
+**Versión del contrato:** 2.9 · **Fecha:** 2026-10-09
+
+**Cambios de la 2.9:** en `GET /v1/sitio` (§3.1), `portalAcademicoUrl` pasa a `portalAcademico: { nombre, url }`, para que el botón muestre el nombre de la plataforma (hoy, **Cubicol**; antes, iCRM) sin cambiar el código del portal. El portal solo enlaza a la plataforma: nunca replica su inicio de sesión ni pide usuario o contraseña.
 
 **Cambios de la 2.8:** cuatro endpoints nuevos para el cuerpo de Propuesta Educativa (§3.23 a §3.26): `pilares`, `niveles`, `academia` y `plataformas`, bajo `/v1/propuesta-educativa/`.
 
@@ -195,11 +197,11 @@ Valores válidos de `seccion`: `"quienes-somos"`, `"niveles"`, `"sedes"`, `"noti
 | `GET /v1/propuesta-educativa/pilares` | `PilaresPropuesta` | Cifras, introducción y pilares de Propuesta Educativa |
 | `GET /v1/propuesta-educativa/niveles` | `NivelPropuesta[]` | Propuesta de cada nivel: descripción, rasgos y talleres |
 | `GET /v1/propuesta-educativa/academia` | `Academia` | Academia preuniversitaria: universidades y ciclos |
-| `GET /v1/propuesta-educativa/plataformas` | `Plataforma[]` | Plataformas digitales (iCRM, EVA) |
+| `GET /v1/propuesta-educativa/plataformas` | `Plataforma[]` | Plataformas digitales (Cubicol, EVA) |
 
 Cada sección del portal carga su endpoint por separado. Si uno falla, esa sección muestra su error y el resto sigue funcionando.
 
-**Excepción importante: `/v1/sitio`.** Lo usan la cabecera (nombre e ICRM), el título oculto de Inicio, la medalla, el estado vacío de noticias, el cierre, el formulario «Solicitar información» y la placa de WhatsApp de Contacto (número de WhatsApp) y el pie (contactos y dirección). Si `/v1/sitio` falla, todas esas partes quedan sin datos a la vez. Es el endpoint que más conviene mantener disponible y rápido.
+**Excepción importante: `/v1/sitio`.** Lo usan la cabecera (nombre y botón del portal académico), el título oculto de Inicio, la medalla, el estado vacío de noticias, el cierre, el formulario «Solicitar información» y la placa de WhatsApp de Contacto (número de WhatsApp) y el pie (contactos y dirección). Si `/v1/sitio` falla, todas esas partes quedan sin datos a la vez. Es el endpoint que más conviene mantener disponible y rápido.
 
 ---
 
@@ -219,7 +221,7 @@ Datos generales del colegio.
 | `telefono` | `Telefono` | no | — | Teléfono principal. |
 | `whatsapp` | `Telefono` | no | — | Número que recibe las solicitudes de información. |
 | `direccion` | `Direccion` | no | — | Dirección principal (ver abajo). |
-| `portalAcademicoUrl` | string \| null | sí | — | Acceso a iCRM. Si es `null`, el portal oculta ese acceso. |
+| `portalAcademico` | `{ nombre, url }` \| null | sí | — | Plataforma académica externa. `nombre` (máx. 20) es el texto del botón dorado de la cabecera, del menú móvil y del pie («Cubicol»); `url` es su página de inicio de sesión. El portal **solo enlaza** a ella, en otra pestaña: no tiene formulario de acceso. `null` = sin botón. |
 | `promotora` | string \| null | sí | 120 | Texto legal del pie. Ej.: «Asociación Educativa Colegio Adventista Túpac Amaru». |
 
 **`Direccion`**: `linea` (string, máx. 80), `referencia` (string \| null, máx. 100), `distrito` (string \| null, máx. 80).
@@ -235,7 +237,7 @@ Datos generales del colegio.
     "telefono": { "numero": "+5151325096", "visible": "051 325096" },
     "whatsapp": { "numero": "+51986322833", "visible": "986 322 833" },
     "direccion": { "linea": "Jr. Moquegua N° 852", "referencia": "Frente al Mercado Internacional Túpac Amaru", "distrito": "Juliaca, San Román, Puno" },
-    "portalAcademicoUrl": "https://cata.icrmedu.com/Academico/Paginas/Login.aspx",
+    "portalAcademico": { "nombre": "Cubicol", "url": "https://cata.cubicol.pe/principal/login" },
     "promotora": "Asociación Educativa Colegio Adventista Túpac Amaru"
   }
 }

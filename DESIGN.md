@@ -207,20 +207,20 @@ Cuatro colores oficiales y cinco derivados para estados y superficies; nada más
 - **Azul marino institucional** (marino): el color del texto y de los bloques de contraste. Cabecera fija, menú móvil, franja de cifras, carriles oscuros, noticias sin foto y pie completo.
 
 ### Tertiary
-- **Dorado de premiación** (dorado): solo acentos. Indicador deslizante del menú, placa ICRM, botones principales, regla superior del mega menú y de las noticias, barra corta de las placas de sede y de los símbolos, borde izquierdo de los carriles, subrayado de los enlaces sueltos, cifras sobre marino, anillo de la medalla y línea del divisor.
+- **Dorado de premiación** (dorado): solo acentos. Indicador deslizante del menú, placa del portal académico, botones principales, regla superior del mega menú y de las noticias, barra corta de las placas de sede y de los símbolos, borde izquierdo de los carriles, subrayado de los enlaces sueltos, cifras sobre marino, anillo de la medalla y línea del divisor.
 
 ### Neutral
 - **Marino suave** (marino-suave): texto secundario sobre blanco o celeste lavado (7.6:1).
 - **Marino lavado** (marino-lavado): texto secundario sobre marino (8.8:1); color base del pie.
 - **Celeste lavado** (celeste-lavado): fondo de las placas de sede, de la sección de noticias, del fondo de imágenes mientras cargan y del hover del botón blanco.
 - **Celeste hondo** (celeste-hondo): hover de enlaces y enlace actual del mega menú.
-- **Dorado claro** (dorado-claro): hover de la placa ICRM y del botón dorado.
+- **Dorado claro** (dorado-claro): hover de la placa del portal académico y del botón dorado.
 
 ### Named Rules
 
 **The 30-60 Rule.** Blanco ≈ 60 %, celeste ≈ 30 %, el resto marino y dorado. Si una pantalla se ve marina o dorada, está mal.
 
-**The Gold Ribbon Rule.** El dorado es cinta, nunca campo: líneas, subrayados, reglas, ICRM y botones principales. Jamás un fondo de sección o de tarjeta.
+**The Gold Ribbon Rule.** El dorado es cinta, nunca campo: líneas, subrayados, reglas, el portal académico y botones principales. Jamás un fondo de sección o de tarjeta.
 
 **The Large-On-Celeste Rule.** Blanco sobre celeste da 3.6:1 y marino sobre celeste 4.0:1, así que sobre celeste solo va texto grande (≥ 24 px, o ≥ 18.7 px en negrita). El texto normal va en marino sobre blanco (14:1) o blanco sobre marino (14:1). Sobre dorado el texto es siempre marino (8.5:1).
 
@@ -238,7 +238,7 @@ Cuatro colores oficiales y cinco derivados para estados y superficies; nada más
 - **Cifra** (900, 125 %, clamp(3.2rem, 6vw, 5.4rem), 0.9, números tabulares): valores de la franja de cifras, en dorado.
 - **Title** (900, 125 %, clamp(1.7rem, 2.8vw, 2.6rem), 0.95, mayúsculas): nombre de cada carril de nivel.
 - **Title placa** (850, 112 %, 1.15rem a 1.35rem, mayúsculas): nombre de sede, título de noticia placa, subtítulos, títulos del pie.
-- **Label botón** (850, 112 %, 1.02rem, 0.02em, mayúsculas): texto de botones e ICRM.
+- **Label botón** (850, 112 %, 1.02rem, 0.02em, mayúsculas): texto de botones y el portal académico.
 - **Label nav** (700, 87.5 %, 0.95rem, 0.03em, mayúsculas): enlaces del menú principal; el activo sube a 850.
 - **Bajada** (500, 100 %, 1.5rem, 1.35, máx. 30ch): la bajada de la cabecera de Propuesta Educativa; es texto grande para poder ir sobre celeste.
 - **Body** (400, 100 %, 1.12rem, 1.65, máx. 60ch): párrafos de Quiénes somos.
@@ -289,9 +289,9 @@ Sistema plano con capas de color; la profundidad viene de la superposición de p
 
 ## Shapes
 
-Lenguaje de placas inclinadas: el fondo se inclina (`skewX(-12deg)` en botones e ICRM, `-10deg` en carriles, `-8deg` en la placa celeste tras la foto de Quiénes somos) y el texto queda recto encima. Las fotos de sede se cortan en diagonal por abajo (`clip-path: polygon(0 0, 100% 0, 100% 86%, 0 100%)`) y las de carril como paralelogramo (`polygon(10% 0, 100% 0, 90% 100%, 0 100%)`). Las franjas de la cabecera de Propuesta Educativa, del cierre y del divisor van rotadas (-11°, -6°, -2.2°).
+Lenguaje de placas inclinadas: el fondo se inclina (`skewX(-12deg)` en botones y el portal académico, `-10deg` en carriles, `-8deg` en la placa celeste tras la foto de Quiénes somos) y el texto queda recto encima. Las fotos de sede se cortan en diagonal por abajo (`clip-path: polygon(0 0, 100% 0, 100% 86%, 0 100%)`) y las de carril como paralelogramo (`polygon(10% 0, 100% 0, 90% 100%, 0 100%)`). Las franjas de la cabecera de Propuesta Educativa, del cierre y del divisor van rotadas (-11°, -6°, -2.2°).
 
-Esquinas casi rectas: 2 px en tarjetas de sede y noticia, 4 px en carriles e ICRM, 5 px en botones, 8 px en fotos y símbolos. El único círculo es la medalla (y el anillo del emblema).
+Esquinas casi rectas: 2 px en tarjetas de sede y noticia, 4 px en carriles y el portal académico, 5 px en botones, 8 px en fotos y símbolos. El único círculo es la medalla (y el anillo del emblema).
 
 ## Components
 
@@ -311,9 +311,9 @@ Texto marino 750 con subrayado dorado de 3 px a 0.35em y flecha; hover a celeste
 ### Navigation
 - **Cabecera:** barra marina fija de 80 px (68 px en móvil) con un filete celeste de 4 px abajo; emblema, sigla CATA (900 al 125 %), nombre del colegio en marino lavado y menú centrado en mayúsculas.
 - **Indicador:** una pestaña dorada de 6 px que se desliza bajo el enlace señalado o activo con un resorte sin rebote de 220 ms.
-- **ICRM:** placa dorada inclinada con texto marino y flecha diagonal; abre el portal académico en otra pestaña. Hover: dorado claro y la flecha se mueve 2 px en diagonal. Foco en blanco.
+- **Portal académico (Cubicol):** placa dorada inclinada con texto marino y flecha diagonal; abre la plataforma académica (hoy, Cubicol; su nombre llega de la API) en otra pestaña. Es solo un enlace: el portal no tiene inicio de sesión. Hover: dorado claro y la flecha se mueve 2 px en diagonal. Foco en blanco.
 - **Mega menú (Nosotros):** panel blanco a lo ancho con regla dorada de 4 px arriba, tres columnas con título celeste grande subrayado en celeste y enlaces marinos; entra en 220 ms y sale en 140 ms; los grupos se escalonan 50 ms. Hover: el enlace pasa a celeste hondo y se corre 6 px.
-- **Menú móvil:** panel marino a pantalla completa con enlaces de 56 px en 900 al 125 %, subgrupos con su título y la placa ICRM al final; el actual va en dorado.
+- **Menú móvil:** panel marino a pantalla completa con enlaces de 56 px en 900 al 125 %, subgrupos con su título y la placa del portal académico al final; el actual va en dorado.
 
 ### Carrusel de novedades (solo Inicio)
 Primera sección de Inicio, bajo la cabecera y a todo el ancho, sobre fondo marino. Cada banner es una imagen grande (con versión móvil opcional y punto focal) y su texto real (título, categoría y fecha, botón dorado opcional) va en una placa marina inclinada con regla dorada, del lado que indique `alineacion` y alineada al ancho de contenido. El contraste no depende de la foto. Controles en una cápsula marina centrada abajo: flechas, indicadores (el activo es más ancho y una barra dorada muestra el progreso de los 6 s) y un botón visible Pausar/Reproducir. Avanza solo cada 6 s; se detiene con el mouse encima, con el foco dentro o con la pestaña oculta; funciona con las flechas del teclado y con arrastre. Las diapositivas que no se ven quedan inertes. Con un banner no hay controles; sin banners, desaparece. No se usa en ninguna otra página.
@@ -400,7 +400,7 @@ Banda marina con cada cifra sobre un filete celeste de 4 px, valor dorado en 900
 Recuadros blancos con borde de 2 px celeste lavado y un tramo dorado de 44 px arriba a la izquierda; nombre en mayúsculas y significado en marino suave.
 
 ### Pie
-Bloque marino completo: medalla, nombre, ICRM, y columnas cuyos títulos en mayúsculas llevan una raya dorada de 36 × 3 px. Enlaces blancos con subrayado dorado al pasar el mouse; base con filete blanco al 14 %.
+Bloque marino completo: medalla, nombre, el portal académico (Cubicol), y columnas cuyos títulos en mayúsculas llevan una raya dorada de 36 × 3 px. Enlaces blancos con subrayado dorado al pasar el mouse; base con filete blanco al 14 %.
 
 ### Foco
 Contorno de 3 px, a 3 px de distancia, esquina 4 px. Marino sobre fondos claros (blanco, celeste lavado, carriles blancos, mega menú); blanco sobre celeste y marino (cabecera, hero, niveles, cierre, carriles marinos, noticias placa, pie). El enlace «Saltar al contenido» va por encima de la cabecera fija (capa 100 frente a 50) y el desplazamiento a anclas deja libre la altura de la cabecera más 16 px.
@@ -424,7 +424,7 @@ Contorno de 3 px, a 3 px de distancia, esquina 4 px. Marino sobre fondos claros 
 
 ### Do:
 - **Do** mantener celeste y blanco como protagonistas (≈ 30 % y 60 %) y el marino para texto, cabecera, cifras y pie.
-- **Do** usar el dorado solo como cinta: líneas, subrayados, reglas superiores, ICRM y botones principales.
+- **Do** usar el dorado solo como cinta: líneas, subrayados, reglas superiores, el portal académico y botones principales.
 - **Do** poner sobre celeste solo texto de 24 px o más, o de 18.7 px o más en negrita; todo lo demás en marino sobre blanco o blanco sobre marino.
 - **Do** escribir siempre en marino sobre dorado.
 - **Do** titular en Archivo Variable al 125 %, 900 y mayúsculas, y dejar el texto al 100 %.

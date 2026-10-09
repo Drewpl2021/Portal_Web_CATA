@@ -5,7 +5,7 @@ import { Cargando, ErrorCarga } from '../../components/EstadoSeccion'
 import { useRecurso } from '../../hooks/useRecurso'
 import { Revelar } from '../movimiento'
 
-// Plataformas digitales (iCRM, EVA) en las tarjetas de texto de Nosotros; lo que falta lleva su aclaración.
+// Plataformas digitales (Cubicol, EVA) en las tarjetas de texto de Nosotros; lo que falta lleva su aclaración.
 export default function PlataformasPropuesta() {
   const r = useRecurso('propuesta-plataformas', obtenerPlataformas)
 

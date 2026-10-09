@@ -26,7 +26,8 @@ export default function Cabecera({ base = '' }: { base?: string }) {
   const nav = useNavegacion()
   const interna = useRutaInterna()
   const sitio = useRecurso('sitio', obtenerSitio)
-  const icrm = sitio.estado === 'listo' ? sitio.datos.portalAcademicoUrl : null
+  // Solo un enlace a la plataforma académica: el portal no replica su inicio de sesión ni pide datos.
+  const portal = sitio.estado === 'listo' ? sitio.datos.portalAcademico : null
   const relativa = nav.ruta.slice(base.length) || '/'
   const activo = MENU.find((m) => estaActiva(m.ruta, relativa))?.ruta ?? null
   const [senalado, setSenalado] = useState<string | null>(null)
@@ -123,10 +124,10 @@ export default function Cabecera({ base = '' }: { base?: string }) {
           </ul>
         </nav>
 
-        {icrm && (
-          <a className="f-icrm" href={icrm} target="_blank" rel="noreferrer">
-            <span className="f-icrm__texto">
-              ICRM <ArrowUpRight size={18} strokeWidth={2.5} aria-hidden="true" />
+        {portal && (
+          <a className="f-portal-academico" href={portal.url} target="_blank" rel="noreferrer">
+            <span className="f-portal-academico__texto">
+              {portal.nombre} <ArrowUpRight size={18} strokeWidth={2.5} aria-hidden="true" />
             </span>
             <span className="visually-hidden"> portal académico (se abre en otra pestaña)</span>
           </a>
@@ -183,10 +184,10 @@ export default function Cabecera({ base = '' }: { base?: string }) {
                   </motion.li>
                 ))}
               </ul>
-              {icrm && (
-                <a className="f-icrm f-icrm--movil" href={icrm} target="_blank" rel="noreferrer">
-                  <span className="f-icrm__texto">
-                    ICRM · Portal académico <ArrowUpRight size={18} strokeWidth={2.5} aria-hidden="true" />
+              {portal && (
+                <a className="f-portal-academico f-portal-academico--movil" href={portal.url} target="_blank" rel="noreferrer">
+                  <span className="f-portal-academico__texto">
+                    {portal.nombre} · Portal académico <ArrowUpRight size={18} strokeWidth={2.5} aria-hidden="true" />
                   </span>
                   <span className="visually-hidden"> (se abre en otra pestaña)</span>
                 </a>

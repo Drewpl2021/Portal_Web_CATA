@@ -18,7 +18,10 @@
       "referencia": null,
       "distrito": null
     },
-    "portalAcademicoUrl": "https://cata.icrmedu.com/Academico/Paginas/Login.aspx",
+    "portalAcademico": {
+      "nombre": "Cubicol",
+      "url": "https://cata.cubicol.pe/principal/login"
+    },
     "promotora": null
   }
 }

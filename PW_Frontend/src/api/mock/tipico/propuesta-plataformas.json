@@ -1,33 +1,33 @@
 {
   "data": [
     {
-      "id": "icrm",
-      "nombre": "iCRM Educativo",
-      "descripcion": "Programación anual, unidades, sesiones con recursos digitales alineadas al currículo, todo en un mismo entorno virtual que el iCRM Educativo pone a disposición del docente y estudiante para un aprendizaje autónomo.",
+      "id": "cubicol",
+      "nombre": "Cubicol",
+      "descripcion": "La plataforma académica del colegio desde 2026. Reemplaza al iCRM Educativo, que se usó de 2020 a 2025.",
       "funciones": [
         {
           "titulo": "Docentes",
-          "texto": "El iCRM Educativo le permite a cada docente personalizar y evaluar las sesiones del día a día."
+          "texto": "Por confirmar: qué ofrece Cubicol a docentes."
         },
         {
-          "titulo": "Académico",
-          "texto": "Con el iCRM Educativo tienes el currículo, planificación anual, monitoreo del progreso académico, etc."
+          "titulo": "Área académica",
+          "texto": "Por confirmar: qué ofrece Cubicol a área académica."
         },
         {
           "titulo": "Padres de familia",
-          "texto": "El iCRM Educativo recopila los datos del progreso de cada estudiante y la presenta al padre o tutor."
+          "texto": "Por confirmar: qué ofrece Cubicol a padres de familia."
         },
         {
           "titulo": "Estudiantes",
-          "texto": "Los estudiantes ejecutan sus sesiones virtuales con evaluaciones y retroalimentación automatizadas."
+          "texto": "Por confirmar: qué ofrece Cubicol a estudiantes."
         }
       ],
       "enlace": {
-        "etiqueta": "Entrar al iCRM",
-        "url": "https://cata.icrmedu.com/Academico/Paginas/Login.aspx",
+        "etiqueta": "Entrar a Cubicol",
+        "url": "https://cata.cubicol.pe/principal/login",
         "externo": true
       },
-      "aclaracion": null
+      "aclaracion": "Funciones por confirmar"
     },
     {
       "id": "eva-student",

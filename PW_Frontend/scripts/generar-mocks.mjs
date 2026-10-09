@@ -54,7 +54,8 @@ const img = (archivo, alt) => {
 // ── Escenario típico: contenido real de cata.edu.pe; noticias e imágenes son de prueba ──
 // Años de reconocimiento de cada nivel: cata.edu.pe/new_resenahistorica (R.D. Regional N° 457 del
 // 07-05-1971, R.D.Z. N° 104-DZE-J del 25-03-1982 y R.D. N° 6954-DREP del 03-12-1998).
-const ICRM = 'https://cata.icrmedu.com/Academico/Paginas/Login.aspx'
+// Plataforma académica: desde 2026, Cubicol (antes, iCRM Educativo, 2020-2025). Solo se enlaza a su inicio de sesión.
+const CUBICOL = { nombre: 'Cubicol', url: 'https://cata.cubicol.pe/principal/login' }
 
 const sitio = {
   nombre: 'Colegio Adventista Túpac Amaru',
@@ -65,7 +66,7 @@ const sitio = {
   telefono: { numero: '+5151325096', visible: '051 325096' },
   whatsapp: { numero: '+51986322833', visible: '986 322 833' },
   direccion: { linea: 'Jr. Moquegua N° 852', referencia: 'Frente al Mercado Internacional Túpac Amaru', distrito: 'Juliaca, San Román, Puno' },
-  portalAcademicoUrl: ICRM,
+  portalAcademico: CUBICOL,
   promotora: 'Asociación Educativa Colegio Adventista Túpac Amaru',
 }
 
@@ -323,7 +324,7 @@ escribir('alt-vacio', 'sedes', { data: altVacio(sedes) })
 escribir('alt-vacio', 'noticias', lista(altVacio(noticias)))
 
 // ── vacio: listas vacías y opcionales en null ──
-escribir('vacio', 'sitio', { data: { ...sitio, portalAcademicoUrl: null, subtitulo: null, promotora: null } })
+escribir('vacio', 'sitio', { data: { ...sitio, portalAcademico: null, subtitulo: null, promotora: null } })
 escribir('vacio', 'quienes-somos', { data: { ...quienes, foto: null, simbolos: [] } })
 escribir('vacio', 'niveles', { data: { titulo: 'Inicial, primaria y secundaria', propuestaUrl: null, items: [] } })
 escribir('vacio', 'sedes', { data: [] })
@@ -732,6 +733,8 @@ const paginasNosotros = {
           { fecha: '25 de marzo de 1982', texto: 'La R.D.Z. N° 104-DZE-J reconoce el nivel secundaria.' },
           { fecha: '3 de diciembre de 1998', texto: 'La R.D. N° 6954-DREP reconoce el nivel inicial.' },
           { fecha: '2000', texto: 'La R.D. N° 4609-DREP-2000 reconoce como promotora a la Asociación Educativa Colegio Adventista Túpac Amaru (AE-CATA).' },
+          { fecha: '2020 – 2025', texto: 'El colegio usa la plataforma académica iCRM Educativo.' },
+          { fecha: '2026', texto: 'El colegio deja el iCRM y empieza a usar la plataforma académica Cubicol.' },
         ],
       },
       t('La educación adventista en el Perú', 'Para comprender esta actitud resuelta de lograr la educación anhelada para los hijos, hay que tener en cuenta la original gesta de la liberación del hombre andino emprendido por Manuel Zúñiga Camacho, quien intentó hacerlo por el camino del conocimiento y la educación, no por la violencia; sin embargo, la oposición de los poderes fácticos de aquel entonces clausuraron la naciente escuela; tal situación le llevó a solicitar ayuda a los líderes de la IASD, quienes prontamente enviaron a los misioneros Fernando y Ana Sthal. Esto permitió continuar la obra educativa en la escuela de Utawilaya – Platería del departamento de Puno; una zona caracterizada por el habla aymara. Posteriormente se suma el misionero argentino Pedro Kalbermatter, quien asume la tarea de llevar el mensaje de la Palabra de Dios a la zona quechua del departamento; acaso estas acciones fueron la primera revolución civil que buscó en el conocimiento y la educación; la liberación del hombre andino, inspirados en el Gran Maestro, que dijo: «y conoceréis la verdad, y la verdad os hará libres» (Juan 8:32). Después de esta breve reseña se concluye que esta es la primera etapa de la Educación Cristiana Adventista en el país incaico, iniciado en 1911.'),
@@ -1160,7 +1163,7 @@ escribir('vacio', 'logros', { data: { ...logrosTipico, bajada: null, cifras: [],
 
 // ── Propuesta Educativa (cuerpo) ──
 // Textos de cata.edu.pe: los 4 pilares (imágenes de new_propuestaeducativa), «Educ. Adventista» y los niveles (páginas
-// inicial, primaria, secundaria y propuesta-pedagogica), la academia (new_academia) y el iCRM (sistema-academico).
+// inicial, primaria, secundaria y propuesta-pedagogica) y la academia (new_academia). La plataforma académica es Cubicol (ver abajo).
 // NO se usa el PDF informativo enlazado en esa página: es una plantilla de Innova Schools (ver docs/PENDIENTES.md).
 // Se corrigieron solo erratas evidentes («empendedor», «medio ambientes», «lo mas íntimo»).
 const pilaresPropuesta = {
@@ -1248,20 +1251,16 @@ const academiaLargo = {
     { id: 'prueba', nombre: 'Universidad de prueba con un nombre muy largo para comprobar el ajuste del filtro y de las fichas', ciclos: Array.from({ length: 6 }, (_, i) => ciclo(`p${i}`, `Ciclo de prueba ${i + 1} con nombre largo`, i % 2 === 0, 1200 + i, i % 2 === 0 ? 900 : null, '2027-01-04', '2027-03-26')) },
   ],
 }
-const ICRM_URL = 'https://cata.icrmedu.com/Academico/Paginas/Login.aspx'
+// Cubicol reemplaza al iCRM Educativo (2020-2025). Qué ofrece a cada rol aún no se sabe: se marca «por confirmar».
+const porConfirmarRol = (rol) => ({ titulo: rol, texto: `Por confirmar: qué ofrece Cubicol a ${rol.toLowerCase()}.` })
 const plataformas = [
   {
-    id: 'icrm',
-    nombre: 'iCRM Educativo',
-    descripcion: 'Programación anual, unidades, sesiones con recursos digitales alineadas al currículo, todo en un mismo entorno virtual que el iCRM Educativo pone a disposición del docente y estudiante para un aprendizaje autónomo.',
-    funciones: [
-      { titulo: 'Docentes', texto: 'El iCRM Educativo le permite a cada docente personalizar y evaluar las sesiones del día a día.' },
-      { titulo: 'Académico', texto: 'Con el iCRM Educativo tienes el currículo, planificación anual, monitoreo del progreso académico, etc.' },
-      { titulo: 'Padres de familia', texto: 'El iCRM Educativo recopila los datos del progreso de cada estudiante y la presenta al padre o tutor.' },
-      { titulo: 'Estudiantes', texto: 'Los estudiantes ejecutan sus sesiones virtuales con evaluaciones y retroalimentación automatizadas.' },
-    ],
-    enlace: { etiqueta: 'Entrar al iCRM', url: ICRM_URL, externo: true },
-    aclaracion: null,
+    id: 'cubicol',
+    nombre: 'Cubicol',
+    descripcion: 'La plataforma académica del colegio desde 2026. Reemplaza al iCRM Educativo, que se usó de 2020 a 2025.',
+    funciones: ['Docentes', 'Área académica', 'Padres de familia', 'Estudiantes'].map(porConfirmarRol),
+    enlace: { etiqueta: 'Entrar a Cubicol', url: CUBICOL.url, externo: true },
+    aclaracion: 'Funciones por confirmar',
   },
   { id: 'eva-student', nombre: 'EVA Student', descripcion: null, funciones: [], enlace: null, aclaracion: 'Descripción por confirmar' },
   { id: 'planificador-eva', nombre: 'Planificador Inteligente EVA', descripcion: null, funciones: [], enlace: { etiqueta: 'Ver el Planificador Inteligente EVA', url: 'https://www.canva.com/design/DAGvTPFEMMM/6r3lFiZV0HneNzyyg7cSxw/view', externo: true }, aclaracion: 'Descripción por confirmar' },
@@ -1274,7 +1273,7 @@ escribir('tipico', 'propuesta-plataformas', { data: plataformas })
 escribir('corto', 'propuesta-pilares', { data: { introduccion: null, cifras: [], pilares: [{ id: 'p', titulo: 'Servicio', texto: 'Servir.', puntos: [] }] } })
 escribir('corto', 'propuesta-niveles', { data: [{ id: 'i', nombre: 'Inicial', rango: null, descripcion: [], rasgos: [], talleres: [], foto: null }] })
 escribir('corto', 'propuesta-academia', { data: { titulo: 'Academia', descripcion: null, aclaracion: null, universidades: [{ id: 'u', nombre: 'UNAJ', ciclos: [ciclo('c', 'Repaso', false)] }] } })
-escribir('corto', 'propuesta-plataformas', { data: [{ id: 'i', nombre: 'iCRM', descripcion: null, funciones: [], enlace: null, aclaracion: null }] })
+escribir('corto', 'propuesta-plataformas', { data: [{ id: 'c', nombre: 'Cubicol', descripcion: null, funciones: [], enlace: null, aclaracion: null }] })
 
 escribir('largo', 'propuesta-pilares', { data: {
   introduccion: { titulo: 'Educación adventista con un título largo para comprobar el ajuste', parrafos: [pilaresPropuesta.introduccion.parrafos[0], textoLargo, textoLargo] },

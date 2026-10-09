@@ -46,7 +46,7 @@ export const esquemaSitio = z.object({
   telefono,
   whatsapp: telefono,
   direccion: z.object({ linea: texto, referencia: textoONulo, distrito: textoONulo }),
-  portalAcademicoUrl: url.nullable(),
+  portalAcademico: z.object({ nombre: z.string().min(1).max(20), url }).nullable(),
   promotora: textoONulo,
 })
 

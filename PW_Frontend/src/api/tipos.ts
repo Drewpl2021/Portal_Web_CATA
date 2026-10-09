@@ -1,4 +1,4 @@
-// Tipos del contrato de la API pública del portal (docs/API_CONTRACT.md, v2.8).
+// Tipos del contrato de la API pública del portal (docs/API_CONTRACT.md, v2.9).
 // Todos los campos llegan siempre; los opcionales valen null.
 
 /** Fecha ISO 8601 sin hora: "2026-10-08". */
@@ -52,8 +52,16 @@ export interface Sitio {
   telefono: Telefono
   whatsapp: Telefono
   direccion: Direccion
-  portalAcademicoUrl: string | null
+  /** Plataforma académica externa (hoy, Cubicol). El portal solo enlaza a ella; nunca pide usuario ni contraseña. null = sin botón. */
+  portalAcademico: PortalAcademico | null
   promotora: string | null
+}
+
+export interface PortalAcademico {
+  /** Nombre de la plataforma, como se muestra en el botón: «Cubicol». */
+  nombre: string
+  /** Página de inicio de sesión de la plataforma (https). */
+  url: string
 }
 
 // GET /v1/portada/banners

@@ -140,9 +140,9 @@
   pointer-events: none;
 }
 
-/* ICRM: placa dorada inclinada */
+/* Portal académico (Cubicol): placa dorada inclinada. Solo enlaza; no hay inicio de sesión en el portal */
 
-.f-icrm {
+.f-portal-academico {
   position: relative;
   isolation: isolate;
   display: inline-flex;
@@ -155,7 +155,7 @@
   transition: transform 160ms var(--ease-salida);
 }
 
-.f-icrm::before {
+.f-portal-academico::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -165,7 +165,7 @@
   transform: skewX(-12deg);
 }
 
-.f-icrm__texto {
+.f-portal-academico__texto {
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
@@ -176,15 +176,15 @@
   text-transform: uppercase;
 }
 
-.f-icrm__texto svg {
+.f-portal-academico__texto svg {
   transition: transform 200ms var(--ease-salida);
 }
 
-.f-icrm:active {
+.f-portal-academico:active {
   transform: scale(0.97);
 }
 
-.f-icrm:focus-visible {
+.f-portal-academico:focus-visible {
   outline-color: var(--blanco);
   outline-offset: 0.25rem;
 }
@@ -362,7 +362,7 @@
   font-weight: 700;
 }
 
-.f-icrm--movil {
+.f-portal-academico--movil {
   margin-top: 1.75rem;
   min-height: 3.25rem;
 }
@@ -1709,11 +1709,11 @@
   color: var(--blanco);
 }
 
-.f-icrm--pie {
+.f-portal-academico--pie {
   margin-top: 0.75rem;
 }
 
-.f-icrm--pie .f-icrm__texto {
+.f-portal-academico--pie .f-portal-academico__texto {
   font-size: 0.88rem;
   white-space: nowrap;
 }
@@ -4791,11 +4791,11 @@ html.f-anim [data-revelar='carriles']:not([data-visto]) > * {
     transform: translateX(0.1875rem);
   }
 
-  .f-icrm:hover::before {
+  .f-portal-academico:hover::before {
     background: var(--dorado-claro);
   }
 
-  .f-icrm:hover .f-icrm__texto svg {
+  .f-portal-academico:hover .f-portal-academico__texto svg {
     transform: translate(0.125rem, -0.125rem);
   }
 
@@ -4984,7 +4984,7 @@ html.f-anim [data-revelar='carriles']:not([data-visto]) > * {
   .f-hamburguesa span,
   .f-boton__texto svg,
   .f-enlace svg,
-  .f-icrm__texto svg {
+  .f-portal-academico__texto svg {
     transition: none;
   }
 }
@@ -5012,11 +5012,11 @@ html.f-anim [data-revelar='carriles']:not([data-visto]) > * {
     display: block;
   }
 
-  .f-cab__barra > .f-icrm {
+  .f-cab__barra > .f-portal-academico {
     margin-left: auto;
   }
 
-  .f-cab__barra > .f-icrm + .f-hamburguesa {
+  .f-cab__barra > .f-portal-academico + .f-hamburguesa {
     margin-left: 0;
   }
 }
@@ -5117,12 +5117,12 @@ html.f-anim [data-revelar='carriles']:not([data-visto]) > * {
     height: 2.5rem;
   }
 
-  .f-cab__barra > .f-icrm {
+  .f-cab__barra > .f-portal-academico {
     display: none;
   }
 
   .f-cab__barra > .f-hamburguesa,
-  .f-cab__barra > .f-icrm + .f-hamburguesa {
+  .f-cab__barra > .f-portal-academico + .f-hamburguesa {
     margin-left: auto;
   }
 

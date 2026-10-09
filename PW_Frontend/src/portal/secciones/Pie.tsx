@@ -25,10 +25,10 @@ export default function PieFinal() {
               {[sitio.subtitulo, `${sitio.ciudad}, desde ${sitio.anioFundacion}`].filter(Boolean).join(' · ')}
             </p>
           )}
-          {sitio?.portalAcademicoUrl && (
-            <a className="f-icrm f-icrm--pie" href={sitio.portalAcademicoUrl} target="_blank" rel="noreferrer">
-              <span className="f-icrm__texto">
-                ICRM · Portal académico <ArrowUpRight size={18} strokeWidth={2.5} aria-hidden="true" />
+          {sitio?.portalAcademico && (
+            <a className="f-portal-academico f-portal-academico--pie" href={sitio.portalAcademico.url} target="_blank" rel="noreferrer">
+              <span className="f-portal-academico__texto">
+                {sitio.portalAcademico.nombre} · Portal académico <ArrowUpRight size={18} strokeWidth={2.5} aria-hidden="true" />
               </span>
               <span className="visually-hidden"> (se abre en otra pestaña)</span>
             </a>

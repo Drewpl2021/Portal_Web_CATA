@@ -6,7 +6,7 @@
     "bloques": [
       {
         "tipo": "personas",
-        "titulo": null,
+        "titulo": "Dirección",
         "personas": [
           {
             "id": "lanza",
@@ -31,38 +31,22 @@
             }
           },
           {
-            "id": "alca",
-            "nombre": "Karen Alca Apaza",
-            "cargo": "Contador(a)",
+            "id": "mamani-apaza",
+            "nombre": "Guillermo Mamani Apaza",
+            "cargo": "Director de gestión de calidad",
             "foto": {
-              "url": "https://cata.edu.pe/wp-content/uploads/2024/08/3.png",
+              "url": "https://cata.edu.pe/wp-content/uploads/2024/09/FT-GM.png",
               "alt": "",
               "ancho": 400,
               "alto": 400
             }
-          },
-          {
-            "id": "cotrina",
-            "nombre": "José Cotrina Alvarado",
-            "cargo": "Capellanía",
-            "foto": {
-              "url": "https://cata.edu.pe/wp-content/uploads/2024/08/4.png",
-              "alt": "",
-              "ancho": 400,
-              "alto": 400
-            }
-          },
-          {
-            "id": "mamani-tarqui-e",
-            "nombre": "Elias Mamani Tarqui",
-            "cargo": "Psicología",
-            "foto": {
-              "url": "https://cata.edu.pe/wp-content/uploads/2024/08/5.png",
-              "alt": "",
-              "ancho": 400,
-              "alto": 400
-            }
-          },
+          }
+        ]
+      },
+      {
+        "tipo": "personas",
+        "titulo": "Dirección académica",
+        "personas": [
           {
             "id": "aliaga",
             "nombre": "Elisa Aliaga Salcedo",
@@ -106,24 +90,19 @@
               "ancho": 400,
               "alto": 400
             }
-          },
+          }
+        ]
+      },
+      {
+        "tipo": "personas",
+        "titulo": "Contabilidad y caja",
+        "personas": [
           {
-            "id": "mamani-tarqui-m",
-            "nombre": "Mary Mamani Tarqui",
-            "cargo": "Caja",
+            "id": "alca",
+            "nombre": "Karen Alca Apaza",
+            "cargo": "Contador(a)",
             "foto": {
-              "url": "https://cata.edu.pe/wp-content/uploads/2024/08/10.png",
-              "alt": "",
-              "ancho": 400,
-              "alto": 400
-            }
-          },
-          {
-            "id": "condori",
-            "nombre": "Luz Condori Quispe",
-            "cargo": "Secretaria general",
-            "foto": {
-              "url": "https://cata.edu.pe/wp-content/uploads/2024/08/11.png",
+              "url": "https://cata.edu.pe/wp-content/uploads/2024/08/3.png",
               "alt": "",
               "ancho": 400,
               "alto": 400
@@ -141,22 +120,28 @@
             }
           },
           {
-            "id": "incahuanaco",
-            "nombre": "Ismael Incahuanaco Mamani",
-            "cargo": "TIC",
+            "id": "mamani-tarqui-m",
+            "nombre": "Mary Mamani Tarqui",
+            "cargo": "Caja",
             "foto": {
-              "url": "https://cata.edu.pe/wp-content/uploads/2024/08/13.png",
+              "url": "https://cata.edu.pe/wp-content/uploads/2024/08/10.png",
               "alt": "",
               "ancho": 400,
               "alto": 400
             }
-          },
+          }
+        ]
+      },
+      {
+        "tipo": "personas",
+        "titulo": "Secretaría, operaciones y TIC",
+        "personas": [
           {
-            "id": "mamani-apaza",
-            "nombre": "Guillermo Mamani Apaza",
-            "cargo": "Director de gestión de calidad",
+            "id": "condori",
+            "nombre": "Luz Condori Quispe",
+            "cargo": "Secretaria general",
             "foto": {
-              "url": "https://cata.edu.pe/wp-content/uploads/2024/09/FT-GM.png",
+              "url": "https://cata.edu.pe/wp-content/uploads/2024/08/11.png",
               "alt": "",
               "ancho": 400,
               "alto": 400
@@ -168,6 +153,45 @@
             "cargo": "Asistente de operaciones",
             "foto": {
               "url": "https://cata.edu.pe/wp-content/uploads/2024/08/15.png",
+              "alt": "",
+              "ancho": 400,
+              "alto": 400
+            }
+          },
+          {
+            "id": "incahuanaco",
+            "nombre": "Ismael Incahuanaco Mamani",
+            "cargo": "TIC",
+            "foto": {
+              "url": "https://cata.edu.pe/wp-content/uploads/2024/08/13.png",
+              "alt": "",
+              "ancho": 400,
+              "alto": 400
+            }
+          }
+        ]
+      },
+      {
+        "tipo": "personas",
+        "titulo": "Bienestar y pastoral",
+        "personas": [
+          {
+            "id": "cotrina",
+            "nombre": "José Cotrina Alvarado",
+            "cargo": "Capellanía",
+            "foto": {
+              "url": "https://cata.edu.pe/wp-content/uploads/2024/08/4.png",
+              "alt": "",
+              "ancho": 400,
+              "alto": 400
+            }
+          },
+          {
+            "id": "mamani-tarqui-e",
+            "nombre": "Elias Mamani Tarqui",
+            "cargo": "Psicología",
+            "foto": {
+              "url": "https://cata.edu.pe/wp-content/uploads/2024/08/5.png",
               "alt": "",
               "ancho": 400,
               "alto": 400

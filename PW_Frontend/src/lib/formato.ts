@@ -50,3 +50,12 @@ export function etapaDe(inicio: string, fin: string | null, hoy = new Date()): '
   if (local > (fin ?? inicio)) return 'pasada'
   return 'en-curso'
 }
+
+const formatoKB = new Intl.NumberFormat('es-PE', { maximumFractionDigits: 0 })
+const formatoMB = new Intl.NumberFormat('es-PE', { maximumFractionDigits: 1 })
+
+/** 850000 → "830 KB"; 1250000 → "1,2 MB". */
+export function pesoLegible(bytes: number) {
+  if (bytes < 1024 * 1024) return `${formatoKB.format(Math.max(1, bytes / 1024))} KB`
+  return `${formatoMB.format(bytes / (1024 * 1024))} MB`
+}

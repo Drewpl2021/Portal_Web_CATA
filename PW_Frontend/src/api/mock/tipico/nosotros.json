@@ -28,6 +28,10 @@
         "resumen": "Dirección general, administración, direcciones académicas y áreas de apoyo."
       },
       {
+        "slug": "personal-docente",
+        "resumen": "Maestras y maestros de inicial, primaria y secundaria."
+      },
+      {
         "slug": "organigrama",
         "resumen": "La estructura de la institución."
       }

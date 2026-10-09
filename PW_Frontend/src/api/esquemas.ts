@@ -294,7 +294,10 @@ const bloque = z.discriminatedUnion('tipo', [
   z.object({
     tipo: z.literal('enlaces'),
     titulo: textoONulo,
-    enlaces: z.array(z.object({ etiqueta: texto, url, descripcion: textoONulo, formato: z.enum(FORMATOS_ENLACE) })).min(1).max(30),
+    enlaces: z
+      .array(z.object({ etiqueta: texto, url, descripcion: textoONulo, formato: z.enum(FORMATOS_ENLACE), peso: z.number().int().positive().nullable() }))
+      .min(1)
+      .max(30),
   }),
 ])
 
@@ -304,6 +307,13 @@ export const esquemaPaginaContenido = z.object({
   bajada: textoONulo,
   bloques: z.array(bloque).max(30),
 })
+
+export const esquemaDocentes = z
+  .object({
+    niveles: z.array(z.object({ id: texto, nombre: texto })).max(6),
+    docentes: z.array(z.object({ id: texto, nombre: texto, cargo: texto, nivel: texto, foto: imagen.nullable() })).max(150),
+  })
+  .refine((d) => d.docentes.every((x) => d.niveles.some((n) => n.id === x.nivel)), 'Cada docente debe usar un nivel de la lista')
 
 export const sobre = <S extends z.ZodTypeAny>(data: S) => z.object({ data })
 export const sobrePaginado = <S extends z.ZodTypeAny>(data: S) => z.object({ data, meta: esquemaMeta })
@@ -331,3 +341,4 @@ coincide<Igual<z.infer<typeof esquemaProyectos>, T.Proyectos>>()
 coincide<Igual<z.infer<typeof esquemaProyecto>, T.Proyecto>>()
 coincide<Igual<z.infer<typeof esquemaNosotros>, T.Nosotros>>()
 coincide<Igual<z.infer<typeof esquemaPaginaContenido>, T.PaginaContenido>>()
+coincide<Igual<z.infer<typeof esquemaDocentes>, T.Docentes>>()

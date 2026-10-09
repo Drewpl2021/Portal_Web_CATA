@@ -30,6 +30,7 @@ const placeholders = {
   'proyecto-robotica': ['Proyecto: Robótica', 3, 2],
   'proyecto-galeria-1': ['Galería del proyecto', 3, 2],
   'proyecto-galeria-2': ['Galería del proyecto', 3, 2],
+  'persona-prueba': ['Persona', 1, 1],
 }
 fs.mkdirSync(dirImg, { recursive: true })
 for (const [archivo, [etiqueta, w, h]] of Object.entries(placeholders)) {
@@ -681,6 +682,17 @@ const vinetas = (titulo, items) => ({ tipo: 'lista', titulo, estilo: 'vinetas', 
 const foto400 = (ruta, alt = '') => ({ url: UP + ruta, alt, ancho: 400, alto: 400 })
 const persona = (id, nombre, cargo, ruta) => ({ id, nombre, cargo, foto: ruta ? foto400(ruta) : null })
 
+const DESCRIPCION_ENLACE = {
+  canva: 'Documento del colegio publicado como diseño en Canva.',
+  hoja: 'Hoja de cálculo del colegio en Google Drive.',
+}
+const enlaceUnico = (slugE, titulo, etiqueta, url, formato) => ({
+  slug: slugE,
+  titulo,
+  bajada: null,
+  bloques: [{ tipo: 'enlaces', titulo: null, enlaces: [{ etiqueta, url, descripcion: DESCRIPCION_ENLACE[formato], formato, peso: null }] }],
+})
+
 const paginasNosotros = {
   'mision-y-vision': {
     slug: 'mision-y-vision',
@@ -876,30 +888,51 @@ const paginasNosotros = {
     slug: 'administracion',
     titulo: 'Administración',
     bajada: null,
+    // Las áreas son una propuesta del portal para ordenar los cargos que publica el colegio.
     bloques: [
-      {
-        tipo: 'personas',
-        titulo: null,
-        personas: [
-          persona('lanza', 'Fredy Lanza Umiña', 'Director general', '2024/08/1v.png'),
-          persona('apaza-sosa', 'Dino Apaza Sosa', 'Administrador', '2024/08/2.png'),
-          persona('alca', 'Karen Alca Apaza', 'Contador(a)', '2024/08/3.png'),
-          persona('cotrina', 'José Cotrina Alvarado', 'Capellanía', '2024/08/4.png'),
-          persona('mamani-tarqui-e', 'Elias Mamani Tarqui', 'Psicología', '2024/08/5.png'),
-          persona('aliaga', 'Elisa Aliaga Salcedo', 'Director académico general', '2024/08/6.png'),
-          persona('coa', 'Kelia Coa Mamani', 'Director académico inicial y primaria', '2024/08/7.png'),
-          persona('apaza-apaza', 'Edwin Apaza Apaza', 'Director académico secundaria', '2024/08/8.png'),
-          persona('huahuacondori', 'Ademer Huahuacondori Aranda', 'Director académico Jerusalén', '2024/08/9.png'),
-          persona('mamani-tarqui-m', 'Mary Mamani Tarqui', 'Caja', '2024/08/10.png'),
-          persona('condori', 'Luz Condori Quispe', 'Secretaria general', '2024/08/11.png'),
-          persona('mamani-valera', 'Griselda Mamani Valera', 'Auxiliar de contabilidad', '2024/08/12.png'),
-          persona('incahuanaco', 'Ismael Incahuanaco Mamani', 'TIC', '2024/08/13.png'),
-          persona('mamani-apaza', 'Guillermo Mamani Apaza', 'Director de gestión de calidad', '2024/09/FT-GM.png'),
-          persona('casildo', 'Yaritza Casildo Chanducas', 'Asistente de operaciones', '2024/08/15.png'),
-        ],
-      },
+      { tipo: 'personas', titulo: 'Dirección', personas: [
+        persona('lanza', 'Fredy Lanza Umiña', 'Director general', '2024/08/1v.png'),
+        persona('apaza-sosa', 'Dino Apaza Sosa', 'Administrador', '2024/08/2.png'),
+        persona('mamani-apaza', 'Guillermo Mamani Apaza', 'Director de gestión de calidad', '2024/09/FT-GM.png'),
+      ] },
+      { tipo: 'personas', titulo: 'Dirección académica', personas: [
+        persona('aliaga', 'Elisa Aliaga Salcedo', 'Director académico general', '2024/08/6.png'),
+        persona('coa', 'Kelia Coa Mamani', 'Director académico inicial y primaria', '2024/08/7.png'),
+        persona('apaza-apaza', 'Edwin Apaza Apaza', 'Director académico secundaria', '2024/08/8.png'),
+        persona('huahuacondori', 'Ademer Huahuacondori Aranda', 'Director académico Jerusalén', '2024/08/9.png'),
+      ] },
+      { tipo: 'personas', titulo: 'Contabilidad y caja', personas: [
+        persona('alca', 'Karen Alca Apaza', 'Contador(a)', '2024/08/3.png'),
+        persona('mamani-valera', 'Griselda Mamani Valera', 'Auxiliar de contabilidad', '2024/08/12.png'),
+        persona('mamani-tarqui-m', 'Mary Mamani Tarqui', 'Caja', '2024/08/10.png'),
+      ] },
+      { tipo: 'personas', titulo: 'Secretaría, operaciones y TIC', personas: [
+        persona('condori', 'Luz Condori Quispe', 'Secretaria general', '2024/08/11.png'),
+        persona('casildo', 'Yaritza Casildo Chanducas', 'Asistente de operaciones', '2024/08/15.png'),
+        persona('incahuanaco', 'Ismael Incahuanaco Mamani', 'TIC', '2024/08/13.png'),
+      ] },
+      { tipo: 'personas', titulo: 'Bienestar y pastoral', personas: [
+        persona('cotrina', 'José Cotrina Alvarado', 'Capellanía', '2024/08/4.png'),
+        persona('mamani-tarqui-e', 'Elias Mamani Tarqui', 'Psicología', '2024/08/5.png'),
+      ] },
     ],
   },
+  'personal-docente': {
+    slug: 'personal-docente',
+    titulo: 'Personal Docente',
+    bajada: null,
+    bloques: [t('Datos de prueba', 'El colegio aún no ha enviado la lista del personal docente. Los nombres, cargos y fotos de esta página son de prueba y sirven solo para mostrar cómo se verá.')],
+  },
+  // Gestión y Documentos: en cata.edu.pe cada página es un enlace a un diseño de Canva (o a una hoja de cálculo).
+  // No se puede leer su contenido, así que cada página muestra ese enlace, con su formato y aviso de nueva pestaña.
+  procesos: enlaceUnico('procesos', 'Procesos', 'Ver los procesos de la institución', 'https://www.canva.com/design/DAFYJWqe40k/2_ux35I_XqoMXonpg7PI-Q/view', 'canva'),
+  'planificacion-anual': enlaceUnico('planificacion-anual', 'Planificación Anual', 'Ver la planificación anual', 'https://www.canva.com/design/DAGmI-Pss9M/CI4stUkvSrABb4qjrUwg9Q/view', 'canva'),
+  'planes-de-mejora': enlaceUnico('planes-de-mejora', 'Planes de Mejora', 'Ver los planes de mejora', 'https://www.canva.com/design/DAGbEJGn1C8/caH94KCRJG8Pkrlj9JZOXQ/view', 'canva'),
+  'evaluacion-docente': enlaceUnico('evaluacion-docente', 'Evaluación Docente', 'Ver la evaluación docente', 'https://www.canva.com/design/DAGdsB80oPU/ZVTzyZPsoyn-MOqtHjKjnQ/view', 'canva'),
+  acreditacion: enlaceUnico('acreditacion', 'Acreditación', 'Ver el documento de acreditación', 'https://docs.google.com/spreadsheets/d/1h7TNou9LWDSt5Qt8TBcazEcZo8NCkGIk/edit?usp=sharing', 'hoja'),
+  'instrumentos-de-gestion': enlaceUnico('instrumentos-de-gestion', 'Instrumentos de Gestión', 'Ver los instrumentos de gestión', 'https://www.canva.com/design/DAGbKISlFuE/L-LmhAkDLI_VhB8bzRwalQ/view', 'canva'),
+  'manual-de-identidad': enlaceUnico('manual-de-identidad', 'Manual de Identidad', 'Ver el manual de identidad', 'https://www.canva.com/design/DAGgzT5uHXk/f4Pah9wxzOjGrYaKOPt55A/view', 'canva'),
+  'planificador-eva': enlaceUnico('planificador-eva', 'Planificador Inteligente EVA', 'Ver el Planificador Inteligente EVA', 'https://www.canva.com/design/DAGvTPFEMMM/6r3lFiZV0HneNzyyg7cSxw/view', 'canva'),
   organigrama: {
     slug: 'organigrama',
     titulo: 'Organigrama',
@@ -944,6 +977,7 @@ const nosotrosIndice = {
     { slug: 'himno', resumen: '«Entonemos canto de alegría, cataínos de esperanza».' },
     { slug: 'consejo-directivo', resumen: 'Representa a la Asociación Educativa Colegio Adventista Túpac Amaru.' },
     { slug: 'administracion', resumen: 'Dirección general, administración, direcciones académicas y áreas de apoyo.' },
+    { slug: 'personal-docente', resumen: 'Maestras y maestros de inicial, primaria y secundaria.' },
     { slug: 'organigrama', resumen: 'La estructura de la institución.' },
   ],
 }
@@ -976,11 +1010,11 @@ const himnoLargo = {
     { tipo: 'audio', titulo: 'Escucha el himno (audio de prueba)', url: MEDIOS + 'himno-prueba.wav', formato: 'audio/wav', descripcion: 'Audio de prueba: un tono de dos segundos para comprobar el reproductor. El colegio no ha publicado una grabación del himno.' },
     ...paginasNosotros.himno.bloques,
     { tipo: 'enlaces', titulo: 'Documentos de prueba', enlaces: [
-      { etiqueta: 'Partitura completa del himno para banda sinfónica, con todas las voces e instrumentos', url: 'https://cata.edu.pe/', descripcion: textoLargo, formato: 'pdf' },
-      { etiqueta: 'Presentación', url: 'https://www.canva.com/', descripcion: null, formato: 'presentacion' },
-      { etiqueta: 'Hoja de cálculo de prueba', url: 'https://docs.google.com/', descripcion: null, formato: 'hoja' },
-      { etiqueta: 'Documento de prueba', url: 'https://docs.google.com/', descripcion: null, formato: 'documento' },
-      { etiqueta: 'Página web', url: 'https://cata.edu.pe/', descripcion: null, formato: 'web' },
+      { etiqueta: 'Partitura completa del himno para banda sinfónica, con todas las voces e instrumentos', url: 'https://cata.edu.pe/', descripcion: textoLargo, formato: 'pdf', peso: 18_874_368 },
+      { etiqueta: 'Presentación', url: 'https://www.canva.com/', descripcion: null, formato: 'presentacion', peso: null },
+      { etiqueta: 'Hoja de cálculo de prueba', url: 'https://docs.google.com/', descripcion: null, formato: 'hoja', peso: null },
+      { etiqueta: 'Documento de prueba', url: 'https://docs.google.com/', descripcion: null, formato: 'documento', peso: null },
+      { etiqueta: 'Página web', url: 'https://cata.edu.pe/', descripcion: null, formato: 'web', peso: null },
     ] },
   ],
 }
@@ -1000,5 +1034,48 @@ for (const slugN of ['emblema', 'himno', 'consejo-directivo', 'administracion'])
 // vacio: páginas sin bloques
 escribir('vacio', 'nosotros', { data: { ...nosotrosIndice, bajada: null, paginas: [] } })
 for (const slugN of SLUGS_INSTITUCION) escribir('vacio', `nosotros-pagina--${slugN}`, { data: { ...paginasNosotros[slugN], bajada: null, bloques: [] } })
+
+// ── Personal docente (datos de prueba: el colegio aún no envía la lista) ──
+const NIVELES_DOCENTES = [
+  { id: 'inicial', nombre: 'Inicial' },
+  { id: 'primaria', nombre: 'Primaria' },
+  { id: 'secundaria', nombre: 'Secundaria' },
+]
+const fotoPrueba = (alt = '') => ({ ...img('persona-prueba', alt), alt })
+const docentePrueba = (n, nivel, cargo, conFoto = true) => ({ id: `d${n}`, nombre: `Docente de prueba ${String(n).padStart(2, '0')}`, cargo: `${cargo} (dato de prueba)`, nivel, foto: conFoto ? fotoPrueba() : null })
+const docentes = [
+  ...['Aula de 3 años', 'Aula de 4 años', 'Aula de 5 años', 'Auxiliar de aula'].map((c, i) => docentePrueba(i + 1, 'inicial', c, i !== 3)),
+  ...['1.er grado', '2.º grado', '3.er grado', '4.º grado', '5.º grado', '6.º grado', 'Educación física', 'Inglés'].map((c, i) => docentePrueba(i + 5, 'primaria', c, i % 4 !== 3)),
+  ...['Matemática', 'Comunicación', 'Ciencia y tecnología', 'Ciencias sociales', 'Educación religiosa', 'Inglés', 'Arte y cultura', 'Educación para el trabajo'].map((c, i) => docentePrueba(i + 13, 'secundaria', c, i !== 5)),
+]
+escribir('tipico', 'docentes', { data: { niveles: NIVELES_DOCENTES, docentes } })
+escribir('corto', 'docentes', { data: { niveles: [{ id: 'inicial', nombre: 'Inicial' }], docentes: [docentePrueba(1, 'inicial', 'Aula')] } })
+escribir('largo', 'docentes', { data: {
+  niveles: [...NIVELES_DOCENTES, { id: 'jerusalen', nombre: 'Primaria · Sede CATA Jerusalén' }, { id: 'oasis', nombre: 'Talleres de la Sede CATA Oasis' }],
+  docentes: Array.from({ length: 90 }, (_, i) => ({
+    id: `dl${i}`,
+    nombre: 'Nombre de prueba muy largo Apellido Paterno Apellido Materno',
+    cargo: 'Cargo de prueba con un nombre largo: tutoría y área de Ciencia y Tecnología (dato de prueba)',
+    nivel: ['inicial', 'primaria', 'secundaria', 'jerusalen', 'oasis'][i % 5],
+    foto: i % 3 ? fotoPrueba() : null,
+  })),
+} })
+escribir('sin-foto', 'docentes', { data: { niveles: NIVELES_DOCENTES, docentes: docentes.map((d) => ({ ...d, foto: null })) } })
+escribir('alt-vacio', 'docentes', { data: { niveles: NIVELES_DOCENTES, docentes } })
+escribir('vacio', 'docentes', { data: { niveles: NIVELES_DOCENTES, docentes: [] } })
+
+// Documentos de prueba con peso, para la lista de descargas
+escribir('largo', 'nosotros-pagina--instrumentos-de-gestion', { data: {
+  slug: 'instrumentos-de-gestion',
+  titulo: 'Instrumentos de Gestión',
+  bajada: 'Datos de prueba: lista de archivos para descargar.',
+  bloques: [{ tipo: 'enlaces', titulo: 'Documentos de prueba', enlaces: [
+    { etiqueta: 'Proyecto Educativo Institucional (PEI) de prueba', url: 'https://cata.edu.pe/', descripcion: textoLargo, formato: 'pdf', peso: 2_457_600 },
+    { etiqueta: 'Reglamento Interno de prueba', url: 'https://cata.edu.pe/', descripcion: null, formato: 'pdf', peso: 870_400 },
+    { etiqueta: 'Plan Anual de Trabajo de prueba', url: 'https://cata.edu.pe/', descripcion: null, formato: 'documento', peso: 312_000 },
+    { etiqueta: 'Presupuesto de prueba', url: 'https://cata.edu.pe/', descripcion: null, formato: 'hoja', peso: 45_000 },
+    { etiqueta: 'Proyecto Curricular de prueba, en Canva', url: 'https://www.canva.com/', descripcion: null, formato: 'canva', peso: null },
+  ] }],
+} })
 
 console.log('ok')

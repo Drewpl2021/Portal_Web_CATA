@@ -1,6 +1,12 @@
 # Contrato de la API pública del portal CATA
 
-**Versión del contrato:** 2.4 · **Fecha:** 2026-10-08
+**Versión del contrato:** 2.5 · **Fecha:** 2026-10-08
+
+**Cambios de la 2.5:**
+- Nuevo `GET /v1/docentes` (§3.21): el personal docente con su nivel, para la página Personal Docente.
+- Bloque `enlaces` (§3.20): cada enlace suma `peso` (bytes, o `null` si no es un archivo) y el formato `"canva"`.
+- Nuevo slug `personal-docente` en Institución, después de `administracion`.
+- Las subpáginas de Gestión y Documentos pasan a mostrarse con la página de contenido.
 
 **Cambios de la 2.4:** nuevos `GET /v1/nosotros` (§3.19), con las frases del índice de Nosotros, y `GET /v1/nosotros/paginas/{slug}` (§3.20), una **página de contenido armada con bloques** que sirve para todas las subpáginas de Nosotros. El detalle responde `404` si la página no existe.
 
@@ -178,6 +184,7 @@ Valores válidos de `seccion`: `"quienes-somos"`, `"niveles"`, `"sedes"`, `"noti
 | `GET /v1/proyectos/{slug}` | `Proyecto` | Página de detalle de un proyecto (`404` si no existe) |
 | `GET /v1/nosotros` | `Nosotros` | Índice de Nosotros: título, frase y una frase por subpágina |
 | `GET /v1/nosotros/paginas/{slug}` | `PaginaContenido` | Cada subpágina de Nosotros, armada con bloques (`404` si no existe) |
+| `GET /v1/docentes` | `Docentes` | Personal docente por nivel (página Personal Docente) |
 
 Cada sección del portal carga su endpoint por separado. Si uno falla, esa sección muestra su error y el resto sigue funcionando.
 
@@ -734,7 +741,7 @@ El índice de Nosotros. Las tres columnas (Institución, Gestión, Documentos) y
 | `paginas` | `{ slug, resumen }[]` | no | 0 a 20 | Una frase (máx. 140) por subpágina, para su tarjeta. Las que no estén muestran solo su nombre. |
 
 **Slugs de las subpáginas** (fijos, son las direcciones del sitio):
-- Institución: `mision-y-vision`, `resena-historica`, `emblema`, `himno`, `consejo-directivo`, `administracion`, `organigrama`.
+- Institución: `mision-y-vision`, `resena-historica`, `emblema`, `himno`, `consejo-directivo`, `administracion`, `personal-docente`, `organigrama`.
 - Gestión: `procesos`, `planificacion-anual`, `planes-de-mejora`, `evaluacion-docente`, `acreditacion`.
 - Documentos: `instrumentos-de-gestion`, `manual-de-identidad`, `planificador-eva`.
 
@@ -758,12 +765,12 @@ Una subpágina de Nosotros. En lugar de un formato distinto para cada una, todas
 | `lista` | `titulo` (string \| null), `estilo` (`"vinetas"` \| `"tarjetas"`), `items` (1 a 20: `titulo` \| null, `texto`, `fuente` \| null) | Viñetas en una placa, o tarjetas (valores, símbolos) con la fuente de la cita al pie. |
 | `hitos` | `titulo` (string \| null), `items` (1 a 20: `fecha` como texto, «1971» o «13 de mayo de 1967», y `texto`) | Línea de tiempo vertical. |
 | `imagen` | `imagen` (`Imagen`), `pie` (string \| null), `transcripcion` (párrafos \| null) | Imagen completa, sin recorte. Si la imagen tiene texto (un documento, una partitura), `transcripcion` lo da como texto en «Leer la transcripción». |
-| `personas` | `titulo` (string \| null), `personas` (1 a 40: `id`, `nombre`, `cargo`, `foto` \| null) | Tarjetas con foto redonda (cuadrada en origen, mínimo 400 × 400). Sin foto, las iniciales. Si el nombre ya está al lado, el `alt` de la foto puede ser `""`. |
+| `personas` | `titulo` (string \| null), `personas` (1 a 40: `id`, `nombre`, `cargo`, `foto` \| null) | Tarjetas con foto redonda (cuadrada en origen, mínimo 400 × 400). Sin foto, las iniciales. Si el nombre ya está al lado, el `alt` de la foto puede ser `""`. **Con `titulo`, el bloque es una sección con su encabezado**: para separar áreas (Administración), envíen un bloque `personas` por área. |
 | `mensaje` | `titulo` (saludo, string \| null), `parrafos`, `firma` (`{ nombre, detalle }`), `foto` (`Imagen` \| null) | Carta firmada con la foto de quien la firma. |
 | `letra` | `titulo` (string \| null), `partes` (1 a 12: `titulo` y `versos`, 1 a 16) | La letra de una canción. Una parte titulada «Coro» va arriba, en una placa marina. |
 | `audio` | `titulo`, `url` (https), `formato` (`"audio/mpeg"` \| `"audio/mp4"` \| `"audio/ogg"` \| `"audio/wav"`), `descripcion` (string \| null) | Reproductor del navegador con sus controles. **Nunca se reproduce solo** y no descarga nada hasta que se pulsa. Si la página tiene un bloque `letra`, enlaza a ella. |
 | `organigrama` | `titulo` (string \| null), `imagen` (`Imagen` \| null), `enlace` (`Enlace` \| null), `raiz` (`{ cargo, detalle, hijos }`, hasta 5 niveles y 12 hijos por cargo) | La estructura **siempre** se muestra como lista jerárquica en texto; la imagen, si la hay, va encima. |
-| `enlaces` | `titulo` (string \| null), `enlaces` (1 a 30: `etiqueta`, `url`, `descripcion` \| null, `formato`: `"pdf"` \| `"web"` \| `"hoja"` \| `"presentacion"` \| `"documento"`) | Lista de documentos con ícono y formato; se abren en otra pestaña. Pensado para Gestión y Documentos. |
+| `enlaces` | `titulo` (string \| null), `enlaces` (1 a 30: `etiqueta`, `url`, `descripcion` \| null, `formato`: `"pdf"` \| `"web"` \| `"hoja"` \| `"presentacion"` \| `"documento"` \| `"canva"`, `peso`: entero en bytes \| null) | Lista de documentos. Cada uno muestra, a la vista y para lectores de pantalla, su formato, su peso (si es un archivo) y que se abre en otra pestaña. `peso: null` para páginas y diseños en línea (Canva, Google Drive). |
 
 ```json
 {
@@ -780,6 +787,19 @@ Una subpágina de Nosotros. En lugar de un formato distinto para cada una, todas
   }
 }
 ```
+
+**Documentos accesibles:** los PDF que se enlacen deben tener texto seleccionable (no escaneados como imagen), título y, de preferencia, etiquetas de estructura. Un PDF escaneado es una imagen para un lector de pantalla: hay que pedir el original o pasarle OCR antes de publicarlo.
+
+### 3.21 `GET /v1/docentes`
+
+El personal docente, para la página Personal Docente. El portal lo agrupa por nivel, con una sección por nivel y un filtro (`/nosotros/personal-docente?nivel=primaria`) que no aparece si hay un solo nivel con docentes. El texto de la página (si lo hay) llega como bloques en `GET /v1/nosotros/paginas/personal-docente`.
+
+| Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
+|---|---|---|---|---|
+| `niveles` | `{ id, nombre }[]` | no | 0 a 6 | En el orden de las secciones y del filtro. `nombre` máx. 40. |
+| `docentes` | `Docente[]` | no | 0 a 150 | En el orden en que se muestran dentro de su nivel. `[]` = «La lista se publicará pronto». |
+
+**`Docente`**: `id`; `nombre` (máx. 80); `cargo` (máx. 80: cargo o área, «Tutora de 3 años», «Matemática»); `nivel` (`id` de un nivel de la lista; si no existe, la respuesta es inválida); `foto` (`Imagen` \| null, cuadrada, mínimo 400 × 400; sin foto, el portal muestra las iniciales). Publicar la foto de cada docente requiere su autorización de uso de imagen.
 
 ## 4. Lo que el portal hace con cada caso
 
@@ -799,6 +819,7 @@ Esto sirve para que el módulo sepa qué pasa con lo que publica.
 | Contacto: sede sin `mapaEmbedUrl` | En el mapa, esa sede muestra «todavía no tiene un mapa» y el enlace «Cómo llegar». |
 | Contacto: redes `[]` y `correo: null` | «Las redes del colegio se publicarán pronto». |
 | Proyectos: una sola categoría con proyectos | No aparece el filtro. |
+| Personal docente de un solo nivel | No aparece el filtro. |
 | Subpágina de Nosotros sin bloques | «El contenido de esta página se publicará pronto», con el menú del grupo y «Anterior / Siguiente». |
 | Proyecto inexistente (`404`) | «Proyecto no encontrado», con enlace a la lista. Cualquier otro error muestra «Reintentar». |
 | Matrícula: falla `/v1/sitio` | El formulario muestra su error con «Reintentar», porque no tiene el número de WhatsApp. |
@@ -814,5 +835,5 @@ Esto sirve para que el módulo sepa qué pasa con lo que publica.
 El portal trae datos de prueba que cumplen este contrato en `PW_Frontend/src/api/mock/`. Sirven de **ejemplos completos** de cada respuesta: el módulo puede compararse con ellos.
 
 - `tipico/`: contenido real del colegio.
-- Escenarios que solo cambian algunos archivos: `corto/`, `largo/`, `sin-foto/`, `alt-vacio/` y `vacio/`. El carrusel tiene 3 banners en `tipico/`, 1 en `corto/`, 6 en `largo/` y ninguno en `vacio/`. Matrícula tiene datos en `tipico/`, `corto/`, `largo/` y `vacio/`, y su cabecera además en `sin-foto/` y `alt-vacio/`. En `tipico/`, los requisitos, documentos y pasos son los de los afiches de cata.edu.pe; el año es el de los afiches publicados (2026), las fechas son de prueba y las vacantes dicen «consultar». Contacto tiene datos en todos los escenarios. En `tipico/`, sedes y redes son las de cata.edu.pe; el colegio no publica correos ni horarios, así que van vacíos, y los mapas son búsquedas de cada dirección, que el colegio debe reemplazar por las de «Insertar un mapa». Proyectos tiene datos en los seis escenarios; los detalles se guardan como `proyecto--{slug}.json`. En `tipico/`, los dos proyectos y sus textos son los que publica cata.edu.pe (Gastronomía e Industrias Alimentarias, y Robótica, Impresiones 3D y Computación); las fotos son de prueba, y niveles, estado y fecha van vacíos porque no están publicados. Nosotros tiene datos en los seis escenarios; las subpáginas se guardan como `nosotros-pagina--{slug}.json`. En `tipico/`, las siete páginas de Institución usan los textos y fotos de cata.edu.pe, salvo el árbol del organigrama, que es de prueba y lo dice (el publicado es un diseño de Canva). El himno no tiene audio publicado; `largo/` trae un tono de prueba para el reproductor.
+- Escenarios que solo cambian algunos archivos: `corto/`, `largo/`, `sin-foto/`, `alt-vacio/` y `vacio/`. El carrusel tiene 3 banners en `tipico/`, 1 en `corto/`, 6 en `largo/` y ninguno en `vacio/`. Matrícula tiene datos en `tipico/`, `corto/`, `largo/` y `vacio/`, y su cabecera además en `sin-foto/` y `alt-vacio/`. En `tipico/`, los requisitos, documentos y pasos son los de los afiches de cata.edu.pe; el año es el de los afiches publicados (2026), las fechas son de prueba y las vacantes dicen «consultar». Contacto tiene datos en todos los escenarios. En `tipico/`, sedes y redes son las de cata.edu.pe; el colegio no publica correos ni horarios, así que van vacíos, y los mapas son búsquedas de cada dirección, que el colegio debe reemplazar por las de «Insertar un mapa». Proyectos tiene datos en los seis escenarios; los detalles se guardan como `proyecto--{slug}.json`. En `tipico/`, los dos proyectos y sus textos son los que publica cata.edu.pe (Gastronomía e Industrias Alimentarias, y Robótica, Impresiones 3D y Computación); las fotos son de prueba, y niveles, estado y fecha van vacíos porque no están publicados. Nosotros tiene datos en los seis escenarios; las subpáginas se guardan como `nosotros-pagina--{slug}.json`. En `tipico/`, las siete páginas de Institución usan los textos y fotos de cata.edu.pe, salvo el árbol del organigrama, que es de prueba y lo dice (el publicado es un diseño de Canva). El himno no tiene audio publicado; `largo/` trae un tono de prueba para el reproductor. Gestión y Documentos enlazan a los diseños de Canva y a la hoja de cálculo que publica cata.edu.pe; `largo/instrumentos-de-gestion` trae archivos de prueba con peso. El personal docente es de prueba en todos los escenarios (el colegio aún no envía la lista).
 - Las pruebas automáticas (`npm test` en `PW_Frontend/`) validan todos esos archivos contra este contrato.

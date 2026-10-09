@@ -1,4 +1,4 @@
-// Tipos del contrato de la API pública del portal (docs/API_CONTRACT.md, v2.4).
+// Tipos del contrato de la API pública del portal (docs/API_CONTRACT.md, v2.5).
 // Todos los campos llegan siempre; los opcionales valen null.
 
 /** Fecha ISO 8601 sin hora: "2026-10-08". */
@@ -386,7 +386,7 @@ export interface NodoOrganigrama {
   hijos: NodoOrganigrama[]
 }
 
-export const FORMATOS_ENLACE = ['pdf', 'web', 'hoja', 'presentacion', 'documento'] as const
+export const FORMATOS_ENLACE = ['pdf', 'web', 'hoja', 'presentacion', 'documento', 'canva'] as const
 export type FormatoEnlace = (typeof FORMATOS_ENLACE)[number]
 
 export const TIPOS_AUDIO = ['audio/mpeg', 'audio/mp4', 'audio/ogg', 'audio/wav'] as const
@@ -412,7 +412,8 @@ export type Bloque =
   | {
       tipo: 'enlaces'
       titulo: string | null
-      enlaces: { etiqueta: string; url: string; descripcion: string | null; formato: FormatoEnlace }[]
+      /** peso: tamaño del archivo en bytes, para los que se descargan. null = página o diseño en línea. */
+      enlaces: { etiqueta: string; url: string; descripcion: string | null; formato: FormatoEnlace; peso: number | null }[]
     }
 
 export type TipoBloque = Bloque['tipo']
@@ -422,6 +423,27 @@ export interface PaginaContenido {
   titulo: string
   bajada: string | null
   bloques: Bloque[]
+}
+
+// GET /v1/docentes
+export interface NivelDocente {
+  id: string
+  nombre: string
+}
+
+export interface Docente {
+  id: string
+  nombre: string
+  /** Cargo o área: «Tutora de 3 años», «Matemática». */
+  cargo: string
+  /** id de uno de los niveles. */
+  nivel: string
+  foto: Imagen | null
+}
+
+export interface Docentes {
+  niveles: NivelDocente[]
+  docentes: Docente[]
 }
 
 // Sobres de respuesta

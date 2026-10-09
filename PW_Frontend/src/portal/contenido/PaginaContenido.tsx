@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { ErrorDatos } from '../../api/servicios'
@@ -18,12 +19,14 @@ interface Props {
   /** Clave del recurso para useRecurso. */
   clave: string
   cargar: () => Promise<Pagina>
+  /** Contenido propio de la página, después de los bloques (p. ej. el personal docente con su filtro). */
+  extra?: ReactNode
 }
 
 // Layout reutilizable para subpáginas de contenido: cabecera con el grupo y la posición, migas,
 // bloques de contenido con el menú del grupo a un lado, y anterior/siguiente al final.
 // Para una página nueva basta con añadirla al mapa del sitio y servir sus bloques desde la API.
-export default function PaginaContenido({ padre, grupo, ruta, clave, cargar }: Props) {
+export default function PaginaContenido({ padre, grupo, ruta, clave, cargar, extra }: Props) {
   const r = useRecurso(clave, cargar)
   const indice = grupo.enlaces.findIndex((e) => e.ruta === ruta)
   const actual = grupo.enlaces[indice]!
@@ -62,11 +65,12 @@ export default function PaginaContenido({ padre, grupo, ruta, clave, cargar }: P
       <section className="f-seccion f-contenido" aria-label={`Contenido de ${p.titulo}`}>
         <div className="f-seccion__interior f-contenido__rejilla">
           <div className="f-contenido__cuerpo">
-            {p.bloques.length === 0 ? (
+            {p.bloques.length === 0 && !extra ? (
               <p className="f-vacio">El contenido de esta página se publicará pronto.</p>
             ) : (
               <Bloques bloques={p.bloques} />
             )}
+            {extra}
           </div>
           <MenuGrupo grupo={grupo} ruta={ruta} />
         </div>

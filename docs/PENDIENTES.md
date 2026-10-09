@@ -38,8 +38,11 @@
   - página de detalle de cada proyecto: descripción, objetivos, ejes, metodología, beneficios, galería y «Más proyectos»
   - un proyecto que no existe muestra «Proyecto no encontrado»
   - contenido de cata.edu.pe: solo publica dos programas, Gastronomía e Industrias Alimentarias, y Robótica, Impresiones 3D y Computación
-- **Nosotros (`/nosotros`), primera tanda:**
-  - índice con las tres columnas del mega menú (Institución, Gestión, Documentos); Gestión y Documentos llevan «Próximamente» y sus páginas siguen «en construcción»
+- **Nosotros (`/nosotros`), completo:**
+  - índice con las tres columnas del mega menú (Institución, Gestión, Documentos) y sus 16 subpáginas
+  - **Gestión y Documentos (segunda tanda):** cada página muestra el enlace que publica cata.edu.pe (diseños de Canva y una hoja de cálculo), con su formato y el aviso de que se abre en otra pestaña
+  - **Personal Docente** (nueva, en Institución tras Administración y en el mega menú): docentes por nivel con filtro en la dirección; datos de prueba
+  - **Administración** organizada en cinco secciones por área
   - las siete subpáginas de Institución con los textos de cata.edu.pe: Misión y Visión, Reseña Histórica (más una línea de tiempo con sus fechas), Emblema, Himno (letra en texto, partitura y oficio de 1987 con su transcripción), Consejo Directivo (mensaje del presidente y 8 integrantes con foto), Administración (15 personas con foto) y Organigrama
   - layout reutilizable `PaginaContenido` con bloques: la segunda tanda solo necesita añadir su grupo a `GRUPOS_NOSOTROS_PUBLICADOS` (`src/sitio/mapa.ts`) y sus datos
 - **Foco nunca tapado:** si un elemento enfocado con el teclado queda en parte bajo la cabecera fija, la página se desplaza para mostrarlo.
@@ -52,11 +55,12 @@
   - las composiciones se agrupan en contenedores de proporción fija
 - **Eliminadas:** las propuestas A, B y C y la portada antigua «Tablero de ruta».
 
-### Contrato de la API (versión 2.4)
+### Contrato de la API (versión 2.5)
 
 - `docs/API_CONTRACT.md` y su JSON Schema `docs/api-contract.schema.json` (`npm run esquema`).
+- **Cambios de la 2.5:** nuevo `GET /v1/docentes`; los enlaces de documentos suman `peso` y el formato `canva`; nuevo slug `personal-docente`.
 - **Cambios de la 2.4:** nuevos `GET /v1/nosotros` y `GET /v1/nosotros/paginas/{slug}` (página de contenido armada con bloques; `404` si no existe).
-- **Endpoints (20):** sitio, banners, cabecera de Propuesta Educativa, quiénes somos, niveles, sedes, noticias, grados, cifras, cinco de Matrícula (cabecera, procesos, vacantes, fechas y preguntas), solicitud, contacto, proyectos, detalle de proyecto, índice de Nosotros y subpágina de Nosotros.
+- **Endpoints (21):** sitio, banners, cabecera de Propuesta Educativa, quiénes somos, niveles, sedes, noticias, grados, cifras, cinco de Matrícula (cabecera, procesos, vacantes, fechas y preguntas), solicitud, contacto, proyectos, detalle de proyecto, índice de Nosotros, subpágina de Nosotros y personal docente.
 - **Cambios de la 2.3:** nuevos `GET /v1/proyectos` y `GET /v1/proyectos/{slug}` (este responde `404` si no existe); `GET /v1/solicitud` suma `mensajesPorPagina`, una plantilla de WhatsApp por página.
 - **Cambios de la 2.2:** nuevo `GET /v1/contacto`; `Sede` suma `correo`, `horario` y `mapaEmbedUrl`; `GET /v1/matricula/solicitud` pasa a `GET /v1/solicitud`, común a Matrícula y Contacto; se aclara que el año de Matrícula lo define el colegio.
 - **Cambios de la 2.1:** solo agrega los endpoints de Matrícula (§3.10 a §3.15); no cambia ninguno anterior.
@@ -67,6 +71,8 @@
 - **Datos de prueba:** `src/api/mock/`. El carrusel tiene 3 banners en `tipico`, 1 en `corto`, 6 en `largo` y ninguno en `vacio`. Matrícula tiene datos en `tipico`, `corto`, `largo`, `sin-foto` y `vacio` (y su cabecera en `alt-vacio`); el año en `tipico` es 2026, el de los afiches publicados. Contacto, Proyectos y Nosotros tienen datos en los seis escenarios.
 
 ### Verificación al cierre
+
+**Nosotros, segunda tanda (2026-10-08):** `npm run typecheck` pasa; `npm test` con 177 pruebas; axe (WCAG 2.2 AA) sin violaciones y sin desplazamiento horizontal en 390, 768, 1920 y 2560 px en el índice y las 16 subpáginas (escenario típico); con movimiento reducido, también Personal Docente en los escenarios corto (sin filtro), largo, sin foto y vacío, Administración sin fotos y una página vacía. Teclado: ningún foco tapado; el filtro de docentes se usa con Enter, anuncia el resultado, deja la elección en la dirección y Atrás la respeta; cada enlace a documentos anuncia formato, peso y nueva pestaña. El filtro de Proyectos sigue igual tras pasar a un componente compartido. review-animations: sin movimiento nuevo (el filtro no se anima a propósito).
 
 **Nosotros, primera tanda (2026-10-08):** `npm run typecheck` pasa; `npm test` con 151 pruebas; axe (WCAG 2.2 AA) sin violaciones y sin desplazamiento horizontal en 390, 768, 1920 y 2560 px en el índice y las siete subpáginas de Institución (escenario típico); con movimiento reducido, también el organigrama y la administración largos, el consejo sin fotos, el himno con audio de prueba y las páginas vacías. Teclado: ningún foco tapado; la transcripción se abre con Enter; el menú lateral marca la página actual; «Siguiente» lleva a la página siguiente con el foco en su contenido; el reproductor tiene controles, no se reproduce solo y no descarga nada al cargar. Las páginas de Gestión siguen «en construcción». Además, Inicio, Propuesta Educativa, Matrícula, Contacto y Proyectos se volvieron a pasar por axe en 390 y 1920 tras los cambios del layout. review-animations: sin hallazgos (entradas al hacer scroll solo con transform, hover solo con mouse, transcripción en 200 ms).
 
@@ -95,7 +101,7 @@
 
 ## Pendientes
 
-1. **Construir las demás páginas, una por una:** la segunda tanda de Nosotros (Gestión y Documentos: hoy, en cata.edu.pe, son enlaces a diseños de Canva y a una hoja de Google) y Logros, más el contenido de Propuesta Educativa. Todas con el mismo nivel de diseño y animaciones que Inicio, sin carrusel. Cada página amplía el contrato de la API.
+1. **Construir las demás páginas, una por una:** Logros, más el contenido de Propuesta Educativa. Todas con el mismo nivel de diseño y animaciones que Inicio, sin carrusel. Cada página amplía el contrato de la API.
 2. **Datos reales de Matrícula** (hoy son de prueba en el escenario típico):
    - confirmar el año del proceso: en los datos de prueba es 2026, el de los afiches publicados; en la API lo define el colegio
    - el cronograma oficial (las cuatro fechas actuales son de prueba, del proceso 2026, y lo dicen en la página)
@@ -120,6 +126,11 @@
    - **Letra del himno:** la partitura original dice «al Colegio sacrosanto» en el coro, mientras que el texto de cata.edu.pe dice «cataínos de esperanza». El portal usa el texto de la web; el colegio debe confirmar cuál es la versión vigente
    - **Reseña Histórica:** la línea de tiempo «Fechas clave» se armó con las fechas que menciona el texto; el colegio debe revisarla
    - **Correcciones mínimas a los textos:** comillas, tildes y espacios rotos («Hoy en día», «la llama encendida del Espíritu Santo», «la Biblia»), sin cambiar palabras. Las frases de las tarjetas del índice son extractos de cada página
+   - **Personal Docente:** el colegio aún no envía la lista. Los 20 docentes son de prueba y la página lo dice. Hace falta, por cada docente: nombre, cargo o área, nivel y foto cuadrada (mínimo 400 × 400)
+   - **Autorización de uso de imagen del personal:** antes de publicar las fotos de docentes y personal, el colegio debe tener la autorización de cada persona
+   - **Administración:** las cinco áreas (Dirección; Dirección académica; Contabilidad y caja; Secretaría, operaciones y TIC; Bienestar y pastoral) son una propuesta del portal para ordenar los cargos publicados; el colegio debe confirmarlas
+   - **Gestión y Documentos:** en cata.edu.pe son diseños de Canva y una hoja de Google Drive, que se abren fuera del sitio y no se pueden leer como texto. Lo ideal es que el colegio publique cada uno como PDF accesible (o como texto en la propia página) con su peso
+   - **PDF accesibles:** todos los PDF que publique el colegio deben tener texto seleccionable, no estar escaneados como imagen. Si alguno está escaneado, hay que pedir la versión original o pasarle OCR antes de publicarlo
    - **Fotos de personas:** las de Consejo Directivo y Administración son las que publica cata.edu.pe; confirmar que el personal está vigente (las de Administración son de 2024)
 6. **Prueba manual con teclado y lector de pantalla** (NVDA en Windows, TalkBack en Android), sobre todo del carrusel, las pestañas de Matrícula, el mapa de Contacto, el filtro de Proyectos, el himno y el organigrama de Nosotros, el formulario y el foco al cambiar de página. axe no cubre todo WCAG 2.2 AA ni puede medir el contraste del texto sobre imágenes; por eso el texto del carrusel va sobre una placa marina sólida.
 7. **Entregar el contrato 2.4 al equipo de RR.HH.** Enviar `docs/API_CONTRACT.md` y `docs/api-contract.schema.json`. Los endpoints de Matrícula, Contacto, Proyectos y Nosotros (con su página de contenido por bloques), los campos nuevos de `Sede` y los mensajes por página de `/v1/solicitud` son una propuesta del portal: hay que acordarlos con RR.HH. antes de que los implementen. Además, acordar:
@@ -138,4 +149,4 @@
 
 ## Siguiente paso
 
-Revisar la primera tanda de Nosotros y construir la segunda (Gestión y Documentos) con el mismo layout (pendiente 1). En paralelo, el colegio puede confirmar los datos de Matrícula y Contacto (pendientes 2 y 3), aportar el contenido de Proyectos y Nosotros (pendientes 4 y 5), entregar el contrato 2.4 a RR.HH. (pendiente 7) y reunir el material del pendiente 8.
+Revisar Nosotros completo y construir Logros (pendiente 1). En paralelo, el colegio puede confirmar los datos de Matrícula y Contacto (pendientes 2 y 3), aportar el contenido de Proyectos y Nosotros (pendientes 4 y 5), entregar el contrato 2.4 a RR.HH. (pendiente 7) y reunir el material del pendiente 8.

@@ -161,31 +161,36 @@
             "etiqueta": "Partitura completa del himno para banda sinfónica, con todas las voces e instrumentos",
             "url": "https://cata.edu.pe/",
             "descripcion": "Texto de prueba que llega al máximo recomendado del contrato para comprobar que el bloque se acomoda en varias líneas sin cortarse ni tapar a los demás elementos de la página, incluso en las pantallas más pequeñas.",
-            "formato": "pdf"
+            "formato": "pdf",
+            "peso": 18874368
           },
           {
             "etiqueta": "Presentación",
             "url": "https://www.canva.com/",
             "descripcion": null,
-            "formato": "presentacion"
+            "formato": "presentacion",
+            "peso": null
           },
           {
             "etiqueta": "Hoja de cálculo de prueba",
             "url": "https://docs.google.com/",
             "descripcion": null,
-            "formato": "hoja"
+            "formato": "hoja",
+            "peso": null
           },
           {
             "etiqueta": "Documento de prueba",
             "url": "https://docs.google.com/",
             "descripcion": null,
-            "formato": "documento"
+            "formato": "documento",
+            "peso": null
           },
           {
             "etiqueta": "Página web",
             "url": "https://cata.edu.pe/",
             "descripcion": null,
-            "formato": "web"
+            "formato": "web",
+            "peso": null
           }
         ]
       }

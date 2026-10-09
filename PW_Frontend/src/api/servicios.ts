@@ -12,6 +12,7 @@ import {
   esquemaVacantes,
   esquemaCifras,
   esquemaContacto,
+  esquemaDocentes,
   esquemaHero,
   esquemaGrados,
   esquemaNiveles,
@@ -40,6 +41,7 @@ import type {
   Vacantes,
   Cifra,
   Contacto,
+  Docentes,
   GrupoGrados,
   Hero,
   ListaNoticias,
@@ -75,6 +77,7 @@ type Recurso =
   | 'proyecto'
   | 'nosotros'
   | 'nosotros-pagina'
+  | 'docentes'
 
 export class ErrorDatos extends Error {
   constructor(
@@ -264,4 +267,8 @@ export async function obtenerNosotros(): Promise<Nosotros> {
 export async function obtenerPaginaNosotros(slug: string): Promise<PaginaContenido> {
   if (!/^[a-z0-9-]+$/.test(slug)) throw new ErrorDatos(`Slug inválido: ${slug}`, 'nosotros-pagina', undefined, true)
   return (await leer('nosotros-pagina', `/v1/nosotros/paginas/${slug}`, sobre(esquemaPaginaContenido), `nosotros-pagina--${slug}`)).data
+}
+
+export async function obtenerDocentes(): Promise<Docentes> {
+  return (await leer('docentes', '/v1/docentes', sobre(esquemaDocentes))).data
 }

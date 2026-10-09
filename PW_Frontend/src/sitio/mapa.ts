@@ -28,6 +28,7 @@ export const NOSOTROS: GrupoMenu[] = [
       { etiqueta: 'Himno', ruta: '/nosotros/himno' },
       { etiqueta: 'Consejo Directivo', ruta: '/nosotros/consejo-directivo' },
       { etiqueta: 'Administración', ruta: '/nosotros/administracion' },
+      { etiqueta: 'Personal Docente', ruta: '/nosotros/personal-docente' },
       { etiqueta: 'Organigrama', ruta: '/nosotros/organigrama' },
     ],
   },
@@ -52,10 +53,10 @@ export const NOSOTROS: GrupoMenu[] = [
 ]
 
 /**
- * Grupos de Nosotros cuyas subpáginas ya se muestran con el layout de contenido. Las de los demás grupos
- * llevan a la página «en construcción» hasta que se construyan (segunda tanda: Gestión y Documentos).
+ * Grupos de Nosotros cuyas subpáginas se muestran con el layout de contenido. Un grupo que no esté aquí
+ * lleva a la página «en construcción».
  */
-export const GRUPOS_NOSOTROS_PUBLICADOS = ['Institución']
+export const GRUPOS_NOSOTROS_PUBLICADOS = ['Institución', 'Gestión', 'Documentos']
 
 export const subpaginaPublicada = (ruta: string) =>
   NOSOTROS.some((g) => GRUPOS_NOSOTROS_PUBLICADOS.includes(g.titulo) && g.enlaces.some((e) => e.ruta === ruta))

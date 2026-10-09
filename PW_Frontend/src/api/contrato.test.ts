@@ -9,6 +9,7 @@ import {
   esquemaVacantes,
   esquemaCifras,
   esquemaContacto,
+  esquemaDocentes,
   esquemaHero,
   esquemaGrados,
   esquemaNiveles,
@@ -45,6 +46,7 @@ const ESQUEMAS = {
   proyecto: sobre(esquemaProyecto),
   nosotros: sobre(esquemaNosotros),
   'nosotros-pagina': sobre(esquemaPaginaContenido),
+  docentes: sobre(esquemaDocentes),
 } as const
 
 const archivos = import.meta.glob<unknown>('./mock/*/*.json', { eager: true, import: 'default' })
@@ -112,8 +114,8 @@ describe('el contrato rechaza respuestas inválidas', () => {
     expect(esquemaSolicitud.safeParse({ ...base, mensajesPorPagina: [m] }).success).toBe(true)
   })
 
-  it('hay una página típica para cada subpágina de Institución', () => {
-    for (const slug of ['mision-y-vision', 'resena-historica', 'emblema', 'himno', 'consejo-directivo', 'administracion', 'organigrama']) {
+  it('hay una página típica para cada subpágina de Nosotros', () => {
+    for (const slug of ['mision-y-vision', 'resena-historica', 'emblema', 'himno', 'consejo-directivo', 'administracion', 'personal-docente', 'organigrama', 'procesos', 'planificacion-anual', 'planes-de-mejora', 'evaluacion-docente', 'acreditacion', 'instrumentos-de-gestion', 'manual-de-identidad', 'planificador-eva']) {
       expect(archivos[`./mock/tipico/nosotros-pagina--${slug}.json`], slug).toBeDefined()
     }
   })
@@ -130,6 +132,15 @@ describe('el contrato rechaza respuestas inválidas', () => {
     const hoja = (n: number): unknown => ({ cargo: `Nivel ${n}`, detalle: null, hijos: n < 7 ? [hoja(n + 1)] : [] })
     const bloque = { tipo: 'organigrama', titulo: null, imagen: null, enlace: null }
     expect(esquemaPaginaContenido.safeParse({ slug: 'o', titulo: 't', bajada: null, bloques: [{ ...bloque, raiz: hoja(1) }] }).success).toBe(false)
+  })
+
+  it('rechaza un docente con un nivel que no está en la lista y un peso de archivo no positivo', () => {
+    const d = { id: '1', nombre: 'n', cargo: 'c', nivel: 'otro', foto: null }
+    expect(esquemaDocentes.safeParse({ niveles: [{ id: 'inicial', nombre: 'Inicial' }], docentes: [d] }).success).toBe(false)
+    const enlace = { etiqueta: 'e', url: 'https://x.pe/a.pdf', descripcion: null, formato: 'pdf' }
+    const pagina = (peso: unknown) => ({ slug: 'x', titulo: 't', bajada: null, bloques: [{ tipo: 'enlaces', titulo: null, enlaces: [{ ...enlace, peso }] }] })
+    expect(esquemaPaginaContenido.safeParse(pagina(0)).success).toBe(false)
+    expect(esquemaPaginaContenido.safeParse(pagina(1_250_000)).success).toBe(true)
   })
 
   it('rechaza una red social desconocida', () => {

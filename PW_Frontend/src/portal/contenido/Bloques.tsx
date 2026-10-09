@@ -1,7 +1,8 @@
 import { useId, type CSSProperties, type ReactNode } from 'react'
-import { ArrowUpRight, Check, File, FileSpreadsheet, FileText, Globe, Presentation, Quote } from 'lucide-react'
+import { ArrowUpRight, Check, File, FileSpreadsheet, FileText, Globe, Palette, Presentation, Quote } from 'lucide-react'
 import type { Bloque, FormatoEnlace, NodoOrganigrama, Persona } from '../../api/tipos'
 import Imagen from '../../components/Imagen'
+import { pesoLegible } from '../../lib/formato'
 import { Revelar } from '../movimiento'
 
 // Renderizador de bloques de contenido. Cada tipo de bloque del contrato tiene su pieza aquí; las páginas
@@ -145,20 +146,40 @@ function FotoPersona({ persona: p, grande = false }: { persona: Pick<Persona, 'n
   )
 }
 
-function Personas({ b }: { b: BloqueDe<'personas'> }) {
+/** Tarjetas de personas (foto redonda o iniciales, nombre y cargo). También las usa Personal Docente. */
+export function TarjetasPersonas({ personas, nivelNombre = 3 }: { personas: Pick<Persona, 'id' | 'nombre' | 'cargo' | 'foto'>[]; nivelNombre?: 3 | 4 }) {
+  const Nombre = nivelNombre === 4 ? 'h4' : 'h3'
   return (
-    <div className="f-bloque">
-      {b.titulo && <TituloBloque>{b.titulo}</TituloBloque>}
-      <Revelar como="ul" efecto="escalonado" className="f-personas">
-        {b.personas.map((p, i) => (
-          <li key={p.id} className="f-persona" style={{ '--i': i } as CSSProperties}>
-            <FotoPersona persona={p} />
-            <h3 className="f-persona__nombre">{p.nombre}</h3>
-            <p className="f-persona__cargo">{p.cargo}</p>
-          </li>
-        ))}
-      </Revelar>
-    </div>
+    <Revelar como="ul" efecto="escalonado" className="f-personas">
+      {personas.map((p, i) => (
+        <li key={p.id} className="f-persona" style={{ '--i': i } as CSSProperties}>
+          <FotoPersona persona={p} />
+          <Nombre className="f-persona__nombre">{p.nombre}</Nombre>
+          <p className="f-persona__cargo">{p.cargo}</p>
+        </li>
+      ))}
+    </Revelar>
+  )
+}
+
+// Con título, cada grupo de personas es una sección con su encabezado (p. ej. las áreas de Administración).
+function Personas({ b }: { b: BloqueDe<'personas'> }) {
+  const id = useId()
+  if (!b.titulo) {
+    return (
+      <div className="f-bloque">
+        <TarjetasPersonas personas={b.personas} />
+      </div>
+    )
+  }
+  return (
+    <section className="f-bloque f-grupo-personas" aria-labelledby={`${id}-titulo`}>
+      <h2 className="f-grupo-personas__titulo" id={`${id}-titulo`}>
+        <span>{b.titulo}</span>
+        <span className="f-grupo-personas__n">{b.personas.length === 1 ? '1 persona' : `${b.personas.length} personas`}</span>
+      </h2>
+      <TarjetasPersonas personas={b.personas} />
+    </section>
   )
 }
 
@@ -284,6 +305,7 @@ const FORMATO: Record<FormatoEnlace, { nombre: string; icono: ReactNode }> = {
   hoja: { nombre: 'Hoja de cálculo', icono: <FileSpreadsheet size={24} strokeWidth={2.25} aria-hidden="true" /> },
   presentacion: { nombre: 'Presentación', icono: <Presentation size={24} strokeWidth={2.25} aria-hidden="true" /> },
   documento: { nombre: 'Documento', icono: <File size={24} strokeWidth={2.25} aria-hidden="true" /> },
+  canva: { nombre: 'Diseño en Canva', icono: <Palette size={24} strokeWidth={2.25} aria-hidden="true" /> },
 }
 
 function Enlaces({ b }: { b: BloqueDe<'enlaces'> }) {
@@ -299,14 +321,17 @@ function Enlaces({ b }: { b: BloqueDe<'enlaces'> }) {
                 {e.etiqueta}
                 <span className="visually-hidden">
                   {' '}
-                  ({FORMATO[e.formato].nombre}, se abre en otra pestaña)
+                  ({[FORMATO[e.formato].nombre, e.peso && pesoLegible(e.peso), 'se abre en otra pestaña'].filter(Boolean).join(', ')})
                 </span>
               </a>
               {e.descripcion && <p className="f-documento__descripcion">{e.descripcion}</p>}
+              {/* Lo mismo, a la vista: formato, peso y que se abre en otra pestaña */}
+              <p className="f-documento__meta" aria-hidden="true">
+                <span className="f-documento__formato">{FORMATO[e.formato].nombre}</span>
+                {e.peso && <span>{pesoLegible(e.peso)}</span>}
+                <span>Se abre en otra pestaña</span>
+              </p>
             </div>
-            <span className="f-documento__formato" aria-hidden="true">
-              {FORMATO[e.formato].nombre}
-            </span>
             <ArrowUpRight className="f-documento__flecha" size={22} strokeWidth={2.5} aria-hidden="true" />
           </li>
         ))}

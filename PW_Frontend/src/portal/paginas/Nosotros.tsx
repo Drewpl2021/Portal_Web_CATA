@@ -4,7 +4,7 @@ import { ArrowDown, ArrowRight } from 'lucide-react'
 import { obtenerNosotros, obtenerSitio } from '../../api/servicios'
 import { useRecurso } from '../../hooks/useRecurso'
 import { useRutaInterna } from '../../sitio/BaseRuta'
-import { NOSOTROS, subpaginaPublicada } from '../../sitio/mapa'
+import { NOSOTROS } from '../../sitio/mapa'
 import { Revelar } from '../movimiento'
 import CabeceraPagina, { CabeceraCargando, CabeceraError } from '../secciones/CabeceraPagina'
 import Cierre from '../secciones/Cierre'
@@ -49,14 +49,12 @@ export default function Nosotros() {
                 </div>
                 <ul className="f-columna__lista">
                   {g.enlaces.map((e) => {
-                    const lista = subpaginaPublicada(e.ruta)
                     const resumen = resumenDe(e.ruta)
                     return (
                       <li key={e.ruta}>
-                        <Link className={`f-subpagina${lista ? '' : ' f-subpagina--pronto'}`} to={interna(e.ruta)}>
+                        <Link className="f-subpagina" to={interna(e.ruta)}>
                           <span className="f-subpagina__nombre">
                             {e.etiqueta}
-                            {!lista && <span className="f-subpagina__pronto">Próximamente</span>}
                           </span>
                           {resumen && <span className="f-subpagina__resumen">{resumen}</span>}
                           <ArrowRight className="f-subpagina__flecha" size={20} strokeWidth={2.5} aria-hidden="true" />

@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "API pública del portal CATA 2.4 (docs/API_CONTRACT.md)",
+  "title": "API pública del portal CATA 2.5 (docs/API_CONTRACT.md)",
   "description": "Cuerpo de respuesta 200 de cada endpoint. Generado desde PW_Frontend/src/api/esquemas.ts; no editar a mano.",
   "definitions": {
     "GET /v1/sitio": {
@@ -3176,7 +3176,19 @@
                                 "web",
                                 "hoja",
                                 "presentacion",
-                                "documento"
+                                "documento",
+                                "canva"
+                              ]
+                            },
+                            "peso": {
+                              "anyOf": [
+                                {
+                                  "type": "integer",
+                                  "exclusiveMinimum": 0
+                                },
+                                {
+                                  "type": "null"
+                                }
                               ]
                             }
                           },
@@ -3184,7 +3196,8 @@
                             "etiqueta",
                             "url",
                             "descripcion",
-                            "formato"
+                            "formato",
+                            "peso"
                           ],
                           "additionalProperties": false
                         },
@@ -3209,6 +3222,124 @@
             "titulo",
             "bajada",
             "bloques"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "GET /v1/docentes": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "niveles": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "nombre": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "nombre"
+                ],
+                "additionalProperties": false
+              },
+              "maxItems": 6
+            },
+            "docentes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "nombre": {
+                    "type": "string"
+                  },
+                  "cargo": {
+                    "type": "string"
+                  },
+                  "nivel": {
+                    "type": "string"
+                  },
+                  "foto": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "url": {
+                            "type": "string",
+                            "format": "uri",
+                            "pattern": "^https:\\/\\/"
+                          },
+                          "alt": {
+                            "type": "string"
+                          },
+                          "ancho": {
+                            "anyOf": [
+                              {
+                                "type": "integer",
+                                "exclusiveMinimum": 0
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "alto": {
+                            "anyOf": [
+                              {
+                                "type": "integer",
+                                "exclusiveMinimum": 0
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "url",
+                          "alt",
+                          "ancho",
+                          "alto"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "id",
+                  "nombre",
+                  "cargo",
+                  "nivel",
+                  "foto"
+                ],
+                "additionalProperties": false
+              },
+              "maxItems": 150
+            }
+          },
+          "required": [
+            "niveles",
+            "docentes"
           ],
           "additionalProperties": false
         }

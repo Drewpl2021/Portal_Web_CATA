@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "API pública del portal CATA 2.6 (docs/API_CONTRACT.md)",
+  "title": "API pública del portal CATA 2.7 (docs/API_CONTRACT.md)",
   "description": "Cuerpo de respuesta 200 de cada endpoint. Generado desde PW_Frontend/src/api/esquemas.ts; no editar a mano.",
   "definitions": {
     "GET /v1/sitio": {
@@ -3492,6 +3492,44 @@
                   },
                   "destacado": {
                     "type": "boolean"
+                  },
+                  "fuente": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "etiqueta": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "format": "uri",
+                                "pattern": "^https:\\/\\/"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "etiqueta",
+                          "url"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "aclaracion": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
                   }
                 },
                 "required": [
@@ -3502,7 +3540,9 @@
                   "nivel",
                   "descripcion",
                   "foto",
-                  "destacado"
+                  "destacado",
+                  "fuente",
+                  "aclaracion"
                 ],
                 "additionalProperties": false
               },

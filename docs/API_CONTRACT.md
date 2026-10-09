@@ -1,6 +1,8 @@
 # Contrato de la API pública del portal CATA
 
-**Versión del contrato:** 2.6 · **Fecha:** 2026-10-09
+**Versión del contrato:** 2.7 · **Fecha:** 2026-10-09
+
+**Cambios de la 2.7:** cada `Logro` (§3.22) suma `fuente` (de dónde sale el dato, con enlace si es público) y `aclaracion` (aviso visible sobre un dato incompleto, como «Año por confirmar»). El filtro por año pasa a ser por década.
 
 **Cambios de la 2.6:** nuevo `GET /v1/logros` (§3.22): la página Logros, con sus cifras y la lista de logros por categoría y año.
 
@@ -806,7 +808,7 @@ El personal docente, para la página Personal Docente. El portal lo agrupa por n
 
 ### 3.22 `GET /v1/logros`
 
-La página Logros. El portal muestra arriba los logros con `destacado: true`, luego la lista completa, del más reciente al más antiguo (los que no tienen año, al final), con dos filtros que quedan en la dirección: categoría (`?categoria=artistico`) y año (`?anio=2011`). Cada filtro solo ofrece las opciones que tienen logros y no aparece si hay una sola.
+La página Logros. El portal muestra arriba los logros con `destacado: true`, luego la lista completa, del más reciente al más antiguo (los que no tienen año, al final), agrupada por década (2000–2009, 2010–2019…; los que no tienen año, al final, en «Sin año»), con dos filtros que quedan en la dirección: categoría (`?categoria=artistico`) y década (`?decada=2000`). Cada filtro solo ofrece las opciones que tienen logros y no aparece si hay una sola.
 
 | Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
 |---|---|---|---|---|
@@ -827,6 +829,8 @@ La página Logros. El portal muestra arriba los logros con `destacado: true`, lu
 | `descripcion` | string \| null | sí | 300 | Detalle: concurso, lugar, organizador. |
 | `foto` | `Imagen` \| null | sí | — | 3:2. Si muestra estudiantes, requiere autorización de las familias. |
 | `destacado` | boolean | no | — | `true` = también aparece arriba, en «Destacados». Úsenlo para los logros más importantes (nacionales, por ejemplo). |
+| `fuente` | `{ etiqueta, url }` \| null | sí | 120 | De dónde sale el dato: `etiqueta` («Diario Correo, 18/07/2011») y `url` (https, o `null` si la fuente no tiene enlace público). Se muestra al pie de cada logro. |
+| `aclaracion` | string \| null | sí | 60 | Aviso visible sobre un dato incompleto: «Año por confirmar». No reemplaza el dato: si el año no se conoce, `anio` es `null`. |
 
 **Solo logros confirmados por el colegio.** El módulo debe publicar únicamente logros que el colegio haya verificado; los que vengan de otras fuentes se confirman antes (ver `docs/PENDIENTES.md`).
 

@@ -1080,43 +1080,64 @@ escribir('largo', 'nosotros-pagina--instrumentos-de-gestion', { data: {
 
 
 // ── Logros ──
-// cata.edu.pe no publica ningún logro concreto (concurso, puesto o año). Lo que sí publica son reconocimientos
-// institucionales (Reseña Histórica): son los únicos que van en «tipico». Los logros encontrados en otras fuentes
-// están en LOGROS_POR_VERIFICAR, con su fuente, listos para pasar a «tipico» cuando el colegio los confirme.
-const logro = (id, titulo, categoria, anio, nivel, descripcion, destacado = false, foto = null) => ({ id, titulo, categoria, anio, nivel, descripcion, foto, destacado })
+// tipico: los reconocimientos que publica cata.edu.pe y los logros que el colegio confirmó a partir de fuentes externas
+// (grupo A), cada uno con su fuente. Los datos que no se conocen quedan en null; lo incompleto lleva «aclaracion».
+// LOGROS_POR_CONFIRMAR (grupo B y los que aún no se confirman) solo van en «largo», marcados.
+const logro = (id, titulo, categoria, anio, nivel, descripcion, { destacado = false, foto = null, fuente = null, aclaracion = null } = {}) => ({ id, titulo, categoria, anio, nivel, descripcion, foto, destacado, fuente, aclaracion })
+const F_CATA = { etiqueta: 'cata.edu.pe, Reseña Histórica', url: 'https://cata.edu.pe/new_resenahistorica/' }
+const F_HISTORIA = { etiqueta: 'Historia del Colegio Adventista Túpac Amaru (2012)', url: 'https://luisroquequispe.wordpress.com/2012/10/18/historia-del-colegio-adventista-tupac-amaru/' }
+const F_CORREO = { etiqueta: 'Diario Correo y prensa local, julio de 2011', url: 'https://diariocorreo.pe/peru/juliaca-banda-de-colegio-adventista-es-una-de-los-mejores-del-pais-533005/' }
+const F_7DIAS = { etiqueta: '7Días, 9 de julio de 2025', url: 'https://7dias.pe/seminario-san-juan-maria-vianney-de-huancavelica-gana-concurso-de-bandas-escolares/educacion/' }
+const F_FACEBOOK = { etiqueta: 'Facebook del colegio', url: 'https://www.facebook.com/colegiocatajuliaca/' }
+const F_SIN_ENLACE = { etiqueta: 'Fuente sin enlace público (por precisar)', url: null }
+const BANDA = 'Banda Sinfónica'
 const LOGROS_CONFIRMADOS = [
-  logro('rd-primaria', 'Reconocimiento del nivel primaria', 'institucional', 1971, 'Primaria', 'Resolución Directoral Regional N° 457, del 7 de mayo de 1971.'),
-  logro('rd-secundaria', 'Reconocimiento del nivel secundaria', 'institucional', 1982, 'Secundaria', 'R.D.Z. N° 104-DZE-J, del 25 de marzo de 1982.'),
-  logro('rd-inicial', 'Reconocimiento del nivel inicial', 'institucional', 1998, 'Inicial', 'R.D. N° 6954-DREP, del 3 de diciembre de 1998.'),
-  logro('rd-promotora', 'Reconocimiento de la promotora AE-CATA', 'institucional', 2000, null, 'La R.D. N° 4609-DREP-2000 reconoce a la Asociación Educativa Colegio Adventista Túpac Amaru como promotora de la institución.'),
-  logro('sgce', 'Equipo docente monitoreado por la certificadora SGCE', 'institucional', null, null, 'El equipo docente está capacitado y monitoreado por la certificadora de calidad internacional SGCE.'),
-  logro('upeu', 'Convenio con la Universidad Peruana Unión', 'institucional', null, null, 'Convenio de apoyo mutuo celebrado con la Universidad Peruana Unión.'),
+  // Reconocimientos publicados en cata.edu.pe
+  logro('rd-primaria', 'Reconocimiento del nivel primaria', 'institucional', 1971, 'Primaria', 'Resolución Directoral Regional N° 457, del 7 de mayo de 1971.', { fuente: F_CATA }),
+  logro('rd-secundaria', 'Reconocimiento del nivel secundaria', 'institucional', 1982, 'Secundaria', 'R.D.Z. N° 104-DZE-J, del 25 de marzo de 1982.', { fuente: F_CATA }),
+  logro('rd-inicial', 'Reconocimiento del nivel inicial', 'institucional', 1998, 'Inicial', 'R.D. N° 6954-DREP, del 3 de diciembre de 1998.', { fuente: F_CATA }),
+  logro('rd-promotora', 'Reconocimiento de la promotora AE-CATA', 'institucional', 2000, null, 'La R.D. N° 4609-DREP-2000 reconoce a la Asociación Educativa Colegio Adventista Túpac Amaru como promotora de la institución.', { fuente: F_CATA }),
+  logro('sgce', 'Equipo docente monitoreado por la certificadora SGCE', 'institucional', null, null, 'El equipo docente está capacitado y monitoreado por la certificadora de calidad internacional SGCE.', { fuente: F_CATA }),
+  logro('upeu', 'Convenio con la Universidad Peruana Unión', 'institucional', null, null, 'Convenio de apoyo mutuo celebrado con la Universidad Peruana Unión.', { fuente: F_CATA }),
+  // Banda Sinfónica
+  logro('banda-1982', 'Creación de la Banda Sinfónica', 'artistico', 1982, BANDA, 'Primera presentación pública en las fiestas patrias de 1982, integrada por alumnos, profesores y padres de familia.', { fuente: F_HISTORIA }),
+  logro('banda-2006', 'Medalla de honor al mérito como mejor banda', 'artistico', 2006, BANDA, 'Otorgada por la UGEL San Román.', { fuente: F_HISTORIA }),
+  logro('banda-2007-huancane', '1.er puesto, concurso de bandas sinfónicas de Huancané', 'artistico', 2007, BANDA, 'Concurso organizado en la provincia de Huancané.', { fuente: F_HISTORIA }),
+  logro('banda-2007-ugel', '1.er puesto, concurso de bandas sinfónicas de la UGEL San Román', 'artistico', 2007, BANDA, null, { fuente: F_HISTORIA }),
+  logro('banda-2008', '1.er puesto, concurso de bandas sinfónicas de la UGEL San Román', 'artistico', 2008, BANDA, null, { fuente: F_HISTORIA }),
+  logro('banda-2009-ugel', '1.er puesto, concurso de bandas sinfónicas de la UGEL San Román', 'artistico', 2009, BANDA, null, { fuente: F_HISTORIA }),
+  logro('banda-2009-esfa', '1.er puesto, concurso organizado por la Escuela Superior de Form. Artística Puno', 'artistico', 2009, BANDA, null, { fuente: F_HISTORIA }),
+  logro('banda-2010', '1.er lugar, concurso de bandas sinfónicas de la UGEL San Román', 'artistico', 2010, BANDA, null, { fuente: F_HISTORIA }),
+  logro('banda-2011', 'Subcampeón nacional: 2.º lugar en el XIX Concurso Nacional de Bandas de Música y Bandas Sinfónicas Escolares', 'artistico', 2011, BANDA, 'Concepción, Huancayo, 8 de julio de 2011. Participaron 21 bandas. La banda, de 46 estudiantes y dirigida por el profesor Jhony César Huanca Rodríguez, llegó como tetracampeona consecutiva en Juliaca.', { destacado: true, fuente: F_CORREO }),
+  logro('banda-2022', 'Participación en el I Concurso Regional de Bandas Escolares', 'artistico', 2022, BANDA, 'Organizado en la UPeU Juliaca.', { fuente: F_SIN_ENLACE }),
+  logro('banda-2025', '2.º lugar nacional, categoría sinfónica, XXX Concurso Nacional de Bandas Escolares de Música', 'artistico', 2025, BANDA, 'Concepción.', { destacado: true, fuente: F_7DIAS }),
+  logro('banda-festival', 'VI Festival de Bandas Sinfónicas Escolares «Homenaje a Nuestra Amada Patria»', 'artistico', null, BANDA, 'Organizado por la GUE José Antonio Encinas y auspiciado por Real Plaza Juliaca.', { fuente: F_FACEBOOK, aclaracion: 'Año por confirmar' }),
+  // Institucional
+  logro('excelencia', '«Colegio Excelencia» de la UGEL Juliaca, en tres oportunidades', 'institucional', null, null, 'La UGEL Juliaca premió al CATA como «Colegio Excelencia» tres veces.', { destacado: true, fuente: F_HISTORIA, aclaracion: 'Años por confirmar' }),
+  logro('fencyt', 'Participación en las ferias FENCYT desde 1996', 'institucional', 1996, null, 'Tres veces organizadora de la fase regional y tres veces finalista nacional (Lima y Pozuzo).', { fuente: F_HISTORIA }),
+  logro('pionero-laboratorio', 'Pionero: laboratorio de ciencias desde 1998', 'institucional', 1998, null, null, { fuente: F_HISTORIA }),
+  logro('pionero-idiomas', 'Pionero: sala de idiomas desde 2005', 'institucional', 2005, null, null, { fuente: F_HISTORIA }),
+  logro('pionero-pizarras', 'Pionero: pizarras interactivas desde 2009', 'institucional', 2009, null, null, { fuente: F_HISTORIA }),
+  // Académico y cultural: trayectoria, no un premio puntual
+  logro('trayectoria', 'Trayectoria en concursos académicos, culturales y deportivos', 'academico', null, null, 'Participación y reconocimientos en concursos de historia de Juliaca, ciencias naturales, biología, física, matemática, feria de ciencias, coros escolares, poesía, declamación, arte y deportes, a nivel local, departamental, regional y nacional.', { fuente: F_HISTORIA }),
 ]
-// Fuentes: blog «Historia del Colegio Adventista Tupac Amaru» (luisroquequispe.wordpress.com, 2012), Diario Correo
-// (18/07/2011), 7Días (09/07/2025) y UGEL San Román (12/09/2022). Ver docs/PENDIENTES.md.
-const porVerificar = (fuente) => `Por verificar. Fuente: ${fuente}.`
-const BLOG = 'blog «Historia del Colegio Adventista Tupac Amaru» (2012)'
-const LOGROS_POR_VERIFICAR = [
-  logro('pv-banda-2025', '2.º lugar, categoría sinfónica, XXX Concurso Nacional de Bandas Escolares de Música (por verificar)', 'artistico', 2025, 'Banda sinfónica', porVerificar('7Días, 9 de julio de 2025; concurso en Concepción'), true),
-  logro('pv-banda-2011', 'Subcampeón del XIX Concurso Nacional de Bandas Sinfónicas Escolares (por verificar)', 'artistico', 2011, 'Banda sinfónica', porVerificar('Diario Correo, 18 de julio de 2011; concurso en Concepción, Huancayo'), true),
-  logro('pv-banda-2010', '1.er lugar, concurso de bandas sinfónicas de la UGEL San Román (por verificar)', 'artistico', 2010, 'Banda sinfónica', porVerificar(BLOG)),
-  logro('pv-banda-2009-esfa', '1.er puesto, concurso de bandas de la Escuela Superior de Formación Artística Puno (por verificar)', 'artistico', 2009, 'Banda', porVerificar(BLOG)),
-  logro('pv-banda-2009', '1.er puesto, concurso de bandas sinfónicas de la UGEL San Román (por verificar)', 'artistico', 2009, 'Banda sinfónica', porVerificar(BLOG)),
-  logro('pv-banda-2008', '1.er puesto, concurso de bandas sinfónicas de la UGEL San Román (por verificar)', 'artistico', 2008, 'Banda sinfónica', porVerificar(BLOG)),
-  logro('pv-banda-2007-ugel', '1.er puesto, concurso de bandas sinfónicas de la UGEL San Román (por verificar)', 'artistico', 2007, 'Banda sinfónica', porVerificar(BLOG)),
-  logro('pv-banda-2007-huancane', '1.er puesto, concurso de bandas sinfónicas en la provincia de Huancané (por verificar)', 'artistico', 2007, 'Banda sinfónica', porVerificar(BLOG)),
-  logro('pv-banda-2006', 'Medalla de honor al mérito como mejor banda, UGEL San Román (por verificar)', 'artistico', 2006, 'Banda', porVerificar(BLOG)),
-  logro('pv-eureka-2022', '3.er lugar, Feria Eureka 2022, etapa UGEL San Román, nivel primario (por verificar)', 'academico', 2022, 'Primaria', porVerificar('UGEL San Román, 12 de septiembre de 2022. Proyecto: jabón líquido bactericida a partir de matico')),
-  logro('pv-excelencia', '«Colegio Excelencia» de la UGEL Juliaca, en tres oportunidades (por verificar)', 'institucional', null, null, porVerificar(`${BLOG}. No indica los años`)),
-  logro('pv-fencyt', 'Participación en la Feria Escolar Nacional FENCYT desde 1996 (por verificar)', 'academico', null, 'Secundaria', porVerificar(`${BLOG}: «tres veces organizadora de la fase regional» y «tres veces participante en la final nacional en Lima y Pozuzo», sin años`)),
+// Grupo B y logros encontrados que el colegio aún no confirma. NO se publican; ver docs/PENDIENTES.md.
+const porConfirmar = (fuente) => ({ etiqueta: `Por confirmar. ${fuente}`, url: null })
+const LOGROS_POR_CONFIRMAR = [
+  logro('pc-capellania', 'Certificación de Capellanía (por confirmar)', 'institucional', null, null, 'Obtenida en el periodo 2022-2023, según una tesis de la UPeU. Falta el documento oficial y la fecha exacta.', { fuente: porConfirmar('Tesis de la UPeU'), aclaracion: 'Por confirmar' }),
+  logro('pc-banda-nacional', 'La banda clasificó a la etapa nacional (por confirmar)', 'artistico', null, BANDA, 'Publicado por la UGEL San Román, sin año identificable.', { fuente: porConfirmar('UGEL San Román'), aclaracion: 'Por confirmar · año desconocido' }),
+  logro('pc-licenciamiento', '«Licenciamiento» (por confirmar)', 'institucional', null, null, 'El colegio lo menciona, pero no hay fuente pública. Falta la resolución con número y fecha.', { aclaracion: 'Por confirmar' }),
+  logro('pc-eureka-2022', '3.er lugar, Feria Eureka 2022, etapa UGEL San Román, nivel primario (por confirmar)', 'academico', 2022, 'Primaria', 'Proyecto: jabón líquido bactericida a partir de matico.', { fuente: { etiqueta: 'Por confirmar. UGEL San Román, 12/09/2022', url: 'https://ugelsanroman.gob.pe/inicio-la-preseleccion-de-la-feria-escolar-nacional-de-ciencia-y-tecnologia-eureka-2022-nivel-primario/' }, aclaracion: 'Por confirmar' }),
 ]
 const logrosTipico = {
   titulo: 'Logros',
   bajada: 'Los profesores y estudiantes cataínos son los principales actores de la historia académica del colegio.',
-  // Cifras que salen de lo publicado: los años desde 1971 y los tres niveles reconocidos por resolución directoral.
+  // Cifras verificables con los logros publicados
   cifras: [
+    { id: 'nacionales', valor: 2, sufijo: null, etiqueta: 'segundos lugares nacionales de la Banda Sinfónica (2011 y 2025)' },
+    { id: 'primeros', valor: 6, sufijo: null, etiqueta: 'primeros puestos de la banda entre 2007 y 2010' },
+    { id: 'excelencia', valor: 3, sufijo: null, etiqueta: 'veces «Colegio Excelencia» de la UGEL Juliaca' },
     { id: 'anios', valor: 55, sufijo: null, etiqueta: 'años de vida institucional' },
-    { id: 'niveles', valor: 3, sufijo: null, etiqueta: 'niveles reconocidos por resolución directoral' },
   ],
   logros: LOGROS_CONFIRMADOS,
 }
@@ -1126,11 +1147,10 @@ escribir('largo', 'logros', { data: {
   ...logrosTipico,
   titulo: 'Logros y reconocimientos del Colegio Adventista Túpac Amaru',
   bajada: textoLargo,
-  cifras: [...logrosTipico.cifras, { id: 'pv', valor: LOGROS_POR_VERIFICAR.length, sufijo: null, etiqueta: 'logros por verificar en esta vista de prueba, con un texto largo de etiqueta' }],
   logros: [
-    ...LOGROS_POR_VERIFICAR.map((l, i) => (i < 2 ? { ...l, foto: img('noticia-1', 'Foto de prueba: la banda sinfónica en el concurso') } : l)),
-    ...LOGROS_CONFIRMADOS,
-    logro('largo-1', 'Logro de prueba con un título muy largo para comprobar que la tarjeta se acomoda en varias líneas sin cortarse', 'deportivo', 2024, 'Secundaria · Selección de vóley de damas de la Sede Central', textoLargo, false, img('nivel-secundaria', 'Foto de prueba')),
+    ...LOGROS_POR_CONFIRMAR,
+    ...LOGROS_CONFIRMADOS.map((l) => (l.destacado ? { ...l, foto: img('noticia-1', 'Foto de prueba: la banda sinfónica en el concurso') } : l)),
+    logro('largo-1', 'Logro de prueba con un título muy largo para comprobar que la tarjeta se acomoda en varias líneas sin cortarse', 'deportivo', 2024, 'Secundaria · Selección de vóley de damas de la Sede Central', textoLargo, { foto: img('nivel-secundaria', 'Foto de prueba'), fuente: { etiqueta: 'Fuente de prueba con un nombre muy largo para comprobar el ajuste del enlace', url: 'https://cata.edu.pe/' }, aclaracion: 'Aclaración de prueba larga: dato pendiente de confirmación por el colegio' }),
   ],
 } })
 escribir('sin-foto', 'logros', { data: logrosTipico })

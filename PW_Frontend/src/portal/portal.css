@@ -4504,6 +4504,50 @@ html.f-anim .f-cronograma:not([data-visto])::before {
   color: var(--marino-suave);
 }
 
+/* Fuente y aclaración de cada logro */
+.f-logro__pie {
+  display: grid;
+  gap: 0.375rem;
+  margin-top: 0.25rem;
+  font-size: 0.88rem;
+  color: var(--marino-suave);
+}
+
+.f-logro__aclaracion {
+  justify-self: start;
+  padding: 0.0625rem 0.5rem;
+  border: 0.125rem dashed currentColor;
+  border-radius: 0.25rem;
+  font-weight: 800;
+  color: var(--marino);
+}
+
+.f-logro__fuente a {
+  font-weight: 700;
+  color: var(--marino);
+  text-decoration-color: var(--dorado);
+  text-decoration-thickness: 0.125rem;
+  overflow-wrap: anywhere;
+}
+
+.f-logro__pie--claro,
+.f-logro__pie--claro .f-logro__aclaracion,
+.f-logro__pie--claro .f-logro__fuente a {
+  color: var(--marino-lavado);
+}
+
+.f-logro__pie--claro .f-logro__fuente a {
+  color: var(--blanco);
+}
+
+.f-logros .f-decada + .f-decada {
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.f-logros .f-filtro__resultado {
+  margin-bottom: 1.75rem;
+}
+
 @media (max-width: 899px) {
   .f-podio__item--foto {
     grid-template-columns: minmax(0, 1fr);

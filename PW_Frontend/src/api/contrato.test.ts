@@ -146,16 +146,21 @@ describe('el contrato rechaza respuestas inválidas', () => {
   })
 
   it('rechaza un logro de categoría desconocida o con un año imposible', () => {
-    const logro = { id: '1', titulo: 't', anio: 2011, nivel: null, descripcion: null, foto: null, destacado: false }
+    const logro = { id: '1', titulo: 't', anio: 2011, nivel: null, descripcion: null, foto: null, destacado: false, fuente: null, aclaracion: null }
     const base = { titulo: 'Logros', bajada: null, cifras: [] }
     expect(esquemaLogros.safeParse({ ...base, logros: [{ ...logro, categoria: 'musical' }] }).success).toBe(false)
     expect(esquemaLogros.safeParse({ ...base, logros: [{ ...logro, categoria: 'artistico', anio: 211 }] }).success).toBe(false)
     expect(esquemaLogros.safeParse({ ...base, logros: [{ ...logro, categoria: 'artistico' }] }).success).toBe(true)
   })
 
-  it('en típico, los logros publicados no son datos por verificar', () => {
+  it('en típico, los logros publicados no son datos por verificar y todos tienen fuente', () => {
     const json = JSON.stringify(archivos['./mock/tipico/logros.json'])
     expect(json).not.toMatch(/por verificar/i)
+    const { logros } = (archivos['./mock/tipico/logros.json'] as { data: { logros: { titulo: string; fuente: unknown }[] } }).data
+    for (const l of logros) {
+      expect(l.titulo, l.titulo).not.toMatch(/por confirmar/i)
+      expect(l.fuente, l.titulo).not.toBeNull()
+    }
   })
 
   it('rechaza una red social desconocida', () => {

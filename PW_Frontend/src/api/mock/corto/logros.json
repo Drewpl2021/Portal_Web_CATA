@@ -12,7 +12,9 @@
         "nivel": null,
         "descripcion": null,
         "foto": null,
-        "destacado": false
+        "destacado": false,
+        "fuente": null,
+        "aclaracion": null
       }
     ]
   }

@@ -1,4 +1,4 @@
-// Tipos del contrato de la API pública del portal (docs/API_CONTRACT.md, v2.6).
+// Tipos del contrato de la API pública del portal (docs/API_CONTRACT.md, v2.7).
 // Todos los campos llegan siempre; los opcionales valen null.
 
 /** Fecha ISO 8601 sin hora: "2026-10-08". */
@@ -462,6 +462,15 @@ export interface Logro {
   foto: Imagen | null
   /** Se muestra arriba, entre los logros destacados. */
   destacado: boolean
+  /** De dónde sale el dato: «Diario Correo, 18/07/2011». url null = fuente sin enlace público. */
+  fuente: FuenteLogro | null
+  /** Aviso visible sobre un dato incompleto: «Año por confirmar». */
+  aclaracion: string | null
+}
+
+export interface FuenteLogro {
+  etiqueta: string
+  url: string | null
 }
 
 export interface Logros {

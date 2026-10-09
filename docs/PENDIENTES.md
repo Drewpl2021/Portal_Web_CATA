@@ -48,7 +48,7 @@
 - **Foco nunca tapado:** si un elemento enfocado con el teclado queda en parte bajo la cabecera fija, la página se desplaza para mostrarlo.
 - **Componentes compartidos por las páginas internas:** `CabeceraPagina`, `IndicePagina` y `SolicitudInformacion`. El formulario recibe la página (`matricula` o `contacto`) y usa su propio mensaje de WhatsApp.
 - **Foco al navegar:** al cambiar de página dentro del sitio, el foco pasa al contenido de la página nueva para que el lector de pantalla la anuncie (en la primera carga no se mueve).
-- **Logros (`/logros`):** cabecera, cifras, destacados y la lista con filtros por categoría y año en la dirección. Publica solo los seis reconocimientos institucionales de cata.edu.pe; los logros de otras fuentes esperan confirmación (pendiente 2b).
+- **Logros (`/logros`):** cabecera, cifras, destacados y la lista agrupada por década, con filtros por categoría y década en la dirección. Publica 24 logros, cada uno con su fuente: los reconocimientos de cata.edu.pe y los que el colegio confirmó de fuentes externas (Banda Sinfónica 1982–2025, «Colegio Excelencia», FENCYT, laboratorio, idiomas, pizarras y su trayectoria en concursos). Lo que falta confirmar está en el pendiente 2b.
 - **Mapa del sitio completo:** todas las páginas del menú están construidas.
 - **Responsivo:**
   - de 360 px a 4K, verificado en 360, 390, 768, 1024, 1366, 1920, 2560 y 3840 px
@@ -56,9 +56,10 @@
   - las composiciones se agrupan en contenedores de proporción fija
 - **Eliminadas:** las propuestas A, B y C y la portada antigua «Tablero de ruta».
 
-### Contrato de la API (versión 2.6)
+### Contrato de la API (versión 2.7)
 
 - `docs/API_CONTRACT.md` y su JSON Schema `docs/api-contract.schema.json` (`npm run esquema`).
+- **Cambios de la 2.7:** cada logro suma `fuente` y `aclaracion`; el filtro por año pasa a ser por década.
 - **Cambios de la 2.6:** nuevo `GET /v1/logros`.
 - **Cambios de la 2.5:** nuevo `GET /v1/docentes`; los enlaces de documentos suman `peso` y el formato `canva`; nuevo slug `personal-docente`.
 - **Cambios de la 2.4:** nuevos `GET /v1/nosotros` y `GET /v1/nosotros/paginas/{slug}` (página de contenido armada con bloques; `404` si no existe).
@@ -73,6 +74,8 @@
 - **Datos de prueba:** `src/api/mock/`. El carrusel tiene 3 banners en `tipico`, 1 en `corto`, 6 en `largo` y ninguno en `vacio`. Matrícula tiene datos en `tipico`, `corto`, `largo`, `sin-foto` y `vacio` (y su cabecera en `alt-vacio`); el año en `tipico` es 2026, el de los afiches publicados. Contacto, Proyectos, Nosotros y Logros tienen datos en los seis escenarios.
 
 ### Verificación al cierre
+
+**Logros con los datos confirmados (2026-10-09):** `npm test` con 185 pruebas (en `tipico`, ningún logro «por verificar» ni «por confirmar» y todos con fuente). Por pedido, solo: axe y responsivo en 390 y 1920 (típico), sin violaciones ni desplazamiento, y una pasada de teclado (ningún foco tapado; el filtro de década se usa con Enter, queda en la dirección, se combina con el de categoría y anuncia el resultado; «Todos» lo quita; los enlaces de fuente avisan que se abren en otra pestaña).
 
 **Logros (2026-10-09):** `npm test` con 185 pruebas (incluye que `tipico/` no traiga logros «por verificar»). Al construirla: axe (WCAG 2.2 AA) sin violaciones ni desplazamiento horizontal en 390, 768, 1920 y 2560 px (típico), y en el escenario largo los dos filtros combinados, el caso sin resultados con su botón y el botón Atrás. Tras retomar la sesión, por pedido, solo: axe y responsivo en 390 y 1920 (típico), sin violaciones ni desplazamiento, y una pasada de teclado (ningún foco tapado; el filtro de año se usa con Enter, queda en la dirección, anuncia el resultado; «Todos» lo quita). No se repitió la matriz ni la regresión de las otras páginas. review-animations: sin movimiento nuevo (destacados, tarjetas y contador reutilizan las entradas ya revisadas; los filtros no se animan).
 
@@ -106,25 +109,21 @@
 ## Pendientes
 
 1. **Contenido de Propuesta Educativa:** es la única página que muestra solo su cabecera. Con el mismo nivel de diseño y animaciones, sin carrusel, y ampliando el contrato.
-2b. **Logros por verificar** (encontrados fuera de cata.edu.pe; están en el escenario `largo`, marcados, listos para publicarse cuando el colegio los confirme). cata.edu.pe no publica ningún logro concreto; su página «Institucional» dice «campeonatos ganados», pero es una plantilla sin editar (texto de relleno y contadores en 0) y conviene retirarla.
+2b. **Logros: lo que el colegio debe confirmar.** No se publica; está en el escenario `largo`, marcado «por confirmar», listo para pasar a publicado.
 
-   | Logro | Categoría | Año | Fuente |
-   |---|---|---|---|
-   | 2.º lugar, categoría sinfónica, XXX Concurso Nacional de Bandas Escolares de Música (Concepción) | Artístico | 2025 | [7Días, 09/07/2025](https://7dias.pe/seminario-san-juan-maria-vianney-de-huancavelica-gana-concurso-de-bandas-escolares/educacion/) |
-   | Subcampeón (2.º lugar, bandas sinfónicas), XIX Concurso Nacional de Bandas de Música y Bandas Sinfónicas Escolares (Concepción, Huancayo) | Artístico | 2011 | [Diario Correo, 18/07/2011](https://diariocorreo.pe/peru/juliaca-banda-de-colegio-adventista-es-una-de-los-mejores-del-pais-533005/); [blog pol2012](https://pol2012.wordpress.com/banda-del-colegio-adventista-tupac-amaru/) |
-   | 1.er lugar, concurso de bandas sinfónicas de la UGEL San Román | Artístico | 2010 | [Blog «Historia del Colegio Adventista Tupac Amaru», 2012](https://luisroquequispe.wordpress.com/2012/10/18/historia-del-colegio-adventista-tupac-amaru/) |
-   | 1.er puesto, concurso de bandas de la Escuela Superior de Formación Artística Puno | Artístico | 2009 | Mismo blog |
-   | 1.er puesto, concurso de bandas sinfónicas de la UGEL San Román | Artístico | 2009 | Mismo blog |
-   | 1.er puesto, concurso de bandas sinfónicas de la UGEL San Román | Artístico | 2008 | Mismo blog |
-   | 1.er puesto, concurso de bandas sinfónicas de la UGEL San Román | Artístico | 2007 | Mismo blog |
-   | 1.er puesto, concurso de bandas sinfónicas en la provincia de Huancané | Artístico | 2007 | Mismo blog |
-   | Medalla de honor al mérito como mejor banda, UGEL San Román | Artístico | 2006 | Mismo blog |
-   | 3.er lugar, Feria Eureka 2022, etapa UGEL San Román, nivel primario (jabón líquido bactericida a partir de matico; 13.6 puntos) | Académico | 2022 | [UGEL San Román, 12/09/2022](https://ugelsanroman.gob.pe/inicio-la-preseleccion-de-la-feria-escolar-nacional-de-ciencia-y-tecnologia-eureka-2022-nivel-primario/). Nombra a un estudiante menor de edad: no se incluyó su nombre; publicarlo requiere autorización |
-   | «Colegio Excelencia» de la UGEL Juliaca, en tres oportunidades | Institucional | **sin años** | Mismo blog de 2012 |
-   | Participación en FENCYT desde 1996; tres veces organizadora de la fase regional; tres veces en la final nacional (Lima y Pozuzo) | Académico | **sin años** | Mismo blog de 2012 |
-   | Eureka 2024, etapa regional: proyecto de «TUPAC AMARU (UGEL San Román)» con 75.00 puntos, **sin puesto** | Académico | 2024 | [DREP Puno](http://www.drepuno.gob.pe/web/archivos/2024/Comunicaciones/RESULTADOS%20EUREKA%202024%20ETAPA%20REGIONAL%20CATEGORIA%20D%20Y%20E.pdf). **Dudoso:** hay otras instituciones «Túpac Amaru»; no está en los datos de prueba |
+   | Qué confirmar | Qué falta | De dónde salió |
+   |---|---|---|
+   | Años de las tres veces «Colegio Excelencia» de la UGEL Juliaca | Los tres años (el logro ya se publica con «Años por confirmar») | [Historia del Colegio Adventista Túpac Amaru (2012)](https://luisroquequispe.wordpress.com/2012/10/18/historia-del-colegio-adventista-tupac-amaru/) |
+   | Año del VI Festival de Bandas Sinfónicas Escolares «Homenaje a Nuestra Amada Patria» | El año (ya se publica con «Año por confirmar») | [Facebook del colegio](https://www.facebook.com/colegiocatajuliaca/) |
+   | Fuente del I Concurso Regional de Bandas Escolares (UPeU Juliaca, 2022) | Un enlace o documento público: no se encontró ninguno (ya se publica con «Fuente sin enlace público») | Información aportada al portal |
+   | Certificación de Capellanía, periodo 2022-2023 | El documento oficial y la fecha exacta | Una tesis de la UPeU |
+   | Clasificación de la banda a la etapa nacional | El año y el concurso | Publicación de la UGEL San Román, sin año identificable |
+   | «Licenciamiento» | La resolución con número y fecha, y aclarar qué es: autorización de funcionamiento, revalidación de la UGEL o acreditación del SINEACE. El licenciamiento como tal aplica a universidades (SUNEDU), no a colegios | El colegio lo menciona; no hay fuente pública |
+   | 3.er lugar, Feria Eureka 2022, etapa UGEL San Román, nivel primario (jabón líquido bactericida a partir de matico) | Confirmación del colegio y, si se quiere nombrar al estudiante (menor de edad), autorización de su familia | [UGEL San Román, 12/09/2022](https://ugelsanroman.gob.pe/inicio-la-preseleccion-de-la-feria-escolar-nacional-de-ciencia-y-tecnologia-eureka-2022-nivel-primario/) |
+   | Eureka 2024, etapa regional: proyecto de «TUPAC AMARU (UGEL San Román)» con 75.00 puntos | Si es del CATA (hay otras instituciones «Túpac Amaru») y el puesto. No está en los datos de prueba | [DREP Puno](http://www.drepuno.gob.pe/web/archivos/2024/Comunicaciones/RESULTADOS%20EUREKA%202024%20ETAPA%20REGIONAL%20CATEGORIA%20D%20Y%20E.pdf) |
+   | Vigencia del convenio con la UPeU | Si sigue vigente: se firmó el 16/08/2022 por tres años | [UPeU](https://upeu.edu.pe/noticias/upeu-firma-convenio-con-el-colegio-adventista-tupac-amaru-en-juliaca%EF%BF%BC/) |
 
-   Además: no se encontró nada sobre ONEM, Juegos Deportivos Escolares ni concursos de la Iglesia Adventista (no hay logros deportivos), y no se pudo revisar el Facebook ni el TikTok del colegio porque piden iniciar sesión: conviene que el colegio revise sus propias publicaciones. El convenio con la UPeU se firmó el 16 de agosto de 2022 por tres años ([UPeU](https://upeu.edu.pe/noticias/upeu-firma-convenio-con-el-colegio-adventista-tupac-amaru-en-juliaca%EF%BF%BC/)): confirmar si sigue vigente, porque Logros lo muestra.
+   Además: la página «Institucional» de cata.edu.pe es una plantilla sin editar (dice «campeonatos ganados» con contadores en 0) y conviene retirarla. Si aparecen fotos de los concursos, publicarlas requiere la autorización de las familias.
 
 2. **Datos reales de Matrícula** (hoy son de prueba en el escenario típico):
    - confirmar el año del proceso: en los datos de prueba es 2026, el de los afiches publicados; en la API lo define el colegio

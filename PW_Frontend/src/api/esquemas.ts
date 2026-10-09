@@ -330,6 +330,8 @@ export const esquemaLogros = z.object({
         descripcion: textoONulo,
         foto: imagen.nullable(),
         destacado: z.boolean(),
+        fuente: z.object({ etiqueta: texto, url: url.nullable() }).nullable(),
+        aclaracion: textoONulo,
       }),
     )
     .max(200),

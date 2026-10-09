@@ -1,0 +1,15 @@
+{
+  "data": {
+    "titulo": "Contacto",
+    "bajada": null,
+    "figura": null,
+    "correo": null,
+    "redes": [
+      {
+        "red": "facebook",
+        "cuenta": "Colegio CATA",
+        "url": "https://www.facebook.com/catajuliaca/"
+      }
+    ]
+  }
+}

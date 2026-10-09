@@ -103,12 +103,21 @@ const niveles = {
   ],
 }
 
-const sedes = [
+const mapaDe = (direccion) => `https://www.google.com/maps?q=${encodeURIComponent(direccion)}&output=embed`
+const MAPAS = {
+  central: mapaDe('Jr. Moquegua 852, Juliaca, Puno, Perú'),
+  inicial: mapaDe('Jr. Raúl Porras Barrenechea 287, Juliaca, Puno, Perú'),
+  jerusalen: mapaDe('Urbanización Jerusalén, Cacachi, San Miguel, San Román, Puno, Perú'),
+  oasis: mapaDe('Chilla, Caracoto, San Román, Puno, Perú'),
+}
+const conContacto = (lista) => lista.map((x) => ({ ...x, correo: null, horario: [], mapaEmbedUrl: MAPAS[x.id] ?? null }))
+
+const sedes = conContacto([
   { id: 'central', nombre: 'Sede Central', direccion: 'Jr. Moquegua N° 852', referencia: 'Frente al Mercado Internacional Túpac Amaru', distrito: 'Juliaca, San Román, Puno', telefono: { numero: '+5151325096', visible: '051 325096' }, nota: null, foto: img('sede-central', 'Foto de prueba: fachada de la Sede Central'), mapaUrl: null },
   { id: 'inicial', nombre: 'Sede CATA Inicial', direccion: 'Jr. Raúl Porras B. N° 287', referencia: 'Esquina con Jr. San Martín', distrito: 'Juliaca, San Román, Puno', telefono: null, nota: null, foto: img('sede-inicial', 'Foto de prueba: entrada de la Sede CATA Inicial'), mapaUrl: null },
   { id: 'jerusalen', nombre: 'Sede CATA Jerusalén', direccion: 'Titiline Independencia N° 2, Urb. Jerusalem', referencia: 'Puente Independencia, salida a Huancané', distrito: 'San Miguel, San Román, Puno', telefono: { numero: '+51937489399', visible: '937 489 399' }, nota: 'Nivel primaria.', foto: img('sede-jerusalen', 'Foto de prueba: patio de la Sede CATA Jerusalén'), mapaUrl: null },
   { id: 'oasis', nombre: 'Sede CATA Oasis', direccion: 'Av. Modesto Borda s/n, Carretera a Coata km 2.5', referencia: 'Chilla', distrito: 'Caracoto, San Román, Puno', telefono: null, nota: 'Biohuertos y talleres de alimentación saludable, arte y pintura, y música.', foto: img('sede-oasis', 'Foto de prueba: biohuerto de la Sede CATA Oasis'), mapaUrl: null },
-]
+])
 
 const noticias = [
   { id: 'n4', slug: 'horario-de-atencion-de-secretaria', tipo: 'comunicado', titulo: 'Horario de atención de secretaría', resumen: 'Comunicado de prueba: la secretaría atiende de lunes a viernes por la mañana en la Sede Central.', fecha: '2026-10-06', foto: null, enlace: null },
@@ -221,7 +230,7 @@ escribir('corto', 'sitio', { data: { ...sitio, subtitulo: null, promotora: null,
 escribir('corto', 'propuesta-cabecera', { data: { titulo: 'Bienvenidos', bajada: null, figuras: [], accionPrincipal: { etiqueta: 'Matrícula', destino: { tipo: 'pagina', ruta: '/matricula' } }, accionSecundaria: null } })
 escribir('corto', 'quienes-somos', { data: { titulo: 'Desde 1971.', parrafos: ['Colegio adventista en Juliaca.'], foto: null, simbolos: [{ nombre: 'Llama', significado: 'Luz.' }] } })
 escribir('corto', 'niveles', { data: { titulo: 'Niveles', propuestaUrl: null, items: [{ id: 'i', nombre: 'Inicial', rango: null, sede: null, reconocimiento: null, foto: null }] } })
-escribir('corto', 'sedes', { data: [{ id: 'c', nombre: 'Central', direccion: 'Jr. Moquegua 852', referencia: null, distrito: null, telefono: null, nota: null, foto: null, mapaUrl: null }] })
+escribir('corto', 'sedes', { data: [{ id: 'c', nombre: 'Central', direccion: 'Jr. Moquegua 852', referencia: null, distrito: null, telefono: null, nota: null, foto: null, mapaUrl: null, correo: null, horario: [], mapaEmbedUrl: null }] })
 escribir('corto', 'noticias', lista([{ id: 'n1', slug: 'aviso', tipo: 'comunicado', titulo: 'Aviso', resumen: null, fecha: '2026-10-07', foto: null, enlace: null }]))
 escribir('corto', 'grados', { data: [{ nivel: 'Inicial', opciones: ['3 años'] }] })
 
@@ -267,6 +276,15 @@ escribir('largo', 'sedes', {
     direccion: 'Avenida Modesto Borda sin número, Carretera salida a Coata kilómetro 2.5',
     referencia: 'A la altura del puente Independencia, salida a Huancané, frente al grifo',
     nota: 'Biohuertos y talleres de preparación de alimentos saludables, arte y pintura, música y un futuro espacio de innovación Maker Space.',
+    // Correos y horarios de prueba: el dominio example.com está reservado y nunca es real.
+    correo: `secretaria-de-la-sede-de-prueba-numero-${i + 1}@example.com`,
+    horario: [
+      { dias: 'Lunes, martes, miércoles, jueves y viernes (horario de prueba)', horas: '7:30 a 13:00 y de 14:30 a 18:00' },
+      { dias: 'Sábados', horas: '8:00 a 12:00' },
+      { dias: 'Domingos y feriados', horas: 'Cerrado' },
+      { dias: 'Vacaciones escolares', horas: 'Solo con cita previa por WhatsApp' },
+    ],
+    mapaEmbedUrl: i === 7 ? null : MAPAS[sedes[i % 4].id],
   })),
 })
 escribir('largo', 'noticias', lista(
@@ -309,11 +327,12 @@ escribir('vacio', 'noticias', lista([]))
 // ── Matrícula ──
 // Requisitos, documentos y pasos: afiches publicados por el colegio en cata.edu.pe (matrícula de estudiantes
 // nuevos y regulares). Se quitaron los años del afiche (2023, 2024) para que no caduquen.
-// El año, las fechas y las vacantes NO están publicados: el año y las fechas son de prueba y las vacantes dicen «consultar».
+// El año es el de los afiches publicados (2026); en la API lo define el colegio. Las fechas no están publicadas: son de
+// prueba y la página lo dice. Las vacantes tampoco: dicen «consultar».
 const cabeceraMatricula = {
   titulo: 'Proceso de matrícula',
   bajada: 'Requisitos, documentos y pasos para matricular a tu hijo o hija en inicial, primaria o secundaria.',
-  anio: 2027,
+  anio: 2026,
   figura: { url: UP + '2023/01/CATA-Matricula_Img_1.png', alt: 'Estudiante con el uniforme del colegio y su mochila, haciendo el gesto de pulgar arriba', ancho: 500, alto: 1000 },
 }
 const PAGO = 'En la caja de la institución. Si hay otros medios de pago, el colegio los comunicará oficialmente y a tiempo a los padres de familia.'
@@ -388,10 +407,10 @@ const vacantes = {
 const fechasMatricula = {
   nota: 'Fechas de prueba: el colegio publicará aquí su cronograma oficial.',
   items: [
-    { id: 'f1', titulo: 'Solicitud de vacantes para estudiantes nuevos', inicio: '2026-11-02', fin: '2026-12-18', detalle: 'Con el FUT, en la caja de la institución.' },
-    { id: 'f2', titulo: 'Matrícula de estudiantes regulares', inicio: '2026-12-01', fin: '2026-12-23', detalle: null },
-    { id: 'f3', titulo: 'Matrícula de estudiantes nuevos', inicio: '2027-01-04', fin: '2027-02-26', detalle: 'Con la constancia de vacante y los documentos completos.' },
-    { id: 'f4', titulo: 'Inicio de clases', inicio: '2027-03-01', fin: null, detalle: null },
+    { id: 'f1', titulo: 'Solicitud de vacantes para estudiantes nuevos', inicio: '2025-11-03', fin: '2025-12-19', detalle: 'Con el FUT, en la caja de la institución.' },
+    { id: 'f2', titulo: 'Matrícula de estudiantes regulares', inicio: '2025-12-01', fin: '2025-12-23', detalle: null },
+    { id: 'f3', titulo: 'Matrícula de estudiantes nuevos', inicio: '2026-01-05', fin: '2026-02-27', detalle: 'Con la constancia de vacante y los documentos completos.' },
+    { id: 'f4', titulo: 'Inicio de clases', inicio: '2026-03-02', fin: null, detalle: null },
   ],
 }
 const preguntas = [
@@ -413,14 +432,14 @@ escribir('tipico', 'matricula-procesos', { data: procesos })
 escribir('tipico', 'matricula-vacantes', { data: vacantes })
 escribir('tipico', 'matricula-fechas', { data: fechasMatricula })
 escribir('tipico', 'matricula-preguntas', { data: preguntas })
-escribir('tipico', 'matricula-solicitud', { data: solicitud })
+escribir('tipico', 'solicitud', { data: solicitud })
 
 escribir('corto', 'matricula-cabecera', { data: { titulo: 'Matrícula', bajada: null, anio: null, figura: null } })
 escribir('corto', 'matricula-procesos', { data: [{ id: 'n', nombre: 'Nuevos', resumen: null, listas: [{ titulo: 'Requisitos', items: ['DNI.'] }], pasos: [{ titulo: 'Firma', detalle: null }] }] })
 escribir('corto', 'matricula-vacantes', { data: { actualizado: null, nota: null, niveles: [{ id: 'i', nivel: 'Inicial', detalle: null, estado: 'disponible', vacantes: 12 }] } })
 escribir('corto', 'matricula-fechas', { data: { nota: null, items: [{ id: 'f', titulo: 'Matrícula', inicio: '2027-01-04', fin: null, detalle: null }] } })
 escribir('corto', 'matricula-preguntas', { data: [{ id: 'p', pregunta: '¿Edad?', respuesta: 'Cumplida al 31 de marzo.' }] })
-escribir('corto', 'matricula-solicitud', { data: { titulo: 'Informes', texto: null, mensajeWhatsapp: 'Hola, soy {nombre}. Me interesa {grado}.' } })
+escribir('corto', 'solicitud', { data: { titulo: 'Informes', texto: null, mensajeWhatsapp: 'Hola, soy {nombre}. Me interesa {grado}.' } })
 
 const textoLargo = 'Texto de prueba que llega al máximo recomendado del contrato para comprobar que el bloque se acomoda en varias líneas sin cortarse ni tapar a los demás elementos de la página, incluso en las pantallas más pequeñas.'
 escribir('largo', 'matricula-cabecera', { data: { ...cabeceraMatricula, titulo: 'Proceso de matrícula y admisión para estudiantes nuevos y regulares', bajada: 'Requisitos, documentos, pasos, fechas y vacantes para matricular a tu hijo o hija en inicial, primaria o secundaria en cualquiera de las cuatro sedes del colegio en la provincia de San Román.' } })
@@ -440,7 +459,7 @@ escribir('largo', 'matricula-vacantes', { data: { actualizado: '2026-10-05', not
 ] } })
 escribir('largo', 'matricula-fechas', { data: { nota: textoLargo, items: Array.from({ length: 12 }, (_, i) => ({ id: `f${i}`, titulo: `Actividad de prueba número ${i + 1} del cronograma de matrícula con un nombre largo`, inicio: `2026-${String(11 + Math.floor(i / 6)).padStart(2, '0')}-${String(2 + (i % 6) * 4).padStart(2, '0')}`, fin: i % 2 ? `2027-02-${String(10 + i).padStart(2, '0')}` : null, detalle: i % 3 ? textoLargo : null })) } })
 escribir('largo', 'matricula-preguntas', { data: Array.from({ length: 15 }, (_, i) => ({ id: `p${i}`, pregunta: `Pregunta de prueba número ${i + 1}: ¿qué pasa si la pregunta es tan larga que ocupa dos o tres líneas en un teléfono?`, respuesta: `${textoLargo} ${textoLargo}` })) })
-escribir('largo', 'matricula-solicitud', { data: { titulo: 'Solicitar información sobre el proceso de matrícula y admisión', texto: textoLargo, mensajeWhatsapp: 'Hola, mi nombre es {nombre}. Quisiera recibir información completa sobre el proceso de matrícula, los requisitos, las fechas y las vacantes para {grado}. Muchas gracias.' } })
+escribir('largo', 'solicitud', { data: { titulo: 'Solicitar información sobre el proceso de matrícula y admisión', texto: textoLargo, mensajeWhatsapp: 'Hola, mi nombre es {nombre}. Quisiera recibir información completa sobre el proceso de matrícula, los requisitos, las fechas y las vacantes para {grado}. Muchas gracias.' } })
 
 escribir('sin-foto', 'matricula-cabecera', { data: { ...cabeceraMatricula, figura: null } })
 escribir('alt-vacio', 'matricula-cabecera', { data: altVacio(cabeceraMatricula) })
@@ -450,6 +469,37 @@ escribir('vacio', 'matricula-procesos', { data: [] })
 escribir('vacio', 'matricula-vacantes', { data: { actualizado: null, nota: null, niveles: [] } })
 escribir('vacio', 'matricula-fechas', { data: { nota: null, items: [] } })
 escribir('vacio', 'matricula-preguntas', { data: [] })
-escribir('vacio', 'matricula-solicitud', { data: { ...solicitud, texto: null } })
+escribir('vacio', 'solicitud', { data: { ...solicitud, texto: null } })
+
+// ── Contacto ──
+// Redes: las que enlaza cata.edu.pe (Facebook, YouTube y TikTok). No publica un correo general.
+const contacto = {
+  titulo: 'Contáctanos',
+  bajada: 'Cuatro sedes en San Román. Escríbenos por WhatsApp, llámanos o visítanos.',
+  figura: { url: UP + '2023/01/CATA-Matricula_Img_2.png', alt: 'Estudiante con el uniforme del colegio, su mochila y un cuaderno de CATA', ancho: 500, alto: 1000 },
+  correo: null,
+  redes: [
+    { red: 'facebook', cuenta: 'Colegio CATA', url: 'https://www.facebook.com/catajuliaca/' },
+    { red: 'youtube', cuenta: 'Colegio CATA', url: 'https://www.youtube.com/@colegiocata828' },
+    { red: 'tiktok', cuenta: '@colegioadventistacata', url: 'https://www.tiktok.com/@colegioadventistacata' },
+  ],
+}
+escribir('tipico', 'contacto', { data: contacto })
+escribir('corto', 'contacto', { data: { titulo: 'Contacto', bajada: null, figura: null, correo: null, redes: [contacto.redes[0]] } })
+escribir('largo', 'contacto', { data: {
+  ...contacto,
+  titulo: 'Contáctanos y visítanos en cualquiera de nuestras cuatro sedes',
+  bajada: 'Texto de prueba: cuatro sedes en la provincia de San Román, con atención por WhatsApp, por teléfono, por correo electrónico y de manera presencial en la secretaría de cada sede.',
+  correo: 'mesa-de-partes-y-atencion-al-padre-de-familia-de-prueba@example.com',
+  redes: [
+    ...contacto.redes.map((x) => ({ ...x, cuenta: x.cuenta + ' · Colegio Adventista Túpac Amaru de Juliaca' })),
+    { red: 'instagram', cuenta: 'Cuenta de prueba', url: 'https://www.instagram.com/' },
+    { red: 'x', cuenta: 'Cuenta de prueba', url: 'https://x.com/' },
+    { red: 'linkedin', cuenta: 'Cuenta de prueba', url: 'https://www.linkedin.com/' },
+  ],
+} })
+escribir('sin-foto', 'contacto', { data: { ...contacto, figura: null } })
+escribir('alt-vacio', 'contacto', { data: altVacio(contacto) })
+escribir('vacio', 'contacto', { data: { ...contacto, bajada: null, figura: null, correo: null, redes: [] } })
 
 console.log('ok')

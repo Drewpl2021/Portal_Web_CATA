@@ -1,8 +1,9 @@
 import CabeceraMatricula from '../secciones/CabeceraMatricula'
 import FechasMatricula from '../secciones/FechasMatricula'
+import IndicePagina from '../secciones/IndicePagina'
 import PreguntasMatricula from '../secciones/PreguntasMatricula'
 import ProcesosMatricula from '../secciones/ProcesosMatricula'
-import SolicitudMatricula from '../secciones/SolicitudMatricula'
+import SolicitudInformacion from '../secciones/SolicitudInformacion'
 import VacantesMatricula from '../secciones/VacantesMatricula'
 
 const INDICE = [
@@ -18,22 +19,12 @@ export default function Matricula() {
   return (
     <>
       <CabeceraMatricula />
-      <nav className="f-indice" aria-label="En esta página">
-        <ul className="f-indice__lista">
-          {INDICE.map((s) => (
-            <li key={s.id}>
-              <a className="f-indice__enlace" href={`#${s.id}`}>
-                {s.etiqueta}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      <IndicePagina secciones={INDICE} />
       <ProcesosMatricula />
       <VacantesMatricula />
       <FechasMatricula />
       <PreguntasMatricula />
-      <SolicitudMatricula />
+      <SolicitudInformacion />
     </>
   )
 }

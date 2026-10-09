@@ -5,6 +5,7 @@ import InsigniaPrueba from '../components/InsigniaPrueba'
 import { tituloDeRuta } from '../sitio/mapa'
 import TransicionPagina from '../sitio/TransicionPagina'
 import Cabecera from './Cabecera'
+import Contacto from './paginas/Contacto'
 import Inicio from './paginas/Inicio'
 import Matricula from './paginas/Matricula'
 import Pendiente from './paginas/Pendiente'
@@ -48,6 +49,7 @@ export default function Layout() {
             <Route index element={pagina(<Inicio />)} />
             <Route path="propuesta-educativa" element={pagina(<PropuestaEducativa />)} />
             <Route path="matricula" element={pagina(<Matricula />)} />
+            <Route path="contacto" element={pagina(<Contacto />)} />
             <Route path="*" element={pagina(<Pendiente titulo={tituloDeRuta(ubicacion.pathname)} />, 'f-pendiente')} />
           </Routes>
         </AnimatePresence>

@@ -7,9 +7,9 @@ import { useRecurso } from '../../hooks/useRecurso'
 import { enlaceWhatsapp, rellenarPlantilla } from '../../lib/formato'
 import { Revelar } from '../movimiento'
 
-// «Solicitar información»: título grande sobre el celeste y el formulario en una placa marina.
+// «Solicitar información» (Matrícula y Contacto): título sobre el celeste y el formulario en una placa marina.
 // No envía datos a ningún servidor: arma el mensaje y abre WhatsApp.
-export default function SolicitudMatricula() {
+export default function SolicitudInformacion() {
   const solicitud = useRecurso('matricula-solicitud', obtenerSolicitud)
   const sitio = useRecurso('sitio', obtenerSitio)
   const titulo = solicitud.estado === 'listo' ? solicitud.datos.titulo : 'Solicitar información'

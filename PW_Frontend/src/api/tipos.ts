@@ -1,4 +1,4 @@
-// Tipos del contrato de la API pública del portal (docs/API_CONTRACT.md, v2.1).
+// Tipos del contrato de la API pública del portal (docs/API_CONTRACT.md, v2.2).
 // Todos los campos llegan siempre; los opcionales valen null.
 
 /** Fecha ISO 8601 sin hora: "2026-10-08". */
@@ -145,7 +145,20 @@ export interface Sede {
   telefono: Telefono | null
   nota: string | null
   foto: Imagen | null
+  /** Enlace «Cómo llegar». null = el portal busca la dirección en Google Maps. */
   mapaUrl: string | null
+  correo: string | null
+  /** Horario de atención, una fila por grupo de días. [] = no se muestra. */
+  horario: HorarioAtencion[]
+  /** URL para insertar el mapa (Google Maps «Insertar un mapa» u OpenStreetMap). null = sin mapa. */
+  mapaEmbedUrl: string | null
+}
+
+export interface HorarioAtencion {
+  /** "Lunes a viernes". */
+  dias: string
+  /** "8:00 a 13:00". */
+  horas: string
 }
 
 // GET /v1/noticias
@@ -181,7 +194,7 @@ export interface GrupoGrados {
 export interface CabeceraMatricula {
   titulo: string
   bajada: string | null
-  /** Año escolar al que corresponde el proceso. null = no se muestra. */
+  /** Año escolar del proceso. Lo define el colegio; el portal no lo calcula. null = no se muestra. */
   anio: number | null
   /** Recorte de estudiante (PNG con fondo transparente). null = cabecera solo con texto. */
   figura: Imagen | null
@@ -248,12 +261,33 @@ export interface PreguntaFrecuente {
   respuesta: string
 }
 
-// GET /v1/matricula/solicitud
+// GET /v1/solicitud (Matrícula y Contacto)
 export interface SolicitudInformacion {
   titulo: string
   texto: string | null
   /** Plantilla del mensaje de WhatsApp. Usa {nombre} y {grado}. */
   mensajeWhatsapp: string
+}
+
+// GET /v1/contacto
+export const REDES = ['facebook', 'youtube', 'tiktok', 'instagram', 'x', 'linkedin'] as const
+export type Red = (typeof REDES)[number]
+
+export interface RedSocial {
+  red: Red
+  /** Nombre de la cuenta como se ve en la red: "Colegio CATA". */
+  cuenta: string
+  url: string
+}
+
+export interface Contacto {
+  titulo: string
+  bajada: string | null
+  /** Recorte de estudiante para la cabecera. */
+  figura: Imagen | null
+  /** Correo general del colegio. */
+  correo: string | null
+  redes: RedSocial[]
 }
 
 // Sobres de respuesta

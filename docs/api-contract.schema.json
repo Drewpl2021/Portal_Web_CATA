@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "API pública del portal CATA 2.1 (docs/API_CONTRACT.md)",
+  "title": "API pública del portal CATA 2.2 (docs/API_CONTRACT.md)",
   "description": "Cuerpo de respuesta 200 de cada endpoint. Generado desde PW_Frontend/src/api/esquemas.ts; no editar a mano.",
   "definitions": {
     "GET /v1/sitio": {
@@ -746,6 +746,56 @@
                     "type": "null"
                   }
                 ]
+              },
+              "correo": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "horario": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "dias": {
+                      "type": "string"
+                    },
+                    "horas": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "dias",
+                    "horas"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 4
+              },
+              "mapaEmbedUrl": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "uri",
+                    "allOf": [
+                      {
+                        "pattern": "^https:\\/\\/"
+                      },
+                      {
+                        "pattern": "^https:\\/\\/(www\\.google\\.com\\/maps(\\/embed)?\\?|www\\.openstreetmap\\.org\\/export\\/embed\\.html\\?)"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               }
             },
             "required": [
@@ -757,7 +807,10 @@
               "telefono",
               "nota",
               "foto",
-              "mapaUrl"
+              "mapaUrl",
+              "correo",
+              "horario",
+              "mapaEmbedUrl"
             ],
             "additionalProperties": false
           },
@@ -1641,7 +1694,7 @@
       "additionalProperties": false,
       "$schema": "http://json-schema.org/draft-07/schema#"
     },
-    "GET /v1/matricula/solicitud": {
+    "GET /v1/solicitud": {
       "type": "object",
       "properties": {
         "data": {
@@ -1665,6 +1718,132 @@
             "titulo",
             "texto",
             "mensajeWhatsapp"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "GET /v1/contacto": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "titulo": {
+              "type": "string"
+            },
+            "bajada": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "figura": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "format": "uri",
+                      "pattern": "^https:\\/\\/"
+                    },
+                    "alt": {
+                      "type": "string"
+                    },
+                    "ancho": {
+                      "anyOf": [
+                        {
+                          "type": "integer",
+                          "exclusiveMinimum": 0
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "alto": {
+                      "anyOf": [
+                        {
+                          "type": "integer",
+                          "exclusiveMinimum": 0
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "url",
+                    "alt",
+                    "ancho",
+                    "alto"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "correo": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "email"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "redes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "red": {
+                    "type": "string",
+                    "enum": [
+                      "facebook",
+                      "youtube",
+                      "tiktok",
+                      "instagram",
+                      "x",
+                      "linkedin"
+                    ]
+                  },
+                  "cuenta": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "^https:\\/\\/"
+                  }
+                },
+                "required": [
+                  "red",
+                  "cuenta",
+                  "url"
+                ],
+                "additionalProperties": false
+              },
+              "maxItems": 6
+            }
+          },
+          "required": [
+            "titulo",
+            "bajada",
+            "figura",
+            "correo",
+            "redes"
           ],
           "additionalProperties": false
         }

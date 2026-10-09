@@ -17,7 +17,27 @@
         "ancho": 1200,
         "alto": 900
       },
-      "mapaUrl": null
+      "mapaUrl": null,
+      "correo": "secretaria-de-la-sede-de-prueba-numero-1@example.com",
+      "horario": [
+        {
+          "dias": "Lunes, martes, miércoles, jueves y viernes (horario de prueba)",
+          "horas": "7:30 a 13:00 y de 14:30 a 18:00"
+        },
+        {
+          "dias": "Sábados",
+          "horas": "8:00 a 12:00"
+        },
+        {
+          "dias": "Domingos y feriados",
+          "horas": "Cerrado"
+        },
+        {
+          "dias": "Vacaciones escolares",
+          "horas": "Solo con cita previa por WhatsApp"
+        }
+      ],
+      "mapaEmbedUrl": "https://www.google.com/maps?q=Jr.%20Moquegua%20852%2C%20Juliaca%2C%20Puno%2C%20Per%C3%BA&output=embed"
     },
     {
       "id": "sede-2",
@@ -33,7 +53,27 @@
         "ancho": 1200,
         "alto": 900
       },
-      "mapaUrl": null
+      "mapaUrl": null,
+      "correo": "secretaria-de-la-sede-de-prueba-numero-2@example.com",
+      "horario": [
+        {
+          "dias": "Lunes, martes, miércoles, jueves y viernes (horario de prueba)",
+          "horas": "7:30 a 13:00 y de 14:30 a 18:00"
+        },
+        {
+          "dias": "Sábados",
+          "horas": "8:00 a 12:00"
+        },
+        {
+          "dias": "Domingos y feriados",
+          "horas": "Cerrado"
+        },
+        {
+          "dias": "Vacaciones escolares",
+          "horas": "Solo con cita previa por WhatsApp"
+        }
+      ],
+      "mapaEmbedUrl": "https://www.google.com/maps?q=Jr.%20Ra%C3%BAl%20Porras%20Barrenechea%20287%2C%20Juliaca%2C%20Puno%2C%20Per%C3%BA&output=embed"
     },
     {
       "id": "sede-3",
@@ -52,7 +92,27 @@
         "ancho": 1200,
         "alto": 900
       },
-      "mapaUrl": null
+      "mapaUrl": null,
+      "correo": "secretaria-de-la-sede-de-prueba-numero-3@example.com",
+      "horario": [
+        {
+          "dias": "Lunes, martes, miércoles, jueves y viernes (horario de prueba)",
+          "horas": "7:30 a 13:00 y de 14:30 a 18:00"
+        },
+        {
+          "dias": "Sábados",
+          "horas": "8:00 a 12:00"
+        },
+        {
+          "dias": "Domingos y feriados",
+          "horas": "Cerrado"
+        },
+        {
+          "dias": "Vacaciones escolares",
+          "horas": "Solo con cita previa por WhatsApp"
+        }
+      ],
+      "mapaEmbedUrl": "https://www.google.com/maps?q=Urbanizaci%C3%B3n%20Jerusal%C3%A9n%2C%20Cacachi%2C%20San%20Miguel%2C%20San%20Rom%C3%A1n%2C%20Puno%2C%20Per%C3%BA&output=embed"
     },
     {
       "id": "sede-4",
@@ -68,7 +128,27 @@
         "ancho": 1200,
         "alto": 900
       },
-      "mapaUrl": null
+      "mapaUrl": null,
+      "correo": "secretaria-de-la-sede-de-prueba-numero-4@example.com",
+      "horario": [
+        {
+          "dias": "Lunes, martes, miércoles, jueves y viernes (horario de prueba)",
+          "horas": "7:30 a 13:00 y de 14:30 a 18:00"
+        },
+        {
+          "dias": "Sábados",
+          "horas": "8:00 a 12:00"
+        },
+        {
+          "dias": "Domingos y feriados",
+          "horas": "Cerrado"
+        },
+        {
+          "dias": "Vacaciones escolares",
+          "horas": "Solo con cita previa por WhatsApp"
+        }
+      ],
+      "mapaEmbedUrl": "https://www.google.com/maps?q=Chilla%2C%20Caracoto%2C%20San%20Rom%C3%A1n%2C%20Puno%2C%20Per%C3%BA&output=embed"
     },
     {
       "id": "sede-5",
@@ -87,7 +167,27 @@
         "ancho": 1200,
         "alto": 900
       },
-      "mapaUrl": null
+      "mapaUrl": null,
+      "correo": "secretaria-de-la-sede-de-prueba-numero-5@example.com",
+      "horario": [
+        {
+          "dias": "Lunes, martes, miércoles, jueves y viernes (horario de prueba)",
+          "horas": "7:30 a 13:00 y de 14:30 a 18:00"
+        },
+        {
+          "dias": "Sábados",
+          "horas": "8:00 a 12:00"
+        },
+        {
+          "dias": "Domingos y feriados",
+          "horas": "Cerrado"
+        },
+        {
+          "dias": "Vacaciones escolares",
+          "horas": "Solo con cita previa por WhatsApp"
+        }
+      ],
+      "mapaEmbedUrl": "https://www.google.com/maps?q=Jr.%20Moquegua%20852%2C%20Juliaca%2C%20Puno%2C%20Per%C3%BA&output=embed"
     },
     {
       "id": "sede-6",
@@ -103,7 +203,27 @@
         "ancho": 1200,
         "alto": 900
       },
-      "mapaUrl": null
+      "mapaUrl": null,
+      "correo": "secretaria-de-la-sede-de-prueba-numero-6@example.com",
+      "horario": [
+        {
+          "dias": "Lunes, martes, miércoles, jueves y viernes (horario de prueba)",
+          "horas": "7:30 a 13:00 y de 14:30 a 18:00"
+        },
+        {
+          "dias": "Sábados",
+          "horas": "8:00 a 12:00"
+        },
+        {
+          "dias": "Domingos y feriados",
+          "horas": "Cerrado"
+        },
+        {
+          "dias": "Vacaciones escolares",
+          "horas": "Solo con cita previa por WhatsApp"
+        }
+      ],
+      "mapaEmbedUrl": "https://www.google.com/maps?q=Jr.%20Ra%C3%BAl%20Porras%20Barrenechea%20287%2C%20Juliaca%2C%20Puno%2C%20Per%C3%BA&output=embed"
     },
     {
       "id": "sede-7",
@@ -122,7 +242,27 @@
         "ancho": 1200,
         "alto": 900
       },
-      "mapaUrl": null
+      "mapaUrl": null,
+      "correo": "secretaria-de-la-sede-de-prueba-numero-7@example.com",
+      "horario": [
+        {
+          "dias": "Lunes, martes, miércoles, jueves y viernes (horario de prueba)",
+          "horas": "7:30 a 13:00 y de 14:30 a 18:00"
+        },
+        {
+          "dias": "Sábados",
+          "horas": "8:00 a 12:00"
+        },
+        {
+          "dias": "Domingos y feriados",
+          "horas": "Cerrado"
+        },
+        {
+          "dias": "Vacaciones escolares",
+          "horas": "Solo con cita previa por WhatsApp"
+        }
+      ],
+      "mapaEmbedUrl": "https://www.google.com/maps?q=Urbanizaci%C3%B3n%20Jerusal%C3%A9n%2C%20Cacachi%2C%20San%20Miguel%2C%20San%20Rom%C3%A1n%2C%20Puno%2C%20Per%C3%BA&output=embed"
     },
     {
       "id": "sede-8",
@@ -138,7 +278,27 @@
         "ancho": 1200,
         "alto": 900
       },
-      "mapaUrl": null
+      "mapaUrl": null,
+      "correo": "secretaria-de-la-sede-de-prueba-numero-8@example.com",
+      "horario": [
+        {
+          "dias": "Lunes, martes, miércoles, jueves y viernes (horario de prueba)",
+          "horas": "7:30 a 13:00 y de 14:30 a 18:00"
+        },
+        {
+          "dias": "Sábados",
+          "horas": "8:00 a 12:00"
+        },
+        {
+          "dias": "Domingos y feriados",
+          "horas": "Cerrado"
+        },
+        {
+          "dias": "Vacaciones escolares",
+          "horas": "Solo con cita previa por WhatsApp"
+        }
+      ],
+      "mapaEmbedUrl": null
     }
   ]
 }

@@ -324,8 +324,8 @@ Campo celeste con titular blanco enorme, tres barras inclinadas que crecen (dora
 ### Medalla
 Disco marino con el emblema al 52 %, aro dorado de 4 px y el nombre del colegio (y «desde el año») girando en dorado alrededor en 40 s. Decorativa (`aria-hidden`). Gira solo mientras está en pantalla. Aparece dentro del anillo de la cabecera de Propuesta Educativa y en el pie. Su texto vive en unidades del SVG (no en rem), porque el `viewBox` ya lo escala.
 
-### Cabecera de página con placa del año (Matrícula)
-Variante más baja de la cabecera celeste (`f-hero--pagina`): titular, barras, bajada y dos botones que bajan a la solicitud y al proceso. A la derecha, una composición de proporción fija 5:4 (máx. 40rem) con `container-type: inline-size`: una placa marina inclinada con «MATRÍCULA» en dorado y el año en blanco (medidos en `cqw`, así escalan con la composición) y el recorte de un estudiante delante, a la derecha. Sin recorte, la placa ocupa todo el ancho (2:1); sin año ni recorte, solo texto.
+### Cabecera de página interna (Matrícula, Contacto)
+Un solo componente (`CabeceraPagina`), variante más baja de la cabecera celeste (`f-hero--pagina`): titular, barras, bajada y dos botones que bajan a secciones de la misma página. A la derecha, una composición de proporción fija 5:4 (máx. 40rem) con `container-type: inline-size`: una placa marina inclinada con un rótulo dorado y un valor blanco (medidos en `cqw`, así escalan con la composición) y el recorte de un estudiante delante, a la derecha. En Matrícula la placa lleva «MATRÍCULA» y el año; en Contacto, «WHATSAPP» y el número, y la placa entera es un enlace a WhatsApp. Los valores de más de cinco caracteres usan un cuerpo menor. Sin recorte, la placa ocupa todo el ancho (2:1); sin placa ni recorte, solo texto.
 
 ### Índice de página
 Franja marina bajo la cabecera, con enlaces en mayúsculas a cada sección de la página (`nav` «En esta página»). El subrayado dorado aparece al pasar el mouse.
@@ -348,8 +348,17 @@ Pista vertical discontinua celeste que crece hacia abajo al entrar. Cada fecha v
 ### Preguntas frecuentes
 `<details>` nativos en placas blancas sobre celeste lavado; el «+» en un cuadrado marino gira 45° al abrir y la respuesta se desliza.
 
+### Fichas de sede (Contacto)
+Placas celeste lavado en dos columnas, con la regla dorada corta arriba y el número de sede (01, 02…) en una placa marina inclinada. Los datos van en una lista de definiciones con ícono: dirección, teléfono, correo y horario; cada uno desaparece sin dejar hueco si falta. Abajo, «Cómo llegar» y «Ver en el mapa», que elige la sede en el mapa y lleva el foco a su botón.
+
+### Mapa bajo pedido (Contacto)
+Sobre el campo celeste: los botones de sede a la izquierda (placas blancas inclinadas; la elegida, marina con base dorada) y un marco blanco de proporción fija (16:10, 4:5 en móvil). Antes de pedirlo, el marco muestra una placa marina con el nombre y la dirección de la sede, el botón dorado «Mostrar el mapa» y una nota de privacidad: nada de terceros se carga hasta ese clic. Después, el mapa aparece sin transición y cambia al elegir otra sede.
+
+### Redes sociales
+Placas marinas inclinadas con base dorada: el nombre de la red en la tipografía ancha (sin logotipos de terceros), la cuenta en dorado y una flecha que se desplaza al pasar el mouse. El correo general, si lo hay, va como una placa más.
+
 ### Formulario Solicitar información
-En el cierre celeste: título blanco a la izquierda y el formulario en una placa marina con regla dorada. Campos blancos de 52 px, errores en dorado con ícono, vinculados con `aria-describedby`, y el foco va al primer campo con error. El botón dorado abre WhatsApp con el mensaje armado; no se guarda ningún dato.
+En el cierre celeste: título blanco a la izquierda y el formulario en una placa marina con regla dorada. Campos blancos de 52 px, errores en dorado con ícono, vinculados con `aria-describedby`, y el foco va al primer campo con error. El botón dorado abre WhatsApp con el mensaje armado; no se guarda ningún dato. Es el mismo componente (`SolicitudInformacion`) al final de Matrícula y de Contacto.
 
 ### Divisor de franjas
 Franjas de camiseta entre secciones: marina de 14 px, dorada de 4 px y celeste de 8 px, rotadas -2.2°, en una banda de 64 px. Variante lavada cuando la sección siguiente es celeste lavado. Decorativo.

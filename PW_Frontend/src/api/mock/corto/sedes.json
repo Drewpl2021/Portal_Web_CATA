@@ -9,7 +9,10 @@
       "telefono": null,
       "nota": null,
       "foto": null,
-      "mapaUrl": null
+      "mapaUrl": null,
+      "correo": null,
+      "horario": [],
+      "mapaEmbedUrl": null
     }
   ]
 }

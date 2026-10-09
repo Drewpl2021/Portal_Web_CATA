@@ -17,7 +17,10 @@
         "ancho": 1200,
         "alto": 900
       },
-      "mapaUrl": null
+      "mapaUrl": null,
+      "correo": null,
+      "horario": [],
+      "mapaEmbedUrl": "https://www.google.com/maps?q=Jr.%20Moquegua%20852%2C%20Juliaca%2C%20Puno%2C%20Per%C3%BA&output=embed"
     },
     {
       "id": "inicial",
@@ -33,7 +36,10 @@
         "ancho": 1200,
         "alto": 900
       },
-      "mapaUrl": null
+      "mapaUrl": null,
+      "correo": null,
+      "horario": [],
+      "mapaEmbedUrl": "https://www.google.com/maps?q=Jr.%20Ra%C3%BAl%20Porras%20Barrenechea%20287%2C%20Juliaca%2C%20Puno%2C%20Per%C3%BA&output=embed"
     },
     {
       "id": "jerusalen",
@@ -52,7 +58,10 @@
         "ancho": 1200,
         "alto": 900
       },
-      "mapaUrl": null
+      "mapaUrl": null,
+      "correo": null,
+      "horario": [],
+      "mapaEmbedUrl": "https://www.google.com/maps?q=Urbanizaci%C3%B3n%20Jerusal%C3%A9n%2C%20Cacachi%2C%20San%20Miguel%2C%20San%20Rom%C3%A1n%2C%20Puno%2C%20Per%C3%BA&output=embed"
     },
     {
       "id": "oasis",
@@ -68,7 +77,10 @@
         "ancho": 1200,
         "alto": 900
       },
-      "mapaUrl": null
+      "mapaUrl": null,
+      "correo": null,
+      "horario": [],
+      "mapaEmbedUrl": "https://www.google.com/maps?q=Chilla%2C%20Caracoto%2C%20San%20Rom%C3%A1n%2C%20Puno%2C%20Per%C3%BA&output=embed"
     }
   ]
 }

@@ -1,7 +1,7 @@
 // Validación en tiempo de ejecución de cada respuesta, según docs/API_CONTRACT.md.
 // Si la API cambia un tipo, la sección muestra su estado de error en vez de romper la página.
 import { z } from 'zod'
-import { CATEGORIAS_BANNER, ESTADOS_VACANTE, SECCIONES } from './tipos'
+import { CATEGORIAS_BANNER, ESTADOS_VACANTE, REDES, SECCIONES } from './tipos'
 import type * as T from './tipos'
 
 const texto = z.string()
@@ -20,6 +20,14 @@ const telefono = z.object({
   numero: z.string().regex(/^\+\d{8,15}$/, 'Teléfono E.164'),
   visible: texto,
 })
+
+const correo = z.string().email('Correo electrónico')
+
+// Solo se insertan mapas de Google Maps u OpenStreetMap
+const mapaEmbed = url.regex(
+  /^https:\/\/(www\.google\.com\/maps(\/embed)?\?|www\.openstreetmap\.org\/export\/embed\.html\?)/,
+  'Mapa de Google Maps u OpenStreetMap',
+)
 
 const enlace = z.object({ etiqueta: texto, url, externo: z.boolean() })
 
@@ -108,6 +116,9 @@ export const esquemaSedes = z
       nota: textoONulo,
       foto: imagen.nullable(),
       mapaUrl: url.nullable(),
+      correo: correo.nullable(),
+      horario: z.array(z.object({ dias: texto, horas: texto })).max(4),
+      mapaEmbedUrl: mapaEmbed.nullable(),
     }),
   )
   .max(8)
@@ -184,6 +195,14 @@ export const esquemaSolicitud = z.object({
   mensajeWhatsapp: z.string().min(1),
 })
 
+export const esquemaContacto = z.object({
+  titulo: texto,
+  bajada: textoONulo,
+  figura: imagen.nullable(),
+  correo: correo.nullable(),
+  redes: z.array(z.object({ red: z.enum(REDES), cuenta: texto, url })).max(6),
+})
+
 export const sobre = <S extends z.ZodTypeAny>(data: S) => z.object({ data })
 export const sobrePaginado = <S extends z.ZodTypeAny>(data: S) => z.object({ data, meta: esquemaMeta })
 
@@ -205,3 +224,4 @@ coincide<Igual<z.infer<typeof esquemaVacantes>, T.Vacantes>>()
 coincide<Igual<z.infer<typeof esquemaFechasMatricula>, T.FechasMatricula>>()
 coincide<Igual<z.infer<typeof esquemaPreguntas>, T.PreguntaFrecuente[]>>()
 coincide<Igual<z.infer<typeof esquemaSolicitud>, T.SolicitudInformacion>>()
+coincide<Igual<z.infer<typeof esquemaContacto>, T.Contacto>>()

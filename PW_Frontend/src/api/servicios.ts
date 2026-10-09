@@ -11,6 +11,7 @@ import {
   esquemaSolicitud,
   esquemaVacantes,
   esquemaCifras,
+  esquemaContacto,
   esquemaHero,
   esquemaGrados,
   esquemaNiveles,
@@ -30,6 +31,7 @@ import type {
   SolicitudInformacion,
   Vacantes,
   Cifra,
+  Contacto,
   GrupoGrados,
   Hero,
   ListaNoticias,
@@ -59,7 +61,8 @@ type Recurso =
   | 'matricula-vacantes'
   | 'matricula-fechas'
   | 'matricula-preguntas'
-  | 'matricula-solicitud'
+  | 'solicitud'
+  | 'contacto'
 
 export class ErrorDatos extends Error {
   constructor(
@@ -210,6 +213,13 @@ export async function obtenerPreguntasMatricula(): Promise<PreguntaFrecuente[]> 
   return (await leer('matricula-preguntas', '/v1/matricula/preguntas', sobre(esquemaPreguntas))).data
 }
 
+// Textos del formulario «Solicitar información» (Matrícula y Contacto)
 export async function obtenerSolicitud(): Promise<SolicitudInformacion> {
-  return (await leer('matricula-solicitud', '/v1/matricula/solicitud', sobre(esquemaSolicitud))).data
+  return (await leer('solicitud', '/v1/solicitud', sobre(esquemaSolicitud))).data
+}
+
+// Contacto
+
+export async function obtenerContacto(): Promise<Contacto> {
+  return (await leer('contacto', '/v1/contacto', sobre(esquemaContacto))).data
 }

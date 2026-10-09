@@ -8,6 +8,7 @@ import {
   esquemaSolicitud,
   esquemaVacantes,
   esquemaCifras,
+  esquemaContacto,
   esquemaHero,
   esquemaGrados,
   esquemaNiveles,
@@ -34,7 +35,8 @@ const ESQUEMAS = {
   'matricula-vacantes': sobre(esquemaVacantes),
   'matricula-fechas': sobre(esquemaFechasMatricula),
   'matricula-preguntas': sobre(esquemaPreguntas),
-  'matricula-solicitud': sobre(esquemaSolicitud),
+  solicitud: sobre(esquemaSolicitud),
+  contacto: sobre(esquemaContacto),
 } as const
 
 const archivos = import.meta.glob<unknown>('./mock/*/*.json', { eager: true, import: 'default' })
@@ -73,6 +75,18 @@ describe('los datos de prueba cumplen docs/API_CONTRACT.md', () => {
 })
 
 describe('el contrato rechaza respuestas inválidas', () => {
+  it('solo acepta mapas insertados de Google Maps u OpenStreetMap', () => {
+    const sede = { id: '1', nombre: 'X', direccion: 'Y', referencia: null, distrito: null, telefono: null, nota: null, foto: null, mapaUrl: null, correo: null, horario: [] }
+    expect(esquemaSedes.safeParse([{ ...sede, mapaEmbedUrl: 'https://evil.example/maps?q=x' }]).success).toBe(false)
+    expect(esquemaSedes.safeParse([{ ...sede, mapaEmbedUrl: 'https://www.google.com/maps/embed?pb=abc' }]).success).toBe(true)
+    expect(esquemaSedes.safeParse([{ ...sede, mapaEmbedUrl: null, correo: 'no-es-correo' }]).success).toBe(false)
+  })
+
+  it('rechaza una red social desconocida', () => {
+    const contacto = { titulo: 't', bajada: null, figura: null, correo: null }
+    expect(esquemaContacto.safeParse({ ...contacto, redes: [{ red: 'myspace', cuenta: 'c', url: 'https://x.pe' }] }).success).toBe(false)
+  })
+
   it('rechaza un estado de vacante desconocido', () => {
     const nivel = { id: 'i', nivel: 'Inicial', detalle: null, vacantes: null }
     expect(esquemaVacantes.safeParse({ actualizado: null, nota: null, niveles: [{ ...nivel, estado: 'abierta' }] }).success).toBe(false)
@@ -85,7 +99,7 @@ describe('el contrato rechaza respuestas inválidas', () => {
   })
 
   it('rechaza un campo opcional omitido en vez de null', () => {
-    const { foto: _, ...sinFoto } = { id: '1', nombre: 'X', direccion: 'Y', referencia: null, distrito: null, telefono: null, nota: null, foto: null, mapaUrl: null }
+    const { foto: _, ...sinFoto } = { id: '1', nombre: 'X', direccion: 'Y', referencia: null, distrito: null, telefono: null, nota: null, foto: null, mapaUrl: null, correo: null, horario: [], mapaEmbedUrl: null }
     expect(esquemaSedes.safeParse([sinFoto]).success).toBe(false)
   })
 

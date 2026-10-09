@@ -1,6 +1,12 @@
 # Contrato de la API pública del portal CATA
 
-**Versión del contrato:** 2.1 · **Fecha:** 2026-10-08
+**Versión del contrato:** 2.2 · **Fecha:** 2026-10-08
+
+**Cambios de la 2.2:**
+- Nuevo `GET /v1/contacto` (§3.16): cabecera de la página Contacto, correo general y redes sociales.
+- `Sede` (§3.6) suma tres campos: `correo`, `horario` y `mapaEmbedUrl`. Inicio los ignora; la página Contacto los muestra.
+- `GET /v1/matricula/solicitud` pasa a `GET /v1/solicitud` (§3.15), con la misma forma, porque el formulario «Solicitar información» ahora está en Matrícula y en Contacto.
+- `anio` de la cabecera de Matrícula (§3.10): se aclara que lo define el colegio.
 
 **Cambios de la 2.1:** seis endpoints nuevos para la página Matrícula, bajo `/v1/matricula/`: `cabecera`, `procesos`, `vacantes`, `fechas`, `preguntas` y `solicitud` (§3.10 a §3.15). `GET /v1/grados` pasa a usarse en el formulario de Matrícula. No cambia ningún endpoint anterior.
 
@@ -150,9 +156,9 @@ Valores válidos de `seccion`: `"quienes-somos"`, `"niveles"`, `"sedes"`, `"noti
 | `GET /v1/portada/banners` | `Banner[]` | Carrusel de Inicio (primera sección) |
 | `GET /v1/quienes-somos` | `QuienesSomos` | Quiénes somos |
 | `GET /v1/niveles` | `Niveles` | Niveles |
-| `GET /v1/sedes` | `Sede[]` | Sedes |
+| `GET /v1/sedes` | `Sede[]` | Sedes de Inicio; fichas y mapa de Contacto |
 | `GET /v1/noticias` | `Noticia[]` + `meta` | Noticias y comunicados |
-| `GET /v1/grados` | `GrupoGrados[]` | Selector de grado de Solicitar información (Matrícula) |
+| `GET /v1/grados` | `GrupoGrados[]` | Selector de grado de Solicitar información (Matrícula y Contacto) |
 | `GET /v1/propuesta-educativa/cabecera` | `Hero` | Cabecera de la página Propuesta Educativa |
 | `GET /v1/portada/cifras` | `Cifra[]` | Cifras destacadas de Inicio |
 | `GET /v1/matricula/cabecera` | `CabeceraMatricula` | Cabecera de Matrícula |
@@ -160,11 +166,12 @@ Valores válidos de `seccion`: `"quienes-somos"`, `"niveles"`, `"sedes"`, `"noti
 | `GET /v1/matricula/vacantes` | `Vacantes` | Niveles y vacantes |
 | `GET /v1/matricula/fechas` | `FechasMatricula` | Cronograma de matrícula |
 | `GET /v1/matricula/preguntas` | `PreguntaFrecuente[]` | Preguntas frecuentes de matrícula |
-| `GET /v1/matricula/solicitud` | `SolicitudInformacion` | Textos del formulario Solicitar información |
+| `GET /v1/solicitud` | `SolicitudInformacion` | Textos del formulario Solicitar información (Matrícula y Contacto) |
+| `GET /v1/contacto` | `Contacto` | Cabecera de Contacto, correo general y redes sociales |
 
 Cada sección del portal carga su endpoint por separado. Si uno falla, esa sección muestra su error y el resto sigue funcionando.
 
-**Excepción importante: `/v1/sitio`.** Lo usan la cabecera (nombre e ICRM), el título oculto de Inicio, la medalla, el estado vacío de noticias, el cierre, el formulario de Matrícula (número de WhatsApp) y el pie (contactos y dirección). Si `/v1/sitio` falla, todas esas partes quedan sin datos a la vez. Es el endpoint que más conviene mantener disponible y rápido.
+**Excepción importante: `/v1/sitio`.** Lo usan la cabecera (nombre e ICRM), el título oculto de Inicio, la medalla, el estado vacío de noticias, el cierre, el formulario «Solicitar información» y la placa de WhatsApp de Contacto (número de WhatsApp) y el pie (contactos y dirección). Si `/v1/sitio` falla, todas esas partes quedan sin datos a la vez. Es el endpoint que más conviene mantener disponible y rápido.
 
 ---
 
@@ -358,7 +365,12 @@ Devuelve `Sede[]` (0 a 8 elementos) en orden de recorrido.
 | `telefono` | `Telefono` \| null | sí | — | |
 | `nota` | string \| null | sí | 160 | Ej.: «Nivel primaria.» |
 | `foto` | `Imagen` \| null | sí | — | Proporción 4:3. |
-| `mapaUrl` | string \| null | sí | — | Enlace a Google Maps. Si es `null`, el portal busca la dirección en Google Maps. |
+| `mapaUrl` | string \| null | sí | — | Enlace «Cómo llegar» (Google Maps). Si es `null`, el portal busca la dirección en Google Maps. |
+| `correo` | string \| null | sí | 80 | Correo de la sede. Se muestra como enlace `mailto:`. |
+| `horario` | `{ dias, horas }[]` | no | 0 a 4 | Horario de atención, una fila por grupo de días: `dias` (máx. 40, «Lunes a viernes») y `horas` (máx. 40, «8:00 a 13:00»). `[]` = no se muestra. |
+| `mapaEmbedUrl` | string \| null | sí | — | URL para **insertar** el mapa en la página. Solo se aceptan `https://www.google.com/maps/embed?…` (Google Maps → Compartir → **Insertar un mapa**, el valor de `src`), `https://www.google.com/maps?…&output=embed` u `https://www.openstreetmap.org/export/embed.html?…`. Cualquier otra URL invalida la respuesta. `null` = la sede no aparece con mapa. |
+
+**Mapa y privacidad:** la página Contacto no carga el mapa al abrirse. Muestra un aviso con el nombre de la sede y un botón «Mostrar el mapa»; solo entonces pide el mapa a Google u OpenStreetMap. Así la página no pierde velocidad y el proveedor no recibe la visita sin permiso.
 
 ```json
 {
@@ -372,7 +384,10 @@ Devuelve `Sede[]` (0 a 8 elementos) en orden de recorrido.
       "telefono": { "numero": "+51937489399", "visible": "937 489 399" },
       "nota": "Nivel primaria.",
       "foto": { "url": "https://rrhh.cata.edu.pe/media/sedes/jerusalen.jpg", "alt": "Patio de la Sede CATA Jerusalén con estudiantes en el recreo", "ancho": 1600, "alto": 1200 },
-      "mapaUrl": null
+      "mapaUrl": null,
+      "correo": null,
+      "horario": [{ "dias": "Lunes a viernes", "horas": "8:00 a 13:00" }],
+      "mapaEmbedUrl": "https://www.google.com/maps/embed?pb=…"
     }
   ]
 }
@@ -478,7 +493,7 @@ La cabecera de la página Matrícula: título, frase y, a la derecha, el año de
 |---|---|---|---|---|
 | `titulo` | string | no | 60 | «Proceso de matrícula». |
 | `bajada` | string \| null | sí | 160 | Una frase bajo el título. |
-| `anio` | integer \| null | sí | — | Año escolar al que corresponde el proceso (2000 a 2100). `null` = no se muestra la placa del año. |
+| `anio` | integer \| null | sí | — | Año escolar al que corresponde el proceso (2000 a 2100). **Lo define el colegio** en el módulo; el portal no lo calcula ni lo deduce de la fecha. `null` = no se muestra la placa del año. |
 | `figura` | `Imagen` \| null | sí | — | Recorte de un estudiante: PNG con fondo transparente, vertical (≈ 1:2), mínimo 500 × 1000 px. `null` = solo la placa del año, o solo texto si `anio` también es `null`. |
 
 ```json
@@ -486,7 +501,7 @@ La cabecera de la página Matrícula: título, frase y, a la derecha, el año de
   "data": {
     "titulo": "Proceso de matrícula",
     "bajada": "Requisitos, documentos y pasos para matricular a tu hijo o hija en inicial, primaria o secundaria.",
-    "anio": 2027,
+    "anio": 2026,
     "figura": { "url": "https://cata.edu.pe/wp-content/uploads/2023/01/CATA-Matricula_Img_1.png", "alt": "Estudiante con el uniforme del colegio y su mochila, haciendo el gesto de pulgar arriba", "ancho": 500, "alto": 1000 }
   }
 }
@@ -572,9 +587,9 @@ Preguntas frecuentes. Devuelve `PreguntaFrecuente[]` (0 a 15): `id`, `pregunta` 
 
 ---
 
-### 3.15 `GET /v1/matricula/solicitud`
+### 3.15 `GET /v1/solicitud`
 
-Textos del formulario «Solicitar información» de Matrícula. El formulario pide el nombre y el grado de interés (opciones de `GET /v1/grados`) y abre WhatsApp con el número de `GET /v1/sitio` (`whatsapp`). No envía datos a ningún servidor.
+Textos del formulario «Solicitar información», que aparece al final de Matrícula y de Contacto con los mismos textos. El formulario pide el nombre y el grado de interés (opciones de `GET /v1/grados`) y abre WhatsApp con el número de `GET /v1/sitio` (`whatsapp`). No envía datos a ningún servidor.
 
 | Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
 |---|---|---|---|---|
@@ -588,6 +603,38 @@ Textos del formulario «Solicitar información» de Matrícula. El formulario pi
     "titulo": "Solicitar información",
     "texto": "Escribe tu nombre y el grado que te interesa. Abriremos WhatsApp con el mensaje listo para que lo envíes al colegio.",
     "mensajeWhatsapp": "Hola, soy {nombre}. Quisiera información sobre la matrícula para {grado}."
+  }
+}
+```
+
+---
+
+### 3.16 `GET /v1/contacto`
+
+La cabecera de la página Contacto, el correo general del colegio y sus redes sociales. Las sedes salen de `GET /v1/sedes` y el WhatsApp de la placa de la cabecera, de `GET /v1/sitio`.
+
+| Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
+|---|---|---|---|---|
+| `titulo` | string | no | 60 | «Contáctanos». |
+| `bajada` | string \| null | sí | 160 | Una frase bajo el título. |
+| `figura` | `Imagen` \| null | sí | — | Recorte de un estudiante, como en Matrícula (PNG transparente, ≈ 1:2). |
+| `correo` | string \| null | sí | 80 | Correo general. Se muestra junto a las redes. |
+| `redes` | `RedSocial[]` | no | 0 a 6 | En el orden en que se muestran. |
+
+**`RedSocial`**: `red` (`"facebook"` \| `"youtube"` \| `"tiktok"` \| `"instagram"` \| `"x"` \| `"linkedin"`), `cuenta` (máx. 60: el nombre como se ve en la red) y `url` (https). El portal escribe el nombre de la red; no usa logotipos.
+
+```json
+{
+  "data": {
+    "titulo": "Contáctanos",
+    "bajada": "Cuatro sedes en San Román. Escríbenos por WhatsApp, llámanos o visítanos.",
+    "figura": { "url": "https://cata.edu.pe/wp-content/uploads/2023/01/CATA-Matricula_Img_2.png", "alt": "Estudiante con el uniforme del colegio, su mochila y un cuaderno de CATA", "ancho": 500, "alto": 1000 },
+    "correo": null,
+    "redes": [
+      { "red": "facebook", "cuenta": "Colegio CATA", "url": "https://www.facebook.com/catajuliaca/" },
+      { "red": "youtube", "cuenta": "Colegio CATA", "url": "https://www.youtube.com/@colegiocata828" },
+      { "red": "tiktok", "cuenta": "@colegioadventistacata", "url": "https://www.tiktok.com/@colegioadventistacata" }
+    ]
   }
 }
 ```
@@ -607,6 +654,8 @@ Esto sirve para que el módulo sepa qué pasa con lo que publica.
 | La URL de una imagen no carga | Se oculta la imagen y el texto sigue visible. |
 | Banners `[]` | El carrusel no aparece. Con un solo banner, no hay controles ni avance. |
 | Matrícula: un solo proceso | Se muestra sin pestañas. |
+| Contacto: sede sin `mapaEmbedUrl` | En el mapa, esa sede muestra «todavía no tiene un mapa» y el enlace «Cómo llegar». |
+| Contacto: redes `[]` y `correo: null` | «Las redes del colegio se publicarán pronto». |
 | Matrícula: falla `/v1/sitio` | El formulario muestra su error con «Reintentar», porque no tiene el número de WhatsApp. |
 
 ---
@@ -620,5 +669,5 @@ Esto sirve para que el módulo sepa qué pasa con lo que publica.
 El portal trae datos de prueba que cumplen este contrato en `PW_Frontend/src/api/mock/`. Sirven de **ejemplos completos** de cada respuesta: el módulo puede compararse con ellos.
 
 - `tipico/`: contenido real del colegio.
-- Escenarios que solo cambian algunos archivos: `corto/`, `largo/`, `sin-foto/`, `alt-vacio/` y `vacio/`. El carrusel tiene 3 banners en `tipico/`, 1 en `corto/`, 6 en `largo/` y ninguno en `vacio/`. Matrícula tiene datos en `tipico/`, `corto/`, `largo/` y `vacio/`, y su cabecera además en `sin-foto/` y `alt-vacio/`. En `tipico/`, los requisitos, documentos y pasos son los de los afiches de cata.edu.pe; el año y las fechas son de prueba y las vacantes dicen «consultar».
+- Escenarios que solo cambian algunos archivos: `corto/`, `largo/`, `sin-foto/`, `alt-vacio/` y `vacio/`. El carrusel tiene 3 banners en `tipico/`, 1 en `corto/`, 6 en `largo/` y ninguno en `vacio/`. Matrícula tiene datos en `tipico/`, `corto/`, `largo/` y `vacio/`, y su cabecera además en `sin-foto/` y `alt-vacio/`. En `tipico/`, los requisitos, documentos y pasos son los de los afiches de cata.edu.pe; el año es el de los afiches publicados (2026), las fechas son de prueba y las vacantes dicen «consultar». Contacto tiene datos en todos los escenarios. En `tipico/`, sedes y redes son las de cata.edu.pe; el colegio no publica correos ni horarios, así que van vacíos, y los mapas son búsquedas de cada dirección, que el colegio debe reemplazar por las de «Insertar un mapa».
 - Las pruebas automáticas (`npm test` en `PW_Frontend/`) validan todos esos archivos contra este contrato.

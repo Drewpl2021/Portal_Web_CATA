@@ -26,6 +26,10 @@ const placeholders = {
   'noticia-1': ['Noticia', 3, 2],
   'noticia-2': ['Comunicado', 3, 2],
   'panoramica': ['Imagen panorámica', 16, 5],
+  'proyecto-gastronomia': ['Proyecto: Gastronomía', 3, 2],
+  'proyecto-robotica': ['Proyecto: Robótica', 3, 2],
+  'proyecto-galeria-1': ['Galería del proyecto', 3, 2],
+  'proyecto-galeria-2': ['Galería del proyecto', 3, 2],
 }
 fs.mkdirSync(dirImg, { recursive: true })
 for (const [archivo, [etiqueta, w, h]] of Object.entries(placeholders)) {
@@ -425,7 +429,11 @@ const preguntas = [
 const solicitud = {
   titulo: 'Solicitar información',
   texto: 'Escribe tu nombre y el grado que te interesa. Abriremos WhatsApp con el mensaje listo para que lo envíes al colegio.',
-  mensajeWhatsapp: 'Hola, soy {nombre}. Quisiera información sobre la matrícula para {grado}.',
+  mensajeWhatsapp: 'Hola, soy {nombre}. Quisiera información sobre el colegio para {grado}.',
+  mensajesPorPagina: [
+    { pagina: 'matricula', mensaje: 'Hola, soy {nombre}. Quisiera información sobre la matrícula para {grado}.' },
+    { pagina: 'contacto', mensaje: 'Hola, soy {nombre}. Tengo una consulta para el colegio sobre {grado}.' },
+  ],
 }
 escribir('tipico', 'matricula-cabecera', { data: cabeceraMatricula })
 escribir('tipico', 'matricula-procesos', { data: procesos })
@@ -439,7 +447,7 @@ escribir('corto', 'matricula-procesos', { data: [{ id: 'n', nombre: 'Nuevos', re
 escribir('corto', 'matricula-vacantes', { data: { actualizado: null, nota: null, niveles: [{ id: 'i', nivel: 'Inicial', detalle: null, estado: 'disponible', vacantes: 12 }] } })
 escribir('corto', 'matricula-fechas', { data: { nota: null, items: [{ id: 'f', titulo: 'Matrícula', inicio: '2027-01-04', fin: null, detalle: null }] } })
 escribir('corto', 'matricula-preguntas', { data: [{ id: 'p', pregunta: '¿Edad?', respuesta: 'Cumplida al 31 de marzo.' }] })
-escribir('corto', 'solicitud', { data: { titulo: 'Informes', texto: null, mensajeWhatsapp: 'Hola, soy {nombre}. Me interesa {grado}.' } })
+escribir('corto', 'solicitud', { data: { titulo: 'Informes', texto: null, mensajeWhatsapp: 'Hola, soy {nombre}. Me interesa {grado}.', mensajesPorPagina: [] } })
 
 const textoLargo = 'Texto de prueba que llega al máximo recomendado del contrato para comprobar que el bloque se acomoda en varias líneas sin cortarse ni tapar a los demás elementos de la página, incluso en las pantallas más pequeñas.'
 escribir('largo', 'matricula-cabecera', { data: { ...cabeceraMatricula, titulo: 'Proceso de matrícula y admisión para estudiantes nuevos y regulares', bajada: 'Requisitos, documentos, pasos, fechas y vacantes para matricular a tu hijo o hija en inicial, primaria o secundaria en cualquiera de las cuatro sedes del colegio en la provincia de San Román.' } })
@@ -459,7 +467,7 @@ escribir('largo', 'matricula-vacantes', { data: { actualizado: '2026-10-05', not
 ] } })
 escribir('largo', 'matricula-fechas', { data: { nota: textoLargo, items: Array.from({ length: 12 }, (_, i) => ({ id: `f${i}`, titulo: `Actividad de prueba número ${i + 1} del cronograma de matrícula con un nombre largo`, inicio: `2026-${String(11 + Math.floor(i / 6)).padStart(2, '0')}-${String(2 + (i % 6) * 4).padStart(2, '0')}`, fin: i % 2 ? `2027-02-${String(10 + i).padStart(2, '0')}` : null, detalle: i % 3 ? textoLargo : null })) } })
 escribir('largo', 'matricula-preguntas', { data: Array.from({ length: 15 }, (_, i) => ({ id: `p${i}`, pregunta: `Pregunta de prueba número ${i + 1}: ¿qué pasa si la pregunta es tan larga que ocupa dos o tres líneas en un teléfono?`, respuesta: `${textoLargo} ${textoLargo}` })) })
-escribir('largo', 'solicitud', { data: { titulo: 'Solicitar información sobre el proceso de matrícula y admisión', texto: textoLargo, mensajeWhatsapp: 'Hola, mi nombre es {nombre}. Quisiera recibir información completa sobre el proceso de matrícula, los requisitos, las fechas y las vacantes para {grado}. Muchas gracias.' } })
+escribir('largo', 'solicitud', { data: { titulo: 'Solicitar información sobre el proceso de matrícula y admisión', texto: textoLargo, mensajeWhatsapp: 'Hola, mi nombre es {nombre}. Quisiera recibir información completa sobre el colegio, sus sedes, niveles y propuesta educativa para {grado}. Muchas gracias.', mensajesPorPagina: [{ pagina: 'matricula', mensaje: 'Hola, mi nombre es {nombre}. Quisiera recibir información completa sobre el proceso de matrícula, los requisitos, las fechas y las vacantes para {grado}. Muchas gracias.' }, { pagina: 'contacto', mensaje: 'Hola, mi nombre es {nombre}. Quisiera hacer una consulta al colegio y que me indiquen el horario de atención de la secretaría para {grado}. Muchas gracias.' }] } })
 
 escribir('sin-foto', 'matricula-cabecera', { data: { ...cabeceraMatricula, figura: null } })
 escribir('alt-vacio', 'matricula-cabecera', { data: altVacio(cabeceraMatricula) })
@@ -469,7 +477,7 @@ escribir('vacio', 'matricula-procesos', { data: [] })
 escribir('vacio', 'matricula-vacantes', { data: { actualizado: null, nota: null, niveles: [] } })
 escribir('vacio', 'matricula-fechas', { data: { nota: null, items: [] } })
 escribir('vacio', 'matricula-preguntas', { data: [] })
-escribir('vacio', 'solicitud', { data: { ...solicitud, texto: null } })
+escribir('vacio', 'solicitud', { data: { ...solicitud, texto: null, mensajesPorPagina: [] } })
 
 // ── Contacto ──
 // Redes: las que enlaza cata.edu.pe (Facebook, YouTube y TikTok). No publica un correo general.
@@ -501,5 +509,166 @@ escribir('largo', 'contacto', { data: {
 escribir('sin-foto', 'contacto', { data: { ...contacto, figura: null } })
 escribir('alt-vacio', 'contacto', { data: altVacio(contacto) })
 escribir('vacio', 'contacto', { data: { ...contacto, bajada: null, figura: null, correo: null, redes: [] } })
+
+// ── Proyectos ──
+// Textos: los dos programas que publica cata.edu.pe (programas-de-valor, gastronomia y robotica).
+// No hay fotos reales (las de esa página son ilustraciones), ni niveles, estado o fecha: van vacíos.
+const proyectosLista = {
+  titulo: 'Proyectos',
+  bajada: 'Impulsamos el desarrollo físico, motriz, psicológico y espiritual de cada niño a través de nuestros programas educativos, fomentando su crecimiento integral.',
+  categorias: [
+    { id: 'alimentacion', nombre: 'Alimentación y salud' },
+    { id: 'tecnologia', nombre: 'Tecnología' },
+  ],
+  proyectos: [
+    {
+      id: 'gastronomia',
+      slug: 'gastronomia',
+      titulo: 'Gastronomía e Industrias Alimentarias',
+      lema: 'Cocinamos con propósito: salud, sabor y servicio.',
+      resumen: 'Desarrolla competencias en cocina, nutrición, procesamiento y control de alimentos, fomentando la creatividad, la innovación y el emprendimiento en el sector alimentario.',
+      categoria: 'alimentacion',
+      niveles: [],
+      estado: null,
+      fecha: null,
+      foto: img('proyecto-gastronomia', 'Foto de prueba: estudiantes en el taller de gastronomía'),
+    },
+    {
+      id: 'robotica',
+      slug: 'robotica',
+      titulo: 'Robótica, Impresiones 3D y Computación',
+      lema: 'Tecnología con propósito: creamos, servimos y transformamos.',
+      resumen: 'Impulsa el desarrollo de competencias digitales en los estudiantes, promoviendo el pensamiento lógico, la resolución de problemas y la creatividad tecnológica.',
+      categoria: 'tecnologia',
+      niveles: [],
+      estado: null,
+      fecha: null,
+      foto: img('proyecto-robotica', 'Foto de prueba: estudiantes programando un robot'),
+    },
+  ],
+}
+const lista_ = (titulo, items) => ({ titulo, tipo: 'lista', items: items.map((texto) => ({ titulo: null, texto })) })
+const numerada = (titulo, items) => ({ titulo, tipo: 'numerada', items: items.map(([t, texto]) => ({ titulo: t, texto })) })
+const galeria = [img('proyecto-galeria-1', 'Foto de prueba: trabajo del proyecto'), img('proyecto-galeria-2', 'Foto de prueba: estudiantes presentando el proyecto')]
+const detalles = {
+  gastronomia: {
+    ...proyectosLista.proyectos[0],
+    categoriaNombre: 'Alimentación y salud',
+    descripcion: [
+      'Taller práctico donde los estudiantes desarrollan habilidades culinarias, conocen procesos de la industria alimentaria y promueven una alimentación saludable, integrando creatividad, ciencia y valores cristianos al servicio de la comunidad.',
+    ],
+    secciones: [
+      lista_('Objetivos', [
+        'Desarrollar habilidades culinarias aplicando técnicas básicas de cocina saludable.',
+        'Fomentar el conocimiento sobre la producción, conservación y transformación de alimentos.',
+        'Promover hábitos alimenticios equilibrados basados en principios de salud y fe cristiana.',
+        'Valorar la gastronomía como medio de servicio, emprendimiento y expresión cultural.',
+      ]),
+      numerada('Ejes fundamentales', [
+        ['Alimentación saludable', 'Promueve el conocimiento y la práctica de hábitos nutricionales equilibrados y conscientes.'],
+        ['Técnicas culinarias', 'Desarrolla habilidades prácticas en la preparación, presentación y manipulación de alimentos.'],
+        ['Industrias alimentarias', 'Introduce procesos básicos de transformación, conservación y envasado de alimentos.'],
+        ['Cultura y servicio', 'Valora la gastronomía como una expresión cultural y una herramienta para servir a los demás.'],
+        ['Fe y cuidado del cuerpo', 'Fomenta el respeto por el cuerpo como templo de Dios, eligiendo alimentos que promuevan la salud integral.'],
+      ]),
+      lista_('Metodología', [
+        'Aprendemos cocinando: teoría que se transforma en sabor y salud.',
+        'Experimentamos, evaluamos y mejoramos cada preparación con propósito.',
+        'Enseñamos a servir a través de la comida, con manos que nutren y corazón cristiano.',
+        'Integramos ciencia, valores y creatividad en cada receta.',
+      ]),
+      lista_('Beneficios', [
+        'Adquieren habilidades prácticas en cocina y manipulación segura de alimentos.',
+        'Desarrollan conciencia sobre una alimentación saludable, responsable y sostenible.',
+        'Fomentan el espíritu emprendedor a través de la elaboración de productos alimenticios.',
+        'Aplican valores cristianos al servir con amor y cuidar el cuerpo como templo de Dios.',
+      ]),
+    ],
+    galeria,
+  },
+  robotica: {
+    ...proyectosLista.proyectos[1],
+    categoriaNombre: 'Tecnología',
+    descripcion: [
+      'Curso-taller que integra robótica, impresión 3D y computación, donde los estudiantes desarrollan habilidades tecnológicas aplicadas a proyectos con sentido cristiano, fomentando la creatividad, el pensamiento crítico y el servicio a la comunidad.',
+    ],
+    secciones: [
+      lista_('Objetivos', [
+        'Desarrollar pensamiento lógico y creativo con tecnología.',
+        'Diseñar y fabricar objetos reales con impresión 3D.',
+        'Construir y programar robots funcionales.',
+        'Impulsar el trabajo en equipo y la innovación.',
+      ]),
+      numerada('Ejes fundamentales', [
+        ['Tecnología creativa', 'Explora herramientas digitales para diseñar, programar y construir soluciones innovadoras.'],
+        ['Aprendizaje interdisciplinario', 'Integra conocimientos de computación, electrónica, física y diseño en proyectos aplicados.'],
+        ['Innovación y prototipado', 'Fomenta la creación de ideas y su materialización mediante robótica e impresión 3D.'],
+        ['Trabajo colaborativo', 'Promueve el desarrollo de proyectos en equipo, fortaleciendo la comunicación y la cooperación.'],
+        ['Resolución de problemas', 'Desarrolla habilidades para enfrentar desafíos reales con pensamiento crítico y lógico.'],
+      ]),
+      lista_('Metodología', [
+        'Aprender haciendo: cada clase es un proyecto.',
+        'Del diseño digital a la realidad: creamos, probamos y mejoramos.',
+        'La tecnología se domina con las manos, la mente y el trabajo en equipo.',
+        'Más que teoría: resolvemos problemas reales con soluciones creativas.',
+      ]),
+      lista_('Beneficios', [
+        'Desarrollan pensamiento lógico y creatividad tecnológica.',
+        'Aplican su fe al crear soluciones que impactan.',
+        'Descubren talentos y posibles vocaciones en ciencia y tecnología.',
+        'Aprenden a trabajar en equipo con valores cristianos.',
+      ]),
+    ],
+    galeria,
+  },
+}
+escribir('tipico', 'proyectos', { data: proyectosLista })
+for (const [slugP, d] of Object.entries(detalles)) escribir('tipico', `proyecto--${slugP}`, { data: d })
+
+// corto: una categoría, un proyecto, lo mínimo
+const cortoP = { id: 'p', slug: 'huerto', titulo: 'Huerto', lema: null, resumen: 'Biohuerto escolar.', categoria: 'c', niveles: [], estado: null, fecha: null, foto: null }
+escribir('corto', 'proyectos', { data: { titulo: 'Proyectos', bajada: null, categorias: [{ id: 'c', nombre: 'Ciencia' }], proyectos: [cortoP] } })
+escribir('corto', 'proyecto--huerto', { data: { ...cortoP, categoriaNombre: 'Ciencia', descripcion: ['Biohuerto escolar.'], secciones: [], galeria: [] } })
+
+// largo: 8 categorías, 12 proyectos y textos al máximo
+const categoriasLargas = ['Tecnología e innovación', 'Alimentación y salud', 'Arte, música y cultura', 'Ciencia y medio ambiente', 'Deporte y recreación', 'Fe y servicio a la comunidad', 'Emprendimiento', 'Lectura y comunicación'].map((nombre, i) => ({ id: `cat-${i + 1}`, nombre }))
+const ESTADOS = ['en-curso', 'proximo', 'finalizado', null]
+const proyectosLargos = Array.from({ length: 12 }, (_, i) => ({
+  id: `p${i + 1}`,
+  slug: `proyecto-de-prueba-${i + 1}`,
+  titulo: `Proyecto de prueba número ${i + 1} con un título muy largo para comprobar el ajuste en varias líneas`,
+  lema: i % 3 === 2 ? null : 'Lema de prueba que ocupa más de una línea en un teléfono para comprobar el ajuste.',
+  resumen: textoLargo,
+  categoria: categoriasLargas[i % 8].id,
+  niveles: i % 4 === 3 ? [] : ['Inicial', 'Primaria', 'Secundaria', 'Talleres de la Sede CATA Oasis'].slice(0, (i % 4) + 1),
+  estado: ESTADOS[i % 4],
+  fecha: i % 5 === 4 ? null : `2026-0${(i % 9) + 1}-15`,
+  foto: i % 3 === 1 ? null : img(i % 2 ? 'proyecto-robotica' : 'proyecto-gastronomia', 'Foto de prueba: proyecto escolar'),
+}))
+escribir('largo', 'proyectos', { data: { titulo: 'Proyectos y programas institucionales del colegio', bajada: `${textoLargo} ${textoLargo}`, categorias: categoriasLargas, proyectos: proyectosLargos } })
+for (const p of proyectosLargos) {
+  escribir('largo', `proyecto--${p.slug}`, { data: {
+    ...p,
+    categoriaNombre: categoriasLargas.find((c) => c.id === p.categoria).nombre,
+    descripcion: Array.from({ length: 6 }, () => parrafoLargo),
+    secciones: [
+      lista_('Sección de prueba con viñetas y un título largo', Array.from({ length: 12 }, () => textoLargo)),
+      numerada('Sección numerada de prueba', Array.from({ length: 12 }, (_, j) => [j % 2 ? null : `Eje de prueba ${j + 1} con título largo`, textoLargo])),
+      ...Array.from({ length: 6 }, (_, j) => lista_(`Lista de prueba ${j + 1}`, [textoLargo])),
+    ],
+    galeria: Array.from({ length: 12 }, (_, j) => img(j % 2 ? 'proyecto-galeria-1' : 'proyecto-galeria-2', `Foto de prueba ${j + 1} de la galería`)),
+  } })
+}
+
+// sin-foto y alt-vacio
+escribir('sin-foto', 'proyectos', { data: sinFoto(proyectosLista) })
+escribir('alt-vacio', 'proyectos', { data: altVacio(proyectosLista) })
+for (const [slugP, d] of Object.entries(detalles)) {
+  escribir('sin-foto', `proyecto--${slugP}`, { data: { ...sinFoto(d), galeria: [] } })
+  escribir('alt-vacio', `proyecto--${slugP}`, { data: altVacio(d) })
+}
+
+// vacio: sin proyectos
+escribir('vacio', 'proyectos', { data: { ...proyectosLista, bajada: null, categorias: [], proyectos: [] } })
 
 console.log('ok')

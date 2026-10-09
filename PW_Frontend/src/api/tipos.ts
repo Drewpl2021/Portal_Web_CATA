@@ -1,4 +1,4 @@
-// Tipos del contrato de la API pública del portal (docs/API_CONTRACT.md, v2.2).
+// Tipos del contrato de la API pública del portal (docs/API_CONTRACT.md, v2.3).
 // Todos los campos llegan siempre; los opcionales valen null.
 
 /** Fecha ISO 8601 sin hora: "2026-10-08". */
@@ -262,11 +262,23 @@ export interface PreguntaFrecuente {
 }
 
 // GET /v1/solicitud (Matrícula y Contacto)
+/** Páginas que muestran el formulario «Solicitar información». */
+export const PAGINAS_SOLICITUD = ['matricula', 'contacto'] as const
+export type PaginaSolicitud = (typeof PAGINAS_SOLICITUD)[number]
+
+export interface MensajePagina {
+  pagina: PaginaSolicitud
+  /** Plantilla del mensaje de WhatsApp en esa página. Usa {nombre} y {grado}. */
+  mensaje: string
+}
+
 export interface SolicitudInformacion {
   titulo: string
   texto: string | null
-  /** Plantilla del mensaje de WhatsApp. Usa {nombre} y {grado}. */
+  /** Plantilla general: se usa en las páginas sin mensaje propio. Usa {nombre} y {grado}. */
   mensajeWhatsapp: string
+  /** Un mensaje por página, como máximo uno para cada una. */
+  mensajesPorPagina: MensajePagina[]
 }
 
 // GET /v1/contacto
@@ -288,6 +300,55 @@ export interface Contacto {
   /** Correo general del colegio. */
   correo: string | null
   redes: RedSocial[]
+}
+
+// GET /v1/proyectos y GET /v1/proyectos/{slug}
+export const ESTADOS_PROYECTO = ['en-curso', 'proximo', 'finalizado'] as const
+export type EstadoProyecto = (typeof ESTADOS_PROYECTO)[number]
+
+export interface CategoriaProyecto {
+  id: string
+  nombre: string
+}
+
+export interface ProyectoResumen {
+  id: string
+  /** Parte de la URL del detalle: /proyectos/{slug}. */
+  slug: string
+  titulo: string
+  /** Frase corta del proyecto: «Cocinamos con propósito». */
+  lema: string | null
+  resumen: string
+  /** id de una de las categorías de la lista. */
+  categoria: string
+  /** Niveles o grados que participan: «Primaria», «Secundaria». [] = no se indica. */
+  niveles: string[]
+  estado: EstadoProyecto | null
+  /** Fecha de inicio o de realización. */
+  fecha: Fecha | null
+  foto: Imagen | null
+}
+
+export interface Proyectos {
+  titulo: string
+  bajada: string | null
+  categorias: CategoriaProyecto[]
+  proyectos: ProyectoResumen[]
+}
+
+export interface SeccionProyecto {
+  titulo: string
+  /** lista: viñetas. numerada: placas numeradas, cada una con título opcional. */
+  tipo: 'lista' | 'numerada'
+  items: { titulo: string | null; texto: string }[]
+}
+
+export interface Proyecto extends ProyectoResumen {
+  /** Nombre de la categoría, para no depender de la lista. */
+  categoriaNombre: string
+  descripcion: string[]
+  secciones: SeccionProyecto[]
+  galeria: Imagen[]
 }
 
 // Sobres de respuesta

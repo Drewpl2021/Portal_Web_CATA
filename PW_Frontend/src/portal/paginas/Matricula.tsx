@@ -24,7 +24,7 @@ export default function Matricula() {
       <VacantesMatricula />
       <FechasMatricula />
       <PreguntasMatricula />
-      <SolicitudInformacion />
+      <SolicitudInformacion pagina="matricula" />
     </>
   )
 }

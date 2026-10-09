@@ -110,3 +110,8 @@ select {
   top: 0.75rem;
   outline-color: var(--dorado);
 }
+
+/* El contenido recibe el foco al cambiar de página (para lectores de pantalla); no es un control, no lleva contorno */
+#contenido:focus {
+  outline: none;
+}

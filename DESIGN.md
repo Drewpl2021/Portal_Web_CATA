@@ -324,8 +324,8 @@ Campo celeste con titular blanco enorme, tres barras inclinadas que crecen (dora
 ### Medalla
 Disco marino con el emblema al 52 %, aro dorado de 4 px y el nombre del colegio (y «desde el año») girando en dorado alrededor en 40 s. Decorativa (`aria-hidden`). Gira solo mientras está en pantalla. Aparece dentro del anillo de la cabecera de Propuesta Educativa y en el pie. Su texto vive en unidades del SVG (no en rem), porque el `viewBox` ya lo escala.
 
-### Cabecera de página interna (Matrícula, Contacto)
-Un solo componente (`CabeceraPagina`), variante más baja de la cabecera celeste (`f-hero--pagina`): titular, barras, bajada y dos botones que bajan a secciones de la misma página. A la derecha, una composición de proporción fija 5:4 (máx. 40rem) con `container-type: inline-size`: una placa marina inclinada con un rótulo dorado y un valor blanco (medidos en `cqw`, así escalan con la composición) y el recorte de un estudiante delante, a la derecha. En Matrícula la placa lleva «MATRÍCULA» y el año; en Contacto, «WHATSAPP» y el número, y la placa entera es un enlace a WhatsApp. Los valores de más de cinco caracteres usan un cuerpo menor. Sin recorte, la placa ocupa todo el ancho (2:1); sin placa ni recorte, solo texto.
+### Cabecera de página interna (Matrícula, Contacto, Proyectos)
+Un solo componente (`CabeceraPagina`), variante más baja de la cabecera celeste (`f-hero--pagina`): titular, barras, bajada y dos botones que bajan a secciones de la misma página. A la derecha, una composición de proporción fija 5:4 (máx. 40rem) con `container-type: inline-size`: una placa marina inclinada con un rótulo dorado y un valor blanco (medidos en `cqw`, así escalan con la composición) y el recorte de un estudiante delante, a la derecha. En Matrícula la placa lleva «MATRÍCULA» y el año; en Contacto, «WHATSAPP» y el número, y la placa entera es un enlace a WhatsApp. Los valores de más de cinco caracteres usan un cuerpo menor. Sin recorte, la placa ocupa todo el ancho (2:1). En la lista de Proyectos la placa lleva el número de proyectos publicados («PROYECTOS 02»). En el detalle de un proyecto, en lugar de la composición va su foto 3:2 en un marco blanco de 8 px girado -3°, y bajo la bajada, los datos del proyecto en etiquetas. Sin placa, recorte ni foto, solo texto. Los botones pueden llevar a una sección de la misma página o a otra página del sitio.
 
 ### Índice de página
 Franja marina bajo la cabecera, con enlaces en mayúsculas a cada sección de la página (`nav` «En esta página»). El subrayado dorado aparece al pasar el mouse.
@@ -357,8 +357,17 @@ Sobre el campo celeste: los botones de sede a la izquierda (placas blancas incli
 ### Redes sociales
 Placas marinas inclinadas con base dorada: el nombre de la red en la tipografía ancha (sin logotipos de terceros), la cuenta en dorado y una flecha que se desplaza al pasar el mouse. El correo general, si lo hay, va como una placa más.
 
+### Tarjetas de proyecto
+Placas celeste lavado con la regla dorada corta arriba y la foto 3:2 con el borde inferior en diagonal. Debajo: etiquetas (categoría en dorado, estado en marino, niveles y fecha en blanco), el título en la tipografía ancha, el lema en negrita, el resumen completo y «Ver proyecto». El título es el enlace y su área cubre la tarjeta; el foco se dibuja alrededor de toda la tarjeta. Las columnas miden hasta 38rem, así una tarjeta sola no se estira a todo el ancho.
+
+### Filtro por categoría
+Botones inclinados como las pestañas de Matrícula, con el número de proyectos de cada categoría en una pastilla. Solo aparece con dos o más categorías con proyectos. La categoría elegida queda en la dirección (`?categoria=…`) y un texto vivo anuncia cuántos proyectos se ven. Cambiar de filtro no se anima: es una acción frecuente.
+
+### Detalle de proyecto
+Descripción a 65ch y, debajo, sus secciones: las listas seguidas, en placas lado a lado (como requisitos y documentos de Matrícula), y las secciones numeradas, como la pista de pasos a todo el ancho. Luego la galería sobre celeste lavado, «Más proyectos» y el cierre.
+
 ### Formulario Solicitar información
-En el cierre celeste: título blanco a la izquierda y el formulario en una placa marina con regla dorada. Campos blancos de 52 px, errores en dorado con ícono, vinculados con `aria-describedby`, y el foco va al primer campo con error. El botón dorado abre WhatsApp con el mensaje armado; no se guarda ningún dato. Es el mismo componente (`SolicitudInformacion`) al final de Matrícula y de Contacto.
+En el cierre celeste: título blanco a la izquierda y el formulario en una placa marina con regla dorada. Campos blancos de 52 px, errores en dorado con ícono, vinculados con `aria-describedby`, y el foco va al primer campo con error. El botón dorado abre WhatsApp con el mensaje armado; no se guarda ningún dato. Es el mismo componente (`SolicitudInformacion`) al final de Matrícula y de Contacto; recibe la página y usa la plantilla de mensaje de esa página.
 
 ### Divisor de franjas
 Franjas de camiseta entre secciones: marina de 14 px, dorada de 4 px y celeste de 8 px, rotadas -2.2°, en una banda de 64 px. Variante lavada cuando la sección siguiente es celeste lavado. Decorativo.

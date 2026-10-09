@@ -1,15 +1,17 @@
-import { useEffect, useLayoutEffect } from 'react'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'motion/react'
 import InsigniaPrueba from '../components/InsigniaPrueba'
 import { tituloDeRuta } from '../sitio/mapa'
-import TransicionPagina from '../sitio/TransicionPagina'
+import TransicionPagina, { pedirFocoEnPaginaNueva } from '../sitio/TransicionPagina'
 import Cabecera from './Cabecera'
 import Contacto from './paginas/Contacto'
 import Inicio from './paginas/Inicio'
 import Matricula from './paginas/Matricula'
 import Pendiente from './paginas/Pendiente'
 import PropuestaEducativa from './paginas/PropuestaEducativa'
+import ProyectoDetalle from './paginas/ProyectoDetalle'
+import Proyectos from './paginas/Proyectos'
 import Pie from './secciones/Pie'
 import './portal.css'
 
@@ -24,9 +26,14 @@ export default function Layout() {
     return () => document.documentElement.classList.remove('f-anim')
   }, [])
 
-  // Cada página nueva empieza arriba.
+  // Cada página nueva empieza arriba y, si se llegó navegando, con el foco en su contenido.
+  const rutaAnterior = useRef(ubicacion.pathname)
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' })
+    if (rutaAnterior.current !== ubicacion.pathname) {
+      rutaAnterior.current = ubicacion.pathname
+      pedirFocoEnPaginaNueva()
+    }
   }, [ubicacion.pathname])
 
   const pagina = (contenido: React.ReactNode, clase?: string) => (
@@ -47,6 +54,8 @@ export default function Layout() {
         <AnimatePresence mode="wait" initial={false}>
           <Routes location={ubicacion} key={ubicacion.pathname}>
             <Route index element={pagina(<Inicio />)} />
+            <Route path="proyectos" element={pagina(<Proyectos />)} />
+            <Route path="proyectos/:slug" element={pagina(<ProyectoDetalle />)} />
             <Route path="propuesta-educativa" element={pagina(<PropuestaEducativa />)} />
             <Route path="matricula" element={pagina(<Matricula />)} />
             <Route path="contacto" element={pagina(<Contacto />)} />

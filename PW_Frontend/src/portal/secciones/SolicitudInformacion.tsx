@@ -1,7 +1,7 @@
 import { useId, useRef, useState, type FormEvent } from 'react'
 import { AlertCircle, ArrowUpRight } from 'lucide-react'
 import { obtenerGrados, obtenerSitio, obtenerSolicitud } from '../../api/servicios'
-import type { SolicitudInformacion, Telefono } from '../../api/tipos'
+import type { PaginaSolicitud, SolicitudInformacion as TextosSolicitud, Telefono } from '../../api/tipos'
 import { Cargando, ErrorCarga } from '../../components/EstadoSeccion'
 import { useRecurso } from '../../hooks/useRecurso'
 import { enlaceWhatsapp, rellenarPlantilla } from '../../lib/formato'
@@ -9,8 +9,9 @@ import { Revelar } from '../movimiento'
 
 // «Solicitar información» (Matrícula y Contacto): título sobre el celeste y el formulario en una placa marina.
 // No envía datos a ningún servidor: arma el mensaje y abre WhatsApp.
-export default function SolicitudInformacion() {
-  const solicitud = useRecurso('matricula-solicitud', obtenerSolicitud)
+// `pagina` elige la plantilla del mensaje de WhatsApp; sin plantilla propia, se usa la general.
+export default function SolicitudInformacion({ pagina }: { pagina: PaginaSolicitud }) {
+  const solicitud = useRecurso('solicitud', obtenerSolicitud)
   const sitio = useRecurso('sitio', obtenerSitio)
   const titulo = solicitud.estado === 'listo' ? solicitud.datos.titulo : 'Solicitar información'
 
@@ -43,7 +44,7 @@ export default function SolicitudInformacion() {
             <ErrorCarga que="el número de WhatsApp del colegio" reintentar={sitio.reintentar} className="f-error--claro" />
           )}
           {solicitud.estado === 'listo' && sitio.estado === 'listo' && (
-            <Formulario solicitud={solicitud.datos} whatsapp={sitio.datos.whatsapp} />
+            <Formulario plantilla={plantillaDe(solicitud.datos, pagina)} whatsapp={sitio.datos.whatsapp} />
           )}
         </div>
       </div>
@@ -51,7 +52,10 @@ export default function SolicitudInformacion() {
   )
 }
 
-function Formulario({ solicitud, whatsapp }: { solicitud: SolicitudInformacion; whatsapp: Telefono }) {
+const plantillaDe = (s: TextosSolicitud, pagina: PaginaSolicitud) =>
+  s.mensajesPorPagina.find((m) => m.pagina === pagina)?.mensaje ?? s.mensajeWhatsapp
+
+function Formulario({ plantilla, whatsapp }: { plantilla: string; whatsapp: Telefono }) {
   const id = useId()
   const grados = useRecurso('grados', obtenerGrados)
   const [nombre, setNombre] = useState('')
@@ -71,7 +75,7 @@ function Formulario({ solicitud, whatsapp }: { solicitud: SolicitudInformacion; 
       ;(er.nombre ? campoNombre : campoGrado).current?.focus()
       return
     }
-    const url = enlaceWhatsapp(whatsapp, rellenarPlantilla(solicitud.mensajeWhatsapp, { nombre: nombre.trim(), grado: grado.trim() }))
+    const url = enlaceWhatsapp(whatsapp, rellenarPlantilla(plantilla, { nombre: nombre.trim(), grado: grado.trim() }))
     window.open(url, '_blank', 'noreferrer')
     setAbierto(url)
   }

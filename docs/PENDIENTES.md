@@ -33,7 +33,13 @@
   - mapa de las sedes **bajo pedido**: no se carga nada de Google hasta que la persona pulsa «Mostrar el mapa»
   - redes del colegio (Facebook, YouTube y TikTok, las que enlaza cata.edu.pe)
   - el mismo formulario «Solicitar información» de Matrícula (un solo componente, `SolicitudInformacion`)
-- **Componentes compartidos por las páginas internas:** `CabeceraPagina`, `IndicePagina` y `SolicitudInformacion`.
+- **Proyectos (`/proyectos` y `/proyectos/{slug}`):**
+  - lista con filtro por categoría (la categoría queda en la dirección) y tarjetas con foto, etiquetas, lema y resumen
+  - página de detalle de cada proyecto: descripción, objetivos, ejes, metodología, beneficios, galería y «Más proyectos»
+  - un proyecto que no existe muestra «Proyecto no encontrado»
+  - contenido de cata.edu.pe: solo publica dos programas, Gastronomía e Industrias Alimentarias, y Robótica, Impresiones 3D y Computación
+- **Componentes compartidos por las páginas internas:** `CabeceraPagina`, `IndicePagina` y `SolicitudInformacion`. El formulario recibe la página (`matricula` o `contacto`) y usa su propio mensaje de WhatsApp.
+- **Foco al navegar:** al cambiar de página dentro del sitio, el foco pasa al contenido de la página nueva para que el lector de pantalla la anuncie (en la primera carga no se mueve).
 - **Resto del mapa del sitio:** tiene sus rutas, pero muestra «en construcción».
 - **Responsivo:**
   - de 360 px a 4K, verificado en 360, 390, 768, 1024, 1366, 1920, 2560 y 3840 px
@@ -41,19 +47,22 @@
   - las composiciones se agrupan en contenedores de proporción fija
 - **Eliminadas:** las propuestas A, B y C y la portada antigua «Tablero de ruta».
 
-### Contrato de la API (versión 2.2)
+### Contrato de la API (versión 2.3)
 
 - `docs/API_CONTRACT.md` y su JSON Schema `docs/api-contract.schema.json` (`npm run esquema`).
-- **Endpoints (16):** sitio, banners, cabecera de Propuesta Educativa, quiénes somos, niveles, sedes, noticias, grados, cifras, cinco de Matrícula (cabecera, procesos, vacantes, fechas y preguntas), solicitud y contacto.
+- **Endpoints (18):** sitio, banners, cabecera de Propuesta Educativa, quiénes somos, niveles, sedes, noticias, grados, cifras, cinco de Matrícula (cabecera, procesos, vacantes, fechas y preguntas), solicitud, contacto, proyectos y detalle de proyecto.
+- **Cambios de la 2.3:** nuevos `GET /v1/proyectos` y `GET /v1/proyectos/{slug}` (este responde `404` si no existe); `GET /v1/solicitud` suma `mensajesPorPagina`, una plantilla de WhatsApp por página.
 - **Cambios de la 2.2:** nuevo `GET /v1/contacto`; `Sede` suma `correo`, `horario` y `mapaEmbedUrl`; `GET /v1/matricula/solicitud` pasa a `GET /v1/solicitud`, común a Matrícula y Contacto; se aclara que el año de Matrícula lo define el colegio.
 - **Cambios de la 2.1:** solo agrega los endpoints de Matrícula (§3.10 a §3.15); no cambia ninguno anterior.
 - **Cambios de la 2.0:**
   - nuevo `GET /v1/portada/banners`, que reemplaza el aviso único
   - se eliminan las rutas de la portada antigua y el aviso
   - el hero pasa a `GET /v1/propuesta-educativa/cabecera`
-- **Datos de prueba:** `src/api/mock/`. El carrusel tiene 3 banners en `tipico`, 1 en `corto`, 6 en `largo` y ninguno en `vacio`. Matrícula tiene datos en `tipico`, `corto`, `largo`, `sin-foto` y `vacio` (y su cabecera en `alt-vacio`); el año en `tipico` es 2026, el de los afiches publicados. Contacto tiene datos en los seis escenarios.
+- **Datos de prueba:** `src/api/mock/`. El carrusel tiene 3 banners en `tipico`, 1 en `corto`, 6 en `largo` y ninguno en `vacio`. Matrícula tiene datos en `tipico`, `corto`, `largo`, `sin-foto` y `vacio` (y su cabecera en `alt-vacio`); el año en `tipico` es 2026, el de los afiches publicados. Contacto y Proyectos tienen datos en los seis escenarios.
 
 ### Verificación al cierre
+
+**Proyectos (2026-10-08):** `npm run typecheck` pasa; `npm test` con 117 pruebas (incluye que cada proyecto de la lista tenga su detalle); axe (WCAG 2.2 AA) sin violaciones y sin desplazamiento horizontal en 390, 768, 1920 y 2560 px en la lista y en un detalle (escenario típico); con movimiento reducido, también los escenarios largo y vacío y el proyecto inexistente. Teclado: ningún foco tapado; el filtro se usa con Enter, anuncia el resultado y deja el foco en el botón; Enter en una tarjeta abre el detalle con el foco en el contenido; Atrás vuelve al filtro elegido. El mensaje de WhatsApp sale distinto en Matrícula y en Contacto. review-animations: sin hallazgos en el movimiento nuevo (entrada de la foto y de las etiquetas en la cabecera, elevación de tarjetas solo con mouse; el filtro no se anima a propósito).
 
 **Contacto (2026-10-08):** `npm run typecheck` pasa; `npm test` con 89 pruebas; axe (WCAG 2.2 AA) sin violaciones y sin desplazamiento horizontal en 390, 768, 1920 y 2560 px (escenario típico), también con movimiento reducido y con el mapa cargado. Ninguna petición a Google ni a OpenStreetMap antes de pulsar «Mostrar el mapa». Teclado: orden de tabulación completo, ningún foco tapado por la cabecera, «Ver en el mapa» elige la sede y lleva el foco a su botón, el formulario compartido anuncia errores y arma el mensaje de WhatsApp. Pasada de review-animations sobre el movimiento nuevo: se corrigió la transición de las placas de redes (el desplazamiento al pasar el mouse saltaba), se quitó el fundido del mapa (si el mapa no avisa que cargó, quedaría invisible) y se acortaron dos transiciones de Matrícula que pasaban de 300 ms (cambio de pestaña y respuesta de las preguntas). Además, Matrícula se volvió a pasar por axe en 390 y 1920 tras compartir sus componentes, y Contacto con datos largos en 390 y 1920.
 
@@ -78,7 +87,7 @@
 
 ## Pendientes
 
-1. **Construir las demás páginas, una por una:** Proyectos, Nosotros (y sus subpáginas) y Logros, más el contenido de Propuesta Educativa. Todas con el mismo nivel de diseño y animaciones que Inicio, sin carrusel. Cada página amplía el contrato de la API.
+1. **Construir las demás páginas, una por una:** Nosotros (y sus subpáginas) y Logros, más el contenido de Propuesta Educativa. Todas con el mismo nivel de diseño y animaciones que Inicio, sin carrusel. Cada página amplía el contrato de la API.
 2. **Datos reales de Matrícula** (hoy son de prueba en el escenario típico):
    - confirmar el año del proceso: en los datos de prueba es 2026, el de los afiches publicados; en la API lo define el colegio
    - el cronograma oficial (las cuatro fechas actuales son de prueba, del proceso 2026, y lo dicen en la página)
@@ -91,12 +100,18 @@
    - la URL de «Insertar un mapa» de Google Maps de cada sede (Compartir → Insertar un mapa). Los mapas actuales son búsquedas de la dirección y no son precisos: el de la Sede CATA Jerusalén cae en un punto genérico de San Miguel
    - confirmar si hay Instagram u otras redes; cata.edu.pe solo enlaza Facebook, YouTube y TikTok
    - confirmar el número del enlace «WhatsApp» del sitio actual: cata.edu.pe tiene un botón que escribe al 956 341 538, mientras que el portal usa el 986 322 833 de los afiches
-4. **Prueba manual con teclado y lector de pantalla** (NVDA en Windows, TalkBack en Android), sobre todo del carrusel, las pestañas de Matrícula, el mapa de Contacto y el formulario. axe no cubre todo WCAG 2.2 AA ni puede medir el contraste del texto sobre imágenes; por eso el texto del carrusel va sobre una placa marina sólida.
-5. **Entregar el contrato 2.2 al equipo de RR.HH.** Enviar `docs/API_CONTRACT.md` y `docs/api-contract.schema.json`. Los endpoints de Matrícula y Contacto, y los campos nuevos de `Sede`, son una propuesta del portal: hay que acordarlos con RR.HH. antes de que los implementen. Además, acordar:
+4. **Contenido real de Proyectos:** cata.edu.pe publica solo dos programas, y la estructura de la página está pensada para más. El colegio debe aportar:
+   - los demás proyectos institucionales que quiera mostrar, con su título, lema, resumen, descripción y secciones
+   - fotos reales de cada proyecto (3:2). Las de cata.edu.pe son ilustraciones, no fotos del colegio, y no se usaron: hoy van fotos de prueba
+   - los niveles que participan, el estado (en curso, próximamente, finalizado) y la fecha de cada proyecto, que hoy van vacíos
+   - confirmar los nombres de las categorías del filtro («Alimentación y salud», «Tecnología»), que son una propuesta del portal
+   - avisar que cata.edu.pe tiene un párrafo de relleno («Lorem fistrum…») en su página de programas
+5. **Prueba manual con teclado y lector de pantalla** (NVDA en Windows, TalkBack en Android), sobre todo del carrusel, las pestañas de Matrícula, el mapa de Contacto, el filtro de Proyectos, el formulario y el foco al cambiar de página. axe no cubre todo WCAG 2.2 AA ni puede medir el contraste del texto sobre imágenes; por eso el texto del carrusel va sobre una placa marina sólida.
+6. **Entregar el contrato 2.3 al equipo de RR.HH.** Enviar `docs/API_CONTRACT.md` y `docs/api-contract.schema.json`. Los endpoints de Matrícula, Contacto y Proyectos, los campos nuevos de `Sede` y los mensajes por página de `/v1/solicitud` son una propuesta del portal: hay que acordarlos con RR.HH. antes de que los implementen. Además, acordar:
    - la URL base
    - el dominio de pruebas para CORS
    - quién avisa cuando el contrato cambie
-6. **Material del colegio:**
+7. **Material del colegio:**
    - confirmar si el emblema con la cinta «1971 – 2022» sigue vigente, y pedir una versión en SVG
    - el número de alumnos para las cifras
    - fotos reales de sedes, niveles y noticias
@@ -104,8 +119,8 @@
    - imágenes móviles 4:5 para los banners
    - autorización de las familias para publicar fotos de estudiantes
    - el Manual de Identidad
-7. **`PW_Backend/`** no tiene ningún papel en la arquitectura actual: decidir si se elimina o para qué se usa.
+8. **`PW_Backend/`** no tiene ningún papel en la arquitectura actual: decidir si se elimina o para qué se usa.
 
 ## Siguiente paso
 
-Revisar Contacto y elegir la siguiente página (pendiente 1). En paralelo, el colegio puede confirmar los datos de Matrícula y Contacto (pendientes 2 y 3), entregar el contrato 2.2 a RR.HH. (pendiente 5) y reunir el material del pendiente 6.
+Revisar Proyectos y elegir la siguiente página (pendiente 1). En paralelo, el colegio puede confirmar los datos de Matrícula y Contacto (pendientes 2 y 3), aportar el contenido de Proyectos (pendiente 4), entregar el contrato 2.3 a RR.HH. (pendiente 6) y reunir el material del pendiente 7.

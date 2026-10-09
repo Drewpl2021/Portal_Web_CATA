@@ -35,7 +35,7 @@ export default function Contacto() {
       <SedesContacto alVerEnMapa={verEnMapa} />
       <MapaSedes seleccion={sedeMapa} alElegir={setSedeMapa} />
       <RedesSociales />
-      <SolicitudInformacion />
+      <SolicitudInformacion pagina="contacto" />
     </>
   )
 }

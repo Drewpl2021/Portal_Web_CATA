@@ -13,6 +13,8 @@ import {
   esquemaGrados,
   esquemaNiveles,
   esquemaNoticias,
+  esquemaProyecto,
+  esquemaProyectos,
   esquemaQuienesSomos,
   esquemaSedes,
   esquemaSitio,
@@ -37,19 +39,21 @@ const ESQUEMAS = {
   'matricula-preguntas': sobre(esquemaPreguntas),
   solicitud: sobre(esquemaSolicitud),
   contacto: sobre(esquemaContacto),
+  proyectos: sobre(esquemaProyectos),
+  proyecto: sobre(esquemaProyecto),
 } as const
 
 const archivos = import.meta.glob<unknown>('./mock/*/*.json', { eager: true, import: 'default' })
 
 describe('los datos de prueba cumplen docs/API_CONTRACT.md', () => {
   it('hay datos típicos para cada recurso', () => {
-    for (const recurso of Object.keys(ESQUEMAS)) {
+    for (const recurso of Object.keys(ESQUEMAS).filter((x) => x !== 'proyecto')) {
       expect(archivos[`./mock/tipico/${recurso}.json`], recurso).toBeDefined()
     }
   })
 
   for (const [ruta, cuerpo] of Object.entries(archivos)) {
-    const recurso = ruta.split('/').pop()!.replace('.json', '') as keyof typeof ESQUEMAS
+    const recurso = ruta.split('/').pop()!.replace('.json', '').split('--')[0] as keyof typeof ESQUEMAS
     it(ruta, () => {
       const esquema = ESQUEMAS[recurso]
       expect(esquema, `recurso desconocido: ${recurso}`).toBeDefined()
@@ -80,6 +84,28 @@ describe('el contrato rechaza respuestas inválidas', () => {
     expect(esquemaSedes.safeParse([{ ...sede, mapaEmbedUrl: 'https://evil.example/maps?q=x' }]).success).toBe(false)
     expect(esquemaSedes.safeParse([{ ...sede, mapaEmbedUrl: 'https://www.google.com/maps/embed?pb=abc' }]).success).toBe(true)
     expect(esquemaSedes.safeParse([{ ...sede, mapaEmbedUrl: null, correo: 'no-es-correo' }]).success).toBe(false)
+  })
+
+  it('cada proyecto de la lista tiene su detalle en el mismo escenario o en típico', () => {
+    for (const [ruta, cuerpo] of Object.entries(archivos).filter(([r]) => r.endsWith('/proyectos.json'))) {
+      const escenario = ruta.split('/')[2]
+      for (const p of (cuerpo as { data: { proyectos: { slug: string }[] } }).data.proyectos) {
+        const detalle = archivos[`./mock/${escenario}/proyecto--${p.slug}.json`] ?? archivos[`./mock/tipico/proyecto--${p.slug}.json`]
+        expect(detalle, `${escenario}: ${p.slug}`).toBeDefined()
+      }
+    }
+  })
+
+  it('rechaza un proyecto con una categoría que no está en la lista', () => {
+    const p = { id: '1', slug: 'a', titulo: 't', lema: null, resumen: 'r', categoria: 'otra', niveles: [], estado: null, fecha: null, foto: null }
+    expect(esquemaProyectos.safeParse({ titulo: 't', bajada: null, categorias: [{ id: 'tec', nombre: 'Tecnología' }], proyectos: [p] }).success).toBe(false)
+  })
+
+  it('rechaza dos mensajes de WhatsApp para la misma página', () => {
+    const base = { titulo: 't', texto: null, mensajeWhatsapp: 'm' }
+    const m = { pagina: 'contacto', mensaje: 'x' }
+    expect(esquemaSolicitud.safeParse({ ...base, mensajesPorPagina: [m, m] }).success).toBe(false)
+    expect(esquemaSolicitud.safeParse({ ...base, mensajesPorPagina: [m] }).success).toBe(true)
   })
 
   it('rechaza una red social desconocida', () => {

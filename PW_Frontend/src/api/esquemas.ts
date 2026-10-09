@@ -1,7 +1,7 @@
 // Validación en tiempo de ejecución de cada respuesta, según docs/API_CONTRACT.md.
 // Si la API cambia un tipo, la sección muestra su estado de error en vez de romper la página.
 import { z } from 'zod'
-import { CATEGORIAS_BANNER, ESTADOS_VACANTE, REDES, SECCIONES } from './tipos'
+import { CATEGORIAS_BANNER, ESTADOS_PROYECTO, ESTADOS_VACANTE, PAGINAS_SOLICITUD, REDES, SECCIONES } from './tipos'
 import type * as T from './tipos'
 
 const texto = z.string()
@@ -193,6 +193,53 @@ export const esquemaSolicitud = z.object({
   titulo: texto,
   texto: textoONulo,
   mensajeWhatsapp: z.string().min(1),
+  mensajesPorPagina: z
+    .array(z.object({ pagina: z.enum(PAGINAS_SOLICITUD), mensaje: z.string().min(1) }))
+    .max(PAGINAS_SOLICITUD.length)
+    .refine((l) => new Set(l.map((m) => m.pagina)).size === l.length, 'Un solo mensaje por página'),
+})
+
+// Proyectos
+const slug = z.string().regex(/^[a-z0-9-]+$/, 'slug: a-z, 0-9 y -')
+
+const proyectoResumen = z.object({
+  id: texto,
+  slug,
+  titulo: texto,
+  lema: textoONulo,
+  resumen: texto,
+  categoria: texto,
+  niveles: z.array(texto).max(6),
+  estado: z.enum(ESTADOS_PROYECTO).nullable(),
+  fecha: fecha.nullable(),
+  foto: imagen.nullable(),
+})
+
+export const esquemaProyectos = z
+  .object({
+    titulo: texto,
+    bajada: textoONulo,
+    categorias: z.array(z.object({ id: texto, nombre: texto })).max(8),
+    proyectos: z.array(proyectoResumen).max(24),
+  })
+  .refine(
+    (d) => d.proyectos.every((p) => d.categorias.some((c) => c.id === p.categoria)),
+    'Cada proyecto debe usar una categoría de la lista',
+  )
+
+export const esquemaProyecto = proyectoResumen.extend({
+  categoriaNombre: texto,
+  descripcion: z.array(texto).min(1).max(6),
+  secciones: z
+    .array(
+      z.object({
+        titulo: texto,
+        tipo: z.enum(['lista', 'numerada']),
+        items: z.array(z.object({ titulo: textoONulo, texto })).min(1).max(12),
+      }),
+    )
+    .max(8),
+  galeria: z.array(imagen).max(12),
 })
 
 export const esquemaContacto = z.object({
@@ -225,3 +272,5 @@ coincide<Igual<z.infer<typeof esquemaFechasMatricula>, T.FechasMatricula>>()
 coincide<Igual<z.infer<typeof esquemaPreguntas>, T.PreguntaFrecuente[]>>()
 coincide<Igual<z.infer<typeof esquemaSolicitud>, T.SolicitudInformacion>>()
 coincide<Igual<z.infer<typeof esquemaContacto>, T.Contacto>>()
+coincide<Igual<z.infer<typeof esquemaProyectos>, T.Proyectos>>()
+coincide<Igual<z.infer<typeof esquemaProyecto>, T.Proyecto>>()

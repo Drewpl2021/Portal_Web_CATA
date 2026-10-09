@@ -1,6 +1,10 @@
 # Contrato de la API pública del portal CATA
 
-**Versión del contrato:** 2.2 · **Fecha:** 2026-10-08
+**Versión del contrato:** 2.3 · **Fecha:** 2026-10-08
+
+**Cambios de la 2.3:**
+- Nuevos `GET /v1/proyectos` (§3.17) y `GET /v1/proyectos/{slug}` (§3.18): la lista de proyectos con sus categorías y el detalle de cada uno. El detalle responde `404` si el proyecto no existe.
+- `GET /v1/solicitud` (§3.15) suma `mensajesPorPagina`: una plantilla de WhatsApp por página (`matricula`, `contacto`). `mensajeWhatsapp` queda como plantilla general.
 
 **Cambios de la 2.2:**
 - Nuevo `GET /v1/contacto` (§3.16): cabecera de la página Contacto, correo general y redes sociales.
@@ -168,6 +172,8 @@ Valores válidos de `seccion`: `"quienes-somos"`, `"niveles"`, `"sedes"`, `"noti
 | `GET /v1/matricula/preguntas` | `PreguntaFrecuente[]` | Preguntas frecuentes de matrícula |
 | `GET /v1/solicitud` | `SolicitudInformacion` | Textos del formulario Solicitar información (Matrícula y Contacto) |
 | `GET /v1/contacto` | `Contacto` | Cabecera de Contacto, correo general y redes sociales |
+| `GET /v1/proyectos` | `Proyectos` | Cabecera y lista de Proyectos, con categorías para el filtro |
+| `GET /v1/proyectos/{slug}` | `Proyecto` | Página de detalle de un proyecto (`404` si no existe) |
 
 Cada sección del portal carga su endpoint por separado. Si uno falla, esa sección muestra su error y el resto sigue funcionando.
 
@@ -589,20 +595,25 @@ Preguntas frecuentes. Devuelve `PreguntaFrecuente[]` (0 a 15): `id`, `pregunta` 
 
 ### 3.15 `GET /v1/solicitud`
 
-Textos del formulario «Solicitar información», que aparece al final de Matrícula y de Contacto con los mismos textos. El formulario pide el nombre y el grado de interés (opciones de `GET /v1/grados`) y abre WhatsApp con el número de `GET /v1/sitio` (`whatsapp`). No envía datos a ningún servidor.
+Textos del formulario «Solicitar información», que aparece al final de Matrícula y de Contacto. El título y el texto son los mismos; el mensaje de WhatsApp puede cambiar según la página. El formulario pide el nombre y el grado de interés (opciones de `GET /v1/grados`) y abre WhatsApp con el número de `GET /v1/sitio` (`whatsapp`). No envía datos a ningún servidor.
 
 | Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
 |---|---|---|---|---|
 | `titulo` | string | no | 40 | «Solicitar información». |
 | `texto` | string \| null | sí | 200 | Frase bajo el título. |
-| `mensajeWhatsapp` | string | no | 300 | Mensaje que se envía. Usa `{nombre}` y `{grado}`, que el portal reemplaza. |
+| `mensajeWhatsapp` | string | no | 300 | Plantilla **general** del mensaje. Se usa en las páginas que no tienen una propia. Usa `{nombre}` y `{grado}`, que el portal reemplaza. |
+| `mensajesPorPagina` | `{ pagina, mensaje }[]` | no | 0 a 2 | Una plantilla por página: `pagina` es `"matricula"` o `"contacto"` y `mensaje` (máx. 300) usa `{nombre}` y `{grado}`. Como máximo una por página. `[]` = todas usan la general. |
 
 ```json
 {
   "data": {
     "titulo": "Solicitar información",
     "texto": "Escribe tu nombre y el grado que te interesa. Abriremos WhatsApp con el mensaje listo para que lo envíes al colegio.",
-    "mensajeWhatsapp": "Hola, soy {nombre}. Quisiera información sobre la matrícula para {grado}."
+    "mensajeWhatsapp": "Hola, soy {nombre}. Quisiera información sobre el colegio para {grado}.",
+    "mensajesPorPagina": [
+      { "pagina": "matricula", "mensaje": "Hola, soy {nombre}. Quisiera información sobre la matrícula para {grado}." },
+      { "pagina": "contacto", "mensaje": "Hola, soy {nombre}. Tengo una consulta para el colegio sobre {grado}." }
+    ]
   }
 }
 ```
@@ -639,6 +650,73 @@ La cabecera de la página Contacto, el correo general del colegio y sus redes so
 }
 ```
 
+---
+
+### 3.17 `GET /v1/proyectos`
+
+La página Proyectos: título, frase, categorías y la lista. El portal ofrece un filtro por categoría (solo con las categorías que tienen proyectos, y solo si hay dos o más) y guarda la elegida en la dirección (`/proyectos?categoria=tecnologia`).
+
+| Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
+|---|---|---|---|---|
+| `titulo` | string | no | 60 | «Proyectos». |
+| `bajada` | string \| null | sí | 240 | Frase bajo el título. |
+| `categorias` | `{ id, nombre }[]` | no | 0 a 8 | `nombre` máx. 40. En el orden del filtro. |
+| `proyectos` | `ProyectoResumen[]` | no | 0 a 24 | En el orden en que se muestran. `[]` = «Los proyectos se publicarán pronto». |
+
+**`ProyectoResumen`**
+
+| Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
+|---|---|---|---|---|
+| `id` | string | no | — | |
+| `slug` | string | no | 60 | Solo `a-z`, `0-9` y `-`. Es la dirección del detalle: `/proyectos/{slug}`. No debe cambiar una vez publicado. |
+| `titulo` | string | no | 80 | |
+| `lema` | string \| null | sí | 100 | Frase corta: «Cocinamos con propósito: salud, sabor y servicio.» |
+| `resumen` | string | no | 240 | Se muestra completo en la tarjeta. |
+| `categoria` | string | no | — | `id` de una categoría de la lista. Si no existe, la respuesta es inválida. |
+| `niveles` | string[] | no | 0 a 6 | Niveles o grados que participan: «Primaria». `[]` = no se indica. |
+| `estado` | `"en-curso"` \| `"proximo"` \| `"finalizado"` \| null | sí | — | Se muestra «En curso», «Próximamente» o «Finalizado». |
+| `fecha` | fecha \| null | sí | — | Inicio o fecha de realización. |
+| `foto` | `Imagen` \| null | sí | — | Proporción 3:2, mínimo 1200 × 800. Foto real del proyecto, no una ilustración. |
+
+### 3.18 `GET /v1/proyectos/{slug}`
+
+El detalle de un proyecto. Devuelve un `Proyecto`: todos los campos de `ProyectoResumen` más los de esta tabla. Si el `slug` no existe, responde **`404`** con el sobre de error (§1.4); el portal muestra «Proyecto no encontrado» con un enlace a la lista.
+
+| Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
+|---|---|---|---|---|
+| `categoriaNombre` | string | no | 40 | Nombre de la categoría, para no depender de la lista. |
+| `descripcion` | string[] | no | 1 a 6 | Párrafos, texto plano. |
+| `secciones` | `SeccionProyecto[]` | no | 0 a 8 | En orden: «Objetivos», «Ejes fundamentales», «Metodología», «Beneficios»… |
+| `galeria` | `Imagen[]` | no | 0 a 12 | Fotos 3:2. `[]` = sin galería. |
+
+**`SeccionProyecto`**: `titulo` (máx. 60), `tipo` e `items` (1 a 12). Cada ítem tiene `titulo` (string \| null, máx. 60) y `texto` (máx. 240).
+- `"lista"`: viñetas. Las listas seguidas se muestran lado a lado, en placas.
+- `"numerada"`: placas numeradas a todo el ancho (el portal pone los números; no los escriban en el texto). Para ejes o etapas con título.
+
+```json
+{
+  "data": {
+    "id": "robotica",
+    "slug": "robotica",
+    "titulo": "Robótica, Impresiones 3D y Computación",
+    "lema": "Tecnología con propósito: creamos, servimos y transformamos.",
+    "resumen": "Impulsa el desarrollo de competencias digitales en los estudiantes, promoviendo el pensamiento lógico, la resolución de problemas y la creatividad tecnológica.",
+    "categoria": "tecnologia",
+    "categoriaNombre": "Tecnología",
+    "niveles": [],
+    "estado": null,
+    "fecha": null,
+    "foto": null,
+    "descripcion": ["Curso-taller que integra robótica, impresión 3D y computación…"],
+    "secciones": [
+      { "titulo": "Objetivos", "tipo": "lista", "items": [{ "titulo": null, "texto": "Construir y programar robots funcionales." }] },
+      { "titulo": "Ejes fundamentales", "tipo": "numerada", "items": [{ "titulo": "Tecnología creativa", "texto": "Explora herramientas digitales para diseñar, programar y construir soluciones innovadoras." }] }
+    ],
+    "galeria": []
+  }
+}
+```
+
 ## 4. Lo que el portal hace con cada caso
 
 Esto sirve para que el módulo sepa qué pasa con lo que publica.
@@ -656,6 +734,8 @@ Esto sirve para que el módulo sepa qué pasa con lo que publica.
 | Matrícula: un solo proceso | Se muestra sin pestañas. |
 | Contacto: sede sin `mapaEmbedUrl` | En el mapa, esa sede muestra «todavía no tiene un mapa» y el enlace «Cómo llegar». |
 | Contacto: redes `[]` y `correo: null` | «Las redes del colegio se publicarán pronto». |
+| Proyectos: una sola categoría con proyectos | No aparece el filtro. |
+| Proyecto inexistente (`404`) | «Proyecto no encontrado», con enlace a la lista. Cualquier otro error muestra «Reintentar». |
 | Matrícula: falla `/v1/sitio` | El formulario muestra su error con «Reintentar», porque no tiene el número de WhatsApp. |
 
 ---
@@ -669,5 +749,5 @@ Esto sirve para que el módulo sepa qué pasa con lo que publica.
 El portal trae datos de prueba que cumplen este contrato en `PW_Frontend/src/api/mock/`. Sirven de **ejemplos completos** de cada respuesta: el módulo puede compararse con ellos.
 
 - `tipico/`: contenido real del colegio.
-- Escenarios que solo cambian algunos archivos: `corto/`, `largo/`, `sin-foto/`, `alt-vacio/` y `vacio/`. El carrusel tiene 3 banners en `tipico/`, 1 en `corto/`, 6 en `largo/` y ninguno en `vacio/`. Matrícula tiene datos en `tipico/`, `corto/`, `largo/` y `vacio/`, y su cabecera además en `sin-foto/` y `alt-vacio/`. En `tipico/`, los requisitos, documentos y pasos son los de los afiches de cata.edu.pe; el año es el de los afiches publicados (2026), las fechas son de prueba y las vacantes dicen «consultar». Contacto tiene datos en todos los escenarios. En `tipico/`, sedes y redes son las de cata.edu.pe; el colegio no publica correos ni horarios, así que van vacíos, y los mapas son búsquedas de cada dirección, que el colegio debe reemplazar por las de «Insertar un mapa».
+- Escenarios que solo cambian algunos archivos: `corto/`, `largo/`, `sin-foto/`, `alt-vacio/` y `vacio/`. El carrusel tiene 3 banners en `tipico/`, 1 en `corto/`, 6 en `largo/` y ninguno en `vacio/`. Matrícula tiene datos en `tipico/`, `corto/`, `largo/` y `vacio/`, y su cabecera además en `sin-foto/` y `alt-vacio/`. En `tipico/`, los requisitos, documentos y pasos son los de los afiches de cata.edu.pe; el año es el de los afiches publicados (2026), las fechas son de prueba y las vacantes dicen «consultar». Contacto tiene datos en todos los escenarios. En `tipico/`, sedes y redes son las de cata.edu.pe; el colegio no publica correos ni horarios, así que van vacíos, y los mapas son búsquedas de cada dirección, que el colegio debe reemplazar por las de «Insertar un mapa». Proyectos tiene datos en los seis escenarios; los detalles se guardan como `proyecto--{slug}.json`. En `tipico/`, los dos proyectos y sus textos son los que publica cata.edu.pe (Gastronomía e Industrias Alimentarias, y Robótica, Impresiones 3D y Computación); las fotos son de prueba, y niveles, estado y fecha van vacíos porque no están publicados.
 - Las pruebas automáticas (`npm test` en `PW_Frontend/`) validan todos esos archivos contra este contrato.

@@ -1,14 +1,18 @@
 import { useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import { motion, useMotionTemplate, useReducedMotion, useScroll, useTransform } from 'motion/react'
+import { Link } from 'react-router-dom'
 import type { Imagen } from '../../api/tipos'
 import { Cargando, ErrorCarga } from '../../components/EstadoSeccion'
 import { atributosExterno } from '../../lib/formato'
+import { useRutaInterna } from '../../sitio/BaseRuta'
 
 export interface AccionCabecera {
   href: string
   etiqueta: string
   icono: ReactNode
   estilo: 'oro' | 'blanco'
+  /** true: `href` es una ruta del sitio (/proyectos) y se navega con el router. */
+  interna?: boolean
 }
 
 export interface PlacaCabecera {
@@ -28,15 +32,21 @@ interface Props {
   acciones: AccionCabecera[]
   placa: PlacaCabecera | null
   figura: Imagen | null
+  /** Foto rectangular (no recorte) en un marco blanco girado; solo si no hay placa ni recorte. */
+  foto?: Imagen | null
+  /** Datos breves bajo la bajada (categoría, estado, fecha…). */
+  meta?: ReactNode
 }
 
-// Cabecera celeste de las páginas internas (Matrícula, Contacto): titular, barras, bajada y botones.
+// Cabecera celeste de las páginas internas (Matrícula, Contacto, Proyectos): titular, barras, bajada y botones.
 // A la derecha, una composición de proporción fija: una placa marina inclinada con un rótulo y un valor
-// grande, y el recorte de un estudiante delante.
-export default function CabeceraPagina({ idTitulo, titulo, bajada, acciones, placa, figura: figuraApi }: Props) {
+// grande, y el recorte de un estudiante delante; o bien una foto enmarcada.
+export default function CabeceraPagina({ idTitulo, titulo, bajada, acciones, placa, figura: figuraApi, foto: fotoApi = null, meta }: Props) {
   const seccion = useRef<HTMLElement>(null)
   const reducir = useReducedMotion()
+  const interna = useRutaInterna()
   const [falloFigura, setFalloFigura] = useState(false)
+  const [falloFoto, setFalloFoto] = useState(false)
 
   // Scroll: las franjas bajan y la placa sube un poco más lento que el texto.
   const { scrollYProgress } = useScroll({ target: seccion, offset: ['start start', 'end start'] })
@@ -47,6 +57,7 @@ export default function CabeceraPagina({ idTitulo, titulo, bajada, acciones, pla
 
   const figura = figuraApi && !falloFigura ? figuraApi : null
   const conComposicion = placa !== null || figura !== null
+  const foto = !conComposicion && fotoApi && !falloFoto ? fotoApi : null
   // Valores largos (un teléfono) usan un cuerpo menor que un año de cuatro cifras.
   const valorLargo = placa !== null && placa.valor.length > 5
 
@@ -61,7 +72,7 @@ export default function CabeceraPagina({ idTitulo, titulo, bajada, acciones, pla
   return (
     <section
       ref={seccion}
-      className={`f-hero f-hero--pagina${conComposicion ? '' : ' f-hero--solo-texto'}`}
+      className={`f-hero f-hero--pagina${conComposicion || foto ? '' : ' f-hero--solo-texto'}`}
       aria-labelledby={idTitulo}
     >
       <motion.div className="f-hero__franjas" aria-hidden="true" style={reducir ? undefined : { transform: tFranjas }}>
@@ -81,18 +92,42 @@ export default function CabeceraPagina({ idTitulo, titulo, bajada, acciones, pla
             ))}
           </div>
           {bajada && <p className="f-hero__bajada">{bajada}</p>}
+          {meta && <div className="f-hero__meta">{meta}</div>}
           {acciones.length > 0 && (
             <div className="f-hero__acciones">
-              {acciones.map((a) => (
-                <a key={a.href} href={a.href} className={`f-boton f-boton--${a.estilo}`}>
+              {acciones.map((a) => {
+                const clase = `f-boton f-boton--${a.estilo}`
+                const texto = (
                   <span className="f-boton__texto">
                     {a.etiqueta} {a.icono}
                   </span>
-                </a>
-              ))}
+                )
+                return a.interna ? (
+                  <Link key={a.href} to={interna(a.href)} className={clase}>
+                    {texto}
+                  </Link>
+                ) : (
+                  <a key={a.href} href={a.href} className={clase}>
+                    {texto}
+                  </a>
+                )
+              })}
             </div>
           )}
         </div>
+
+        {foto && (
+          <div className="f-cab-foto">
+            <img
+              src={foto.url}
+              alt={foto.alt}
+              width={foto.ancho ?? undefined}
+              height={foto.alto ?? undefined}
+              onError={() => setFalloFoto(true)}
+              {...{ fetchpriority: 'high' }}
+            />
+          </div>
+        )}
 
         {conComposicion && (
           // Composición de proporción fija: la placa, el valor y el recorte se ubican en % de ella.

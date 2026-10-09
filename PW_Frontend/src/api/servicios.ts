@@ -16,6 +16,8 @@ import {
   esquemaGrados,
   esquemaNiveles,
   esquemaNoticias,
+  esquemaProyecto,
+  esquemaProyectos,
   esquemaQuienesSomos,
   esquemaSedes,
   esquemaSitio,
@@ -28,6 +30,8 @@ import type {
   FechasMatricula,
   PreguntaFrecuente,
   ProcesoMatricula,
+  Proyecto,
+  Proyectos,
   SolicitudInformacion,
   Vacantes,
   Cifra,
@@ -63,12 +67,16 @@ type Recurso =
   | 'matricula-preguntas'
   | 'solicitud'
   | 'contacto'
+  | 'proyectos'
+  | 'proyecto'
 
 export class ErrorDatos extends Error {
   constructor(
     mensaje: string,
     readonly recurso: Recurso,
     readonly causa?: unknown,
+    /** La API respondió 404: el recurso pedido no existe (p. ej. un proyecto con otro slug). */
+    readonly noEncontrado = false,
   ) {
     super(mensaje)
     this.name = 'ErrorDatos'
@@ -106,15 +114,18 @@ const MEDIOS_PRUEBA = 'https://medios.prueba.cata.edu.pe/'
 
 const esperar = (ms: number) => new Promise((r) => setTimeout(r, ms))
 
-async function leerLocal(recurso: Recurso): Promise<unknown> {
+class NoEncontrado extends Error {}
+
+// `archivo` es el nombre del JSON; para los detalles lleva el slug: «proyecto--gastronomia».
+async function leerLocal(archivo: string): Promise<unknown> {
   if (origen.tipo !== 'local') throw new Error('origen no local')
   if (origen.retrasoMs > 0) await esperar(origen.retrasoMs)
   if (origen.escenario === 'error') throw new Error('Escenario de prueba «error»')
 
   // Cada escenario solo trae los archivos que cambia; el resto sale de «tipico».
   const cargar =
-    archivosLocales[`./mock/${origen.escenario}/${recurso}.json`] ?? archivosLocales[`./mock/tipico/${recurso}.json`]
-  if (!cargar) throw new Error(`No hay datos de prueba para ${recurso}`)
+    archivosLocales[`./mock/${origen.escenario}/${archivo}.json`] ?? archivosLocales[`./mock/tipico/${archivo}.json`]
+  if (!cargar) throw new NoEncontrado(`No hay datos de prueba para ${archivo}`)
   return (await cargar()).default
 }
 
@@ -126,6 +137,7 @@ const servirMediosLocales = <T,>(datos: T): T =>
 
 async function leerApi(ruta: string): Promise<unknown> {
   const res = await fetch(`${API_URL}${ruta}`, { headers: { Accept: 'application/json' } })
+  if (res.status === 404) throw new NoEncontrado(`404 en ${ruta}`)
   if (!res.ok) throw new Error(`HTTP ${res.status} en ${ruta}`)
   return res.json()
 }
@@ -136,12 +148,13 @@ async function leer<S extends z.ZodTypeAny>(
   recurso: Recurso,
   ruta: string,
   esquema: S,
+  archivo: string = recurso,
 ): Promise<z.infer<S>> {
   let cuerpo: unknown
   try {
-    cuerpo = origen.tipo === 'local' ? await leerLocal(recurso) : await leerApi(ruta)
+    cuerpo = origen.tipo === 'local' ? await leerLocal(archivo) : await leerApi(ruta)
   } catch (e) {
-    throw new ErrorDatos(`No se pudo leer ${recurso}`, recurso, e)
+    throw new ErrorDatos(`No se pudo leer ${recurso}`, recurso, e, e instanceof NoEncontrado)
   }
 
   const resultado = esquema.safeParse(cuerpo)
@@ -222,4 +235,16 @@ export async function obtenerSolicitud(): Promise<SolicitudInformacion> {
 
 export async function obtenerContacto(): Promise<Contacto> {
   return (await leer('contacto', '/v1/contacto', sobre(esquemaContacto))).data
+}
+
+// Proyectos
+
+export async function obtenerProyectos(): Promise<Proyectos> {
+  return (await leer('proyectos', '/v1/proyectos', sobre(esquemaProyectos))).data
+}
+
+export async function obtenerProyecto(slug: string): Promise<Proyecto> {
+  // Un slug que no cumple el formato no puede existir: no se pide.
+  if (!/^[a-z0-9-]+$/.test(slug)) throw new ErrorDatos(`Slug inválido: ${slug}`, 'proyecto', undefined, true)
+  return (await leer('proyecto', `/v1/proyectos/${slug}`, sobre(esquemaProyecto), `proyecto--${slug}`)).data
 }

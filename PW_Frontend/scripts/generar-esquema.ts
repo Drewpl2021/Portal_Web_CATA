@@ -16,6 +16,8 @@ import {
   esquemaGrados,
   esquemaNiveles,
   esquemaNoticias,
+  esquemaProyecto,
+  esquemaProyectos,
   esquemaQuienesSomos,
   esquemaSedes,
   esquemaSitio,
@@ -40,6 +42,8 @@ const respuestas = {
   'GET /v1/matricula/preguntas': sobre(esquemaPreguntas),
   'GET /v1/solicitud': sobre(esquemaSolicitud),
   'GET /v1/contacto': sobre(esquemaContacto),
+  'GET /v1/proyectos': sobre(esquemaProyectos),
+  'GET /v1/proyectos/{slug}': sobre(esquemaProyecto),
 }
 
 const definitions = Object.fromEntries(
@@ -51,7 +55,7 @@ const definitions = Object.fromEntries(
 
 const documento = {
   $schema: 'http://json-schema.org/draft-07/schema#',
-  title: 'API pública del portal CATA 2.2 (docs/API_CONTRACT.md)',
+  title: 'API pública del portal CATA 2.3 (docs/API_CONTRACT.md)',
   description: 'Cuerpo de respuesta 200 de cada endpoint. Generado desde PW_Frontend/src/api/esquemas.ts; no editar a mano.',
   definitions,
 }

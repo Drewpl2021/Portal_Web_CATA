@@ -2,6 +2,7 @@
   "data": {
     "titulo": "Solicitar información",
     "texto": null,
-    "mensajeWhatsapp": "Hola, soy {nombre}. Quisiera información sobre la matrícula para {grado}."
+    "mensajeWhatsapp": "Hola, soy {nombre}. Quisiera información sobre el colegio para {grado}.",
+    "mensajesPorPagina": []
   }
 }

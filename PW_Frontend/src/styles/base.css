@@ -4,9 +4,16 @@
   box-sizing: border-box;
 }
 
+/*
+  Escala del sitio. Hasta 1920 px de ancho la raíz vale 100 % (16 px, o lo que la persona configure).
+  Por encima crece en proporción al ancho: 2560 px → 21,3 px; 3840 px → 32 px (tope 200 %).
+  Como todo el sitio se mide en rem, en 2K y 4K se ve igual que en 1080p, solo más grande:
+  nada queda pequeño ni flotando suelto.
+*/
 html {
+  font-size: clamp(100%, 0.8333vw, 200%);
   scroll-behavior: smooth;
-  scrollbar-color: var(--azul-emblema) var(--azul-claro-lavado);
+  scrollbar-color: var(--marino) var(--celeste-lavado);
   -webkit-text-size-adjust: 100%;
 }
 
@@ -19,19 +26,19 @@ html {
 body {
   margin: 0;
   background: var(--blanco);
-  color: var(--tinta);
-  font-family: var(--font-texto);
+  color: var(--marino);
+  font-family: var(--font-display);
   font-size: 1.0625rem;
   line-height: 1.6;
   font-variant-numeric: lining-nums;
   -webkit-font-smoothing: antialiased;
-  caret-color: var(--azul-emblema);
+  caret-color: var(--marino);
   overflow-wrap: break-word;
 }
 
 ::selection {
-  background: var(--azul-claro);
-  color: var(--tinta);
+  background: var(--dorado);
+  color: var(--marino);
 }
 
 h1,
@@ -72,7 +79,7 @@ select {
 }
 
 :focus-visible {
-  outline: 3px solid var(--foco, var(--tinta));
+  outline: 3px solid var(--foco, var(--marino));
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -86,18 +93,20 @@ select {
   white-space: nowrap;
 }
 
+/* Por encima de la cabecera fija: el foco nunca queda tapado */
 .skip-link {
   position: absolute;
   left: var(--gutter);
   top: -100px;
   z-index: 100;
-  padding: 10px 16px;
-  background: var(--tinta);
+  padding: 0.625rem 1rem;
+  background: var(--marino);
   color: var(--blanco);
   font-weight: 600;
   text-decoration: none;
 }
 
 .skip-link:focus {
-  top: 12px;
+  top: 0.75rem;
+  outline-color: var(--dorado);
 }

@@ -15,16 +15,16 @@
       "dorado-claro": { "role": "neutral", "displayName": "Dorado claro", "canonical": "#ffca7a", "tonalRamp": ["#4a3000", "#7a5000", "#b07812", "#e09f36", "#ffbd59", "#ffca7a", "#ffe0ae", "#fff4e2"] }
     },
     "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "Titular del hero, blanco sobre celeste, con cortina de izquierda a derecha." },
+      "display": { "displayName": "Display", "purpose": "Titular de la cabecera de Propuesta Educativa, blanco sobre celeste, con cortina de izquierda a derecha." },
       "headline-enorme": { "displayName": "Headline enorme", "purpose": "Título del cierre." },
       "headline": { "displayName": "Headline", "purpose": "Título de cada sección." },
-      "headline-chico": { "displayName": "Headline chico", "purpose": "Título del aviso vigente." },
+      "headline-chico": { "displayName": "Headline chico", "purpose": "Título de cada banner del carrusel de Inicio, sobre su placa marina." },
       "cifra": { "displayName": "Cifra", "purpose": "Valores dorados de la franja de cifras, animados con NumberFlow." },
       "title": { "displayName": "Title", "purpose": "Nombre de cada carril de nivel." },
       "title-placa": { "displayName": "Title placa", "purpose": "Nombres de sede, noticias placa, subtítulos y títulos del pie (112 %, 850, mayúsculas)." },
       "label-boton": { "displayName": "Label botón", "purpose": "Texto de botones inclinados e ICRM." },
       "label-nav": { "displayName": "Label nav", "purpose": "Enlaces del menú principal (87.5 %, mayúsculas)." },
-      "bajada": { "displayName": "Bajada", "purpose": "Bajada del hero; 24 px para poder ir sobre celeste." },
+      "bajada": { "displayName": "Bajada", "purpose": "Bajada de la cabecera de Propuesta Educativa; 24 px para poder ir sobre celeste." },
       "body": { "displayName": "Body", "purpose": "Texto corrido, máx. 60ch, siempre al 100 % de ancho." },
       "body-meta": { "displayName": "Body meta", "purpose": "Fecha, tipo y detalles en marino suave." }
     },
@@ -43,8 +43,8 @@
       { "name": "escalonado", "value": "60ms entre elementos", "purpose": "Tarjetas y cifras." },
       { "name": "carriles", "value": "90ms entre elementos, desde translateX(-56px)", "purpose": "Carriles de nivel." },
       { "name": "contador", "value": "1100ms NumberFlow", "purpose": "Cifras que suben hasta su valor." },
-      { "name": "parallax", "value": "6 %", "purpose": "Fotos grandes; en el hero, franjas 120 px, figuras 50 px y anillo 140°." },
-      { "name": "resorte-puntero", "value": "stiffness 120, damping 18", "purpose": "Los alumnos del hero siguen al mouse." },
+      { "name": "parallax", "value": "6 %", "purpose": "Fotos grandes; en la cabecera de Propuesta Educativa, franjas 7rem, escena 3rem y anillo 140°." },
+      { "name": "resorte-puntero", "value": "stiffness 120, damping 18", "purpose": "Los alumnos de la escena siguen al mouse (en % de la escena)." },
       { "name": "pagina", "value": "280ms entrada, 160ms salida", "purpose": "Transición entre páginas." },
       { "name": "mega-menu", "value": "220ms entrada, 140ms salida", "purpose": "Apertura y cierre del mega menú." },
       { "name": "indicador", "value": "spring 220ms, bounce 0", "purpose": "Indicador dorado deslizante del menú." },
@@ -134,7 +134,7 @@
   ],
   "narrative": {
     "northStar": "El Día de Olimpiadas",
-    "overview": "El portal se viste como un día de olimpiadas escolares de CATA: franjas diagonales como de camiseta deportiva, alumnos reales al frente, tipografía ancha en mayúsculas y orgullo institucional en forma de medalla. La energía viene de la diagonal y del contraste entre un campo celeste, placas blancas y bloques marinos; el dorado es la cinta de premiación, nunca el campo.\n\nLa página alterna fondos con ritmo de pista: cabecera marina, hero celeste, franja marina de cifras, cuerpo blanco, carriles sobre celeste, noticias sobre celeste lavado, cierre celeste y pie marino. Las piezas se inclinan (placas con `skewX`, cortes en diagonal, franjas rotadas) pero el texto siempre queda recto y legible. Cada sección entra con su propio gesto, y el movimiento se limita a transform y opacity.\n\nLa paleta es la oficial del colegio y es obligatoria. El contenido llega de una API de solo lectura, así que cada componente sostiene textos cortos, típicos y muy largos, imágenes ausentes y secciones vacías.",
+    "overview": "El portal se viste como un día de olimpiadas escolares de CATA: franjas diagonales como de camiseta deportiva, alumnos reales al frente, tipografía ancha en mayúsculas y orgullo institucional en forma de medalla. La energía viene de la diagonal y del contraste entre un campo celeste, placas blancas y bloques marinos; el dorado es la cinta de premiación, nunca el campo.\n\nLa página alterna fondos con ritmo de pista: cabecera marina, carrusel de novedades en Inicio, franja marina de cifras, cuerpo blanco, carriles sobre celeste, noticias sobre celeste lavado, cierre celeste y pie marino. Las piezas se inclinan (placas con `skewX`, cortes en diagonal, franjas rotadas) pero el texto siempre queda recto y legible. Cada sección entra con su propio gesto, y el movimiento se limita a transform y opacity.\n\nLa paleta es la oficial del colegio y es obligatoria. El contenido llega de una API de solo lectura, así que cada componente sostiene textos cortos, típicos y muy largos, imágenes ausentes y secciones vacías.",
     "keyCharacteristics": [
       "Celeste y blanco dominan (≈ 30 % celeste, 60 % blanco); marino en cabecera, cifras, carriles y pie; dorado solo como acento.",
       "Archivo Variable en dos anchos: 125 % y 900 en mayúsculas para títulos, 100 % para el texto.",

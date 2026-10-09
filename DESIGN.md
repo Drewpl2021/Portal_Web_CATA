@@ -184,7 +184,7 @@ components:
 
 El portal se viste como un día de olimpiadas escolares de CATA: franjas diagonales como de camiseta deportiva, alumnos reales al frente, tipografía ancha en mayúsculas y orgullo institucional en forma de medalla. La energía viene de la diagonal y del contraste entre un campo celeste, placas blancas y bloques marinos; el dorado es la cinta de premiación, nunca el campo.
 
-La página alterna fondos con ritmo de pista: cabecera marina, hero celeste, franja marina de cifras, cuerpo blanco, carriles sobre celeste, noticias sobre celeste lavado, cierre celeste y pie marino. Las piezas se inclinan (placas con `skewX`, cortes en diagonal, franjas rotadas) pero el texto siempre queda recto y legible. Cada sección entra con su propio gesto, y el movimiento se limita a transform y opacity.
+La página alterna fondos con ritmo de pista: cabecera marina; en Inicio, el carrusel de novedades a todo el ancho y luego la franja marina de cifras, cuerpo blanco, carriles sobre celeste, noticias sobre celeste lavado, cierre celeste y pie marino; en Propuesta Educativa, una cabecera celeste con la escena de los alumnos. Las piezas se inclinan (placas con `skewX`, cortes en diagonal, franjas rotadas) pero el texto siempre queda recto y legible. Cada sección entra con su propio gesto, y el movimiento se limita a transform y opacity.
 
 La paleta es la oficial del colegio y es obligatoria. El contenido llega de una API de solo lectura, así que cada componente sostiene textos cortos, típicos y muy largos, imágenes ausentes y secciones vacías.
 
@@ -200,7 +200,7 @@ La paleta es la oficial del colegio y es obligatoria. El contenido llega de una 
 Cuatro colores oficiales y cinco derivados para estados y superficies; nada más.
 
 ### Primary
-- **Celeste CATA** (celeste): el campo. Fondo del hero, de la sección de niveles y del cierre; reglas de 4 px bajo la cabecera, sobre cada cifra y bajo los títulos del mega menú. Sobre él solo va texto grande.
+- **Celeste CATA** (celeste): el campo. Fondo de la cabecera de Propuesta Educativa, de la sección de niveles y del cierre; reglas de 4 px bajo la cabecera, sobre cada cifra y bajo los títulos del mega menú. Sobre él solo va texto grande.
 - **Blanco** (blanco): la superficie dominante. Fondo de las secciones de contenido, de los carriles claros, del mega menú y de las tarjetas de noticia.
 
 ### Secondary
@@ -232,16 +232,16 @@ Cuatro colores oficiales y cinco derivados para estados y superficies; nada más
 **Character:** Una sola familia variable que cambia de ancho según el papel: ancha, negra y en mayúsculas como un dorsal para titular; normal y tranquila para leer. Big Shoulders Display y Barlow son heredadas y solo las usa la portada antigua en `/`; ninguna superficie nueva las usa.
 
 ### Hierarchy
-- **Display** (900, 125 %, clamp(1.85rem, 4.3vw, 4.25rem), 0.96, mayúsculas, `text-wrap: balance`): titular del hero, blanco sobre celeste.
+- **Display** (900, 125 %, clamp(1.85rem, 3.9vw, 3.75rem), 0.96, mayúsculas, `text-wrap: balance`): titular de la cabecera de Propuesta Educativa, blanco sobre celeste.
 - **Headline enorme** (900, 125 %, clamp(2.5rem, 6.4vw, 5.6rem), 0.98, mayúsculas): título del cierre.
-- **Headline** (900, 125 %, clamp(2rem, 4.2vw, 3.6rem), 0.98, mayúsculas): título de cada sección; la variante chica (clamp(1.6rem, 3vw, 2.4rem)) para el aviso.
+- **Headline** (900, 125 %, clamp(2rem, 4.2vw, 3.6rem), 0.98, mayúsculas): título de cada sección. El título de cada banner del carrusel usa clamp(1.15rem, 1.9vw, 1.9rem) sobre su placa marina.
 - **Cifra** (900, 125 %, clamp(3.2rem, 6vw, 5.4rem), 0.9, números tabulares): valores de la franja de cifras, en dorado.
 - **Title** (900, 125 %, clamp(1.7rem, 2.8vw, 2.6rem), 0.95, mayúsculas): nombre de cada carril de nivel.
 - **Title placa** (850, 112 %, 1.15rem a 1.35rem, mayúsculas): nombre de sede, título de noticia placa, subtítulos, títulos del pie.
 - **Label botón** (850, 112 %, 1.02rem, 0.02em, mayúsculas): texto de botones e ICRM.
 - **Label nav** (700, 87.5 %, 0.95rem, 0.03em, mayúsculas): enlaces del menú principal; el activo sube a 850.
-- **Bajada** (500, 100 %, 1.5rem, 1.35, máx. 30ch): la bajada del hero; es texto grande para poder ir sobre celeste.
-- **Body** (400, 100 %, 1.12rem, 1.65, máx. 60ch): párrafos de Quiénes somos y del aviso.
+- **Bajada** (500, 100 %, 1.5rem, 1.35, máx. 30ch): la bajada de la cabecera de Propuesta Educativa; es texto grande para poder ir sobre celeste.
+- **Body** (400, 100 %, 1.12rem, 1.65, máx. 60ch): párrafos de Quiénes somos.
 - **Body meta** (400, 0.92rem a 0.97rem): fecha y tipo de noticia, detalle de sede; en marino suave.
 
 ### Named Rules
@@ -254,13 +254,23 @@ Cuatro colores oficiales y cinco derivados para estados y superficies; nada más
 
 Contenido centrado a un máximo de 1240 px más dos márgenes laterales de clamp(16px, 4vw, 48px). Cada sección tiene clamp(72px, 10vw, 128px) arriba y abajo, y 32 a 48 px entre la cabeza de sección y su contenido. Las rejillas de tarjetas son `auto-fit` con mínimos de 240 px (sedes), 280 px (noticias) y 220 px (cifras) y 20 px de separación, de modo que se reacomodan solas según la cantidad que mande la API.
 
-El hero ocupa la altura de la ventana menos la cabecera, en dos columnas (1.18fr texto, 0.82fr figuras); sin figuras pasa a una sola columna. Quiénes somos pone una foto 4:5 fija (sticky) a la izquierda y el texto a la derecha. Los carriles son filas a lo ancho: nombre, datos y, si hay, foto.
+La cabecera de Propuesta Educativa ocupa la altura de la ventana menos la cabecera fija; su interior se limita a `--ancho-escena` (90rem) en dos columnas (1.05fr texto, 0.95fr escena) y sin figuras pasa a una sola columna. El carrusel de Inicio va a todo el ancho con proporción ≈ 1900:700 en escritorio y 4:5 en móvil. Quiénes somos pone una foto 4:5 fija (sticky) a la izquierda y el texto a la derecha. Los carriles son filas a lo ancho: nombre, datos y, si hay, foto.
 
-Puntos de quiebre: 1280 px (se oculta el nombre largo en la cabecera, el pie pasa a dos columnas), 1099 px (el menú se vuelve hamburguesa), 899 px (hero, carriles, aviso y Quiénes somos a una columna; la inclinación de los carriles baja de -10° a -4°), 600 px (cabecera de 68 px, ICRM pasa al menú móvil, botones a lo ancho, pie a una columna).
+Puntos de quiebre: 1439 px (se oculta el nombre largo junto al logo), 1280 px (el pie pasa a dos columnas), 1099 px (el menú se vuelve hamburguesa), 899 px (cabecera con escena, carriles y Quiénes somos a una columna; la inclinación de los carriles baja de -10° a -4°), 700 px (el carrusel pasa a 4:5, usa la imagen móvil y la placa va a lo ancho), 600 px (cabecera de 68 px, ICRM pasa al menú móvil, botones a lo ancho, pie a una columna).
 
-**Proporciones de imagen:** foto de Quiénes somos 4:5; placa de sede 4:3; foto de noticia y de carril 3:2; foto de respaldo del hero 4:3; recortes de alumnos y aviso en su proporción natural. Sin imagen, o si no carga, el bloque de imagen desaparece sin dejar hueco.
+**Proporciones de imagen:** banner del carrusel ≈ 1900:700 en escritorio y 4:5 en móvil (recortado en su punto focal); foto de Quiénes somos 4:5; placa de sede 4:3; foto de noticia y de carril 3:2; foto de respaldo de la escena 4:3; recortes de alumnos en su proporción natural. Sin imagen, o si no carga, el bloque de imagen desaparece sin dejar hueco.
 
-**Estados de sección:** al cargar, un esqueleto de barras con un latido de opacidad y un texto oculto «Cargando …» con `role="status"`; si falla, el mensaje «No pudimos cargar …», una ayuda y un botón «Reintentar» con `role="alert"`, sin tumbar el resto de la página; vacío, una frase que dice cuándo llegará el contenido (y en noticias, teléfono y WhatsApp). Las secciones complementarias (cifras, aviso) se ocultan si no hay datos o fallan.
+**Estados de sección:** al cargar, un esqueleto de barras con un latido de opacidad y un texto oculto «Cargando …» con `role="status"`; si falla, el mensaje «No pudimos cargar …», una ayuda y un botón «Reintentar» con `role="alert"`, sin tumbar el resto de la página; vacío, una frase que dice cuándo llegará el contenido (y en noticias, teléfono y WhatsApp). Las cifras se ocultan si no hay datos o fallan; el carrusel se oculta si no hay banners y, si falla, muestra su error con «Reintentar».
+
+## Escala y responsivo
+
+Regla para **todo el sitio, presente y futuro**: el portal es 100 % responsivo de 360 px a 4K y se verifica con capturas en 360, 390, 768, 1024, 1366, 1920, 2560 y 3840 px antes de dar una página por terminada.
+
+- **Todo se mide en rem.** La raíz es fluida (`html { font-size: clamp(100%, 0.8333vw, 200%) }`): hasta 1920 px vale 16 px (o lo que la persona configure) y por encima crece con el ancho (21,3 px en 2560; 32 px en 3840). En 2K y 4K el sitio se ve igual que en 1080p, solo más grande; nada queda pequeño ni flotando. Solo quedan en px los bordes de 1 px, las media queries y el texto dentro de SVG con `viewBox`.
+- **Ancho máximo de contenido.** Secciones en `--ancho` (77.5rem) y composiciones a sangre en `--ancho-escena` (90rem), centradas; el fondo puede ir a todo el ancho, el contenido no.
+- **Tipografía fluida** con `clamp(mínimo en rem, valor en vw, máximo en rem)`.
+- **Las composiciones se agrupan.** Lo que forma una sola imagen (anillo, medalla, alumnos, franjas de una escena) va dentro de un contenedor con proporción fija (`aspect-ratio`) y cada pieza se ubica y dimensiona en % de ese contenedor, nunca en relación con la ventana. Así escalan y se mueven juntas.
+- **Sin desplazamiento horizontal** en ningún ancho; la raíz de la página usa `overflow-x: clip`.
 
 ## Elevation & Depth
 
@@ -279,7 +289,7 @@ Sistema plano con capas de color; la profundidad viene de la superposición de p
 
 ## Shapes
 
-Lenguaje de placas inclinadas: el fondo se inclina (`skewX(-12deg)` en botones e ICRM, `-10deg` en carriles, `-8deg` en la placa celeste tras la foto de Quiénes somos) y el texto queda recto encima. Las fotos de sede se cortan en diagonal por abajo (`clip-path: polygon(0 0, 100% 0, 100% 86%, 0 100%)`) y las de carril como paralelogramo (`polygon(10% 0, 100% 0, 90% 100%, 0 100%)`). Las franjas del hero, del cierre y del divisor van rotadas (-11°, -6°, -2.2°).
+Lenguaje de placas inclinadas: el fondo se inclina (`skewX(-12deg)` en botones e ICRM, `-10deg` en carriles, `-8deg` en la placa celeste tras la foto de Quiénes somos) y el texto queda recto encima. Las fotos de sede se cortan en diagonal por abajo (`clip-path: polygon(0 0, 100% 0, 100% 86%, 0 100%)`) y las de carril como paralelogramo (`polygon(10% 0, 100% 0, 90% 100%, 0 100%)`). Las franjas de la cabecera de Propuesta Educativa, del cierre y del divisor van rotadas (-11°, -6°, -2.2°).
 
 Esquinas casi rectas: 2 px en tarjetas de sede y noticia, 4 px en carriles e ICRM, 5 px en botones, 8 px en fotos y símbolos. El único círculo es la medalla (y el anillo del emblema).
 
@@ -305,11 +315,14 @@ Texto marino 750 con subrayado dorado de 3 px a 0.35em y flecha; hover a celeste
 - **Mega menú (Nosotros):** panel blanco a lo ancho con regla dorada de 4 px arriba, tres columnas con título celeste grande subrayado en celeste y enlaces marinos; entra en 220 ms y sale en 140 ms; los grupos se escalonan 50 ms. Hover: el enlace pasa a celeste hondo y se corre 6 px.
 - **Menú móvil:** panel marino a pantalla completa con enlaces de 56 px en 900 al 125 %, subgrupos con su título y la placa ICRM al final; el actual va en dorado.
 
-### Héroe
-Campo celeste con titular blanco enorme, tres barras inclinadas que crecen (dorada 62 %, blanca 42 %, marina 22 %), bajada de 24 px y dos botones. A la derecha, dos alumnos recortados delante del anillo del emblema (círculo marino de trazo 12 y uno blanco punteado) y la medalla abajo a la izquierda; franjas marina, blanca y marina cruzan el fondo a -11°. Si no hay recortes se usa una foto 4:3 con marco blanco de 8 px girada -3°; si no hay nada, el hero queda solo con el texto.
+### Carrusel de novedades (solo Inicio)
+Primera sección de Inicio, bajo la cabecera y a todo el ancho, sobre fondo marino. Cada banner es una imagen grande (con versión móvil opcional y punto focal) y su texto real (título, categoría y fecha, botón dorado opcional) va en una placa marina inclinada con regla dorada, del lado que indique `alineacion` y alineada al ancho de contenido. El contraste no depende de la foto. Controles en una cápsula marina centrada abajo: flechas, indicadores (el activo es más ancho y una barra dorada muestra el progreso de los 6 s) y un botón visible Pausar/Reproducir. Avanza solo cada 6 s; se detiene con el mouse encima, con el foco dentro o con la pestaña oculta; funciona con las flechas del teclado y con arrastre. Las diapositivas que no se ven quedan inertes. Con un banner no hay controles; sin banners, desaparece. No se usa en ninguna otra página.
+
+### Cabecera con escena (Propuesta Educativa)
+Campo celeste con titular blanco enorme, tres barras inclinadas que crecen (dorada 62 %, blanca 42 %, marina 22 %), bajada de 24 px y dos botones. A la derecha, la **escena**: un bloque de proporción fija 6:5 (máx. 44rem) donde todo se ubica en % del bloque. El anillo del emblema (círculo marino de trazo 10 y uno blanco punteado) ocupa el 58 % del ancho arriba a la izquierda, con la medalla girando **centrada dentro del anillo**; dos alumnos recortados de pie a la derecha, delante del anillo. Así anillo, medalla y alumnos escalan y se mueven juntos en cualquier pantalla. Franjas marina, blanca y marina cruzan el fondo a -11°. Si no hay recortes se usa una foto 4:3 con marco blanco de 8 px girada -3°; si no hay nada, queda solo el texto.
 
 ### Medalla
-Disco marino con el emblema al 52 %, aro dorado de 4 px y el nombre del colegio (y «desde el año») girando en dorado alrededor en 40 s. Decorativa (`aria-hidden`). Gira solo mientras está en pantalla. Aparece en el hero y en el pie.
+Disco marino con el emblema al 52 %, aro dorado de 4 px y el nombre del colegio (y «desde el año») girando en dorado alrededor en 40 s. Decorativa (`aria-hidden`). Gira solo mientras está en pantalla. Aparece dentro del anillo de la cabecera de Propuesta Educativa y en el pie. Su texto vive en unidades del SVG (no en rem), porque el `viewBox` ya lo escala.
 
 ### Divisor de franjas
 Franjas de camiseta entre secciones: marina de 14 px, dorada de 4 px y celeste de 8 px, rotadas -2.2°, en una banda de 64 px. Variante lavada cuando la sección siguiente es celeste lavado. Decorativo.
@@ -339,9 +352,10 @@ Contorno de 3 px, a 3 px de distancia, esquina 4 px. Marino sobre fondos claros 
 - Solo se animan transform y opacity. Las cortinas usan scaleX o scaleY; los cambios de color al pasar el mouse son instantáneos.
 - Curvas: salida `cubic-bezier(0.23, 1, 0.32, 1)` para entradas y respuestas; recorrido `cubic-bezier(0.77, 0, 0.175, 1)` para cortinas.
 - Entrada propia por sección: cortina del título de izquierda a derecha (640 ms); foto con cortina del color del fondo (800 ms) y asiento desde 1.1 (1200 ms); tarjetas y cifras escalonadas cada 60 ms; carriles desde la izquierda cada 90 ms; barras que crecen. Las tarjetas y los carriles llevan texto, así que solo se desplazan (sin opacidad): el texto corrido nunca empieza oculto.
-- El texto corrido nunca empieza oculto; la bajada del hero solo se desliza.
+- El texto corrido nunca empieza oculto; la bajada de la cabecera solo se desliza y la placa de cada banner solo se asienta (transform, 450 ms).
 - Contadores con NumberFlow (1100 ms, curva de salida).
-- Parallax suave de 6 % en fotos grandes; en el hero, las franjas bajan 120 px, las figuras 50 px y el anillo gira 140° con el scroll.
+- Parallax suave de 6 % en fotos grandes; en la cabecera de Propuesta Educativa, las franjas bajan 7rem, la escena 3rem y el anillo gira 140° con el scroll; los alumnos siguen al puntero con un resorte medido en % de la escena.
+- Carrusel: deslizamiento de Embla al cambiar; con «reducir movimiento» no avanza solo y las diapositivas se funden en vez de deslizarse. La barra de progreso del indicador es lineal (6 s) y se pausa junto con el carrusel.
 - Los alumnos siguen al puntero con un resorte (rigidez 120, amortiguación 18), solo con mouse.
 - Transición de página: 280 ms al entrar, 160 ms al salir. Mega menú: 220 ms al entrar, 140 ms al salir.
 - Movimiento al pasar el mouse solo con puntero fino; solo se elevan (4 px) las tarjetas con acciones (sedes, noticias); las informativas solo ganan sombra.
@@ -362,6 +376,9 @@ Contorno de 3 px, a 3 px de distancia, esquina 4 px. Marino sobre fondos claros 
 - **Do** animar solo transform y opacity, con las curvas de salida y recorrido.
 - **Do** ajustar el color del foco al fondo: marino sobre claro, blanco sobre celeste y marino.
 
+- **Do** medir en rem, limitar el contenido a `--ancho`/`--ancho-escena` y agrupar las composiciones en un contenedor de proporción fija con piezas en %.
+- **Do** verificar cada página nueva en los ocho anchos (360 a 3840).
+
 ### Don't:
 - **Don't** usar el dorado como fondo de una sección o de una tarjeta.
 - **Don't** poner texto normal (cuerpo, metas, etiquetas pequeñas) sobre celeste.
@@ -370,4 +387,6 @@ Contorno de 3 px, a 3 px de distancia, esquina 4 px. Marino sobre fondos claros 
 - **Don't** esconder el texto corrido antes de que entre en pantalla.
 - **Don't** elevar al pasar el mouse una tarjeta que no tiene acciones.
 - **Don't** dejar la medalla girando fuera de pantalla ni ningún movimiento continuo sin control.
+- **Don't** posicionar piezas de una misma composición respecto de la ventana: en pantallas grandes se separan.
+- **Don't** usar carrusel fuera de Inicio.
 - **Don't** activar efectos de hover en pantallas táctiles.

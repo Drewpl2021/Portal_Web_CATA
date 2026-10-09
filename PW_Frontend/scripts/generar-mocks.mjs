@@ -64,35 +64,7 @@ const sitio = {
   promotora: 'Asociación Educativa Colegio Adventista Túpac Amaru',
 }
 
-const sec = (seccion) => ({ tipo: 'seccion', seccion })
-const rutas = {
-  familias: {
-    nombre: 'Familias que nos conocen',
-    bajada: 'Conoce el colegio y pide información sin compromiso.',
-    paradas: [
-      { id: 'f1', etiqueta: 'Quiénes somos', detalle: 'Desde 1971', destino: sec('quienes-somos') },
-      { id: 'f2', etiqueta: 'Niveles', detalle: 'Inicial, primaria, secundaria', destino: sec('niveles') },
-      { id: 'f3', etiqueta: 'Sedes', detalle: 'Cuatro en San Román', destino: sec('sedes') },
-    ],
-    accion: {
-      etiqueta: 'Solicitar información',
-      detalle: 'Te respondemos por WhatsApp',
-      mensajeWhatsapp: 'Hola, soy {nombre}. Quisiera información sobre {grado} en CATA.',
-    },
-  },
-  comunidad: {
-    nombre: 'Comunidad CATA',
-    bajada: 'Comunicados, noticias y accesos para familias y alumnos.',
-    paradas: [
-      { id: 'c1', etiqueta: 'Noticias', detalle: 'Lo último del colegio', destino: sec('noticias') },
-      { id: 'c2', etiqueta: 'Matrícula', detalle: 'Requisitos', destino: { tipo: 'url', url: 'https://cata.edu.pe/new_matricula/', externo: true } },
-      { id: 'c3', etiqueta: 'Contacto', detalle: 'Teléfono y WhatsApp', destino: sec('contacto') },
-    ],
-    terminal: { id: 'c4', etiqueta: 'Portal académico', detalle: 'iCRM educativo', destino: { tipo: 'url', url: ICRM, externo: true } },
-  },
-}
-
-// Hero de Inicio: fotos publicadas por el propio colegio en cata.edu.pe (se enlazan, no se copian).
+// Cabecera de Propuesta Educativa: fotos publicadas por el propio colegio en cata.edu.pe (se enlazan, no se copian).
 const UP = 'https://cata.edu.pe/wp-content/uploads/'
 const hero = {
   titulo: 'Mejoramos la experiencia de aprendizaje',
@@ -104,21 +76,6 @@ const hero = {
   ],
   accionPrincipal: { etiqueta: 'Proceso de matrícula', destino: { tipo: 'pagina', ruta: '/matricula' } },
   accionSecundaria: { etiqueta: 'Conoce la propuesta educativa', destino: { tipo: 'pagina', ruta: '/propuesta-educativa' } },
-}
-
-const aviso = {
-  id: '15',
-  titulo: 'Año académico 2026',
-  texto: 'Conoce las novedades del nuevo año en todas nuestras sedes.',
-  imagen: {
-    url: 'https://cata.edu.pe/wp-content/uploads/2025/12/Banner-CATA.png',
-    alt: 'Emblema del Colegio Adventista Túpac Amaru junto al año 2026 y la dirección www.cata.edu.pe',
-    ancho: 1900,
-    alto: 700,
-  },
-  enlace: null,
-  vigenteDesde: '2026-01-05T00:00:00-05:00',
-  vigenteHasta: null,
 }
 
 const quienes = {
@@ -168,10 +125,78 @@ const grados = [
 
 const lista = (items, limite = 6) => ({ data: items.slice(0, limite), meta: { pagina: 1, limite, total: items.length } })
 
+const banner = {
+  matriculas: {
+    id: 'b-matriculas',
+    categoria: 'matricula',
+    titulo: 'Matrículas 2026 abiertas para inicial, primaria y secundaria',
+    fecha: '2026-01-05',
+    imagen: { url: UP + '2025/01/4.png', alt: 'Afiche: Matrículas abiertas 2026. Inicial, Primaria, Secundaria. Informes por WhatsApp al 986322833, www.cata.edu.pe. Un niño con el uniforme del colegio sonríe a la derecha.', ancho: 1900, alto: 700 },
+    imagenMovil: null,
+    puntoFocal: { x: 82, y: 40 },
+    alineacion: 'derecha',
+    accion: { etiqueta: 'Ver requisitos', destino: { tipo: 'pagina', ruta: '/matricula' } },
+  },
+  bienvenida: {
+    id: 'b-bienvenida',
+    categoria: 'aviso',
+    titulo: 'Bienvenidos de nuevo al colegio',
+    fecha: '2026-03-02',
+    imagen: { url: UP + '2025/01/5.png', alt: 'Afiche: Bienvenido de nuevo al colegio. El mejor lugar: CATA 2026. Infórmate al 986322833, www.cata.edu.pe. Síguenos en Facebook, Twitter, YouTube e Instagram.', ancho: 1900, alto: 700 },
+    imagenMovil: null,
+    puntoFocal: { x: 30, y: 50 },
+    alineacion: 'derecha',
+    accion: { etiqueta: 'Contáctanos', destino: { tipo: 'pagina', ruta: '/contacto' } },
+  },
+  lideres: {
+    id: 'b-lideres',
+    categoria: 'noticia',
+    titulo: 'Líderes que dejan huella',
+    fecha: null,
+    imagen: { url: UP + '2025/01/2.png', alt: 'Afiche: Líderes que dejan huella. Cuatro estudiantes sonríen en el auditorio del colegio bajo el letrero Bienvenidos. Cita: «La obra de la verdadera educación consiste en desarrollar las facultades físicas, mentales y espirituales del estudiante, preparándolo para el gozo del servicio en este mundo y para un gozo superior en el mundo venidero.» Elena G. White. Facebook: colegiocatajuliaca.', ancho: 1900, alto: 700 },
+    imagenMovil: null,
+    puntoFocal: { x: 58, y: 45 },
+    alineacion: 'derecha',
+    accion: null,
+  },
+  anio: {
+    id: 'b-anio',
+    categoria: 'aviso',
+    titulo: 'Año académico 2026',
+    fecha: '2026-01-05',
+    imagen: { url: UP + '2025/12/Banner-CATA.png', alt: 'Banner con las letras CATA, el emblema del colegio, el año 2026 y la dirección www.cata.edu.pe.', ancho: 1900, alto: 700 },
+    imagenMovil: null,
+    puntoFocal: { x: 50, y: 50 },
+    alineacion: 'izquierda',
+    accion: null,
+  },
+  bus: {
+    id: 'b-bus',
+    categoria: 'evento',
+    titulo: '¡Bienvenidos, cataínos! Un líder cataíno en cada hogar',
+    fecha: '2026-02-20',
+    imagen: { url: UP + '2025/01/3.png', alt: 'Afiche: ¡Bienvenidos Cataínos! «Un líder cataíno en cada hogar». Bus escolar del colegio con el logo CATA y las palabras Integridad, Abnegación e Innovación. Íconos de Facebook, YouTube y WhatsApp.', ancho: 1900, alto: 700 },
+    imagenMovil: null,
+    puntoFocal: { x: 70, y: 50 },
+    alineacion: 'izquierda',
+    accion: null,
+  },
+}
+
 escribir('tipico', 'sitio', { data: sitio })
-escribir('tipico', 'rutas', { data: rutas })
-escribir('tipico', 'aviso', { data: aviso })
-escribir('tipico', 'hero', { data: hero })
+escribir('tipico', 'banners', { data: [banner.matriculas, banner.bienvenida, banner.lideres] })
+escribir('corto', 'banners', { data: [{ ...banner.anio, titulo: 'CATA 2026', fecha: null }] })
+escribir('largo', 'banners', { data: [
+  { ...banner.matriculas, titulo: 'Proceso de matrícula 2027: inscripciones abiertas para inicial, primaria y secundaria en todas las sedes', accion: { etiqueta: 'Conoce todos los requisitos de admisión', destino: { tipo: 'pagina', ruta: '/matricula' } } },
+  banner.bienvenida,
+  banner.lideres,
+  banner.anio,
+  banner.bus,
+  { id: 'b-prueba', categoria: 'evento', titulo: 'Imagen de prueba panorámica para comprobar el recorte con punto focal', fecha: '2026-09-28', imagen: img('panoramica', 'Foto de prueba: imagen panorámica'), imagenMovil: img('quienes-somos', 'Foto de prueba: versión vertical para móvil'), puntoFocal: { x: 50, y: 50 }, alineacion: 'izquierda', accion: { etiqueta: 'Ver más', destino: { tipo: 'url', url: 'https://cata.edu.pe/', externo: true } } },
+] })
+escribir('vacio', 'banners', { data: [] })
+escribir('alt-vacio', 'banners', { data: [banner.matriculas, banner.bienvenida, banner.lideres].map((b) => ({ ...b, imagen: { ...b.imagen, alt: '' } })) })
+escribir('tipico', 'propuesta-cabecera', { data: hero })
 // Cifras reales. Falta el número de alumnos: lo debe dar el colegio.
 escribir('tipico', 'cifras', { data: [
   { id: 'anios', valor: 55, sufijo: null, etiqueta: 'años educando en Juliaca' },
@@ -193,14 +218,7 @@ escribir('tipico', 'grados', { data: grados })
 
 // ── corto: lo mínimo que el contrato permite ──
 escribir('corto', 'sitio', { data: { ...sitio, subtitulo: null, promotora: null, direccion: { linea: 'Jr. Moquegua 852', referencia: null, distrito: null } } })
-escribir('corto', 'rutas', {
-  data: {
-    familias: { nombre: 'Admisión', bajada: null, paradas: [{ id: 'f1', etiqueta: 'Sedes', detalle: null, destino: sec('sedes') }], accion: { etiqueta: 'Escríbenos', detalle: null, mensajeWhatsapp: 'Hola, soy {nombre}. Información para {grado}.' } },
-    comunidad: { nombre: 'Familias', bajada: null, paradas: [{ id: 'c1', etiqueta: 'Noticias', detalle: null, destino: sec('noticias') }], terminal: null },
-  },
-})
-escribir('corto', 'hero', { data: { titulo: 'Bienvenidos', bajada: null, figuras: [], accionPrincipal: { etiqueta: 'Matrícula', destino: { tipo: 'pagina', ruta: '/matricula' } }, accionSecundaria: null } })
-escribir('corto', 'aviso', { data: { id: '1', titulo: 'Matrícula', texto: null, imagen: null, enlace: null, vigenteDesde: '2026-10-01T00:00:00-05:00', vigenteHasta: null } })
+escribir('corto', 'propuesta-cabecera', { data: { titulo: 'Bienvenidos', bajada: null, figuras: [], accionPrincipal: { etiqueta: 'Matrícula', destino: { tipo: 'pagina', ruta: '/matricula' } }, accionSecundaria: null } })
 escribir('corto', 'quienes-somos', { data: { titulo: 'Desde 1971.', parrafos: ['Colegio adventista en Juliaca.'], foto: null, simbolos: [{ nombre: 'Llama', significado: 'Luz.' }] } })
 escribir('corto', 'niveles', { data: { titulo: 'Niveles', propuestaUrl: null, items: [{ id: 'i', nombre: 'Inicial', rango: null, sede: null, reconocimiento: null, foto: null }] } })
 escribir('corto', 'sedes', { data: [{ id: 'c', nombre: 'Central', direccion: 'Jr. Moquegua 852', referencia: null, distrito: null, telefono: null, nota: null, foto: null, mapaUrl: null }] })
@@ -220,44 +238,7 @@ escribir('largo', 'sitio', {
     promotora: 'Asociación Educativa Colegio Adventista Túpac Amaru, promotora reconocida por R.D. N° 4609-DREP-2000',
   },
 })
-escribir('largo', 'rutas', {
-  data: {
-    familias: {
-      nombre: 'Familias que quieren conocer el colegio',
-      bajada: 'Conoce nuestra historia, nuestros niveles y todas las sedes, y pide información sin ningún compromiso.',
-      paradas: [
-        { id: 'f1', etiqueta: 'Quiénes somos y misión', detalle: 'Más de cincuenta años educando en Juliaca', destino: sec('quienes-somos') },
-        { id: 'f2', etiqueta: 'Niveles educativos', detalle: 'Inicial, primaria y secundaria completa', destino: sec('niveles') },
-        { id: 'f3', etiqueta: 'Nuestras sedes', detalle: 'Cuatro sedes en la provincia de San Román', destino: sec('sedes') },
-        { id: 'f4', etiqueta: 'Propuesta educativa', detalle: 'Metodología por niveles y talleres', destino: { tipo: 'url', url: 'https://cata.edu.pe/new_propuestaeducativa/', externo: true } },
-      ],
-      accion: { etiqueta: 'Solicitar información ahora', detalle: 'Te respondemos por WhatsApp el mismo día', mensajeWhatsapp: 'Hola, mi nombre es {nombre}. Quisiera recibir información sobre la admisión para {grado} en el Colegio Adventista Túpac Amaru, incluyendo requisitos, fechas y costos.' },
-    },
-    comunidad: {
-      nombre: 'Comunidad educativa del colegio CATA',
-      bajada: 'Comunicados oficiales, noticias de todas las sedes y accesos directos para familias, alumnos y docentes.',
-      paradas: [
-        { id: 'c1', etiqueta: 'Noticias y comunicados', detalle: 'Lo último publicado por el colegio', destino: sec('noticias') },
-        { id: 'c2', etiqueta: 'Matrícula 2027', detalle: 'Requisitos, cronograma y documentos', destino: { tipo: 'url', url: 'https://cata.edu.pe/new_matricula/', externo: true } },
-        { id: 'c3', etiqueta: 'Contacto y ubicación', detalle: 'Teléfono, WhatsApp y dirección', destino: sec('contacto') },
-        { id: 'c4', etiqueta: 'Sedes del colegio', detalle: 'Direcciones y cómo llegar', destino: sec('sedes') },
-      ],
-      terminal: { id: 'c5', etiqueta: 'Portal académico iCRM', detalle: 'Notas, asistencia y tareas en línea', destino: { tipo: 'url', url: ICRM, externo: true } },
-    },
-  },
-})
-escribir('largo', 'hero', { data: { ...hero, titulo: 'Más de cincuenta años formando estudiantes con excelencia académica y valores cristianos en Juliaca', bajada: 'Colegio Adventista Túpac Amaru: educación inicial, primaria y secundaria con cosmovisión cristiana en cuatro sedes de la provincia de San Román, con talleres de música, arte, biohuertos y alimentación saludable.', accionPrincipal: { etiqueta: 'Conoce el proceso de matrícula 2027', destino: { tipo: 'pagina', ruta: '/matricula' } }, accionSecundaria: { etiqueta: 'Descubre nuestra propuesta educativa por niveles', destino: { tipo: 'pagina', ruta: '/propuesta-educativa' } } } })
-escribir('largo', 'aviso', {
-  data: {
-    id: '99',
-    titulo: 'Proceso de admisión 2027: inscripciones abiertas para inicial, primaria y secundaria en todas las sedes',
-    texto: 'Las familias interesadas pueden acercarse a cualquiera de nuestras cuatro sedes de lunes a viernes, de 8:00 a 13:00, con el DNI del estudiante y del apoderado, la libreta de notas del año anterior y la constancia de no adeudo del colegio de procedencia.',
-    imagen: img('panoramica', 'Foto de prueba: banner panorámico con el texto Admisión 2027, inscripciones abiertas'),
-    enlace: { etiqueta: 'Ver todos los requisitos de admisión 2027', url: 'https://cata.edu.pe/new_matricula/', externo: true },
-    vigenteDesde: '2026-09-01T08:00:00-05:00',
-    vigenteHasta: '2027-02-28T23:59:59-05:00',
-  },
-})
+escribir('largo', 'propuesta-cabecera', { data: { ...hero, titulo: 'Más de cincuenta años formando estudiantes con excelencia académica y valores cristianos en Juliaca', bajada: 'Colegio Adventista Túpac Amaru: educación inicial, primaria y secundaria con cosmovisión cristiana en cuatro sedes de la provincia de San Román, con talleres de música, arte, biohuertos y alimentación saludable.', accionPrincipal: { etiqueta: 'Conoce el proceso de matrícula 2027', destino: { tipo: 'pagina', ruta: '/matricula' } }, accionSecundaria: { etiqueta: 'Descubre nuestra propuesta educativa por niveles', destino: { tipo: 'pagina', ruta: '/propuesta-educativa' } } } })
 escribir('largo', 'quienes-somos', {
   data: {
     titulo: 'Más de cincuenta años de educación adventista en la ciudad de Juliaca y la provincia de San Román.',
@@ -304,8 +285,7 @@ escribir('largo', 'grados', { data: grados })
 
 // ── sin-foto: todas las imágenes en null ──
 const sinFoto = (o) => JSON.parse(JSON.stringify(o, (k, v) => (k === 'foto' || k === 'imagen' ? null : v)))
-escribir('sin-foto', 'aviso', { data: sinFoto(aviso) })
-escribir('sin-foto', 'hero', { data: { ...hero, figuras: [] } })
+escribir('sin-foto', 'propuesta-cabecera', { data: { ...hero, figuras: [] } })
 escribir('sin-foto', 'quienes-somos', { data: sinFoto(quienes) })
 escribir('sin-foto', 'niveles', { data: sinFoto(niveles) })
 escribir('sin-foto', 'sedes', { data: sinFoto(sedes) })
@@ -313,8 +293,7 @@ escribir('sin-foto', 'noticias', lista(sinFoto(noticias)))
 
 // ── alt-vacio: imágenes decorativas ──
 const altVacio = (o) => JSON.parse(JSON.stringify(o, (k, v) => (k === 'alt' ? '' : v)))
-escribir('alt-vacio', 'aviso', { data: altVacio(aviso) })
-escribir('alt-vacio', 'hero', { data: altVacio(hero) })
+escribir('alt-vacio', 'propuesta-cabecera', { data: altVacio(hero) })
 escribir('alt-vacio', 'quienes-somos', { data: altVacio(quienes) })
 escribir('alt-vacio', 'niveles', { data: altVacio(niveles) })
 escribir('alt-vacio', 'sedes', { data: altVacio(sedes) })
@@ -322,8 +301,6 @@ escribir('alt-vacio', 'noticias', lista(altVacio(noticias)))
 
 // ── vacio: listas vacías y opcionales en null ──
 escribir('vacio', 'sitio', { data: { ...sitio, portalAcademicoUrl: null, subtitulo: null, promotora: null } })
-escribir('vacio', 'rutas', { data: { ...rutas, comunidad: { ...rutas.comunidad, terminal: null } } })
-escribir('vacio', 'aviso', { data: null })
 escribir('vacio', 'quienes-somos', { data: { ...quienes, foto: null, simbolos: [] } })
 escribir('vacio', 'niveles', { data: { titulo: 'Inicial, primaria y secundaria', propuestaUrl: null, items: [] } })
 escribir('vacio', 'sedes', { data: [] })

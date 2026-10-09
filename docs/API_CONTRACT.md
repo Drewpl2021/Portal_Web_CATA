@@ -1,6 +1,12 @@
 # Contrato de la API pública del portal CATA
 
-**Versión del contrato:** 1.2 · **Fecha:** 2026-10-08 (1.1 agrega `/v1/portada/hero` y el destino `pagina`; 1.2 agrega `/v1/portada/cifras`)
+**Versión del contrato:** 2.0 · **Fecha:** 2026-10-08
+
+**Cambios de la 2.0** (antes de que el módulo se implemente, por eso las rutas siguen bajo `/v1`):
+- Nuevo `GET /v1/portada/banners`: el carrusel de Inicio. Reemplaza el aviso único.
+- Se eliminan `GET /v1/portada/rutas` y `GET /v1/avisos/vigente` (eran de la portada anterior).
+- `GET /v1/portada/hero` pasa a `GET /v1/propuesta-educativa/cabecera`, con la misma forma: ahora es la cabecera de la página Propuesta Educativa.
+- Se mantiene `GET /v1/portada/cifras` (agregado en la 1.2).
 **Quién la expone:** el módulo «Portal web» del sistema de RR.HH. del colegio.
 **Quién la consume:** el portal público `cata.edu.pe` (React). El portal no tiene login y solo lee.
 
@@ -52,7 +58,7 @@ Ante un error, el código HTTP lo indica y el cuerpo tiene esta forma:
 | 500 | `ERROR_INTERNO` | Falla del servidor. |
 | 503 | `NO_DISPONIBLE` | Mantenimiento. |
 
-**Que no haya contenido no es un error.** Si no hay noticias, se responde `200` con `"data": []`. Si no hay aviso vigente, `200` con `"data": null`. El portal muestra su propio estado vacío.
+**Que no haya contenido no es un error.** Si no hay noticias, se responde `200` con `"data": []`. Si no hay banners, `200` con `"data": []`. El portal muestra su propio estado vacío.
 
 ### 1.5 Campos y valores
 
@@ -99,7 +105,8 @@ Toda imagen se envía como objeto, nunca como texto suelto:
 | Foto de nivel | 3:2 | 1200 × 800 |
 | Foto de Quiénes somos | 4:5 (vertical) | 1200 × 1500 |
 | Foto de noticia | 3:2 | 1200 × 800 |
-| Imagen de aviso | se muestra completa, sin recorte | 1900 de ancho |
+| Banner del carrusel, escritorio | ≈ 1900:700, recortada en el punto focal | 1920 × 708 |
+| Banner del carrusel, móvil | 4:5 | 1080 × 1350 |
 
 ### 1.8 Tipos auxiliares
 
@@ -137,19 +144,18 @@ Valores válidos de `seccion`: `"quienes-somos"`, `"niveles"`, `"sedes"`, `"noti
 | Método y ruta | Devuelve en `data` | Sección del portal |
 |---|---|---|
 | `GET /v1/sitio` | `Sitio` | Cabecera, contacto, pie |
-| `GET /v1/portada/rutas` | `Rutas` | Las dos placas de ruta |
-| `GET /v1/avisos/vigente` | `Aviso` o `null` | Placa de aviso |
+| `GET /v1/portada/banners` | `Banner[]` | Carrusel de Inicio (primera sección) |
 | `GET /v1/quienes-somos` | `QuienesSomos` | Quiénes somos |
 | `GET /v1/niveles` | `Niveles` | Niveles |
 | `GET /v1/sedes` | `Sede[]` | Sedes |
 | `GET /v1/noticias` | `Noticia[]` + `meta` | Noticias y comunicados |
 | `GET /v1/grados` | `GrupoGrados[]` | Selector de grado de Solicitar información |
-| `GET /v1/portada/hero` | `Hero` | Primera pantalla de Inicio |
+| `GET /v1/propuesta-educativa/cabecera` | `Hero` | Cabecera de la página Propuesta Educativa |
 | `GET /v1/portada/cifras` | `Cifra[]` | Cifras destacadas de Inicio |
 
 Cada sección del portal carga su endpoint por separado. Si uno falla, esa sección muestra su error y el resto sigue funcionando.
 
-**Excepción importante: `/v1/sitio`.** Lo usan la cabecera (nombre y contactos), el formulario Solicitar información (número de WhatsApp), el estado vacío de noticias, la placa de contacto y el pie. Si `/v1/sitio` falla, todas esas partes quedan sin datos a la vez. Es el endpoint que más conviene mantener disponible y rápido.
+**Excepción importante: `/v1/sitio`.** Lo usan la cabecera (nombre e ICRM), el título oculto de Inicio, la medalla, el estado vacío de noticias, el cierre y el pie (contactos y dirección). Si `/v1/sitio` falla, todas esas partes quedan sin datos a la vez. Es el endpoint que más conviene mantener disponible y rápido.
 
 ---
 
@@ -191,95 +197,84 @@ Datos generales del colegio.
 }
 ```
 
-### 3.2 `GET /v1/portada/rutas`
+### 3.2 `GET /v1/portada/banners`
 
-Los textos de las dos placas de ruta de la primera pantalla.
-
-| Campo | Tipo | ¿Puede ser null? | Descripción |
-|---|---|---|---|
-| `familias` | `RutaFamilias` | no | Placa para familias que evalúan el colegio. |
-| `comunidad` | `RutaComunidad` | no | Placa para la comunidad actual. |
-
-**Campos comunes de una ruta**
-
-| Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
-|---|---|---|---|---|
-| `nombre` | string | no | 40 | Nombre grande de la ruta. Ej.: «Familias que nos conocen». |
-| `bajada` | string \| null | sí | 110 | Frase bajo el nombre. |
-| `paradas` | `Parada[]` | no | 1 a 4 elementos | Paradas intermedias, en orden. |
-
-**`Parada`**: `id` (string), `etiqueta` (string, máx. 24), `detalle` (string \| null, máx. 40), `destino` (`Destino`).
-
-**`RutaFamilias`** agrega `accion`, la parada final que abre Solicitar información:
-
-| Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
-|---|---|---|---|---|
-| `accion.etiqueta` | string | no | 28 | Ej.: «Solicitar información». |
-| `accion.detalle` | string \| null | sí | 40 | Ej.: «Te respondemos por WhatsApp». |
-| `accion.mensajeWhatsapp` | string | no | 300 | Plantilla del mensaje. El portal reemplaza `{nombre}` y `{grado}`. |
-
-**`RutaComunidad`** agrega `terminal`, la parada final (`Parada` o `null`). Normalmente es el portal académico.
-
-```json
-{
-  "data": {
-    "familias": {
-      "nombre": "Familias que nos conocen",
-      "bajada": "Conoce el colegio y pide información sin compromiso.",
-      "paradas": [
-        { "id": "f1", "etiqueta": "Quiénes somos", "detalle": "Desde 1971", "destino": { "tipo": "seccion", "seccion": "quienes-somos" } },
-        { "id": "f2", "etiqueta": "Niveles", "detalle": "Inicial, primaria, secundaria", "destino": { "tipo": "seccion", "seccion": "niveles" } },
-        { "id": "f3", "etiqueta": "Sedes", "detalle": "Cuatro en San Román", "destino": { "tipo": "seccion", "seccion": "sedes" } }
-      ],
-      "accion": {
-        "etiqueta": "Solicitar información",
-        "detalle": "Te respondemos por WhatsApp",
-        "mensajeWhatsapp": "Hola, soy {nombre}. Quisiera información sobre {grado} en CATA."
-      }
-    },
-    "comunidad": {
-      "nombre": "Comunidad CATA",
-      "bajada": "Comunicados, noticias y accesos para familias y alumnos.",
-      "paradas": [
-        { "id": "c1", "etiqueta": "Noticias", "detalle": "Lo último del colegio", "destino": { "tipo": "seccion", "seccion": "noticias" } },
-        { "id": "c2", "etiqueta": "Matrícula", "detalle": "Requisitos", "destino": { "tipo": "url", "url": "https://cata.edu.pe/new_matricula/", "externo": true } },
-        { "id": "c3", "etiqueta": "Contacto", "detalle": "Teléfono y WhatsApp", "destino": { "tipo": "seccion", "seccion": "contacto" } }
-      ],
-      "terminal": { "id": "c4", "etiqueta": "Portal académico", "detalle": "iCRM educativo", "destino": { "tipo": "url", "url": "https://cata.icrmedu.com/Academico/Paginas/Login.aspx", "externo": true } }
-    }
-  }
-}
-```
-
-### 3.3 `GET /v1/avisos/vigente`
-
-El **único** aviso (banner) que se muestra en la portada. El módulo elige cuál: el más reciente cuya vigencia incluye el momento actual. Si no hay ninguno, responde `"data": null`.
+El carrusel de la primera sección de Inicio, justo debajo de la cabecera y a todo el ancho: lo último que publica el colegio (avisos, matrículas, eventos, noticias). Devuelve `Banner[]` (0 a 8 elementos), **del más reciente al más antiguo**, en el orden en que se muestran.
 
 | Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
 |---|---|---|---|---|
 | `id` | string | no | — | |
-| `titulo` | string | no | 90 | Siempre visible como título del aviso, aunque la imagen ya lo diga. |
-| `texto` | string \| null | sí | 240 | Detalle. |
-| `imagen` | `Imagen` \| null | sí | — | Se muestra completa, sin recorte. Si tiene texto dentro, el `alt` debe repetirlo. |
-| `enlace` | `Enlace` \| null | sí | — | Botón del aviso. |
-| `vigenteDesde` | fecha y hora | no | — | |
-| `vigenteHasta` | fecha y hora \| null | sí | — | `null` = sin fecha de fin. |
+| `categoria` | `"aviso"` \| `"matricula"` \| `"evento"` \| `"noticia"` | no | — | Se muestra junto a la fecha, debajo del título. |
+| `titulo` | string | no | 80 | Texto real del banner. El portal lo escribe sobre la imagen, en una placa marina de contraste garantizado. |
+| `fecha` | fecha \| null | sí | — | `AAAA-MM-DD`. Opcional. |
+| `imagen` | `Imagen` | no | — | Imagen de escritorio, apaisada. Proporción en pantalla ≈ 1900:700. Mínimo 1920 × 708 px. |
+| `imagenMovil` | `Imagen` \| null | sí | — | Imagen vertical para pantallas de hasta 700 px de ancho, proporción 4:5, mínimo 1080 × 1350 px. Si es `null`, el portal recorta la de escritorio alrededor de `puntoFocal`. |
+| `puntoFocal` | `{ x, y }` \| null | sí | — | Punto que debe quedar a la vista al recortar, en porcentaje (0 a 100) desde la esquina superior izquierda. `null` = centro (50, 50). |
+| `alineacion` | `"izquierda"` \| `"derecha"` | no | — | Lado donde el portal pone el título y el botón. Elijan el lado que **no** tape el texto propio de la imagen. |
+| `accion` | `AccionHero` \| null | sí | — | Botón opcional (`etiqueta` + `destino`). |
 
-El portal nunca rota avisos ni los hace avanzar solos.
+**Afiches con texto incluido (requisito WCAG 2.2 AA):** si la imagen es un afiche o banner que trae texto escrito (títulos, fechas, teléfonos, direcciones, redes), su `alt` debe **repetir todo ese texto**, no solo describir la imagen. Ejemplo: «Afiche: Matrículas abiertas 2026. Inicial, Primaria, Secundaria. Informes por WhatsApp al 986322833, www.cata.edu.pe.» Lo mismo vale para `imagenMovil`. En este caso el `alt` puede pasar de los 150 caracteres recomendados.
+
+**Comportamiento del carrusel en el portal**, para que el colegio sepa qué esperar:
+- 0 banners: la sección desaparece sin dejar hueco.
+- 1 banner: se muestra fijo, sin flechas, indicadores ni avance.
+- 2 o más: avanza solo cada 6 segundos, con flechas, indicadores y un botón visible de Pausar/Reproducir. Se detiene con el mouse encima, con el foco del teclado dentro o con la pestaña oculta. Funciona con las flechas del teclado y con arrastre táctil. Para quien tiene activado «reducir movimiento», no avanza solo y cambia con un fundido.
+
+```json
+{
+  "data": [
+    {
+      "id": "b-matriculas",
+      "categoria": "matricula",
+      "titulo": "Matrículas 2026 abiertas para inicial, primaria y secundaria",
+      "fecha": "2026-01-05",
+      "imagen": { "url": "https://cata.edu.pe/wp-content/uploads/2025/01/4.png", "alt": "Afiche: Matrículas abiertas 2026. Inicial, Primaria, Secundaria. Informes por WhatsApp al 986322833, www.cata.edu.pe. Un niño con el uniforme del colegio sonríe a la derecha.", "ancho": 1900, "alto": 700 },
+      "imagenMovil": null,
+      "puntoFocal": { "x": 82, "y": 40 },
+      "alineacion": "derecha",
+      "accion": { "etiqueta": "Ver requisitos", "destino": { "tipo": "pagina", "ruta": "/matricula" } }
+    }
+  ]
+}
+```
+
+### 3.3 `GET /v1/propuesta-educativa/cabecera`
+
+La cabecera de la página Propuesta Educativa: un título grande, una frase, dos botones y hasta tres figuras. El portal arma con las figuras una escena: los recortes de estudiantes delante del anillo del emblema, con la medalla del colegio girando dentro del anillo.
+
+| Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
+|---|---|---|---|---|
+| `titulo` | string | no | 70 | Frase principal. Se muestra muy grande: conviene corta. |
+| `bajada` | string \| null | sí | 180 | Frase de apoyo bajo el título. |
+| `figuras` | `FiguraHero[]` | no | 0 a 3 | En orden de importancia. Se usan hasta dos recortes; si no hay recortes, la primera foto. `[]` = cabecera solo con texto. |
+| `accionPrincipal` | `AccionHero` | no | — | Botón principal. |
+| `accionSecundaria` | `AccionHero` \| null | sí | — | Botón secundario. |
+
+**`FiguraHero`**
+
+| Campo | Tipo | ¿Puede ser null? | Descripción |
+|---|---|---|---|
+| `tipo` | `"recorte"` \| `"foto"` | no | `recorte`: PNG o WebP con **fondo transparente** (una persona u objeto recortado). `foto`: imagen rectangular con fondo. El diseño trata distinto cada tipo. |
+| `imagen` | `Imagen` | no | Recorte: mínimo 800 × 1600 px, vertical. Foto: mínimo 1600 × 1200 px. |
+
+**`AccionHero`**: `etiqueta` (string, máx. 32; dice a dónde lleva) y `destino` (`Destino`).
 
 ```json
 {
   "data": {
-    "id": "15",
-    "titulo": "Año académico 2026",
-    "texto": "Conoce las novedades del nuevo año en todas nuestras sedes.",
-    "imagen": { "url": "https://cata.edu.pe/wp-content/uploads/2025/12/Banner-CATA.png", "alt": "Emblema del colegio junto al texto 2026 y la dirección www.cata.edu.pe", "ancho": 1900, "alto": 700 },
-    "enlace": null,
-    "vigenteDesde": "2026-01-05T00:00:00-05:00",
-    "vigenteHasta": null
+    "titulo": "Mejoramos la experiencia de aprendizaje",
+    "bajada": "Colegio Adventista Túpac Amaru: inicial, primaria y secundaria en cuatro sedes de Juliaca, desde 1971.",
+    "figuras": [
+      { "tipo": "recorte", "imagen": { "url": "https://cata.edu.pe/wp-content/uploads/2023/01/CATA-Matricula_Img_2.png", "alt": "Estudiante con el uniforme del colegio, su mochila y un cuaderno de CATA", "ancho": 500, "alto": 1000 } },
+      { "tipo": "foto", "imagen": { "url": "https://cata.edu.pe/wp-content/uploads/2025/05/Sin-titulo-1200-x-900-px.png", "alt": "Niño con el uniforme del colegio y lentes, sonriendo y abrazando una Santa Biblia", "ancho": 1200, "alto": 900 } }
+    ],
+    "accionPrincipal": { "etiqueta": "Proceso de matrícula", "destino": { "tipo": "pagina", "ruta": "/matricula" } },
+    "accionSecundaria": { "etiqueta": "Conoce la propuesta educativa", "destino": { "tipo": "pagina", "ruta": "/propuesta-educativa" } }
   }
 }
 ```
+
+Las fotos de estudiantes deben contar con la autorización del colegio y de las familias para su publicación.
 
 ### 3.4 `GET /v1/quienes-somos`
 
@@ -443,45 +438,7 @@ Las opciones del selector de grado de Solicitar información, agrupadas por nive
 
 ---
 
-### 3.9 `GET /v1/portada/hero`
-
-La primera pantalla de la página de Inicio: un título grande, una frase y hasta tres figuras.
-
-| Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
-|---|---|---|---|---|
-| `titulo` | string | no | 70 | Frase principal. Se muestra muy grande: conviene corta. |
-| `bajada` | string \| null | sí | 180 | Frase de apoyo bajo el título. |
-| `figuras` | `FiguraHero[]` | no | 0 a 3 | En orden de importancia. `[]` = hero solo con texto. |
-| `accionPrincipal` | `AccionHero` | no | — | Botón principal. |
-| `accionSecundaria` | `AccionHero` \| null | sí | — | Botón secundario. |
-
-**`FiguraHero`**
-
-| Campo | Tipo | ¿Puede ser null? | Descripción |
-|---|---|---|---|
-| `tipo` | `"recorte"` \| `"foto"` | no | `recorte`: PNG o WebP con **fondo transparente** (una persona u objeto recortado). `foto`: imagen rectangular con fondo. El diseño trata distinto cada tipo. |
-| `imagen` | `Imagen` | no | Recorte: mínimo 800 × 1600 px, vertical. Foto: mínimo 1600 × 1200 px. |
-
-**`AccionHero`**: `etiqueta` (string, máx. 32; dice a dónde lleva) y `destino` (`Destino`).
-
-```json
-{
-  "data": {
-    "titulo": "Mejoramos la experiencia de aprendizaje",
-    "bajada": "Colegio Adventista Túpac Amaru: inicial, primaria y secundaria en cuatro sedes de Juliaca, desde 1971.",
-    "figuras": [
-      { "tipo": "recorte", "imagen": { "url": "https://cata.edu.pe/wp-content/uploads/2023/01/CATA-Matricula_Img_2.png", "alt": "Estudiante con el uniforme del colegio, su mochila y un cuaderno de CATA", "ancho": 500, "alto": 1000 } },
-      { "tipo": "foto", "imagen": { "url": "https://cata.edu.pe/wp-content/uploads/2025/05/Sin-titulo-1200-x-900-px.png", "alt": "Niño con el uniforme del colegio y lentes, sonriendo y abrazando una Santa Biblia", "ancho": 1200, "alto": 900 } }
-    ],
-    "accionPrincipal": { "etiqueta": "Proceso de matrícula", "destino": { "tipo": "pagina", "ruta": "/matricula" } },
-    "accionSecundaria": { "etiqueta": "Conoce la propuesta educativa", "destino": { "tipo": "pagina", "ruta": "/propuesta-educativa" } }
-  }
-}
-```
-
-Las fotos de estudiantes deben contar con la autorización del colegio y de las familias para su publicación.
-
-### 3.10 `GET /v1/portada/cifras`
+### 3.9 `GET /v1/portada/cifras`
 
 Cifras destacadas de Inicio. El portal las muestra con un contador que sube hasta el valor al entrar en pantalla. Devuelve `Cifra[]` (0 a 4 elementos) en el orden en que se muestran. `[]` oculta la sección.
 
@@ -515,7 +472,7 @@ Esto sirve para que el módulo sepa qué pasa con lo que publica.
 | `foto: null` | El bloque se arma sin foto, sin recuadro vacío. |
 | `alt: ""` | Imagen decorativa, oculta para lectores de pantalla. |
 | La URL de una imagen no carga | Se oculta la imagen y el texto sigue visible. |
-| Aviso `null` | La placa de aviso no aparece. |
+| Banners `[]` | El carrusel no aparece. Con un solo banner, no hay controles ni avance. |
 
 ---
 
@@ -528,5 +485,5 @@ Esto sirve para que el módulo sepa qué pasa con lo que publica.
 El portal trae datos de prueba que cumplen este contrato en `PW_Frontend/src/api/mock/`. Sirven de **ejemplos completos** de cada respuesta: el módulo puede compararse con ellos.
 
 - `tipico/`: contenido real del colegio.
-- Escenarios que solo cambian algunos archivos: `corto/`, `largo/`, `sin-foto/`, `alt-vacio/` y `vacio/`.
+- Escenarios que solo cambian algunos archivos: `corto/`, `largo/`, `sin-foto/`, `alt-vacio/` y `vacio/`. El carrusel tiene 3 banners en `tipico/`, 1 en `corto/`, 6 en `largo/` y ninguno en `vacio/`.
 - Las pruebas automáticas (`npm test` en `PW_Frontend/`) validan todos esos archivos contra este contrato.

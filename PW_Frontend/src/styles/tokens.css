@@ -21,28 +21,16 @@
   --celeste-lavado: #e6f4fb; /* fondo suave */
   --celeste-hondo: #0077ab; /* hover del celeste */
   --dorado-claro: #ffca7a; /* hover del dorado */
-  --rojo-emblema: #d52b34;
-  --rojo-texto: #a3161f;
-
-  /* Nombres anteriores, apuntando a la paleta oficial (portada antigua y propuestas) */
-  --azul-claro: var(--celeste);
-  --azul-emblema: var(--marino);
-  --tinta: var(--marino);
-  --tinta-suave: var(--marino-suave);
-  --azul-claro-lavado: var(--celeste-lavado);
-  --azul-emblema-lavado: var(--marino-lavado);
 
   /* Tipografía del sitio nuevo: Archivo Variable (ancho 125 % y 900 para títulos, 100 % para texto) */
   --font-display: 'Archivo Variable', system-ui, sans-serif;
 
-  /* Heredadas: solo las usa la portada antigua en / hasta que la reemplace /propuesta-final */
-  --font-rotulo: 'Big Shoulders Display', 'Barlow', system-ui, sans-serif;
-  --font-texto: 'Barlow', system-ui, sans-serif;
-
-  --gutter: clamp(16px, 4vw, 48px);
-  --ancho: 1240px;
-  --radio-placa: 10px;
-  --linea: 8px;
+  /* Medidas en rem: escalan con la raíz fluida de base.css en pantallas 2K y 4K */
+  --gutter: clamp(1rem, 4vw, 3rem);
+  /* Ancho máximo del contenido de las secciones */
+  --ancho: 77.5rem;
+  /* Ancho máximo de las composiciones a sangre (cabeceras con escena) */
+  --ancho-escena: 90rem;
 
   /* Curvas de movimiento (Emil Kowalski) */
   --ease-salida: cubic-bezier(0.23, 1, 0.32, 1);

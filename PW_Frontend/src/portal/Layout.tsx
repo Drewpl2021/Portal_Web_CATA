@@ -1,0 +1,57 @@
+import { useEffect, useLayoutEffect } from 'react'
+import { Route, Routes, useLocation } from 'react-router-dom'
+import { AnimatePresence } from 'motion/react'
+import InsigniaPrueba from '../components/InsigniaPrueba'
+import { tituloDeRuta } from '../sitio/mapa'
+import TransicionPagina from '../sitio/TransicionPagina'
+import Cabecera from './Cabecera'
+import Inicio from './paginas/Inicio'
+import Pendiente from './paginas/Pendiente'
+import PropuestaEducativa from './paginas/PropuestaEducativa'
+import Pie from './secciones/Pie'
+import './portal.css'
+
+// Estructura de todo el portal: cabecera fija, páginas con transición y pie.
+export default function Layout() {
+  const ubicacion = useLocation()
+
+  // Activa los estados iniciales de las entradas al hacer scroll antes del primer pintado.
+  // Sin esta clase (sin JavaScript), todo el contenido se ve desde el principio.
+  useLayoutEffect(() => {
+    document.documentElement.classList.add('f-anim')
+    return () => document.documentElement.classList.remove('f-anim')
+  }, [])
+
+  // Cada página nueva empieza arriba.
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  }, [ubicacion.pathname])
+
+  const pagina = (contenido: React.ReactNode, clase?: string) => (
+    <TransicionPagina>
+      <main id="contenido" tabIndex={-1} className={clase}>
+        {contenido}
+      </main>
+    </TransicionPagina>
+  )
+
+  return (
+    <div className="f">
+      <a className="skip-link" href="#contenido">
+        Saltar al contenido
+      </a>
+      <Cabecera />
+      <div data-fondo-menu>
+        <AnimatePresence mode="wait" initial={false}>
+          <Routes location={ubicacion} key={ubicacion.pathname}>
+            <Route index element={pagina(<Inicio />)} />
+            <Route path="propuesta-educativa" element={pagina(<PropuestaEducativa />)} />
+            <Route path="*" element={pagina(<Pendiente titulo={tituloDeRuta(ubicacion.pathname)} />, 'f-pendiente')} />
+          </Routes>
+        </AnimatePresence>
+        <Pie />
+        <InsigniaPrueba />
+      </div>
+    </div>
+  )
+}

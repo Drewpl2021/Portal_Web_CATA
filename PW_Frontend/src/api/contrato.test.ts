@@ -1,13 +1,12 @@
 import { describe, expect, it } from 'vitest'
 import {
-  esquemaAviso,
+  esquemaBanners,
   esquemaCifras,
   esquemaHero,
   esquemaGrados,
   esquemaNiveles,
   esquemaNoticias,
   esquemaQuienesSomos,
-  esquemaRutas,
   esquemaSedes,
   esquemaSitio,
   sobre,
@@ -16,10 +15,9 @@ import {
 
 const ESQUEMAS = {
   sitio: sobre(esquemaSitio),
-  rutas: sobre(esquemaRutas),
-  hero: sobre(esquemaHero),
+  banners: sobre(esquemaBanners),
+  'propuesta-cabecera': sobre(esquemaHero),
   cifras: sobre(esquemaCifras),
-  aviso: sobre(esquemaAviso),
   'quienes-somos': sobre(esquemaQuienesSomos),
   niveles: sobre(esquemaNiveles),
   sedes: sobre(esquemaSedes),
@@ -79,9 +77,21 @@ describe('el contrato rechaza respuestas inválidas', () => {
   })
 
   it('rechaza una sección de destino desconocida', () => {
-    const p = { id: '1', etiqueta: 'x', detalle: null, destino: { tipo: 'seccion', seccion: 'eventos' } }
-    const ruta = { nombre: 'n', bajada: null, paradas: [p], terminal: null }
-    const familias = { nombre: 'n', bajada: null, paradas: [p], accion: { etiqueta: 'e', detalle: null, mensajeWhatsapp: 'm' } }
-    expect(esquemaRutas.safeParse({ familias, comunidad: ruta }).success).toBe(false)
+    const cabecera = {
+      titulo: 't',
+      bajada: null,
+      figuras: [],
+      accionPrincipal: { etiqueta: 'e', destino: { tipo: 'seccion', seccion: 'eventos' } },
+      accionSecundaria: null,
+    }
+    expect(esquemaHero.safeParse(cabecera).success).toBe(false)
+  })
+
+  it('rechaza un banner con punto focal fuera de 0–100 o sin alineación válida', () => {
+    const imagen = { url: 'https://x.pe/a.jpg', alt: '', ancho: null, alto: null }
+    const base = { id: '1', categoria: 'aviso', titulo: 't', fecha: null, imagen, imagenMovil: null, accion: null }
+    expect(esquemaBanners.safeParse([{ ...base, puntoFocal: { x: 120, y: 50 }, alineacion: 'izquierda' }]).success).toBe(false)
+    expect(esquemaBanners.safeParse([{ ...base, puntoFocal: null, alineacion: 'centro' }]).success).toBe(false)
+    expect(esquemaBanners.safeParse([{ ...base, puntoFocal: null, alineacion: 'derecha' }]).success).toBe(true)
   })
 })

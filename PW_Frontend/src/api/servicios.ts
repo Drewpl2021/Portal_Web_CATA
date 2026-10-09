@@ -3,28 +3,26 @@
 // Los componentes solo usan las funciones obtener*() y nunca saben de dónde vienen los datos.
 import type { z } from 'zod'
 import {
-  esquemaAviso,
+  esquemaBanners,
   esquemaCifras,
   esquemaHero,
   esquemaGrados,
   esquemaNiveles,
   esquemaNoticias,
   esquemaQuienesSomos,
-  esquemaRutas,
   esquemaSedes,
   esquemaSitio,
   sobre,
   sobrePaginado,
 } from './esquemas'
 import type {
-  Aviso,
+  Banner,
   Cifra,
   GrupoGrados,
   Hero,
   ListaNoticias,
   Niveles,
   QuienesSomos,
-  Rutas,
   Sede,
   Sitio,
 } from './tipos'
@@ -34,7 +32,16 @@ const API_URL = (import.meta.env.VITE_API_URL ?? '').trim().replace(/\/+$/, '')
 export const ESCENARIOS = ['tipico', 'corto', 'largo', 'sin-foto', 'alt-vacio', 'vacio', 'error'] as const
 export type Escenario = (typeof ESCENARIOS)[number]
 
-type Recurso = 'sitio' | 'rutas' | 'hero' | 'cifras' | 'aviso' | 'quienes-somos' | 'niveles' | 'sedes' | 'noticias' | 'grados'
+type Recurso =
+  | 'sitio'
+  | 'banners'
+  | 'propuesta-cabecera'
+  | 'cifras'
+  | 'quienes-somos'
+  | 'niveles'
+  | 'sedes'
+  | 'noticias'
+  | 'grados'
 
 export class ErrorDatos extends Error {
   constructor(
@@ -130,20 +137,16 @@ export async function obtenerSitio(): Promise<Sitio> {
   return (await leer('sitio', '/v1/sitio', sobre(esquemaSitio))).data
 }
 
-export async function obtenerRutas(): Promise<Rutas> {
-  return (await leer('rutas', '/v1/portada/rutas', sobre(esquemaRutas))).data
+export async function obtenerBanners(): Promise<Banner[]> {
+  return (await leer('banners', '/v1/portada/banners', sobre(esquemaBanners))).data
 }
 
-export async function obtenerHero(): Promise<Hero> {
-  return (await leer('hero', '/v1/portada/hero', sobre(esquemaHero))).data
+export async function obtenerCabeceraPropuesta(): Promise<Hero> {
+  return (await leer('propuesta-cabecera', '/v1/propuesta-educativa/cabecera', sobre(esquemaHero))).data
 }
 
 export async function obtenerCifras(): Promise<Cifra[]> {
   return (await leer('cifras', '/v1/portada/cifras', sobre(esquemaCifras))).data
-}
-
-export async function obtenerAvisoVigente(): Promise<Aviso | null> {
-  return (await leer('aviso', '/v1/avisos/vigente', sobre(esquemaAviso))).data
 }
 
 export async function obtenerQuienesSomos(): Promise<QuienesSomos> {

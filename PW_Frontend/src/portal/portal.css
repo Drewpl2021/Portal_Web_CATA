@@ -1,7 +1,7 @@
 /* Propuesta final · base A (Polideportivo) con la paleta oficial */
 
 .f {
-  --f-alto: 80px;
+  --f-alto: 5rem;
   --f-fondo: var(--blanco);
   --foco: var(--marino);
   font-family: 'Archivo Variable', system-ui, sans-serif;
@@ -13,7 +13,7 @@
 }
 
 :root:has(.f) {
-  scroll-padding-top: calc(var(--f-alto, 80px) + 16px);
+  scroll-padding-top: calc(var(--f-alto, 5rem) + 1rem);
 }
 
 .f [data-fondo-menu] {
@@ -37,18 +37,18 @@
 .f-cab__barra {
   display: flex;
   align-items: center;
-  gap: clamp(12px, 2vw, 28px);
+  gap: clamp(0.75rem, 2vw, 1.75rem);
   height: var(--f-alto);
-  padding: 0 clamp(16px, 3vw, 40px);
+  padding: 0 clamp(1rem, 3vw, 2.5rem);
   background: var(--marino);
-  border-bottom: 4px solid var(--celeste);
+  border-bottom: 0.25rem solid var(--celeste);
   color: var(--blanco);
 }
 
 .f-cab__marca {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 0.625rem;
   flex-shrink: 0;
   color: inherit;
   text-decoration: none;
@@ -60,8 +60,8 @@
 }
 
 .f-cab__marca img {
-  width: 48px;
-  height: 48px;
+  width: 3rem;
+  height: 3rem;
   object-fit: contain;
 }
 
@@ -100,9 +100,10 @@
 
 .f-nav__enlace {
   display: inline-flex;
+  white-space: nowrap;
   align-items: center;
-  gap: 4px;
-  padding: 0 clamp(8px, 0.9vw, 14px);
+  gap: 0.25rem;
+  padding: 0 clamp(0.5rem, 0.9vw, 0.875rem);
   border: 0;
   background: none;
   font-stretch: 87.5%;
@@ -130,11 +131,11 @@
 
 .f-nav__indicador {
   position: absolute;
-  left: 8px;
-  right: 8px;
-  bottom: -4px;
-  height: 6px;
-  border-radius: 3px 3px 0 0;
+  left: 0.5rem;
+  right: 0.5rem;
+  bottom: -0.25rem;
+  height: 0.375rem;
+  border-radius: 0.1875rem 0.1875rem 0 0;
   background: var(--dorado);
   pointer-events: none;
 }
@@ -147,8 +148,8 @@
   display: inline-flex;
   align-items: center;
   flex-shrink: 0;
-  min-height: 46px;
-  padding: 0 22px;
+  min-height: 2.875rem;
+  padding: 0 1.375rem;
   color: var(--marino);
   text-decoration: none;
   transition: transform 160ms var(--ease-salida);
@@ -159,7 +160,7 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   background: var(--dorado);
   transform: skewX(-12deg);
 }
@@ -167,7 +168,7 @@
 .f-icrm__texto {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 0.375rem;
   font-stretch: 112%;
   font-weight: 850;
   font-size: 1rem;
@@ -185,7 +186,7 @@
 
 .f-icrm:focus-visible {
   outline-color: var(--blanco);
-  outline-offset: 4px;
+  outline-offset: 0.25rem;
 }
 
 /* Hamburguesa */
@@ -194,11 +195,11 @@
   position: relative;
   display: none;
   flex-shrink: 0;
-  width: 48px;
-  height: 48px;
+  width: 3rem;
+  height: 3rem;
   margin-left: auto;
-  border: 2px solid rgb(255 255 255 / 0.4);
-  border-radius: 8px;
+  border: 0.125rem solid rgb(255 255 255 / 0.4);
+  border-radius: 0.5rem;
   background: none;
   cursor: pointer;
   transition: transform 160ms var(--ease-salida);
@@ -210,28 +211,28 @@
 
 .f-hamburguesa span {
   position: absolute;
-  left: 11px;
-  width: 22px;
-  height: 3px;
-  border-radius: 2px;
+  left: 0.6875rem;
+  width: 1.375rem;
+  height: 0.1875rem;
+  border-radius: 0.125rem;
   background: var(--blanco);
   transition: transform 220ms var(--ease-salida), opacity 150ms ease;
 }
 
 .f-hamburguesa span:nth-child(1) {
-  top: 14px;
+  top: 0.875rem;
 }
 
 .f-hamburguesa span:nth-child(2) {
-  top: 21px;
+  top: 1.3125rem;
 }
 
 .f-hamburguesa span:nth-child(3) {
-  top: 28px;
+  top: 1.75rem;
 }
 
 .f-hamburguesa[data-abierto] span:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
+  transform: translateY(0.4375rem) rotate(45deg);
 }
 
 .f-hamburguesa[data-abierto] span:nth-child(2) {
@@ -239,7 +240,7 @@
 }
 
 .f-hamburguesa[data-abierto] span:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
+  transform: translateY(-0.4375rem) rotate(-45deg);
 }
 
 /* Mega menú Nosotros: blanco, con línea dorada */
@@ -249,10 +250,10 @@
   top: var(--f-alto);
   left: 0;
   right: 0;
-  border-top: 4px solid var(--dorado);
+  border-top: 0.25rem solid var(--dorado);
   background: var(--blanco);
   color: var(--marino);
-  box-shadow: 0 28px 44px -28px rgb(33 40 83 / 0.6);
+  box-shadow: 0 1.75rem 2.75rem -1.75rem rgb(33 40 83 / 0.6);
   transform-origin: top center;
   --foco: var(--marino);
 }
@@ -260,16 +261,16 @@
 .f-mega__interior {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(24px, 4vw, 64px);
-  max-width: 1180px;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  max-width: 73.75rem;
   margin: 0 auto;
-  padding: 34px clamp(16px, 3vw, 40px) 42px;
+  padding: 2.125rem clamp(1rem, 3vw, 2.5rem) 2.625rem;
 }
 
 .f-mega__titulo {
-  margin-bottom: 10px;
-  padding-bottom: 10px;
-  border-bottom: 4px solid var(--celeste);
+  margin-bottom: 0.625rem;
+  padding-bottom: 0.625rem;
+  border-bottom: 0.25rem solid var(--celeste);
   font-stretch: 125%;
   font-weight: 900;
   font-size: 1.45rem;
@@ -280,7 +281,7 @@
 .f-mega__enlace {
   display: flex;
   align-items: center;
-  min-height: 40px;
+  min-height: 2.5rem;
   font-size: 1.05rem;
   font-weight: 500;
   color: var(--marino);
@@ -303,19 +304,19 @@
   right: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
-  padding: 20px clamp(16px, 5vw, 40px) 48px;
+  padding: 1.25rem clamp(1rem, 5vw, 2.5rem) 3rem;
   background: var(--marino);
   color: var(--blanco);
 }
 
 .f-movil__lista > li {
-  border-bottom: 2px solid rgb(255 255 255 / 0.14);
+  border-bottom: 0.125rem solid rgb(255 255 255 / 0.14);
 }
 
 .f-movil__enlace {
   display: flex;
   align-items: center;
-  min-height: 56px;
+  min-height: 3.5rem;
   margin: 0;
   font-stretch: 125%;
   font-weight: 900;
@@ -330,15 +331,15 @@
 }
 
 .f-movil__grupo {
-  padding-bottom: 12px;
+  padding-bottom: 0.75rem;
 }
 
 .f-movil__subgrupo {
-  margin-top: 10px;
+  margin-top: 0.625rem;
 }
 
 .f-movil__subgrupo h3 {
-  margin-bottom: 2px;
+  margin-bottom: 0.125rem;
   font-size: 0.85rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -349,7 +350,7 @@
 .f-movil__subgrupo a {
   display: flex;
   align-items: center;
-  min-height: 44px;
+  min-height: 2.75rem;
   font-size: 1.1rem;
   font-weight: 500;
   color: var(--blanco);
@@ -362,15 +363,15 @@
 }
 
 .f-icrm--movil {
-  margin-top: 28px;
-  min-height: 52px;
+  margin-top: 1.75rem;
+  min-height: 3.25rem;
 }
 
 /* ═════════ Piezas comunes ═════════ */
 
 .f-seccion {
   --f-fondo: var(--blanco);
-  padding: clamp(72px, 10vw, 128px) 0;
+  padding: clamp(4.5rem, 10vw, 8rem) 0;
   background: var(--f-fondo);
 }
 
@@ -385,8 +386,8 @@
   flex-wrap: wrap;
   align-items: end;
   justify-content: space-between;
-  gap: 16px 40px;
-  margin-bottom: clamp(32px, 4vw, 48px);
+  gap: 1rem 2.5rem;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
 }
 
 .f-titulo {
@@ -412,7 +413,7 @@
 }
 
 .f-subtitulo {
-  margin: 48px 0 16px;
+  margin: 3rem 0 1rem;
   font-stretch: 112%;
   font-weight: 850;
   font-size: 1.15rem;
@@ -422,7 +423,7 @@
 
 .f-sedes .f-titulo,
 .f-noticias .f-titulo {
-  margin-bottom: clamp(32px, 4vw, 48px);
+  margin-bottom: clamp(2rem, 4vw, 3rem);
 }
 
 /* Botones inclinados, con texto marino sobre dorado o blanco */
@@ -433,8 +434,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 56px;
-  padding: 10px 28px;
+  min-height: 3.5rem;
+  padding: 0.625rem 1.75rem;
   color: var(--marino);
   text-align: center;
   text-decoration: none;
@@ -446,13 +447,13 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  border-radius: 5px;
+  border-radius: 0.3125rem;
   transform: skewX(-12deg);
 }
 
 .f-boton--oro::before {
   background: var(--dorado);
-  box-shadow: 0 12px 22px -12px rgb(33 40 83 / 0.6);
+  box-shadow: 0 0.75rem 1.375rem -0.75rem rgb(33 40 83 / 0.6);
 }
 
 .f-boton--blanco::before {
@@ -463,7 +464,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 0.625rem;
   font-stretch: 112%;
   font-weight: 850;
   font-size: 1.02rem;
@@ -482,7 +483,7 @@
 }
 
 .f-boton:focus-visible {
-  outline-offset: 6px;
+  outline-offset: 0.375rem;
 }
 
 /* Enlaces sueltos: subrayado dorado y flecha */
@@ -490,14 +491,14 @@
 .f-enlace {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  min-height: 44px;
+  gap: 0.5rem;
+  min-height: 2.75rem;
   font-weight: 750;
   font-size: 1.05rem;
   color: var(--marino);
   text-decoration: underline;
   text-decoration-color: var(--dorado);
-  text-decoration-thickness: 3px;
+  text-decoration-thickness: 0.1875rem;
   text-underline-offset: 0.35em;
   transition: transform 160ms var(--ease-salida);
 }
@@ -517,7 +518,7 @@
 }
 
 .f-enlace--chico {
-  min-height: 40px;
+  min-height: 2.5rem;
   font-size: 0.98rem;
 }
 
@@ -534,7 +535,7 @@
   inset: 0;
   z-index: -1;
   border-radius: inherit;
-  box-shadow: 0 22px 40px -22px rgb(33 40 83 / 0.55);
+  box-shadow: 0 1.375rem 2.5rem -1.375rem rgb(33 40 83 / 0.55);
   opacity: 0;
   transition: opacity 220ms ease;
   pointer-events: none;
@@ -566,7 +567,7 @@
   aspect-ratio: 1;
   border-radius: 50%;
   background: var(--marino);
-  box-shadow: 0 0 0 4px var(--dorado), 0 16px 30px -12px rgb(0 0 0 / 0.45);
+  box-shadow: 0 0 0 0.25rem var(--dorado), 0 1rem 1.875rem -0.75rem rgb(0 0 0 / 0.45);
 }
 
 .f-medalla__anillo {
@@ -585,7 +586,7 @@
 
 .f-medalla__anillo text {
   font-family: 'Archivo Variable', system-ui, sans-serif;
-  font-size: 12.5px;
+  font-size: 12.5px; /* unidades del viewBox del SVG: no usar rem */
   font-weight: 700;
   letter-spacing: 0.08em;
   fill: var(--dorado);
@@ -615,22 +616,22 @@
 
 .f .cargando {
   display: grid;
-  gap: 14px;
+  gap: 0.875rem;
 }
 
 .f .cargando__titulo,
 .f .cargando__linea {
   display: block;
-  height: 18px;
-  border-radius: 4px;
+  height: 1.125rem;
+  border-radius: 0.25rem;
   background: color-mix(in srgb, currentColor 14%, transparent);
   animation: f-latido 1.4s ease-in-out infinite;
 }
 
 .f .cargando__titulo {
-  width: min(70%, 520px);
-  height: clamp(40px, 6vw, 72px);
-  margin-bottom: 10px;
+  width: min(70%, 32.5rem);
+  height: clamp(2.5rem, 6vw, 4.5rem);
+  margin-bottom: 0.625rem;
 }
 
 .f .cargando__linea:nth-child(odd) {
@@ -644,8 +645,8 @@
 .f .error-carga {
   display: grid;
   justify-items: start;
-  gap: 8px;
-  margin-top: 24px;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
   max-width: 60ch;
 }
 
@@ -659,12 +660,12 @@
 .f .boton-secundario {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  min-height: 44px;
-  margin-top: 8px;
-  padding: 0 18px;
-  border: 2px solid currentColor;
-  border-radius: 6px;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  margin-top: 0.5rem;
+  padding: 0 1.125rem;
+  border: 0.125rem solid currentColor;
+  border-radius: 0.375rem;
   background: transparent;
   font-weight: 700;
   cursor: pointer;
@@ -682,7 +683,7 @@
 }
 
 .f-vacio p + p {
-  margin-top: 10px;
+  margin-top: 0.625rem;
   color: var(--marino-suave);
 }
 
@@ -713,7 +714,7 @@
   color: var(--blanco);
 }
 
-/* ═════════ Hero ═════════ */
+/* ═════════ Cabecera de página con escena (Propuesta Educativa) ═════════ */
 
 .f-hero {
   --f-fondo: var(--celeste);
@@ -721,23 +722,37 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  display: grid;
-  grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr);
-  align-items: center;
-  gap: clamp(16px, 3vw, 48px);
+  display: flex;
   min-height: calc(100svh - var(--f-alto));
-  padding: clamp(32px, 5vw, 72px) clamp(16px, 4vw, 64px) 0;
+  padding: clamp(2rem, 5vw, 4.5rem) var(--gutter) 0;
   background: var(--celeste);
   color: var(--blanco);
 }
 
-.f-hero--solo-texto {
+/* El contenido se limita a --ancho-escena: en pantallas anchas no se separa de la escena */
+.f-hero__interior {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  align-items: end;
+  gap: clamp(1rem, 3vw, 3rem);
+  width: 100%;
+  max-width: var(--ancho-escena);
+  margin: 0 auto;
+}
+
+.f-hero--solo-texto .f-hero__interior {
   grid-template-columns: minmax(0, 1fr);
 }
 
 .f-hero--estado {
-  display: block;
   min-height: 70svh;
+}
+
+.f-hero--estado .f-hero__interior {
+  display: block;
+  padding-bottom: 4rem;
 }
 
 .f-hero__franjas {
@@ -748,7 +763,7 @@
   z-index: -1;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 0.875rem;
   rotate: -11deg;
   pointer-events: none;
 }
@@ -760,52 +775,51 @@
 }
 
 .f-hero__franjas span:nth-child(1) {
-  height: clamp(70px, 9vw, 130px);
+  height: clamp(4.375rem, 9vw, 8.125rem);
 }
 
 .f-hero__franjas span:nth-child(2) {
-  height: clamp(12px, 1.5vw, 22px);
+  height: clamp(0.75rem, 1.5vw, 1.375rem);
   background: var(--blanco);
   animation-delay: 80ms;
 }
 
 .f-hero__franjas span:nth-child(3) {
-  height: clamp(24px, 3vw, 44px);
+  height: clamp(1.5rem, 3vw, 2.75rem);
   animation-delay: 160ms;
 }
 
 .f-hero__texto {
-  position: relative;
-  z-index: 2;
-  padding-bottom: clamp(40px, 7vw, 120px);
+  align-self: center;
+  padding-bottom: clamp(2.5rem, 7vw, 7.5rem);
 }
 
 .f-hero__titulo {
   font-stretch: 125%;
   font-weight: 900;
-  font-size: clamp(1.85rem, 4.3vw, 4.25rem);
+  font-size: clamp(1.85rem, 3.9vw, 3.75rem);
   line-height: 0.96;
   letter-spacing: -0.01em;
   text-transform: uppercase;
   text-wrap: balance;
 }
 
-/* Al cargar, la cortina del título se abre de izquierda a derecha (de la propuesta C) */
+/* Al cargar, la cortina del título se abre de izquierda a derecha */
 .f-hero__titulo .f-barrido::after {
   animation: f-cortina 640ms var(--ease-recorrido) 60ms backwards;
 }
 
-/* Barras que crecen (de la propuesta C), inclinadas como las franjas */
+/* Barras que crecen, inclinadas como las franjas */
 .f-hero__barras {
   display: grid;
-  gap: 8px;
-  margin-top: 24px;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
   transform: skewX(-12deg);
 }
 
 .f-hero__barras span {
   display: block;
-  height: 10px;
+  height: 0.625rem;
   transform-origin: left center;
   animation: f-barra 700ms var(--ease-salida) backwards;
   animation-delay: calc(560ms + var(--i) * 90ms);
@@ -826,10 +840,10 @@
   background: var(--marino);
 }
 
-/* Bajada en 24 px: es texto grande y cumple 3:1 sobre el celeste. Solo se desliza; nunca empieza oculta. */
+/* Bajada en 24 px: texto grande, 3.6:1 sobre el celeste. Solo se desliza; nunca empieza oculta. */
 .f-hero__bajada {
   max-width: 30ch;
-  margin-top: 24px;
+  margin-top: 1.5rem;
   font-size: 1.5rem;
   font-weight: 500;
   line-height: 1.35;
@@ -839,44 +853,62 @@
 .f-hero__acciones {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px 18px;
-  margin-top: 32px;
+  gap: 0.875rem 1.125rem;
+  margin-top: 2rem;
   animation: f-desliza 700ms var(--ease-salida) 200ms backwards;
 }
 
-/* Figuras, anillo y medalla */
-
-.f-hero__figuras {
+/*
+  Escena: proporción fija (6:5) y todo lo de adentro en % de ella.
+  El anillo, la medalla y los alumnos escalan y se mueven juntos, como un solo grupo,
+  sin depender del ancho de la ventana.
+*/
+.f-escena {
   position: relative;
-  z-index: 1;
-  align-self: end;
-  height: 100%;
-  min-height: 500px;
+  justify-self: end;
+  width: min(100%, 44rem);
+  aspect-ratio: 6 / 5;
 }
 
-.f-hero__anillo {
+.f-escena__anillo {
   position: absolute;
-  top: 4%;
-  left: 50%;
-  width: min(92%, 560px);
-  margin-left: max(-46%, -280px);
-  overflow: visible;
-  pointer-events: none;
+  left: 0;
+  top: 6%;
+  width: 58%;
+  aspect-ratio: 1;
   animation: f-anillo 1100ms var(--ease-salida) 180ms backwards;
 }
 
-.f-hero__anillo circle {
-  fill: none;
-  stroke: var(--marino);
-  stroke-width: 12;
+.f-escena__anillo svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
 }
 
-.f-hero__anillo .f-hero__anillo-fino {
+.f-escena__anillo circle {
+  fill: none;
+  stroke: var(--marino);
+  stroke-width: 10;
+}
+
+.f-escena__anillo .f-escena__anillo-fino {
   stroke: var(--blanco);
   stroke-width: 3;
 }
 
-.f-hero__grupo {
+/* La medalla gira dentro del anillo, centrada */
+.f-escena__medalla {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 46%;
+  translate: -50% -50%;
+  animation: f-medalla 800ms var(--ease-salida) 700ms backwards;
+}
+
+.f-escena__alumnos {
   position: absolute;
   inset: 0;
 }
@@ -886,50 +918,265 @@
   bottom: 0;
   width: auto;
   max-width: none;
-  filter: drop-shadow(0 20px 26px rgb(33 40 83 / 0.35));
+  filter: drop-shadow(0 1.25rem 1.625rem rgb(33 40 83 / 0.35));
   animation: f-figura 900ms var(--ease-salida) backwards;
   animation-delay: calc(260ms + var(--i) * 140ms);
 }
 
 .f-recorte--0 {
-  right: 6%;
+  right: 0;
   z-index: 2;
-  height: min(92%, 640px);
+  height: 96%;
 }
 
 .f-recorte--1 {
-  right: 40%;
+  right: 26%;
   z-index: 1;
-  height: min(84%, 590px);
+  height: 86%;
 }
 
-.f-hero__foto {
+.f-escena__foto {
   position: absolute;
-  left: 8%;
-  right: 4%;
-  bottom: 12%;
-  width: 88%;
+  right: 0;
+  bottom: 8%;
+  width: 70%;
   aspect-ratio: 4 / 3;
   height: auto;
   object-fit: cover;
-  border: 8px solid var(--blanco);
-  border-radius: 6px;
+  border: 0.5rem solid var(--blanco);
+  border-radius: 0.375rem;
   rotate: -3deg;
 }
 
-.f-hero__medalla {
+/* ═════════ Carrusel de Inicio ═════════ */
+
+.f-carrusel {
+  --foco: var(--blanco);
+  position: relative;
+  background: var(--marino);
+  color: var(--blanco);
+}
+
+.f-carrusel--estado {
+  min-height: 22rem;
+  padding: 3rem var(--gutter);
+}
+
+.f-carrusel__vista {
+  overflow: hidden;
+}
+
+.f-carrusel__pista {
+  display: flex;
+  touch-action: pan-y pinch-zoom;
+}
+
+.f-banner {
+  position: relative;
+  flex: 0 0 100%;
+  min-width: 0;
+  overflow: hidden;
+  aspect-ratio: 1900 / 700;
+  min-height: 20rem;
+  max-height: calc(100svh - var(--f-alto));
+  background: var(--marino);
+}
+
+.f-banner__imagen {
   position: absolute;
-  left: 0;
-  bottom: 9%;
-  z-index: 3;
-  width: clamp(118px, 11vw, 158px);
-  animation: f-medalla 800ms var(--ease-salida) 900ms backwards;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.f-banner__imagen--movil {
+  display: none;
+}
+
+/* Texto real sobre la imagen: va en una placa marina inclinada, así el contraste no depende de la foto */
+.f-banner__placa {
+  position: absolute;
+  bottom: clamp(5rem, 7vw, 6.5rem);
+  z-index: 1;
+  display: grid;
+  justify-items: start;
+  gap: 0.5rem;
+  max-width: min(30rem, 40%);
+  padding: 1.25rem 1.75rem 1.5rem;
+  isolation: isolate;
+}
+
+.f-banner__placa::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 0.25rem;
+  background: var(--marino);
+  box-shadow: inset 0.375rem 0 0 var(--dorado), 0 1.125rem 2.125rem -1rem rgb(0 0 0 / 0.55);
+  transform: skewX(-8deg);
+}
+
+/* En pantallas anchas la placa se alinea con el ancho de contenido, no con el borde de la ventana */
+.f-banner__placa--izquierda {
+  left: max(var(--gutter), calc((100% - var(--ancho-escena)) / 2 + var(--gutter)));
+}
+
+.f-banner__placa--derecha {
+  right: max(var(--gutter), calc((100% - var(--ancho-escena)) / 2 + var(--gutter)));
+}
+
+.f-banner__titulo {
+  font-stretch: 125%;
+  font-weight: 900;
+  font-size: clamp(1.15rem, 1.9vw, 1.9rem);
+  line-height: 1.04;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.f-banner__meta {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--marino-lavado);
+}
+
+.f-banner__accion {
+  margin-top: 0.375rem;
+  min-height: 3rem;
+}
+
+/* Al quedar activa, la placa se asienta (solo transform: el texto nunca espera) */
+.f-banner__placa > * {
+  transform: translateY(0.875rem);
+  transition: transform 450ms var(--ease-salida);
+}
+
+.f-banner--activa .f-banner__placa > * {
+  transform: none;
+}
+
+.f-banner--activa .f-banner__placa > :nth-child(2) {
+  transition-delay: 60ms;
+}
+
+.f-banner--activa .f-banner__placa > :nth-child(3) {
+  transition-delay: 120ms;
+}
+
+/* Controles: flechas, indicadores con progreso y pausa, sobre una cápsula marina */
+.f-carrusel__controles {
+  position: absolute;
+  left: 50%;
+  bottom: 1rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.375rem;
+  border-radius: 62.4375rem;
+  background: var(--marino);
+  box-shadow: 0 0.625rem 1.5rem -0.75rem rgb(0 0 0 / 0.6);
+  translate: -50% 0;
+}
+
+.f-carrusel__boton {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--blanco);
+  cursor: pointer;
+  transition: transform 160ms var(--ease-salida);
+}
+
+.f-carrusel__boton svg {
+  transition: transform 200ms var(--ease-salida);
+}
+
+.f-carrusel__boton:active {
+  transform: scale(0.92);
+}
+
+.f-carrusel__puntos {
+  display: flex;
+  align-items: center;
+}
+
+.f-punto {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2.75rem;
+  padding: 0 0.25rem;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transition: transform 160ms var(--ease-salida);
+}
+
+.f-punto[aria-current='true'] {
+  width: 3.5rem;
+}
+
+.f-punto:active {
+  transform: scale(0.92);
+}
+
+.f-punto__pista {
+  display: block;
+  width: 100%;
+  height: 0.375rem;
+  overflow: hidden;
+  border-radius: 0.1875rem;
+  background: rgb(255 255 255 / 0.45);
+}
+
+.f-punto__barra {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--dorado);
+  transform-origin: left center;
+  animation: f-avance var(--avance) linear both;
+  animation-play-state: paused;
+}
+
+.f-punto__barra[data-corriendo] {
+  animation-play-state: running;
+}
+
+.f-carrusel__pausa {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  height: 2.5rem;
+  margin-left: 0.25rem;
+  padding: 0 0.875rem;
+  border: 0.125rem solid rgb(255 255 255 / 0.45);
+  border-radius: 62.4375rem;
+  background: none;
+  color: var(--blanco);
+  font-size: 0.88rem;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 160ms var(--ease-salida);
+}
+
+.f-carrusel__pausa:active {
+  transform: scale(0.96);
 }
 
 /* ═════════ Cifras ═════════ */
 
 .f-cifras {
-  padding: clamp(48px, 7vw, 88px) var(--gutter);
+  padding: clamp(3rem, 7vw, 5.5rem) var(--gutter);
   background: var(--marino);
   color: var(--blanco);
 }
@@ -937,8 +1184,8 @@
 .f-cifras__lista {
   display: grid;
   align-items: start;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 32px clamp(24px, 4vw, 64px);
+  grid-template-columns: repeat(auto-fit, minmax(13.75rem, 1fr));
+  gap: 2rem clamp(1.5rem, 4vw, 4rem);
   max-width: var(--ancho);
   margin: 0 auto;
 }
@@ -946,9 +1193,9 @@
 .f-cifra {
   display: grid;
   align-content: start;
-  gap: 4px;
-  padding-top: 18px;
-  border-top: 4px solid var(--celeste);
+  gap: 0.25rem;
+  padding-top: 1.125rem;
+  border-top: 0.25rem solid var(--celeste);
 }
 
 .f-cifra__valor {
@@ -974,50 +1221,6 @@
   color: var(--blanco);
 }
 
-/* ═════════ Aviso ═════════ */
-
-.f-aviso {
-  padding-bottom: clamp(40px, 5vw, 64px);
-}
-
-.f-quienes {
-  padding-top: clamp(40px, 5vw, 72px);
-}
-
-.f-aviso__interior {
-  display: grid;
-  gap: clamp(24px, 4vw, 56px);
-  align-items: center;
-  max-width: calc(var(--ancho) + 2 * var(--gutter));
-  margin: 0 auto;
-  padding: 0 var(--gutter);
-}
-
-.f-aviso__interior--imagen {
-  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
-}
-
-.f-aviso__imagen {
-  overflow: hidden;
-  border-radius: 8px;
-}
-
-.f-aviso__imagen img {
-  width: 100%;
-  height: auto;
-}
-
-.f-aviso__texto {
-  display: grid;
-  justify-items: start;
-  gap: 14px;
-}
-
-.f-aviso__texto p {
-  max-width: 50ch;
-  font-size: 1.12rem;
-}
-
 /* ═════════ Quiénes somos ═════════ */
 
 .f-quienes .f-quienes__cuerpo {
@@ -1029,21 +1232,21 @@
 .f-quienes__cuerpo--foto {
   display: grid;
   grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
-  gap: clamp(40px, 6vw, 88px);
+  gap: clamp(2.5rem, 6vw, 5.5rem);
   align-items: start;
 }
 
 .f-quienes__foto {
   position: sticky;
-  top: calc(var(--f-alto) + 32px);
+  top: calc(var(--f-alto) + 2rem);
 }
 
 .f-quienes__foto::before {
   content: '';
   position: absolute;
-  left: -14px;
+  left: -0.875rem;
   right: 30%;
-  bottom: -14px;
+  bottom: -0.875rem;
   z-index: -1;
   height: 40%;
   background: var(--celeste);
@@ -1061,19 +1264,19 @@
 }
 
 .f-quienes__texto .f-enlace {
-  margin-top: 20px;
+  margin-top: 1.25rem;
 }
 
 .f-barras {
   display: grid;
-  gap: 8px;
-  margin: 22px 0 28px;
+  gap: 0.5rem;
+  margin: 1.375rem 0 1.75rem;
   transform: skewX(-12deg);
 }
 
 .f-barras span {
   display: block;
-  height: 8px;
+  height: 0.5rem;
   transform-origin: left center;
 }
 
@@ -1090,25 +1293,25 @@
 .f-simbolos {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  gap: 0.875rem;
 }
 
 .f-simbolo {
   display: grid;
-  gap: 6px;
-  padding: 18px 20px 20px;
-  border: 2px solid var(--celeste-lavado);
-  border-radius: 8px;
+  gap: 0.375rem;
+  padding: 1.125rem 1.25rem 1.25rem;
+  border: 0.125rem solid var(--celeste-lavado);
+  border-radius: 0.5rem;
   background: var(--blanco);
 }
 
 .f-simbolo::before {
   content: '';
   position: absolute;
-  top: -2px;
-  left: 18px;
-  width: 44px;
-  height: 4px;
+  top: -0.125rem;
+  left: 1.125rem;
+  width: 2.75rem;
+  height: 0.25rem;
   background: var(--dorado);
 }
 
@@ -1133,7 +1336,7 @@
 .f-foto__marco {
   position: relative;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   background: var(--celeste-lavado);
 }
 
@@ -1162,7 +1365,7 @@
 
 .f-carriles {
   display: grid;
-  gap: 18px;
+  gap: 1.125rem;
 }
 
 .f-carril {
@@ -1171,13 +1374,13 @@
   display: grid;
   grid-template-columns: minmax(min-content, 0.9fr) minmax(0, 1.2fr);
   align-items: center;
-  gap: 12px clamp(20px, 3vw, 40px);
-  min-height: 150px;
-  padding: 24px clamp(28px, 4vw, 56px);
+  gap: 0.75rem clamp(1.25rem, 3vw, 2.5rem);
+  min-height: 9.375rem;
+  padding: 1.5rem clamp(1.75rem, 4vw, 3.5rem);
 }
 
 .f-carril--foto {
-  grid-template-columns: minmax(min-content, 0.9fr) minmax(0, 1.1fr) minmax(180px, 0.75fr);
+  grid-template-columns: minmax(min-content, 0.9fr) minmax(0, 1.1fr) minmax(11.25rem, 0.75fr);
 }
 
 .f-carril::before {
@@ -1185,7 +1388,7 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   transform: skewX(-10deg);
 }
 
@@ -1196,7 +1399,7 @@
 
 .f-carril--marino::before {
   background: var(--marino);
-  box-shadow: inset 6px 0 0 var(--dorado);
+  box-shadow: inset 0.375rem 0 0 var(--dorado);
 }
 
 .f-carril--blanco {
@@ -1206,7 +1409,7 @@
 
 .f-carril--blanco::before {
   background: var(--blanco);
-  box-shadow: inset 6px 0 0 var(--dorado);
+  box-shadow: inset 0.375rem 0 0 var(--dorado);
 }
 
 .f-carril__nombre {
@@ -1220,7 +1423,7 @@
 
 .f-carril__datos {
   display: grid;
-  gap: 4px;
+  gap: 0.25rem;
 }
 
 .f-carril__rango {
@@ -1248,7 +1451,7 @@
 .f-divisor {
   position: relative;
   overflow: hidden;
-  height: 64px;
+  height: 4rem;
   background: var(--blanco);
 }
 
@@ -1265,20 +1468,20 @@
 }
 
 .f-divisor span:nth-child(1) {
-  top: 18px;
-  height: 14px;
+  top: 1.125rem;
+  height: 0.875rem;
   background: var(--marino);
 }
 
 .f-divisor span:nth-child(2) {
-  top: 36px;
-  height: 4px;
+  top: 2.25rem;
+  height: 0.25rem;
   background: var(--dorado);
 }
 
 .f-divisor span:nth-child(3) {
-  top: 44px;
-  height: 8px;
+  top: 2.75rem;
+  height: 0.5rem;
   background: var(--celeste);
 }
 
@@ -1286,14 +1489,14 @@
 
 .f-sedes__lista {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1.25rem;
 }
 
 /* Sedes como placas: regla dorada encima de la foto, foto con corte inclinado y fondo celeste suave */
 .f-sede {
   overflow: hidden;
-  border-radius: 2px;
+  border-radius: 0.125rem;
   background: var(--celeste-lavado);
 }
 
@@ -1301,10 +1504,10 @@
   content: '';
   position: absolute;
   top: 0;
-  left: 20px;
+  left: 1.25rem;
   z-index: 3;
-  width: 56px;
-  height: 5px;
+  width: 3.5rem;
+  height: 0.3125rem;
   background: var(--dorado);
 }
 
@@ -1315,8 +1518,8 @@
 
 .f-sede__texto {
   display: grid;
-  gap: 6px;
-  padding: 18px 20px 20px;
+  gap: 0.375rem;
+  padding: 1.125rem 1.25rem 1.25rem;
 }
 
 .f-sede__nombre {
@@ -1339,8 +1542,8 @@
 .f-sede__acciones {
   display: flex;
   flex-wrap: wrap;
-  gap: 0 16px;
-  margin-top: 4px;
+  gap: 0 1rem;
+  margin-top: 0.25rem;
 }
 
 /* ═════════ Noticias ═════════ */
@@ -1352,19 +1555,19 @@
 .f-noticias__lista {
   display: grid;
   align-items: start;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(17.5rem, 1fr));
+  gap: 1.25rem;
 }
 
 .f-noticia {
   overflow: hidden;
-  border-radius: 2px;
+  border-radius: 0.125rem;
   background: var(--blanco);
-  box-shadow: inset 0 5px 0 var(--dorado);
+  box-shadow: inset 0 0.3125rem 0 var(--dorado);
 }
 
 .f-noticia .imagen {
-  margin-top: 5px;
+  margin-top: 0.3125rem;
 }
 
 /* Sin foto, la noticia es una placa marina */
@@ -1375,7 +1578,7 @@
 }
 
 .f-noticia--placa .f-noticia__texto {
-  padding-top: 28px;
+  padding-top: 1.75rem;
 }
 
 .f-noticia--placa .f-noticia__titulo {
@@ -1401,8 +1604,8 @@
 .f-noticia__texto {
   display: grid;
   justify-items: start;
-  gap: 8px;
-  padding: 20px 22px 22px;
+  gap: 0.5rem;
+  padding: 1.25rem 1.375rem 1.375rem;
 }
 
 .f-noticia__titulo {
@@ -1441,33 +1644,33 @@
   position: absolute;
   left: -10%;
   right: -10%;
-  bottom: -40px;
+  bottom: -2.5rem;
   z-index: -1;
   display: grid;
-  gap: 12px;
+  gap: 0.75rem;
   rotate: -6deg;
 }
 
 .f-cierre__franjas span {
   display: block;
-  height: 70px;
+  height: 4.375rem;
   background: var(--marino);
 }
 
 .f-cierre__franjas span:nth-child(2) {
-  height: 16px;
+  height: 1rem;
   background: var(--blanco);
 }
 
 .f-cierre__interior {
-  padding-bottom: 120px;
+  padding-bottom: 7.5rem;
 }
 
 .f-cierre__acciones {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px 18px;
-  margin-top: 36px;
+  gap: 0.875rem 1.125rem;
+  margin-top: 2.25rem;
 }
 
 /* ═════════ Pie ═════════ */
@@ -1481,21 +1684,21 @@
 .f-pie__interior {
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr));
-  gap: 40px clamp(24px, 4vw, 56px);
+  gap: 2.5rem clamp(1.5rem, 4vw, 3.5rem);
   max-width: calc(var(--ancho) + 2 * var(--gutter));
   margin: 0 auto;
-  padding: clamp(56px, 8vw, 88px) var(--gutter) 40px;
+  padding: clamp(3.5rem, 8vw, 5.5rem) var(--gutter) 2.5rem;
 }
 
 .f-pie__marca {
   display: grid;
   justify-items: start;
-  gap: 12px;
+  gap: 0.75rem;
 }
 
 .f-pie__medalla {
-  width: 124px;
-  margin-bottom: 8px;
+  width: 7.75rem;
+  margin-bottom: 0.5rem;
 }
 
 .f-pie__nombre {
@@ -1507,7 +1710,7 @@
 }
 
 .f-icrm--pie {
-  margin-top: 12px;
+  margin-top: 0.75rem;
 }
 
 .f-icrm--pie .f-icrm__texto {
@@ -1517,8 +1720,8 @@
 
 .f-pie__columna h2 {
   position: relative;
-  margin-bottom: 18px;
-  padding-bottom: 12px;
+  margin-bottom: 1.125rem;
+  padding-bottom: 0.75rem;
   font-stretch: 112%;
   font-weight: 850;
   font-size: 0.98rem;
@@ -1532,36 +1735,36 @@
   position: absolute;
   left: 0;
   bottom: 0;
-  width: 36px;
-  height: 3px;
+  width: 2.25rem;
+  height: 0.1875rem;
   background: var(--dorado);
 }
 
 .f-pie__columna a {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  min-height: 36px;
+  gap: 0.5rem;
+  min-height: 2.25rem;
   color: var(--blanco);
   text-decoration: none;
   text-underline-offset: 0.3em;
   text-decoration-color: var(--dorado);
-  text-decoration-thickness: 2px;
+  text-decoration-thickness: 0.125rem;
 }
 
 .f-pie__contacto a {
   align-items: flex-start;
-  padding: 6px 0;
+  padding: 0.375rem 0;
   line-height: 1.4;
 }
 
 .f-pie__contacto svg {
   flex-shrink: 0;
-  margin-top: 2px;
+  margin-top: 0.125rem;
 }
 
 .f-pie__base {
-  padding: 20px var(--gutter);
+  padding: 1.25rem var(--gutter);
   border-top: 1px solid rgb(255 255 255 / 0.14);
   font-size: 0.92rem;
   text-align: center;
@@ -1592,7 +1795,7 @@ html.f-anim [data-revelar='titulo']:not([data-visto])::after {
 
 html.f-anim [data-revelar='subir']:not([data-visto]) {
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(1.5rem);
 }
 
 /* Foto: una cortina del color del fondo sube y la imagen se asienta */
@@ -1647,7 +1850,7 @@ html.f-anim [data-revelar='barras']:not([data-visto]) span {
 
 /* Llevan texto: solo se desplazan, nunca empiezan ocultas */
 html.f-anim [data-revelar='escalonado']:not([data-visto]) > * {
-  transform: translateY(28px);
+  transform: translateY(1.75rem);
 }
 
 /* Carriles: entran desde la izquierda, uno tras otro */
@@ -1658,23 +1861,31 @@ html.f-anim [data-revelar='escalonado']:not([data-visto]) > * {
 }
 
 html.f-anim [data-revelar='carriles']:not([data-visto]) > * {
-  transform: translateX(-56px);
+  transform: translateX(-3.5rem);
 }
 
 /* ═════════ Hover (solo con mouse) ═════════ */
 
 @media (hover: hover) and (pointer: fine) {
+  .f-carrusel__boton:first-child:hover svg {
+    transform: translateX(-0.1875rem);
+  }
+
+  .f-carrusel__boton:hover svg {
+    transform: translateX(0.1875rem);
+  }
+
   .f-icrm:hover::before {
     background: var(--dorado-claro);
   }
 
   .f-icrm:hover .f-icrm__texto svg {
-    transform: translate(2px, -2px);
+    transform: translate(0.125rem, -0.125rem);
   }
 
   .f-mega__enlace:hover {
     color: var(--celeste-hondo);
-    transform: translateX(6px);
+    transform: translateX(0.375rem);
   }
 
   .f-boton--oro:hover::before {
@@ -1686,7 +1897,7 @@ html.f-anim [data-revelar='carriles']:not([data-visto]) > * {
   }
 
   .f-boton:hover .f-boton__texto svg {
-    transform: translateX(4px);
+    transform: translateX(0.25rem);
   }
 
   .f-enlace:hover {
@@ -1698,13 +1909,13 @@ html.f-anim [data-revelar='carriles']:not([data-visto]) > * {
   }
 
   .f-enlace:hover svg {
-    transform: translateX(4px);
+    transform: translateX(0.25rem);
   }
 
   /* Solo se elevan las tarjetas con acciones; las informativas solo ganan sombra */
   .f-sede:hover,
   .f-noticia:hover {
-    translate: 0 -4px;
+    translate: 0 -0.25rem;
   }
 
   .f-tarjeta:hover::after {
@@ -1741,14 +1952,14 @@ html.f-anim [data-revelar='carriles']:not([data-visto]) > * {
 
 @keyframes f-desliza {
   from {
-    translate: 0 16px;
+    translate: 0 1rem;
   }
 }
 
 @keyframes f-figura {
   from {
     opacity: 0;
-    translate: 0 70px;
+    translate: 0 4.375rem;
   }
 }
 
@@ -1779,6 +1990,12 @@ html.f-anim [data-revelar='carriles']:not([data-visto]) > * {
   }
 }
 
+@keyframes f-avance {
+  from {
+    transform: scaleX(0);
+  }
+}
+
 @keyframes f-fundido {
   from {
     opacity: 0;
@@ -1791,8 +2008,8 @@ html.f-anim [data-revelar='carriles']:not([data-visto]) > * {
 @media (prefers-reduced-motion: reduce) {
   .f-hero__franjas span,
   .f-recorte,
-  .f-hero__anillo,
-  .f-hero__medalla {
+  .f-escena__anillo,
+  .f-escena__medalla {
     animation: f-fundido 400ms ease-out backwards;
   }
 
@@ -1838,6 +2055,15 @@ html.f-anim [data-revelar='carriles']:not([data-visto]) > * {
     transform: none;
   }
 
+  .f-banner__placa > * {
+    transform: none;
+    transition: none;
+  }
+
+  .f-carrusel__boton svg {
+    transition: none;
+  }
+
   .f-nav__flecha,
   .f-hamburguesa span,
   .f-boton__texto svg,
@@ -1849,11 +2075,13 @@ html.f-anim [data-revelar='carriles']:not([data-visto]) > * {
 
 /* ═════════ Responsive ═════════ */
 
-@media (max-width: 1280px) {
+@media (max-width: 1439px) {
   .f-cab__nombre {
     display: none;
   }
+}
 
+@media (max-width: 1280px) {
   .f-pie__interior {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1879,26 +2107,20 @@ html.f-anim [data-revelar='carriles']:not([data-visto]) > * {
 
 @media (max-width: 899px) {
   .f-hero {
+    padding-top: 2.25rem;
+  }
+
+  .f-hero__interior {
     grid-template-columns: minmax(0, 1fr);
-    align-content: start;
-    padding-top: 36px;
   }
 
   .f-hero__texto {
-    padding-bottom: 8px;
+    padding-bottom: 0.5rem;
   }
 
-  .f-hero__figuras {
-    min-height: 0;
-    height: clamp(380px, 100vw, 540px);
-  }
-
-  .f-recorte--0 {
-    right: 4%;
-  }
-
-  .f-recorte--1 {
-    right: 44%;
+  .f-escena {
+    justify-self: center;
+    width: min(100%, 35rem);
   }
 
   .f-carril,
@@ -1911,10 +2133,9 @@ html.f-anim [data-revelar='carriles']:not([data-visto]) > * {
   }
 
   .f-carril__foto {
-    max-width: 360px;
+    max-width: 22.5rem;
   }
 
-  .f-aviso__interior--imagen,
   .f-quienes__cuerpo--foto {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -1922,13 +2143,53 @@ html.f-anim [data-revelar='carriles']:not([data-visto]) > * {
   .f-quienes__foto {
     position: relative;
     top: 0;
-    max-width: 440px;
+    max-width: 27.5rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .f-banner {
+    aspect-ratio: 4 / 5;
+    max-height: none;
+  }
+
+  .f-banner__imagen--escritorio {
+    display: none;
+  }
+
+  .f-banner__imagen--movil {
+    display: block;
+  }
+
+  .f-banner__placa,
+  .f-banner__placa--izquierda,
+  .f-banner__placa--derecha {
+    left: 1rem;
+    right: 1rem;
+    bottom: 5.25rem;
+    max-width: none;
+  }
+
+  .f-carrusel__pausa span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .f-carrusel__pausa {
+    width: 2.75rem;
+    height: 2.75rem;
+    justify-content: center;
+    padding: 0;
   }
 }
 
 @media (max-width: 600px) {
   .f {
-    --f-alto: 68px;
+    --f-alto: 4.25rem;
   }
 
   .f-cab__sigla {
@@ -1936,8 +2197,8 @@ html.f-anim [data-revelar='carriles']:not([data-visto]) > * {
   }
 
   .f-cab__marca img {
-    width: 40px;
-    height: 40px;
+    width: 2.5rem;
+    height: 2.5rem;
   }
 
   .f-cab__barra > .f-icrm {
@@ -1957,12 +2218,65 @@ html.f-anim [data-revelar='carriles']:not([data-visto]) > * {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .f-hero__medalla {
-    width: 104px;
-    bottom: 6%;
-  }
-
   .f-pie__interior {
     grid-template-columns: minmax(0, 1fr);
   }
+}
+
+/* ═════════ Insignia de datos de prueba ═════════ */
+
+.insignia-prueba {
+  --foco: var(--blanco);
+  padding: 0.375rem var(--gutter);
+  background: var(--marino);
+  color: var(--blanco);
+  font-size: 0.9rem;
+}
+
+.insignia-prueba button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.insignia-prueba__panel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.875rem;
+  padding: 0.5rem 0 0.375rem;
+}
+
+.insignia-prueba__panel[hidden] {
+  display: none;
+}
+
+.insignia-prueba select {
+  min-height: 2.25rem;
+  padding: 0 0.625rem;
+  border: 0;
+  border-radius: 0.25rem;
+  color: var(--marino);
+  background: var(--blanco);
+}
+
+.insignia-prueba p {
+  flex-basis: 100%;
+  color: var(--marino-lavado);
+}
+
+.insignia-prueba code {
+  color: var(--blanco);
+}
+
+.f-pendiente__texto {
+  margin-top: 1.5rem;
 }

@@ -3,14 +3,13 @@
 import { writeFileSync } from 'node:fs'
 import { zodToJsonSchema } from 'zod-to-json-schema'
 import {
-  esquemaAviso,
+  esquemaBanners,
   esquemaCifras,
   esquemaHero,
   esquemaGrados,
   esquemaNiveles,
   esquemaNoticias,
   esquemaQuienesSomos,
-  esquemaRutas,
   esquemaSedes,
   esquemaSitio,
   sobre,
@@ -19,14 +18,13 @@ import {
 
 const respuestas = {
   'GET /v1/sitio': sobre(esquemaSitio),
-  'GET /v1/portada/rutas': sobre(esquemaRutas),
-  'GET /v1/avisos/vigente': sobre(esquemaAviso),
+  'GET /v1/portada/banners': sobre(esquemaBanners),
   'GET /v1/quienes-somos': sobre(esquemaQuienesSomos),
   'GET /v1/niveles': sobre(esquemaNiveles),
   'GET /v1/sedes': sobre(esquemaSedes),
   'GET /v1/noticias': sobrePaginado(esquemaNoticias),
   'GET /v1/grados': sobre(esquemaGrados),
-  'GET /v1/portada/hero': sobre(esquemaHero),
+  'GET /v1/propuesta-educativa/cabecera': sobre(esquemaHero),
   'GET /v1/portada/cifras': sobre(esquemaCifras),
 }
 
@@ -39,7 +37,7 @@ const definitions = Object.fromEntries(
 
 const documento = {
   $schema: 'http://json-schema.org/draft-07/schema#',
-  title: 'API pública del portal CATA v1.2 (docs/API_CONTRACT.md)',
+  title: 'API pública del portal CATA 2.0 (docs/API_CONTRACT.md)',
   description: 'Cuerpo de respuesta 200 de cada endpoint. Generado desde PW_Frontend/src/api/esquemas.ts; no editar a mano.',
   definitions,
 }

@@ -56,41 +56,27 @@ export interface Sitio {
   promotora: string | null
 }
 
-// GET /v1/portada/rutas
-export interface Parada {
+// GET /v1/portada/banners
+export const CATEGORIAS_BANNER = ['aviso', 'matricula', 'evento', 'noticia'] as const
+export type CategoriaBanner = (typeof CATEGORIAS_BANNER)[number]
+
+export interface Banner {
   id: string
-  etiqueta: string
-  detalle: string | null
-  destino: Destino
+  categoria: CategoriaBanner
+  titulo: string
+  fecha: Fecha | null
+  /** Imagen de escritorio, apaisada (≈ 1900 × 700). */
+  imagen: Imagen
+  /** Imagen vertical opcional para móvil (4:5). Sin ella, se recorta la de escritorio en el punto focal. */
+  imagenMovil: Imagen | null
+  /** Punto focal en porcentaje (0–100) para recortar la imagen de escritorio. */
+  puntoFocal: { x: number; y: number } | null
+  /** Lado donde va el texto, para no tapar el texto propio de un afiche. */
+  alineacion: 'izquierda' | 'derecha'
+  accion: AccionHero | null
 }
 
-export interface RutaBase {
-  nombre: string
-  bajada: string | null
-  paradas: Parada[]
-}
-
-export interface AccionSolicitud {
-  etiqueta: string
-  detalle: string | null
-  /** Plantilla con {nombre} y {grado}. */
-  mensajeWhatsapp: string
-}
-
-export interface RutaFamilias extends RutaBase {
-  accion: AccionSolicitud
-}
-
-export interface RutaComunidad extends RutaBase {
-  terminal: Parada | null
-}
-
-export interface Rutas {
-  familias: RutaFamilias
-  comunidad: RutaComunidad
-}
-
-// GET /v1/portada/hero
+// GET /v1/propuesta-educativa/cabecera
 export interface FiguraHero {
   /** recorte: PNG con fondo transparente (persona u objeto). foto: imagen rectangular. */
   tipo: 'recorte' | 'foto'
@@ -118,17 +104,6 @@ export interface Cifra {
   /** Signo opcional tras el número: "+", "%". */
   sufijo: string | null
   etiqueta: string
-}
-
-// GET /v1/avisos/vigente
-export interface Aviso {
-  id: string
-  titulo: string
-  texto: string | null
-  imagen: Imagen | null
-  enlace: Enlace | null
-  vigenteDesde: FechaHora
-  vigenteHasta: FechaHora | null
 }
 
 // GET /v1/quienes-somos

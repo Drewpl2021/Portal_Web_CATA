@@ -50,6 +50,7 @@ export function Revelar({
   efecto,
   retraso = 0,
   className,
+  style,
   children,
   ...resto
 }: {
@@ -57,6 +58,7 @@ export function Revelar({
   efecto: Efecto
   retraso?: number
   className?: string
+  style?: CSSProperties
   children: ReactNode
   id?: string
   'aria-labelledby'?: string
@@ -68,7 +70,7 @@ export function Revelar({
       className={className}
       data-revelar={efecto}
       data-visto={visto ? '' : undefined}
-      style={{ '--retraso': `${retraso}ms` } as CSSProperties}
+      style={{ ...style, '--retraso': `${retraso}ms` } as CSSProperties}
       {...resto}
     >
       {children}

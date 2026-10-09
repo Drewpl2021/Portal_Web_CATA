@@ -1,0 +1,35 @@
+{
+  "data": {
+    "nota": "Fechas de prueba: el colegio publicará aquí su cronograma oficial.",
+    "items": [
+      {
+        "id": "f1",
+        "titulo": "Solicitud de vacantes para estudiantes nuevos",
+        "inicio": "2026-11-02",
+        "fin": "2026-12-18",
+        "detalle": "Con el FUT, en la caja de la institución."
+      },
+      {
+        "id": "f2",
+        "titulo": "Matrícula de estudiantes regulares",
+        "inicio": "2026-12-01",
+        "fin": "2026-12-23",
+        "detalle": null
+      },
+      {
+        "id": "f3",
+        "titulo": "Matrícula de estudiantes nuevos",
+        "inicio": "2027-01-04",
+        "fin": "2027-02-26",
+        "detalle": "Con la constancia de vacante y los documentos completos."
+      },
+      {
+        "id": "f4",
+        "titulo": "Inicio de clases",
+        "inicio": "2027-03-01",
+        "fin": null,
+        "detalle": null
+      }
+    ]
+  }
+}

@@ -324,6 +324,33 @@ Campo celeste con titular blanco enorme, tres barras inclinadas que crecen (dora
 ### Medalla
 Disco marino con el emblema al 52 %, aro dorado de 4 px y el nombre del colegio (y «desde el año») girando en dorado alrededor en 40 s. Decorativa (`aria-hidden`). Gira solo mientras está en pantalla. Aparece dentro del anillo de la cabecera de Propuesta Educativa y en el pie. Su texto vive en unidades del SVG (no en rem), porque el `viewBox` ya lo escala.
 
+### Cabecera de página con placa del año (Matrícula)
+Variante más baja de la cabecera celeste (`f-hero--pagina`): titular, barras, bajada y dos botones que bajan a la solicitud y al proceso. A la derecha, una composición de proporción fija 5:4 (máx. 40rem) con `container-type: inline-size`: una placa marina inclinada con «MATRÍCULA» en dorado y el año en blanco (medidos en `cqw`, así escalan con la composición) y el recorte de un estudiante delante, a la derecha. Sin recorte, la placa ocupa todo el ancho (2:1); sin año ni recorte, solo texto.
+
+### Índice de página
+Franja marina bajo la cabecera, con enlaces en mayúsculas a cada sección de la página (`nav` «En esta página»). El subrayado dorado aparece al pasar el mouse.
+
+### Pestañas de proceso
+Placas inclinadas: la activa es marina con texto blanco y una regla dorada que crece debajo; las demás, celeste lavado con borde marino. Patrón de pestañas de ARIA (flechas, Inicio y Fin). Con un solo proceso no hay pestañas.
+
+### Pista de pasos
+Cada paso lleva su número en una placa marina inclinada con base dorada. Con 2 a 4 pasos y más de 900 px, van en una fila unida por una línea discontinua celeste; si no, en una cuadrícula.
+
+### Listas de requisitos
+Placas celeste lavado con la regla dorada corta arriba (como las sedes) y cada elemento con una marca de verificación dorada en un círculo marino.
+
+### Estado de vacantes
+Los niveles reusan los carriles de Inicio con una placa de estado a la derecha: dorada con texto marino, o sin relleno y con borde para «agotadas». El estado siempre se dice con texto; el número aparece solo si el colegio lo publica, con el contador de NumberFlow.
+
+### Cronograma
+Pista vertical discontinua celeste que crece hacia abajo al entrar. Cada fecha va en una placa marina inclinada (día grande, mes y año en dorado) y, al lado, el título y el periodo escrito completo, con «En curso» o «Terminó» en una etiqueta dorada.
+
+### Preguntas frecuentes
+`<details>` nativos en placas blancas sobre celeste lavado; el «+» en un cuadrado marino gira 45° al abrir y la respuesta se desliza.
+
+### Formulario Solicitar información
+En el cierre celeste: título blanco a la izquierda y el formulario en una placa marina con regla dorada. Campos blancos de 52 px, errores en dorado con ícono, vinculados con `aria-describedby`, y el foco va al primer campo con error. El botón dorado abre WhatsApp con el mensaje armado; no se guarda ningún dato.
+
 ### Divisor de franjas
 Franjas de camiseta entre secciones: marina de 14 px, dorada de 4 px y celeste de 8 px, rotadas -2.2°, en una banda de 64 px. Variante lavada cuando la sección siguiente es celeste lavado. Decorativo.
 

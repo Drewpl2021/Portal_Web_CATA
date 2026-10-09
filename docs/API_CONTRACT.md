@@ -1,6 +1,8 @@
 # Contrato de la API pública del portal CATA
 
-**Versión del contrato:** 2.0 · **Fecha:** 2026-10-08
+**Versión del contrato:** 2.1 · **Fecha:** 2026-10-08
+
+**Cambios de la 2.1:** seis endpoints nuevos para la página Matrícula, bajo `/v1/matricula/`: `cabecera`, `procesos`, `vacantes`, `fechas`, `preguntas` y `solicitud` (§3.10 a §3.15). `GET /v1/grados` pasa a usarse en el formulario de Matrícula. No cambia ningún endpoint anterior.
 
 **Cambios de la 2.0** (antes de que el módulo se implemente, por eso las rutas siguen bajo `/v1`):
 - Nuevo `GET /v1/portada/banners`: el carrusel de Inicio. Reemplaza el aviso único.
@@ -107,6 +109,7 @@ Toda imagen se envía como objeto, nunca como texto suelto:
 | Foto de noticia | 3:2 | 1200 × 800 |
 | Banner del carrusel, escritorio | ≈ 1900:700, recortada en el punto focal | 1920 × 708 |
 | Banner del carrusel, móvil | 4:5 | 1080 × 1350 |
+| Recorte de la cabecera de Matrícula | ≈ 1:2, PNG transparente, completo | 500 × 1000 |
 
 ### 1.8 Tipos auxiliares
 
@@ -149,13 +152,19 @@ Valores válidos de `seccion`: `"quienes-somos"`, `"niveles"`, `"sedes"`, `"noti
 | `GET /v1/niveles` | `Niveles` | Niveles |
 | `GET /v1/sedes` | `Sede[]` | Sedes |
 | `GET /v1/noticias` | `Noticia[]` + `meta` | Noticias y comunicados |
-| `GET /v1/grados` | `GrupoGrados[]` | Selector de grado de Solicitar información |
+| `GET /v1/grados` | `GrupoGrados[]` | Selector de grado de Solicitar información (Matrícula) |
 | `GET /v1/propuesta-educativa/cabecera` | `Hero` | Cabecera de la página Propuesta Educativa |
 | `GET /v1/portada/cifras` | `Cifra[]` | Cifras destacadas de Inicio |
+| `GET /v1/matricula/cabecera` | `CabeceraMatricula` | Cabecera de Matrícula |
+| `GET /v1/matricula/procesos` | `ProcesoMatricula[]` | Pasos, requisitos y documentos |
+| `GET /v1/matricula/vacantes` | `Vacantes` | Niveles y vacantes |
+| `GET /v1/matricula/fechas` | `FechasMatricula` | Cronograma de matrícula |
+| `GET /v1/matricula/preguntas` | `PreguntaFrecuente[]` | Preguntas frecuentes de matrícula |
+| `GET /v1/matricula/solicitud` | `SolicitudInformacion` | Textos del formulario Solicitar información |
 
 Cada sección del portal carga su endpoint por separado. Si uno falla, esa sección muestra su error y el resto sigue funcionando.
 
-**Excepción importante: `/v1/sitio`.** Lo usan la cabecera (nombre e ICRM), el título oculto de Inicio, la medalla, el estado vacío de noticias, el cierre y el pie (contactos y dirección). Si `/v1/sitio` falla, todas esas partes quedan sin datos a la vez. Es el endpoint que más conviene mantener disponible y rápido.
+**Excepción importante: `/v1/sitio`.** Lo usan la cabecera (nombre e ICRM), el título oculto de Inicio, la medalla, el estado vacío de noticias, el cierre, el formulario de Matrícula (número de WhatsApp) y el pie (contactos y dirección). Si `/v1/sitio` falla, todas esas partes quedan sin datos a la vez. Es el endpoint que más conviene mantener disponible y rápido.
 
 ---
 
@@ -422,7 +431,7 @@ Noticias y comunicados publicados, **de la más reciente a la más antigua** por
 
 ### 3.8 `GET /v1/grados`
 
-Las opciones del selector de grado de Solicitar información, agrupadas por nivel.
+Las opciones del selector de grado del formulario «Solicitar información» de la página Matrícula, agrupadas por nivel. Si falla, el formulario pide escribir el grado a mano.
 
 **`GrupoGrados`**: `nivel` (string, máx. 24) y `opciones` (string[], 1 a 8 elementos, máx. 24 cada uno).
 
@@ -459,6 +468,130 @@ Cifras destacadas de Inicio. El portal las muestra con un contador que sube hast
 }
 ```
 
+---
+
+### 3.10 `GET /v1/matricula/cabecera`
+
+La cabecera de la página Matrícula: título, frase y, a la derecha, el año del proceso en una placa marina con el recorte de un estudiante delante.
+
+| Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
+|---|---|---|---|---|
+| `titulo` | string | no | 60 | «Proceso de matrícula». |
+| `bajada` | string \| null | sí | 160 | Una frase bajo el título. |
+| `anio` | integer \| null | sí | — | Año escolar al que corresponde el proceso (2000 a 2100). `null` = no se muestra la placa del año. |
+| `figura` | `Imagen` \| null | sí | — | Recorte de un estudiante: PNG con fondo transparente, vertical (≈ 1:2), mínimo 500 × 1000 px. `null` = solo la placa del año, o solo texto si `anio` también es `null`. |
+
+```json
+{
+  "data": {
+    "titulo": "Proceso de matrícula",
+    "bajada": "Requisitos, documentos y pasos para matricular a tu hijo o hija en inicial, primaria o secundaria.",
+    "anio": 2027,
+    "figura": { "url": "https://cata.edu.pe/wp-content/uploads/2023/01/CATA-Matricula_Img_1.png", "alt": "Estudiante con el uniforme del colegio y su mochila, haciendo el gesto de pulgar arriba", "ancho": 500, "alto": 1000 }
+  }
+}
+```
+
+---
+
+### 3.11 `GET /v1/matricula/procesos`
+
+Un proceso por tipo de estudiante (nuevos, regulares…), con sus pasos y sus listas de requisitos y documentos. Devuelve `ProcesoMatricula[]` (0 a 4) en el orden en que se muestran. Con dos o más, el portal los muestra en pestañas; con uno, sin pestañas; con `[]`, un estado vacío que invita a escribir por WhatsApp.
+
+**`ProcesoMatricula`**
+
+| Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
+|---|---|---|---|---|
+| `id` | string | no | — | |
+| `nombre` | string | no | 40 | Para quién es: «Estudiantes nuevos». Es el texto de la pestaña. |
+| `resumen` | string \| null | sí | 160 | Una frase sobre a quién aplica. |
+| `pasos` | `{ titulo, detalle }[]` | no | 0 a 8 | En orden. `titulo` (máx. 60) y `detalle` (string \| null, máx. 240). El portal los numera; no pongan «1er paso» en el título. |
+| `listas` | `{ titulo, items }[]` | no | 0 a 4 | Requisitos y documentos. `titulo` (máx. 60) e `items` (string[], 1 a 15, máx. 240 cada uno). |
+
+```json
+{
+  "data": [
+    {
+      "id": "regulares",
+      "nombre": "Estudiantes regulares",
+      "resumen": "Para quienes ya estudian en CATA y continúan el próximo año.",
+      "listas": [
+        { "titulo": "Requisitos", "items": ["No tener deuda por el servicio de enseñanza con la institución del año anterior.", "No haber sido observado reincidentemente por mala conducta.", "Haber aprobado el año académico anterior."] }
+      ],
+      "pasos": [
+        { "titulo": "Actualización de datos", "detalle": "En la secretaría de la institución se actualizan los datos de los padres de familia o del apoderado." },
+        { "titulo": "Pago de la matrícula", "detalle": "En la caja de la institución." },
+        { "titulo": "Firma del contrato", "detalle": "Contrato de prestación de servicios educativos." }
+      ]
+    }
+  ]
+}
+```
+
+---
+
+### 3.12 `GET /v1/matricula/vacantes`
+
+Vacantes por nivel. El colegio decide si publica el número; el estado siempre se muestra con texto.
+
+| Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
+|---|---|---|---|---|
+| `actualizado` | fecha \| null | sí | — | Fecha de la última actualización. Se muestra «Actualizado el…». |
+| `nota` | string \| null | sí | 240 | Aclaración bajo la lista. |
+| `niveles` | `VacantesNivel[]` | no | 0 a 6 | `[]` = estado vacío. |
+
+**`VacantesNivel`**: `id`; `nivel` (máx. 40); `detalle` (string \| null, máx. 60: «3, 4 y 5 años»); `estado` (`"disponible"` \| `"pocas"` \| `"agotadas"` \| `"consultar"`); `vacantes` (integer ≥ 0 \| null).
+
+| `estado` | Lo que muestra el portal |
+|---|---|
+| `disponible` | El número y «vacantes» si `vacantes` no es `null`; si no, «Vacantes disponibles». |
+| `pocas` | El número y «Últimas vacantes»; sin número, «Últimas vacantes». |
+| `agotadas` | «Vacantes agotadas», sin número. |
+| `consultar` | «Consulta las vacantes», sin número. Úsenlo mientras no haya cifras confirmadas. |
+
+**Solo cifras reales:** si el número no está confirmado, envíen `vacantes: null` o `estado: "consultar"`.
+
+---
+
+### 3.13 `GET /v1/matricula/fechas`
+
+El cronograma del proceso.
+
+| Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
+|---|---|---|---|---|
+| `nota` | string \| null | sí | 200 | Aviso sobre el cronograma, en un recuadro sobre la lista. |
+| `items` | `FechaMatricula[]` | no | 0 a 12 | En orden cronológico. `[]` = «El cronograma se publicará pronto». |
+
+**`FechaMatricula`**: `id`; `titulo` (máx. 80); `inicio` (fecha); `fin` (fecha \| null; `null` = un solo día); `detalle` (string \| null, máx. 160). El portal escribe el periodo completo («Del 2 de noviembre al 18 de diciembre de 2026») y marca «En curso» o «Terminó» según la fecha de hoy en Lima.
+
+---
+
+### 3.14 `GET /v1/matricula/preguntas`
+
+Preguntas frecuentes. Devuelve `PreguntaFrecuente[]` (0 a 15): `id`, `pregunta` (máx. 140) y `respuesta` (máx. 600, texto plano sin HTML). `[]` = estado vacío que invita a escribir por WhatsApp.
+
+---
+
+### 3.15 `GET /v1/matricula/solicitud`
+
+Textos del formulario «Solicitar información» de Matrícula. El formulario pide el nombre y el grado de interés (opciones de `GET /v1/grados`) y abre WhatsApp con el número de `GET /v1/sitio` (`whatsapp`). No envía datos a ningún servidor.
+
+| Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
+|---|---|---|---|---|
+| `titulo` | string | no | 40 | «Solicitar información». |
+| `texto` | string \| null | sí | 200 | Frase bajo el título. |
+| `mensajeWhatsapp` | string | no | 300 | Mensaje que se envía. Usa `{nombre}` y `{grado}`, que el portal reemplaza. |
+
+```json
+{
+  "data": {
+    "titulo": "Solicitar información",
+    "texto": "Escribe tu nombre y el grado que te interesa. Abriremos WhatsApp con el mensaje listo para que lo envíes al colegio.",
+    "mensajeWhatsapp": "Hola, soy {nombre}. Quisiera información sobre la matrícula para {grado}."
+  }
+}
+```
+
 ## 4. Lo que el portal hace con cada caso
 
 Esto sirve para que el módulo sepa qué pasa con lo que publica.
@@ -473,6 +606,8 @@ Esto sirve para que el módulo sepa qué pasa con lo que publica.
 | `alt: ""` | Imagen decorativa, oculta para lectores de pantalla. |
 | La URL de una imagen no carga | Se oculta la imagen y el texto sigue visible. |
 | Banners `[]` | El carrusel no aparece. Con un solo banner, no hay controles ni avance. |
+| Matrícula: un solo proceso | Se muestra sin pestañas. |
+| Matrícula: falla `/v1/sitio` | El formulario muestra su error con «Reintentar», porque no tiene el número de WhatsApp. |
 
 ---
 
@@ -485,5 +620,5 @@ Esto sirve para que el módulo sepa qué pasa con lo que publica.
 El portal trae datos de prueba que cumplen este contrato en `PW_Frontend/src/api/mock/`. Sirven de **ejemplos completos** de cada respuesta: el módulo puede compararse con ellos.
 
 - `tipico/`: contenido real del colegio.
-- Escenarios que solo cambian algunos archivos: `corto/`, `largo/`, `sin-foto/`, `alt-vacio/` y `vacio/`. El carrusel tiene 3 banners en `tipico/`, 1 en `corto/`, 6 en `largo/` y ninguno en `vacio/`.
+- Escenarios que solo cambian algunos archivos: `corto/`, `largo/`, `sin-foto/`, `alt-vacio/` y `vacio/`. El carrusel tiene 3 banners en `tipico/`, 1 en `corto/`, 6 en `largo/` y ninguno en `vacio/`. Matrícula tiene datos en `tipico/`, `corto/`, `largo/` y `vacio/`, y su cabecera además en `sin-foto/` y `alt-vacio/`. En `tipico/`, los requisitos, documentos y pasos son los de los afiches de cata.edu.pe; el año y las fechas son de prueba y las vacantes dicen «consultar».
 - Las pruebas automáticas (`npm test` en `PW_Frontend/`) validan todos esos archivos contra este contrato.

@@ -306,4 +306,150 @@ escribir('vacio', 'niveles', { data: { titulo: 'Inicial, primaria y secundaria',
 escribir('vacio', 'sedes', { data: [] })
 escribir('vacio', 'noticias', lista([]))
 
+// ── Matrícula ──
+// Requisitos, documentos y pasos: afiches publicados por el colegio en cata.edu.pe (matrícula de estudiantes
+// nuevos y regulares). Se quitaron los años del afiche (2023, 2024) para que no caduquen.
+// El año, las fechas y las vacantes NO están publicados: el año y las fechas son de prueba y las vacantes dicen «consultar».
+const cabeceraMatricula = {
+  titulo: 'Proceso de matrícula',
+  bajada: 'Requisitos, documentos y pasos para matricular a tu hijo o hija en inicial, primaria o secundaria.',
+  anio: 2027,
+  figura: { url: UP + '2023/01/CATA-Matricula_Img_1.png', alt: 'Estudiante con el uniforme del colegio y su mochila, haciendo el gesto de pulgar arriba', ancho: 500, alto: 1000 },
+}
+const PAGO = 'En la caja de la institución. Si hay otros medios de pago, el colegio los comunicará oficialmente y a tiempo a los padres de familia.'
+const procesos = [
+  {
+    id: 'nuevos',
+    nombre: 'Estudiantes nuevos',
+    resumen: 'Para quienes postulan a CATA por primera vez.',
+    listas: [
+      {
+        titulo: 'Requisitos para solicitar una vacante',
+        items: [
+          'Tener la edad cumplida al 31 de marzo, según disposición del Minedu.',
+          'Solicitar la vacante con el Formulario Único de Trámite (FUT), que se adquiere en caja.',
+          'Copia del DNI del estudiante y del padre de familia.',
+          'Informe de progreso del estudiante del año anterior.',
+          'De ser el caso, se pedirá una evaluación psicopedagógica con la psicóloga de la institución.',
+        ],
+      },
+      {
+        titulo: 'Documentos para la matrícula',
+        items: [
+          'Ficha de datos para la matrícula, completada por el padre de familia.',
+          'Partida de nacimiento original del estudiante.',
+          'Copia del DNI del estudiante y del padre de familia.',
+          'Informe de progreso del estudiante del año anterior.',
+          'Copia de la ficha de matrícula generada por el SIAGIE, constancia de matrícula e informe de progreso, si el estudiante estudia actualmente en otro centro educativo.',
+          'Constancia de no adeudo, para estudiantes que vienen de instituciones educativas privadas.',
+          'Certificado de buena conducta.',
+          'Resolución directoral de traslado de la institución educativa de procedencia.',
+          'Comprobante del pago por derecho de admisión.',
+        ],
+      },
+    ],
+    pasos: [
+      { titulo: 'Reserva de matrícula', detalle: 'Recibida la solicitud con los requisitos, Dirección General programa una entrevista con los padres de familia y el estudiante. De ser necesario, la institución pedirá una evaluación psicológica.' },
+      { titulo: 'Pago de la cuota de ingreso y la matrícula', detalle: PAGO },
+      { titulo: 'Constancia de vacante', detalle: 'Secretaría la entrega al padre de familia o apoderado, para pedir los documentos a la institución de origen y hacer la matrícula oficial.' },
+      { titulo: 'Firma del contrato', detalle: 'Contrato de prestación de servicios educativos.' },
+    ],
+  },
+  {
+    id: 'regulares',
+    nombre: 'Estudiantes regulares',
+    resumen: 'Para quienes ya estudian en CATA y continúan el próximo año.',
+    listas: [
+      {
+        titulo: 'Requisitos',
+        items: [
+          'No tener deuda por el servicio de enseñanza con la institución del año anterior.',
+          'No haber sido observado reincidentemente por mala conducta.',
+          'Haber aprobado el año académico anterior.',
+        ],
+      },
+    ],
+    pasos: [
+      { titulo: 'Actualización de datos', detalle: 'En la secretaría de la institución se actualizan los datos de los padres de familia o del apoderado.' },
+      { titulo: 'Pago de la matrícula', detalle: PAGO },
+      { titulo: 'Firma del contrato', detalle: 'Contrato de prestación de servicios educativos.' },
+    ],
+  },
+]
+const vacantes = {
+  actualizado: null,
+  nota: 'Las vacantes dependen de cada grado. Consulta la disponibilidad por WhatsApp o en la secretaría del colegio.',
+  niveles: [
+    { id: 'inicial', nivel: 'Inicial', detalle: '3, 4 y 5 años', estado: 'consultar', vacantes: null },
+    { id: 'primaria', nivel: 'Primaria', detalle: '1.er a 6.º grado', estado: 'consultar', vacantes: null },
+    { id: 'secundaria', nivel: 'Secundaria', detalle: '1.er a 5.º año', estado: 'consultar', vacantes: null },
+  ],
+}
+const fechasMatricula = {
+  nota: 'Fechas de prueba: el colegio publicará aquí su cronograma oficial.',
+  items: [
+    { id: 'f1', titulo: 'Solicitud de vacantes para estudiantes nuevos', inicio: '2026-11-02', fin: '2026-12-18', detalle: 'Con el FUT, en la caja de la institución.' },
+    { id: 'f2', titulo: 'Matrícula de estudiantes regulares', inicio: '2026-12-01', fin: '2026-12-23', detalle: null },
+    { id: 'f3', titulo: 'Matrícula de estudiantes nuevos', inicio: '2027-01-04', fin: '2027-02-26', detalle: 'Con la constancia de vacante y los documentos completos.' },
+    { id: 'f4', titulo: 'Inicio de clases', inicio: '2027-03-01', fin: null, detalle: null },
+  ],
+}
+const preguntas = [
+  { id: 'edad', pregunta: '¿Qué edad debe tener mi hijo o hija para postular?', respuesta: 'Debe tener la edad cumplida al 31 de marzo del año al que postula, según la disposición del Ministerio de Educación (Minedu).' },
+  { id: 'fut', pregunta: '¿Dónde consigo el FUT para solicitar la vacante?', respuesta: 'El Formulario Único de Trámite (FUT) se adquiere en la caja de la institución.' },
+  { id: 'entrevista', pregunta: '¿Habrá una entrevista o una evaluación?', respuesta: 'Sí. Recibida la solicitud con los requisitos, Dirección General programa una entrevista con los padres de familia y el estudiante. De ser necesario, la psicóloga de la institución hará una evaluación psicopedagógica.' },
+  { id: 'pago', pregunta: '¿Dónde se pagan la cuota de ingreso y la matrícula?', respuesta: PAGO },
+  { id: 'traslado', pregunta: 'Viene de un colegio privado, ¿qué documentos adicionales necesito?', respuesta: 'La constancia de no adeudo del colegio de procedencia, además de la resolución directoral de traslado, la ficha de matrícula del SIAGIE, el informe de progreso y el certificado de buena conducta.' },
+  { id: 'constancia', pregunta: '¿Para qué sirve la constancia de vacante?', respuesta: 'Secretaría la entrega al padre de familia o apoderado para pedir los documentos a la institución de origen y completar la matrícula oficial.' },
+  { id: 'regulares', pregunta: 'Mi hijo o hija ya estudia en CATA, ¿qué debo hacer?', respuesta: 'Actualizar los datos en secretaría, pagar la matrícula en caja y firmar el contrato de prestación de servicios educativos. Se requiere no tener deuda del año anterior, haber aprobado el año académico y no haber sido observado reincidentemente por mala conducta.' },
+]
+const solicitud = {
+  titulo: 'Solicitar información',
+  texto: 'Escribe tu nombre y el grado que te interesa. Abriremos WhatsApp con el mensaje listo para que lo envíes al colegio.',
+  mensajeWhatsapp: 'Hola, soy {nombre}. Quisiera información sobre la matrícula para {grado}.',
+}
+escribir('tipico', 'matricula-cabecera', { data: cabeceraMatricula })
+escribir('tipico', 'matricula-procesos', { data: procesos })
+escribir('tipico', 'matricula-vacantes', { data: vacantes })
+escribir('tipico', 'matricula-fechas', { data: fechasMatricula })
+escribir('tipico', 'matricula-preguntas', { data: preguntas })
+escribir('tipico', 'matricula-solicitud', { data: solicitud })
+
+escribir('corto', 'matricula-cabecera', { data: { titulo: 'Matrícula', bajada: null, anio: null, figura: null } })
+escribir('corto', 'matricula-procesos', { data: [{ id: 'n', nombre: 'Nuevos', resumen: null, listas: [{ titulo: 'Requisitos', items: ['DNI.'] }], pasos: [{ titulo: 'Firma', detalle: null }] }] })
+escribir('corto', 'matricula-vacantes', { data: { actualizado: null, nota: null, niveles: [{ id: 'i', nivel: 'Inicial', detalle: null, estado: 'disponible', vacantes: 12 }] } })
+escribir('corto', 'matricula-fechas', { data: { nota: null, items: [{ id: 'f', titulo: 'Matrícula', inicio: '2027-01-04', fin: null, detalle: null }] } })
+escribir('corto', 'matricula-preguntas', { data: [{ id: 'p', pregunta: '¿Edad?', respuesta: 'Cumplida al 31 de marzo.' }] })
+escribir('corto', 'matricula-solicitud', { data: { titulo: 'Informes', texto: null, mensajeWhatsapp: 'Hola, soy {nombre}. Me interesa {grado}.' } })
+
+const textoLargo = 'Texto de prueba que llega al máximo recomendado del contrato para comprobar que el bloque se acomoda en varias líneas sin cortarse ni tapar a los demás elementos de la página, incluso en las pantallas más pequeñas.'
+escribir('largo', 'matricula-cabecera', { data: { ...cabeceraMatricula, titulo: 'Proceso de matrícula y admisión para estudiantes nuevos y regulares', bajada: 'Requisitos, documentos, pasos, fechas y vacantes para matricular a tu hijo o hija en inicial, primaria o secundaria en cualquiera de las cuatro sedes del colegio en la provincia de San Román.' } })
+escribir('largo', 'matricula-procesos', { data: [
+  { ...procesos[0], nombre: 'Estudiantes nuevos que postulan por traslado desde otra institución educativa', resumen: textoLargo, listas: [...procesos[0].listas, { titulo: 'Lista de prueba con el máximo de quince elementos permitidos por el contrato', items: Array.from({ length: 15 }, (_, i) => `Requisito de prueba número ${i + 1}: ${textoLargo}`) }], pasos: Array.from({ length: 8 }, (_, i) => ({ titulo: `Paso de prueba número ${i + 1} con un título largo que ocupa varias líneas`, detalle: textoLargo })) },
+  procesos[1],
+  { id: 'inclusivos', nombre: 'Estudiantes con necesidades educativas especiales', resumen: null, listas: [{ titulo: 'Requisitos', items: [textoLargo] }], pasos: [] },
+  { id: 'extranjeros', nombre: 'Estudiantes extranjeros', resumen: null, listas: [], pasos: [{ titulo: 'Convalidación de estudios', detalle: textoLargo }] },
+] })
+escribir('largo', 'matricula-vacantes', { data: { actualizado: '2026-10-05', nota: textoLargo, niveles: [
+  { id: 'inicial', nivel: 'Educación Inicial', detalle: 'Niños y niñas de 3, 4 y 5 años de edad, en la Sede CATA Inicial', estado: 'pocas', vacantes: 3 },
+  { id: 'primaria', nivel: 'Educación Primaria', detalle: 'Del primer al sexto grado, en la Sede Central y en la Sede CATA Jerusalén', estado: 'disponible', vacantes: 128 },
+  { id: 'secundaria', nivel: 'Educación Secundaria', detalle: 'Del primer al quinto año de secundaria, en la Sede Central', estado: 'agotadas', vacantes: 0 },
+  { id: 'inicial-3', nivel: 'Inicial de tres años', detalle: null, estado: 'consultar', vacantes: null },
+  { id: 'talleres', nivel: 'Talleres de la Sede CATA Oasis', detalle: textoLargo, estado: 'disponible', vacantes: null },
+  { id: 'otro', nivel: 'Nivel de prueba', detalle: null, estado: 'disponible', vacantes: 1000 },
+] } })
+escribir('largo', 'matricula-fechas', { data: { nota: textoLargo, items: Array.from({ length: 12 }, (_, i) => ({ id: `f${i}`, titulo: `Actividad de prueba número ${i + 1} del cronograma de matrícula con un nombre largo`, inicio: `2026-${String(11 + Math.floor(i / 6)).padStart(2, '0')}-${String(2 + (i % 6) * 4).padStart(2, '0')}`, fin: i % 2 ? `2027-02-${String(10 + i).padStart(2, '0')}` : null, detalle: i % 3 ? textoLargo : null })) } })
+escribir('largo', 'matricula-preguntas', { data: Array.from({ length: 15 }, (_, i) => ({ id: `p${i}`, pregunta: `Pregunta de prueba número ${i + 1}: ¿qué pasa si la pregunta es tan larga que ocupa dos o tres líneas en un teléfono?`, respuesta: `${textoLargo} ${textoLargo}` })) })
+escribir('largo', 'matricula-solicitud', { data: { titulo: 'Solicitar información sobre el proceso de matrícula y admisión', texto: textoLargo, mensajeWhatsapp: 'Hola, mi nombre es {nombre}. Quisiera recibir información completa sobre el proceso de matrícula, los requisitos, las fechas y las vacantes para {grado}. Muchas gracias.' } })
+
+escribir('sin-foto', 'matricula-cabecera', { data: { ...cabeceraMatricula, figura: null } })
+escribir('alt-vacio', 'matricula-cabecera', { data: altVacio(cabeceraMatricula) })
+
+escribir('vacio', 'matricula-cabecera', { data: { ...cabeceraMatricula, bajada: null, anio: null, figura: null } })
+escribir('vacio', 'matricula-procesos', { data: [] })
+escribir('vacio', 'matricula-vacantes', { data: { actualizado: null, nota: null, niveles: [] } })
+escribir('vacio', 'matricula-fechas', { data: { nota: null, items: [] } })
+escribir('vacio', 'matricula-preguntas', { data: [] })
+escribir('vacio', 'matricula-solicitud', { data: { ...solicitud, texto: null } })
+
 console.log('ok')

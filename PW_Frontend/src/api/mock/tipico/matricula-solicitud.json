@@ -1,0 +1,7 @@
+{
+  "data": {
+    "titulo": "Solicitar información",
+    "texto": "Escribe tu nombre y el grado que te interesa. Abriremos WhatsApp con el mensaje listo para que lo envíes al colegio.",
+    "mensajeWhatsapp": "Hola, soy {nombre}. Quisiera información sobre la matrícula para {grado}."
+  }
+}

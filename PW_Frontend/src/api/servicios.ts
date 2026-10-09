@@ -4,6 +4,12 @@
 import type { z } from 'zod'
 import {
   esquemaBanners,
+  esquemaCabeceraMatricula,
+  esquemaFechasMatricula,
+  esquemaPreguntas,
+  esquemaProcesos,
+  esquemaSolicitud,
+  esquemaVacantes,
   esquemaCifras,
   esquemaHero,
   esquemaGrados,
@@ -17,6 +23,12 @@ import {
 } from './esquemas'
 import type {
   Banner,
+  CabeceraMatricula,
+  FechasMatricula,
+  PreguntaFrecuente,
+  ProcesoMatricula,
+  SolicitudInformacion,
+  Vacantes,
   Cifra,
   GrupoGrados,
   Hero,
@@ -42,6 +54,12 @@ type Recurso =
   | 'sedes'
   | 'noticias'
   | 'grados'
+  | 'matricula-cabecera'
+  | 'matricula-procesos'
+  | 'matricula-vacantes'
+  | 'matricula-fechas'
+  | 'matricula-preguntas'
+  | 'matricula-solicitud'
 
 export class ErrorDatos extends Error {
   constructor(
@@ -168,4 +186,30 @@ export async function obtenerNoticias(limite = 6): Promise<ListaNoticias> {
 
 export async function obtenerGrados(): Promise<GrupoGrados[]> {
   return (await leer('grados', '/v1/grados', sobre(esquemaGrados))).data
+}
+
+// Matrícula
+
+export async function obtenerCabeceraMatricula(): Promise<CabeceraMatricula> {
+  return (await leer('matricula-cabecera', '/v1/matricula/cabecera', sobre(esquemaCabeceraMatricula))).data
+}
+
+export async function obtenerProcesosMatricula(): Promise<ProcesoMatricula[]> {
+  return (await leer('matricula-procesos', '/v1/matricula/procesos', sobre(esquemaProcesos))).data
+}
+
+export async function obtenerVacantes(): Promise<Vacantes> {
+  return (await leer('matricula-vacantes', '/v1/matricula/vacantes', sobre(esquemaVacantes))).data
+}
+
+export async function obtenerFechasMatricula(): Promise<FechasMatricula> {
+  return (await leer('matricula-fechas', '/v1/matricula/fechas', sobre(esquemaFechasMatricula))).data
+}
+
+export async function obtenerPreguntasMatricula(): Promise<PreguntaFrecuente[]> {
+  return (await leer('matricula-preguntas', '/v1/matricula/preguntas', sobre(esquemaPreguntas))).data
+}
+
+export async function obtenerSolicitud(): Promise<SolicitudInformacion> {
+  return (await leer('matricula-solicitud', '/v1/matricula/solicitud', sobre(esquemaSolicitud))).data
 }

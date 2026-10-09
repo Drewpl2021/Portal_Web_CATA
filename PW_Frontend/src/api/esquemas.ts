@@ -1,7 +1,7 @@
 // Validación en tiempo de ejecución de cada respuesta, según docs/API_CONTRACT.md.
 // Si la API cambia un tipo, la sección muestra su estado de error en vez de romper la página.
 import { z } from 'zod'
-import { CATEGORIAS_BANNER, SECCIONES } from './tipos'
+import { CATEGORIAS_BANNER, ESTADOS_VACANTE, SECCIONES } from './tipos'
 import type * as T from './tipos'
 
 const texto = z.string()
@@ -133,6 +133,57 @@ export const esquemaNoticias = z.array(noticia)
 
 export const esquemaGrados = z.array(z.object({ nivel: texto, opciones: z.array(texto).min(1).max(8) }))
 
+// Matrícula
+export const esquemaCabeceraMatricula = z.object({
+  titulo: texto,
+  bajada: textoONulo,
+  anio: z.number().int().min(2000).max(2100).nullable(),
+  figura: imagen.nullable(),
+})
+
+export const esquemaProcesos = z
+  .array(
+    z.object({
+      id: texto,
+      nombre: texto,
+      resumen: textoONulo,
+      listas: z.array(z.object({ titulo: texto, items: z.array(texto).min(1).max(15) })).max(4),
+      pasos: z.array(z.object({ titulo: texto, detalle: textoONulo })).max(8),
+    }),
+  )
+  .max(4)
+
+export const esquemaVacantes = z.object({
+  actualizado: fecha.nullable(),
+  nota: textoONulo,
+  niveles: z
+    .array(
+      z.object({
+        id: texto,
+        nivel: texto,
+        detalle: textoONulo,
+        estado: z.enum(ESTADOS_VACANTE),
+        vacantes: z.number().int().min(0).nullable(),
+      }),
+    )
+    .max(6),
+})
+
+export const esquemaFechasMatricula = z.object({
+  nota: textoONulo,
+  items: z
+    .array(z.object({ id: texto, titulo: texto, inicio: fecha, fin: fecha.nullable(), detalle: textoONulo }))
+    .max(12),
+})
+
+export const esquemaPreguntas = z.array(z.object({ id: texto, pregunta: texto, respuesta: texto })).max(15)
+
+export const esquemaSolicitud = z.object({
+  titulo: texto,
+  texto: textoONulo,
+  mensajeWhatsapp: z.string().min(1),
+})
+
 export const sobre = <S extends z.ZodTypeAny>(data: S) => z.object({ data })
 export const sobrePaginado = <S extends z.ZodTypeAny>(data: S) => z.object({ data, meta: esquemaMeta })
 
@@ -148,3 +199,9 @@ coincide<Igual<z.infer<typeof esquemaNiveles>, T.Niveles>>()
 coincide<Igual<z.infer<typeof esquemaSedes>, T.Sede[]>>()
 coincide<Igual<z.infer<typeof esquemaNoticias>, T.Noticia[]>>()
 coincide<Igual<z.infer<typeof esquemaGrados>, T.GrupoGrados[]>>()
+coincide<Igual<z.infer<typeof esquemaCabeceraMatricula>, T.CabeceraMatricula>>()
+coincide<Igual<z.infer<typeof esquemaProcesos>, T.ProcesoMatricula[]>>()
+coincide<Igual<z.infer<typeof esquemaVacantes>, T.Vacantes>>()
+coincide<Igual<z.infer<typeof esquemaFechasMatricula>, T.FechasMatricula>>()
+coincide<Igual<z.infer<typeof esquemaPreguntas>, T.PreguntaFrecuente[]>>()
+coincide<Igual<z.infer<typeof esquemaSolicitud>, T.SolicitudInformacion>>()

@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "API pública del portal CATA 2.0 (docs/API_CONTRACT.md)",
+  "title": "API pública del portal CATA 2.1 (docs/API_CONTRACT.md)",
   "description": "Cuerpo de respuesta 200 de cada endpoint. Generado desde PW_Frontend/src/api/esquemas.ts; no editar a mano.",
   "definitions": {
     "GET /v1/sitio": {
@@ -1263,6 +1263,410 @@
             "additionalProperties": false
           },
           "maxItems": 4
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "GET /v1/matricula/cabecera": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "titulo": {
+              "type": "string"
+            },
+            "bajada": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "anio": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 2000,
+                  "maximum": 2100
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "figura": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "format": "uri",
+                      "pattern": "^https:\\/\\/"
+                    },
+                    "alt": {
+                      "type": "string"
+                    },
+                    "ancho": {
+                      "anyOf": [
+                        {
+                          "type": "integer",
+                          "exclusiveMinimum": 0
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "alto": {
+                      "anyOf": [
+                        {
+                          "type": "integer",
+                          "exclusiveMinimum": 0
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "url",
+                    "alt",
+                    "ancho",
+                    "alto"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "titulo",
+            "bajada",
+            "anio",
+            "figura"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "GET /v1/matricula/procesos": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "nombre": {
+                "type": "string"
+              },
+              "resumen": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "listas": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "titulo": {
+                      "type": "string"
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "minItems": 1,
+                      "maxItems": 15
+                    }
+                  },
+                  "required": [
+                    "titulo",
+                    "items"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 4
+              },
+              "pasos": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "titulo": {
+                      "type": "string"
+                    },
+                    "detalle": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "titulo",
+                    "detalle"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 8
+              }
+            },
+            "required": [
+              "id",
+              "nombre",
+              "resumen",
+              "listas",
+              "pasos"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 4
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "GET /v1/matricula/vacantes": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "actualizado": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "nota": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "niveles": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "nivel": {
+                    "type": "string"
+                  },
+                  "detalle": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "estado": {
+                    "type": "string",
+                    "enum": [
+                      "disponible",
+                      "pocas",
+                      "agotadas",
+                      "consultar"
+                    ]
+                  },
+                  "vacantes": {
+                    "anyOf": [
+                      {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "id",
+                  "nivel",
+                  "detalle",
+                  "estado",
+                  "vacantes"
+                ],
+                "additionalProperties": false
+              },
+              "maxItems": 6
+            }
+          },
+          "required": [
+            "actualizado",
+            "nota",
+            "niveles"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "GET /v1/matricula/fechas": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "nota": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "titulo": {
+                    "type": "string"
+                  },
+                  "inicio": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                  },
+                  "fin": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "detalle": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "id",
+                  "titulo",
+                  "inicio",
+                  "fin",
+                  "detalle"
+                ],
+                "additionalProperties": false
+              },
+              "maxItems": 12
+            }
+          },
+          "required": [
+            "nota",
+            "items"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "GET /v1/matricula/preguntas": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "pregunta": {
+                "type": "string"
+              },
+              "respuesta": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "pregunta",
+              "respuesta"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 15
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "GET /v1/matricula/solicitud": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "titulo": {
+              "type": "string"
+            },
+            "texto": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "mensajeWhatsapp": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "titulo",
+            "texto",
+            "mensajeWhatsapp"
+          ],
+          "additionalProperties": false
         }
       },
       "required": [

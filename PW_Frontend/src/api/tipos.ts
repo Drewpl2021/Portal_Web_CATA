@@ -1,4 +1,4 @@
-// Tipos del contrato de la API pública del portal (docs/API_CONTRACT.md, v1.0).
+// Tipos del contrato de la API pública del portal (docs/API_CONTRACT.md, v2.1).
 // Todos los campos llegan siempre; los opcionales valen null.
 
 /** Fecha ISO 8601 sin hora: "2026-10-08". */
@@ -175,6 +175,85 @@ export interface ListaNoticias {
 export interface GrupoGrados {
   nivel: string
   opciones: string[]
+}
+
+// GET /v1/matricula/cabecera
+export interface CabeceraMatricula {
+  titulo: string
+  bajada: string | null
+  /** Año escolar al que corresponde el proceso. null = no se muestra. */
+  anio: number | null
+  /** Recorte de estudiante (PNG con fondo transparente). null = cabecera solo con texto. */
+  figura: Imagen | null
+}
+
+// GET /v1/matricula/procesos
+export interface ListaRequisitos {
+  titulo: string
+  items: string[]
+}
+
+export interface PasoMatricula {
+  titulo: string
+  detalle: string | null
+}
+
+export interface ProcesoMatricula {
+  id: string
+  /** Para quién es: "Estudiantes nuevos". */
+  nombre: string
+  resumen: string | null
+  listas: ListaRequisitos[]
+  pasos: PasoMatricula[]
+}
+
+// GET /v1/matricula/vacantes
+export const ESTADOS_VACANTE = ['disponible', 'pocas', 'agotadas', 'consultar'] as const
+export type EstadoVacante = (typeof ESTADOS_VACANTE)[number]
+
+export interface VacantesNivel {
+  id: string
+  nivel: string
+  detalle: string | null
+  estado: EstadoVacante
+  /** Número de vacantes, si el colegio decide publicarlo. */
+  vacantes: number | null
+}
+
+export interface Vacantes {
+  actualizado: Fecha | null
+  nota: string | null
+  niveles: VacantesNivel[]
+}
+
+// GET /v1/matricula/fechas
+export interface FechaMatricula {
+  id: string
+  titulo: string
+  inicio: Fecha
+  /** null = un solo día. */
+  fin: Fecha | null
+  detalle: string | null
+}
+
+export interface FechasMatricula {
+  nota: string | null
+  items: FechaMatricula[]
+}
+
+// GET /v1/matricula/preguntas
+export interface PreguntaFrecuente {
+  id: string
+  pregunta: string
+  respuesta: string
+}
+
+// GET /v1/matricula/solicitud
+export interface SolicitudInformacion {
+  titulo: string
+  texto: string | null
+  /** Plantilla del mensaje de WhatsApp. Usa {nombre} y {grado}. */
+  mensajeWhatsapp: string
 }
 
 // Sobres de respuesta

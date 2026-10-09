@@ -366,6 +366,12 @@ Botones inclinados como las pestañas de Matrícula, con el número de proyectos
 ### Detalle de proyecto
 Descripción a 65ch y, debajo, sus secciones: las listas seguidas, en placas lado a lado (como requisitos y documentos de Matrícula), y las secciones numeradas, como la pista de pasos a todo el ancho. Luego la galería sobre celeste lavado, «Más proyectos» y el cierre.
 
+### Índice de Nosotros
+Las tres columnas del mega menú como placas celeste lavado con número (01, 02, 03) y título; dentro, cada subpágina es una tarjeta blanca con su nombre, su frase y una flecha que se desplaza al pasar el mouse. Las subpáginas que aún no se construyen llevan la etiqueta «Próximamente».
+
+### Página de contenido (layout reutilizable)
+`PaginaContenido` arma toda subpágina de Nosotros: cabecera compacta con el grupo y la posición en la placa («INSTITUCIÓN 4/7»), migas en la franja marina, el contenido a la izquierda (68 caracteres para el texto) y a la derecha el menú del grupo, fijo al hacer scroll, con la página actual en marino y base dorada; al final, «Anterior» y «Siguiente» como placas blancas inclinadas sobre celeste. En móvil, el menú pasa debajo del contenido. El contenido llega como bloques (`Bloques`): texto con firma, destacados (placas marinas lado a lado), listas en placa o en tarjetas con fuente, hitos (la pista del cronograma), imágenes con transcripción desplegable, personas (foto redonda con doble aro blanco y dorado, o iniciales), mensaje firmado, letra (el coro en placa marina), audio (reproductor nativo en placa marina, sin reproducción automática), organigrama (árbol en texto con líneas celestes) y enlaces a documentos.
+
 ### Formulario Solicitar información
 En el cierre celeste: título blanco a la izquierda y el formulario en una placa marina con regla dorada. Campos blancos de 52 px, errores en dorado con ícono, vinculados con `aria-describedby`, y el foco va al primer campo con error. El botón dorado abre WhatsApp con el mensaje armado; no se guarda ningún dato. Es el mismo componente (`SolicitudInformacion`) al final de Matrícula y de Contacto; recibe la página y usa la plantilla de mensaje de esa página.
 

@@ -1,6 +1,8 @@
 # Contrato de la API pública del portal CATA
 
-**Versión del contrato:** 2.3 · **Fecha:** 2026-10-08
+**Versión del contrato:** 2.4 · **Fecha:** 2026-10-08
+
+**Cambios de la 2.4:** nuevos `GET /v1/nosotros` (§3.19), con las frases del índice de Nosotros, y `GET /v1/nosotros/paginas/{slug}` (§3.20), una **página de contenido armada con bloques** que sirve para todas las subpáginas de Nosotros. El detalle responde `404` si la página no existe.
 
 **Cambios de la 2.3:**
 - Nuevos `GET /v1/proyectos` (§3.17) y `GET /v1/proyectos/{slug}` (§3.18): la lista de proyectos con sus categorías y el detalle de cada uno. El detalle responde `404` si el proyecto no existe.
@@ -174,6 +176,8 @@ Valores válidos de `seccion`: `"quienes-somos"`, `"niveles"`, `"sedes"`, `"noti
 | `GET /v1/contacto` | `Contacto` | Cabecera de Contacto, correo general y redes sociales |
 | `GET /v1/proyectos` | `Proyectos` | Cabecera y lista de Proyectos, con categorías para el filtro |
 | `GET /v1/proyectos/{slug}` | `Proyecto` | Página de detalle de un proyecto (`404` si no existe) |
+| `GET /v1/nosotros` | `Nosotros` | Índice de Nosotros: título, frase y una frase por subpágina |
+| `GET /v1/nosotros/paginas/{slug}` | `PaginaContenido` | Cada subpágina de Nosotros, armada con bloques (`404` si no existe) |
 
 Cada sección del portal carga su endpoint por separado. Si uno falla, esa sección muestra su error y el resto sigue funcionando.
 
@@ -717,6 +721,66 @@ El detalle de un proyecto. Devuelve un `Proyecto`: todos los campos de `Proyecto
 }
 ```
 
+---
+
+### 3.19 `GET /v1/nosotros`
+
+El índice de Nosotros. Las tres columnas (Institución, Gestión, Documentos) y sus subpáginas son la estructura del sitio y viven en el portal, igual que el menú; la API solo pone los textos.
+
+| Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
+|---|---|---|---|---|
+| `titulo` | string | no | 60 | «Nosotros». |
+| `bajada` | string \| null | sí | 200 | |
+| `paginas` | `{ slug, resumen }[]` | no | 0 a 20 | Una frase (máx. 140) por subpágina, para su tarjeta. Las que no estén muestran solo su nombre. |
+
+**Slugs de las subpáginas** (fijos, son las direcciones del sitio):
+- Institución: `mision-y-vision`, `resena-historica`, `emblema`, `himno`, `consejo-directivo`, `administracion`, `organigrama`.
+- Gestión: `procesos`, `planificacion-anual`, `planes-de-mejora`, `evaluacion-docente`, `acreditacion`.
+- Documentos: `instrumentos-de-gestion`, `manual-de-identidad`, `planificador-eva`.
+
+### 3.20 `GET /v1/nosotros/paginas/{slug}`
+
+Una subpágina de Nosotros. En lugar de un formato distinto para cada una, todas son una **lista de bloques** que el portal muestra en orden, con la misma plantilla: cabecera, ruta de navegación, el menú de su grupo a un lado y «Anterior / Siguiente». Así, una página nueva solo necesita su lista de bloques. Si el `slug` no existe, responde `404`.
+
+| Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
+|---|---|---|---|---|
+| `slug` | string | no | 60 | El de la dirección. |
+| `titulo` | string | no | 60 | |
+| `bajada` | string \| null | sí | 160 | |
+| `bloques` | `Bloque[]` | no | 0 a 30 | En orden. `[]` = «El contenido de esta página se publicará pronto». |
+
+**Tipos de bloque** (campo `tipo`). Todos los textos son planos, sin HTML.
+
+| `tipo` | Campos | Cómo se muestra |
+|---|---|---|
+| `texto` | `titulo` (string \| null), `parrafos` (1 a 20), `firma` (`{ nombre, detalle }` \| null) | Párrafos a 68 caracteres de ancho; la firma, al final con una regla dorada. |
+| `destacado` | `rotulo`, `texto` (máx. 200) | Placa marina con el rótulo en dorado (Misión, Visión, Lema). Los destacados seguidos van lado a lado. |
+| `lista` | `titulo` (string \| null), `estilo` (`"vinetas"` \| `"tarjetas"`), `items` (1 a 20: `titulo` \| null, `texto`, `fuente` \| null) | Viñetas en una placa, o tarjetas (valores, símbolos) con la fuente de la cita al pie. |
+| `hitos` | `titulo` (string \| null), `items` (1 a 20: `fecha` como texto, «1971» o «13 de mayo de 1967», y `texto`) | Línea de tiempo vertical. |
+| `imagen` | `imagen` (`Imagen`), `pie` (string \| null), `transcripcion` (párrafos \| null) | Imagen completa, sin recorte. Si la imagen tiene texto (un documento, una partitura), `transcripcion` lo da como texto en «Leer la transcripción». |
+| `personas` | `titulo` (string \| null), `personas` (1 a 40: `id`, `nombre`, `cargo`, `foto` \| null) | Tarjetas con foto redonda (cuadrada en origen, mínimo 400 × 400). Sin foto, las iniciales. Si el nombre ya está al lado, el `alt` de la foto puede ser `""`. |
+| `mensaje` | `titulo` (saludo, string \| null), `parrafos`, `firma` (`{ nombre, detalle }`), `foto` (`Imagen` \| null) | Carta firmada con la foto de quien la firma. |
+| `letra` | `titulo` (string \| null), `partes` (1 a 12: `titulo` y `versos`, 1 a 16) | La letra de una canción. Una parte titulada «Coro» va arriba, en una placa marina. |
+| `audio` | `titulo`, `url` (https), `formato` (`"audio/mpeg"` \| `"audio/mp4"` \| `"audio/ogg"` \| `"audio/wav"`), `descripcion` (string \| null) | Reproductor del navegador con sus controles. **Nunca se reproduce solo** y no descarga nada hasta que se pulsa. Si la página tiene un bloque `letra`, enlaza a ella. |
+| `organigrama` | `titulo` (string \| null), `imagen` (`Imagen` \| null), `enlace` (`Enlace` \| null), `raiz` (`{ cargo, detalle, hijos }`, hasta 5 niveles y 12 hijos por cargo) | La estructura **siempre** se muestra como lista jerárquica en texto; la imagen, si la hay, va encima. |
+| `enlaces` | `titulo` (string \| null), `enlaces` (1 a 30: `etiqueta`, `url`, `descripcion` \| null, `formato`: `"pdf"` \| `"web"` \| `"hoja"` \| `"presentacion"` \| `"documento"`) | Lista de documentos con ícono y formato; se abren en otra pestaña. Pensado para Gestión y Documentos. |
+
+```json
+{
+  "data": {
+    "slug": "mision-y-vision",
+    "titulo": "Misión y Visión",
+    "bajada": null,
+    "bloques": [
+      { "tipo": "destacado", "rotulo": "Misión", "texto": "Formar ciudadanos íntegros y abnegados para esta vida y la eternidad." },
+      { "tipo": "lista", "titulo": "Valores institucionales", "estilo": "tarjetas", "items": [
+        { "titulo": "Integridad", "texto": "«La mayor necesidad del mundo es la de hombres que no se vendan ni se compren…»", "fuente": "La Educación, p. 57" }
+      ] }
+    ]
+  }
+}
+```
+
 ## 4. Lo que el portal hace con cada caso
 
 Esto sirve para que el módulo sepa qué pasa con lo que publica.
@@ -735,6 +799,7 @@ Esto sirve para que el módulo sepa qué pasa con lo que publica.
 | Contacto: sede sin `mapaEmbedUrl` | En el mapa, esa sede muestra «todavía no tiene un mapa» y el enlace «Cómo llegar». |
 | Contacto: redes `[]` y `correo: null` | «Las redes del colegio se publicarán pronto». |
 | Proyectos: una sola categoría con proyectos | No aparece el filtro. |
+| Subpágina de Nosotros sin bloques | «El contenido de esta página se publicará pronto», con el menú del grupo y «Anterior / Siguiente». |
 | Proyecto inexistente (`404`) | «Proyecto no encontrado», con enlace a la lista. Cualquier otro error muestra «Reintentar». |
 | Matrícula: falla `/v1/sitio` | El formulario muestra su error con «Reintentar», porque no tiene el número de WhatsApp. |
 
@@ -749,5 +814,5 @@ Esto sirve para que el módulo sepa qué pasa con lo que publica.
 El portal trae datos de prueba que cumplen este contrato en `PW_Frontend/src/api/mock/`. Sirven de **ejemplos completos** de cada respuesta: el módulo puede compararse con ellos.
 
 - `tipico/`: contenido real del colegio.
-- Escenarios que solo cambian algunos archivos: `corto/`, `largo/`, `sin-foto/`, `alt-vacio/` y `vacio/`. El carrusel tiene 3 banners en `tipico/`, 1 en `corto/`, 6 en `largo/` y ninguno en `vacio/`. Matrícula tiene datos en `tipico/`, `corto/`, `largo/` y `vacio/`, y su cabecera además en `sin-foto/` y `alt-vacio/`. En `tipico/`, los requisitos, documentos y pasos son los de los afiches de cata.edu.pe; el año es el de los afiches publicados (2026), las fechas son de prueba y las vacantes dicen «consultar». Contacto tiene datos en todos los escenarios. En `tipico/`, sedes y redes son las de cata.edu.pe; el colegio no publica correos ni horarios, así que van vacíos, y los mapas son búsquedas de cada dirección, que el colegio debe reemplazar por las de «Insertar un mapa». Proyectos tiene datos en los seis escenarios; los detalles se guardan como `proyecto--{slug}.json`. En `tipico/`, los dos proyectos y sus textos son los que publica cata.edu.pe (Gastronomía e Industrias Alimentarias, y Robótica, Impresiones 3D y Computación); las fotos son de prueba, y niveles, estado y fecha van vacíos porque no están publicados.
+- Escenarios que solo cambian algunos archivos: `corto/`, `largo/`, `sin-foto/`, `alt-vacio/` y `vacio/`. El carrusel tiene 3 banners en `tipico/`, 1 en `corto/`, 6 en `largo/` y ninguno en `vacio/`. Matrícula tiene datos en `tipico/`, `corto/`, `largo/` y `vacio/`, y su cabecera además en `sin-foto/` y `alt-vacio/`. En `tipico/`, los requisitos, documentos y pasos son los de los afiches de cata.edu.pe; el año es el de los afiches publicados (2026), las fechas son de prueba y las vacantes dicen «consultar». Contacto tiene datos en todos los escenarios. En `tipico/`, sedes y redes son las de cata.edu.pe; el colegio no publica correos ni horarios, así que van vacíos, y los mapas son búsquedas de cada dirección, que el colegio debe reemplazar por las de «Insertar un mapa». Proyectos tiene datos en los seis escenarios; los detalles se guardan como `proyecto--{slug}.json`. En `tipico/`, los dos proyectos y sus textos son los que publica cata.edu.pe (Gastronomía e Industrias Alimentarias, y Robótica, Impresiones 3D y Computación); las fotos son de prueba, y niveles, estado y fecha van vacíos porque no están publicados. Nosotros tiene datos en los seis escenarios; las subpáginas se guardan como `nosotros-pagina--{slug}.json`. En `tipico/`, las siete páginas de Institución usan los textos y fotos de cata.edu.pe, salvo el árbol del organigrama, que es de prueba y lo dice (el publicado es un diseño de Canva). El himno no tiene audio publicado; `largo/` trae un tono de prueba para el reproductor.
 - Las pruebas automáticas (`npm test` en `PW_Frontend/`) validan todos esos archivos contra este contrato.

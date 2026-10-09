@@ -13,6 +13,8 @@ import {
   esquemaGrados,
   esquemaNiveles,
   esquemaNoticias,
+  esquemaNosotros,
+  esquemaPaginaContenido,
   esquemaProyecto,
   esquemaProyectos,
   esquemaQuienesSomos,
@@ -41,13 +43,15 @@ const ESQUEMAS = {
   contacto: sobre(esquemaContacto),
   proyectos: sobre(esquemaProyectos),
   proyecto: sobre(esquemaProyecto),
+  nosotros: sobre(esquemaNosotros),
+  'nosotros-pagina': sobre(esquemaPaginaContenido),
 } as const
 
 const archivos = import.meta.glob<unknown>('./mock/*/*.json', { eager: true, import: 'default' })
 
 describe('los datos de prueba cumplen docs/API_CONTRACT.md', () => {
   it('hay datos típicos para cada recurso', () => {
-    for (const recurso of Object.keys(ESQUEMAS).filter((x) => x !== 'proyecto')) {
+    for (const recurso of Object.keys(ESQUEMAS).filter((x) => x !== 'proyecto' && x !== 'nosotros-pagina')) {
       expect(archivos[`./mock/tipico/${recurso}.json`], recurso).toBeDefined()
     }
   })
@@ -106,6 +110,26 @@ describe('el contrato rechaza respuestas inválidas', () => {
     const m = { pagina: 'contacto', mensaje: 'x' }
     expect(esquemaSolicitud.safeParse({ ...base, mensajesPorPagina: [m, m] }).success).toBe(false)
     expect(esquemaSolicitud.safeParse({ ...base, mensajesPorPagina: [m] }).success).toBe(true)
+  })
+
+  it('hay una página típica para cada subpágina de Institución', () => {
+    for (const slug of ['mision-y-vision', 'resena-historica', 'emblema', 'himno', 'consejo-directivo', 'administracion', 'organigrama']) {
+      expect(archivos[`./mock/tipico/nosotros-pagina--${slug}.json`], slug).toBeDefined()
+    }
+  })
+
+  it('rechaza un bloque de tipo desconocido y un audio que no es de un formato admitido', () => {
+    const pagina = { slug: 'x', titulo: 't', bajada: null }
+    expect(esquemaPaginaContenido.safeParse({ ...pagina, bloques: [{ tipo: 'video', url: 'https://x.pe/v.mp4' }] }).success).toBe(false)
+    const audio = { tipo: 'audio', titulo: 'Himno', url: 'https://x.pe/h.mp3', descripcion: null }
+    expect(esquemaPaginaContenido.safeParse({ ...pagina, bloques: [{ ...audio, formato: 'audio/midi' }] }).success).toBe(false)
+    expect(esquemaPaginaContenido.safeParse({ ...pagina, bloques: [{ ...audio, formato: 'audio/mpeg' }] }).success).toBe(true)
+  })
+
+  it('limita la profundidad del organigrama', () => {
+    const hoja = (n: number): unknown => ({ cargo: `Nivel ${n}`, detalle: null, hijos: n < 7 ? [hoja(n + 1)] : [] })
+    const bloque = { tipo: 'organigrama', titulo: null, imagen: null, enlace: null }
+    expect(esquemaPaginaContenido.safeParse({ slug: 'o', titulo: 't', bajada: null, bloques: [{ ...bloque, raiz: hoja(1) }] }).success).toBe(false)
   })
 
   it('rechaza una red social desconocida', () => {

@@ -14,7 +14,7 @@ Public website for the school CATA (Colegio Adventista Túpac Amaru, Juliaca).
 
 ## API contract and data layer
 
-- **Contract:** `docs/API_CONTRACT.md` (v2.3) is the source of truth for every endpoint, field, nullability, date format and image rule. `docs/api-contract.schema.json` is its JSON Schema, generated with `npm run esquema` in `PW_Frontend/`; never edit it by hand. Any change to the contract is agreed with the HR team first and updates both files, the types and the mock data together. Do not invent endpoints in the HR system.
+- **Contract:** `docs/API_CONTRACT.md` (v2.4) is the source of truth for every endpoint, field, nullability, date format and image rule. `docs/api-contract.schema.json` is its JSON Schema, generated with `npm run esquema` in `PW_Frontend/`; never edit it by hand. Any change to the contract is agreed with the HR team first and updates both files, the types and the mock data together. Do not invent endpoints in the HR system.
 - **Types and validation:** `PW_Frontend/src/api/tipos.ts` (TypeScript types) and `PW_Frontend/src/api/esquemas.ts` (zod schemas). A compile-time check asserts both describe the same shapes.
 - **Data layer:** `PW_Frontend/src/api/servicios.ts` is the only place that fetches data. Components call its `obtener*()` functions and never know where data comes from. Every response, local or remote, is validated against the contract; an invalid response becomes that section's error state.
   - `VITE_API_URL` empty: reads the local mock data.
@@ -34,6 +34,7 @@ Public website for the school CATA (Colegio Adventista Túpac Amaru, Juliaca).
 - Inicio (`/`) starts with the **banner carousel** (`GET /v1/portada/banners`). The carousel is used **only on Inicio**; every other page starts with its own header.
 - Propuesta Educativa (`/propuesta-educativa`) starts with the header scene (students in front of the emblem ring, with the medal rotating inside the ring).
 - Other pages in the site map (Proyectos, Nosotros, Matrícula, Logros, Contacto) are built one at a time, with the same design and motion level as Inicio and without a carousel.
+- Nosotros subpages use the reusable content layout `portal/contenido/PaginaContenido.tsx`, which renders the API's list of blocks (`portal/contenido/Bloques.tsx`). A group of subpages goes live by adding it to `GRUPOS_NOSOTROS_PUBLICADOS` in `src/sitio/mapa.ts`.
 
 ## Responsive and scale (applies to every page, present and future)
 

@@ -16,6 +16,8 @@ import {
   esquemaGrados,
   esquemaNiveles,
   esquemaNoticias,
+  esquemaNosotros,
+  esquemaPaginaContenido,
   esquemaProyecto,
   esquemaProyectos,
   esquemaQuienesSomos,
@@ -29,6 +31,8 @@ import type {
   CabeceraMatricula,
   FechasMatricula,
   PreguntaFrecuente,
+  Nosotros,
+  PaginaContenido,
   ProcesoMatricula,
   Proyecto,
   Proyectos,
@@ -69,6 +73,8 @@ type Recurso =
   | 'contacto'
   | 'proyectos'
   | 'proyecto'
+  | 'nosotros'
+  | 'nosotros-pagina'
 
 export class ErrorDatos extends Error {
   constructor(
@@ -247,4 +253,15 @@ export async function obtenerProyecto(slug: string): Promise<Proyecto> {
   // Un slug que no cumple el formato no puede existir: no se pide.
   if (!/^[a-z0-9-]+$/.test(slug)) throw new ErrorDatos(`Slug inválido: ${slug}`, 'proyecto', undefined, true)
   return (await leer('proyecto', `/v1/proyectos/${slug}`, sobre(esquemaProyecto), `proyecto--${slug}`)).data
+}
+
+// Nosotros
+
+export async function obtenerNosotros(): Promise<Nosotros> {
+  return (await leer('nosotros', '/v1/nosotros', sobre(esquemaNosotros))).data
+}
+
+export async function obtenerPaginaNosotros(slug: string): Promise<PaginaContenido> {
+  if (!/^[a-z0-9-]+$/.test(slug)) throw new ErrorDatos(`Slug inválido: ${slug}`, 'nosotros-pagina', undefined, true)
+  return (await leer('nosotros-pagina', `/v1/nosotros/paginas/${slug}`, sobre(esquemaPaginaContenido), `nosotros-pagina--${slug}`)).data
 }

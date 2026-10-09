@@ -1,7 +1,7 @@
 // Validación en tiempo de ejecución de cada respuesta, según docs/API_CONTRACT.md.
 // Si la API cambia un tipo, la sección muestra su estado de error en vez de romper la página.
 import { z } from 'zod'
-import { CATEGORIAS_BANNER, ESTADOS_PROYECTO, ESTADOS_VACANTE, PAGINAS_SOLICITUD, REDES, SECCIONES } from './tipos'
+import { CATEGORIAS_BANNER, ESTADOS_PROYECTO, ESTADOS_VACANTE, FORMATOS_ENLACE, PAGINAS_SOLICITUD, REDES, SECCIONES, TIPOS_AUDIO } from './tipos'
 import type * as T from './tipos'
 
 const texto = z.string()
@@ -250,6 +250,61 @@ export const esquemaContacto = z.object({
   redes: z.array(z.object({ red: z.enum(REDES), cuenta: texto, url })).max(6),
 })
 
+// Nosotros
+export const esquemaNosotros = z.object({
+  titulo: texto,
+  bajada: textoONulo,
+  paginas: z.array(z.object({ slug, resumen: texto })).max(20),
+})
+
+const firma = z.object({ nombre: texto, detalle: textoONulo })
+
+// El organigrama es un árbol; se limita a 5 niveles y 12 hijos por cargo.
+const nodoOrganigrama = (nivel: number): z.ZodType<T.NodoOrganigrama> =>
+  z.object({
+    cargo: texto,
+    detalle: textoONulo,
+    hijos: nivel >= 5 ? z.array(z.never()).max(0) : z.array(z.lazy(() => nodoOrganigrama(nivel + 1))).max(12),
+  }) as z.ZodType<T.NodoOrganigrama>
+
+const bloque = z.discriminatedUnion('tipo', [
+  z.object({ tipo: z.literal('texto'), titulo: textoONulo, parrafos: z.array(texto).min(1).max(20), firma: firma.nullable() }),
+  z.object({ tipo: z.literal('destacado'), rotulo: texto, texto }),
+  z.object({
+    tipo: z.literal('lista'),
+    titulo: textoONulo,
+    estilo: z.enum(['vinetas', 'tarjetas']),
+    items: z.array(z.object({ titulo: textoONulo, texto, fuente: textoONulo })).min(1).max(20),
+  }),
+  z.object({ tipo: z.literal('hitos'), titulo: textoONulo, items: z.array(z.object({ fecha: texto, texto })).min(1).max(20) }),
+  z.object({ tipo: z.literal('imagen'), imagen, pie: textoONulo, transcripcion: z.array(texto).min(1).max(20).nullable() }),
+  z.object({
+    tipo: z.literal('personas'),
+    titulo: textoONulo,
+    personas: z.array(z.object({ id: texto, nombre: texto, cargo: texto, foto: imagen.nullable() })).min(1).max(40),
+  }),
+  z.object({ tipo: z.literal('mensaje'), titulo: textoONulo, parrafos: z.array(texto).min(1).max(12), firma, foto: imagen.nullable() }),
+  z.object({
+    tipo: z.literal('letra'),
+    titulo: textoONulo,
+    partes: z.array(z.object({ titulo: texto, versos: z.array(texto).min(1).max(16) })).min(1).max(12),
+  }),
+  z.object({ tipo: z.literal('audio'), titulo: texto, url, formato: z.enum(TIPOS_AUDIO), descripcion: textoONulo }),
+  z.object({ tipo: z.literal('organigrama'), titulo: textoONulo, imagen: imagen.nullable(), enlace: enlace.nullable(), raiz: nodoOrganigrama(1) }),
+  z.object({
+    tipo: z.literal('enlaces'),
+    titulo: textoONulo,
+    enlaces: z.array(z.object({ etiqueta: texto, url, descripcion: textoONulo, formato: z.enum(FORMATOS_ENLACE) })).min(1).max(30),
+  }),
+])
+
+export const esquemaPaginaContenido = z.object({
+  slug,
+  titulo: texto,
+  bajada: textoONulo,
+  bloques: z.array(bloque).max(30),
+})
+
 export const sobre = <S extends z.ZodTypeAny>(data: S) => z.object({ data })
 export const sobrePaginado = <S extends z.ZodTypeAny>(data: S) => z.object({ data, meta: esquemaMeta })
 
@@ -274,3 +329,5 @@ coincide<Igual<z.infer<typeof esquemaSolicitud>, T.SolicitudInformacion>>()
 coincide<Igual<z.infer<typeof esquemaContacto>, T.Contacto>>()
 coincide<Igual<z.infer<typeof esquemaProyectos>, T.Proyectos>>()
 coincide<Igual<z.infer<typeof esquemaProyecto>, T.Proyecto>>()
+coincide<Igual<z.infer<typeof esquemaNosotros>, T.Nosotros>>()
+coincide<Igual<z.infer<typeof esquemaPaginaContenido>, T.PaginaContenido>>()

@@ -671,4 +671,334 @@ for (const [slugP, d] of Object.entries(detalles)) {
 // vacio: sin proyectos
 escribir('vacio', 'proyectos', { data: { ...proyectosLista, bajada: null, categorias: [], proyectos: [] } })
 
+
+// ── Nosotros (Institución) ──
+// Textos de cata.edu.pe tal cual: new_nosotros, new_resenahistorica, new_emblema, new_himno, new_consejodirectivo y
+// new_administracion. Solo se corrigieron signos rotos (comillas, espacios). El organigrama publicado es un diseño de Canva:
+// su estructura no se puede leer, así que el árbol es de prueba y lo dice.
+const t = (titulo, ...parrafos) => ({ tipo: 'texto', titulo, parrafos, firma: null })
+const vinetas = (titulo, items) => ({ tipo: 'lista', titulo, estilo: 'vinetas', items: items.map(([ti, texto]) => ({ titulo: ti, texto, fuente: null })) })
+const foto400 = (ruta, alt = '') => ({ url: UP + ruta, alt, ancho: 400, alto: 400 })
+const persona = (id, nombre, cargo, ruta) => ({ id, nombre, cargo, foto: ruta ? foto400(ruta) : null })
+
+const paginasNosotros = {
+  'mision-y-vision': {
+    slug: 'mision-y-vision',
+    titulo: 'Misión y Visión',
+    bajada: null,
+    bloques: [
+      { tipo: 'destacado', rotulo: 'Misión', texto: 'Formar ciudadanos íntegros y abnegados para esta vida y la eternidad.' },
+      { tipo: 'destacado', rotulo: 'Visión', texto: 'Ser un líder en cada hogar con principios cristianos modelado en experiencias prácticas.' },
+      {
+        tipo: 'lista',
+        titulo: 'Valores institucionales',
+        estilo: 'tarjetas',
+        items: [
+          { titulo: 'Integridad', texto: '«La mayor necesidad del mundo es la de hombres que no se vendan ni se compren; hombres que sean sinceros y honrados en lo más íntimo de sus almas; hombres que no teman dar al pecado el nombre que le corresponde; hombres cuya conciencia sea tan leal al deber como la brújula al Polo; hombres que se mantengan de parte de la justicia, aunque se desplomen los cielos».', fuente: 'La Educación, p. 57' },
+          { titulo: 'Abnegación', texto: '«La ley de amor requiere la dedicación del ser entero al servicio de Dios y de nuestros semejantes. Este servicio, a la vez que nos constituye en bendición para los demás, nos proporciona enormes bendiciones. La abnegación es la base de todo verdadero crecimiento. Por medio del servicio abnegado, adquieren su máximo desarrollo todas nuestras facultades. Llegamos a participar cada vez más plenamente de la naturaleza divina. Somos preparados para el cielo, porque lo recibimos en nuestro corazón».', fuente: 'La Educación, cap. 1, p. 16' },
+          { titulo: 'Innovación', texto: 'Dios no es solo el Creador sino también un innovador: el Innovador por excelencia. Por definición, innovación es «una idea nueva, pensamientos creativos, nuevas imaginaciones ya sea de dispositivos o métodos». Ser innovador es ser creativo: tener la capacidad de pensar de manera original. Es lo que se necesitó para salvar a la humanidad una vez que caímos en las manos de Satanás.', fuente: null },
+        ],
+      },
+    ],
+  },
+  'resena-historica': {
+    slug: 'resena-historica',
+    titulo: 'Reseña Histórica',
+    bajada: null,
+    bloques: [
+      t(null, 'Los inicios del Colegio Adventista Túpac Amaru se remontan a la fundación de la Iglesia Adventista del Séptimo Día (IASD) Villa Hermosa, en la ciudad de Juliaca; la cual se organizó el 13 de mayo de 1967 en el Barrio Túpac Amaru. Las familias, los hermanos y hermanas de esta reciente iglesia se preocuparon por la educación de sus hijos y el avance de la obra adventista, lo que permitió proyectarse a instituir un centro educativo.'),
+      {
+        tipo: 'hitos',
+        titulo: 'Fechas clave',
+        items: [
+          { fecha: '1911', texto: 'Se inicia la Educación Cristiana Adventista en el país, en la escuela de Utawilaya – Platería, en Puno.' },
+          { fecha: '1922', texto: 'La Misión Peruana del Sur compra el fundo Chullunquiani, a casi seis kilómetros de Juliaca. Se funda la Clínica Americana.' },
+          { fecha: '1923', texto: 'Entra en operación el Colegio Normal de Chullunquiani.' },
+          { fecha: '13 de mayo de 1967', texto: 'Se organiza la IASD Villa Hermosa en el Barrio Túpac Amaru.' },
+          { fecha: '1969 – 1970', texto: 'Se gestiona la Escuela Particular Adventista «Túpac Amaru», anexada en sus inicios a la Escuela Particular Adventista Americana.' },
+          { fecha: '7 de mayo de 1971', texto: 'La Resolución Directoral Regional N° 457 reconoce el nivel primaria.' },
+          { fecha: '25 de marzo de 1982', texto: 'La R.D.Z. N° 104-DZE-J reconoce el nivel secundaria.' },
+          { fecha: '3 de diciembre de 1998', texto: 'La R.D. N° 6954-DREP reconoce el nivel inicial.' },
+          { fecha: '2000', texto: 'La R.D. N° 4609-DREP-2000 reconoce como promotora a la Asociación Educativa Colegio Adventista Túpac Amaru (AE-CATA).' },
+        ],
+      },
+      t('La educación adventista en el Perú', 'Para comprender esta actitud resuelta de lograr la educación anhelada para los hijos, hay que tener en cuenta la original gesta de la liberación del hombre andino emprendido por Manuel Zúñiga Camacho, quien intentó hacerlo por el camino del conocimiento y la educación, no por la violencia; sin embargo, la oposición de los poderes fácticos de aquel entonces clausuraron la naciente escuela; tal situación le llevó a solicitar ayuda a los líderes de la IASD, quienes prontamente enviaron a los misioneros Fernando y Ana Sthal. Esto permitió continuar la obra educativa en la escuela de Utawilaya – Platería del departamento de Puno; una zona caracterizada por el habla aymara. Posteriormente se suma el misionero argentino Pedro Kalbermatter, quien asume la tarea de llevar el mensaje de la Palabra de Dios a la zona quechua del departamento; acaso estas acciones fueron la primera revolución civil que buscó en el conocimiento y la educación; la liberación del hombre andino, inspirados en el Gran Maestro, que dijo: «y conoceréis la verdad, y la verdad os hará libres» (Juan 8:32). Después de esta breve reseña se concluye que esta es la primera etapa de la Educación Cristiana Adventista en el país incaico, iniciado en 1911.'),
+      {
+        tipo: 'texto',
+        titulo: 'La educación adventista en Juliaca',
+        parrafos: [
+          'La Ciudad de los Vientos, Juliaca, actualmente denominada como Capital de la Integración Andina, tiene el privilegio de tener una ubicación geográfica estratégica, lo que permitió la expansión y desarrollo del evangelio en esta parte del país. En 1922, la Misión Peruana del Sur, hoy Misión del Lago Titicaca, representado por el misionero E.H. Wilcox, compra el fundo denominado Chullunquiani, ubicado a casi seis kilómetros de la ciudad de Juliaca. Dicha compra tiene el propósito de continuar la formación educativa iniciada en Platería, adicionalmente ampliar una educación superior para la formación de educadores. Hoy en día, este lugar, con mucha satisfacción es conocido como el alma mater de la Educación Cristiana Adventista Peruana.',
+          'Desde este lugar se marca la segunda etapa del avance de la obra educativa adventista, aquí alcanza su pleno desarrollo. Para fines del año 1923 se tiene la dicha de tener en operación el Colegio Normal de Chullunquiani, el mismo que después de algunas décadas sería la Filial de la Universidad Peruana Unión, no obstante, existió muchas peripecias y vicisitudes hasta verlo realidad.',
+          'A la obra de predicar y enseñar, como lo hacía Jesús, se une la tarea de curar y atender a los enfermos; para entonces, la obra médica adventista ya se había emprendido con los pioneros Ana y Fernando Sthal y Pedro Kalbermater, que más adelante les conllevó a la fundación de la Clínica Americana en 1922. El número de trabajadores de esta institución, tales como médicos, enfermeras, auxiliares y otros, encuentran la necesidad de habilitar un centro educativo adventista para sus hijos. De esta manera se estableció, lo que actualmente se denomina Colegio Particular Adventista Americana, siendo la segunda institución educativa adventista en la ciudad de Juliaca.',
+          'La tercera Institución establecida es el Colegio Adventista Túpac Amaru, que tiene sus antecedentes en la iniciativa de los miembros de la IASD Villa Hermosa de la ciudad de Juliaca. En el afán de disponer con una educación adventista para sus hijos y en el fervor de llevar el evangelio de salvación en la región, deciden gestionar la creación de la Escuela Particular Adventista «Túpac Amaru» (1969-1970) anexado en sus inicios a la Escuela Particular Adventista Americana.',
+          'Como dice la promesa «Pedid, y se os dará; buscad, y hallaréis; llamad, y se os abrirá» (Mateo 7:7), la IASD Villa Hermosa fue bendecida con la grata noticia de haber sido aceptada su solicitud de prestar servicios educativos de Ciclo Completo del nivel primaria, reconocido por la Resolución Directoral Regional N° 457, del 07 de mayo de 1971; siendo registrado como Director el profesor Ernesto Huaquipaco y teniendo como primeras maestras a las profesoras Lidia Marina Condori y Elvira Limachi Miranda.',
+          'A medida que los alumnos avanzaban de grado y la institución gozaba del progreso paulatino en su actividad, se vio en la necesidad de articular con el siguiente nivel educativo como es secundaria, el cual se logró conseguir y ser reconocida por R.D.Z. N° 104-DZE-J, del 25 de marzo de 1982 y posteriormente se incluye el nivel Inicial, reconocida por R.D. N° 6954-DREP del 03 de diciembre de 1998. A fines de la década de los noventa se tuvo dificultades eclesiales y jurídicas, siendo necesaria su reestructuración formal y reorientación administrativa, la misma que fue llevado a cabo con la plena participación de los miembros de la IASD Villa Hermosa entre los años de 1999 y 2000. El consenso pleno de los hermanos hizo que se reconociera como promotora de la Institución a la «Asociación Educativa Colegio Adventista Túpac Amaru» (AE-CATA), conforme a la R.D. N° 4609-DREP-2000. De esta manera el Colegio Adventista Túpac Amaru pasa a ser de la asociación mencionada, representado por el Consejo Directivo y administrado conforme al Estatuto y Reglamento que los rige.',
+          'Cada 30 de junio se celebra un año más de vida institucional. Los profesores y estudiantes cataínos son los principales actores de la historia académica del colegio, siendo ellos los que alcanzaron logros y satisfacciones en los diversos concursos y competencias escolares a nivel local, regional, nacional e internacional. En la actualidad se cuenta con un gran equipo docente capacitado y monitoreado por la certificadora de calidad internacional SGCE; asimismo, cuenta con una propia plataforma digital como es iCRM educativo, Docente Mentor Pro, EVA Student, Padre Mentor 3.0, y un convenio de apoyo mutuo celebrado con nuestra casa superior Universidad Peruana Unión; todo para prestar un servicio educativo a la altura de las nuevas demandas que nuestra sociedad requiere.',
+          'Actualmente, conforme al Plan Maestro de la AE-CATA, se ha dado inicio a la construcción del Complejo Educativo denominado OASIS DEL MINISTERIO (Cata Oasis) en la localidad de Chilla, donde ya se cuenta con talleres como biohuertos, preparación de alimentos saludables, arte y pintura, música y un futuro espacio de innovación Maker Space. Asimismo, se puso en operación una nueva sede del Nivel primaria denominado SEDE CATA JERUSALÉN (Cacachi), ubicado en la urbanización Jerusalem del Puente Independencia, salida a Huancané.',
+        ],
+        firma: { nombre: 'Rolando Carcasi Condori (Pablo Roca)', detalle: 'Exprofesor del CATA' },
+      },
+    ],
+  },
+  emblema: {
+    slug: 'emblema',
+    titulo: 'Emblema',
+    bajada: 'Logotipo del Colegio Adventista Túpac Amaru',
+    bloques: [
+      t(null, 'El logotipo que caracteriza a la institución fue creado con la participación de los profesores: Ricardo Mamani Flores, Sócrates Quispe Maquera, Basilio Chambi Quispe, Rufino Condori Mendoza (QEPD) y otros. Con la única finalidad de identificar al Colegio Adventista «Túpac Amaru» en los desfiles cívicos y otras actividades.'),
+      vinetas('Originalmente fue diseñada de la siguiente forma', [['La A', 'Significa Adventista.'], ['La T', 'Significa Túpac.'], ['Nuevamente la A', 'Significa Amaru.']]),
+      { tipo: 'imagen', imagen: { url: UP + '2023/09/Logo-adventista-1-1-fotor-bg-remover-20230918114531.png', alt: 'Logotipo original: las letras A, T y A entrelazadas, en trazo azul.', ancho: 500, alto: 483 }, pie: 'Logotipo original', transcripcion: null },
+      t(null, 'Posteriormente se hizo algunas mejoras incluyendo el nombre completo de la Institución: Colegio Adventista «Túpac Amaru», además el lugar donde está ubicado que es Juliaca.'),
+      { tipo: 'imagen', imagen: { url: UP + '2023/09/Logo_CATA--226x300.png', alt: 'Logotipo con el nombre completo: «Colegio Adventista "Túpac Amaru"», Juliaca. Sobre un globo azul con las letras ATA, unas manos abiertas sostienen la Biblia abierta y una llama.', ancho: 226, alto: 300 }, pie: 'Logotipo con el nombre completo de la institución', transcripcion: null },
+      t('Símbolos de la Institución', 'Se tiene un conjunto de símbolos plasmados en el logotipo de la institución que son: las manos abiertas, la Biblia abierta, la llama encendida y los laureles.'),
+      {
+        tipo: 'lista',
+        titulo: null,
+        estilo: 'tarjetas',
+        items: [
+          { titulo: 'Manos abiertas', texto: 'Simboliza que cada docente, personal administrativo, personal de apoyo y estudiante de la Institución, siempre estará dispuesto a extender la mano a los que más los necesitan bajo las recomendaciones de las sagradas escrituras.', fuente: null },
+          { titulo: 'Biblia abierta', texto: 'Simboliza la enseñanza bajo la cosmovisión cristiana basada en la Biblia.', fuente: null },
+          { titulo: 'Llama de fuego', texto: 'Simboliza que cada docente, personal administrativo, personal de apoyo y estudiante de la Institución debe mantener la llama encendida del Espíritu Santo que da luz en la oscuridad.', fuente: null },
+          { titulo: 'Laureles', texto: 'Simboliza la riqueza minera peruana y la abundancia de recursos naturales existentes en el país.', fuente: null },
+        ],
+      },
+      t('Color de la Institución', 'El color principal de la institución es el color Azul Claro, y este color representa la excelencia que se refleja en los cielos de color azul. Este color nos impulsa la mejora continua que se soporta en el sistema de gestión de la calidad.'),
+      { tipo: 'imagen', imagen: { url: UP + '2023/09/Logo-cata.png', alt: 'Emblema actual: el logotipo del colegio rodeado de laureles dorados, con la palabra CATA debajo.', ancho: 341, alto: 360 }, pie: 'Emblema actual', transcripcion: null },
+    ],
+  },
+  himno: {
+    slug: 'himno',
+    titulo: 'Himno',
+    bajada: 'Himno al CATA',
+    bloques: [
+      t(
+        null,
+        'Con el propósito de promover identidad en la comunidad educativa, se ha creado el himno oficial del Colegio Adventista «Túpac Amaru».',
+        'Inicialmente se ha convocado a concurso de las letras con las directivas precisas de que debe contener y resaltar los valores, principios y el propósito por el cual fue creada esta institución el de redimir.',
+        'El ganador de dicho concurso fue el profesor: Ricardo Apaza Paucar (QEPD), claro está en sus inicios se tuvo que hacer algunas mejoras como son la rima y otros aspectos propios de la poesía.',
+        'Posteriormente en 1987, se convoca a concurso para la música del himno al CATA y en esa oportunidad el ganador de dicho concurso fue el profesor Basilio Chambi Quispe, un docente que estuvo desde los inicios cuando se ha creado el nivel secundario (1982) y como testimonio se tiene el oficio que se hace referencia de los resultados de dicho concurso mencionándose que la composición que más se adapta a los criterios establecidos es la presentada por B.CH.Q y la partitura original con sus dos estrofas quien actualmente vibra de emoción al escuchar cantar acompañada de la banda sinfónica de la institución este himno cuyas letras dicen así:',
+      ),
+      {
+        tipo: 'letra',
+        titulo: 'Himno al CATA',
+        partes: [
+          { titulo: 'Coro', versos: ['Entonemos canto de alegría', 'cataínos de esperanza', 'A Túpac Amaru templo del saber', 'Faro de la juventud y cristiandad'] },
+          { titulo: 'I', versos: ['Por los siglos y siglos enhiesta', 'Impartiendo la ciencia y virtud', 'Los aymaras y quechuas te forjaron', 'Para ser un fanal del saber', 'Practicando la unión fraternal', 'Con Cristo en el corazón', 'Anunciando el evangelio', 'Y redimiendo hasta el fin'] },
+          { titulo: 'II', versos: ['Alma mater bendito venimos,', 'Con amor esperanza y fe', 'De salir de tus aulas triunfantes', 'Preparados al fin para bien', 'En mi pecho llevo tus colores', 'Como la cumbre de Huayna roque', 'Adelante vamos CATA', 'Eficientes en la labor.'] },
+        ],
+      },
+      t(
+        'Significado',
+        'Este himno en el coro evoca identidad, pone de manifiesto que la institución es un templo del saber comparándola con un faro que alumbra en este mundo de tinieblas y cuyo objetivo es impartir conocimientos y valores y por esta razón se debe entonar con alegría.',
+        'La primera estrofa hace mención que los que forjaron la institución fueron humildes hombres y mujeres de habla aymara y quechua con el único propósito de que el evangelio sea predicado en esta parte del Perú, de esta manera cumplir con el lema de «Educar es redimir».',
+        'La segunda estrofa evoca que de las aulas del CATA los estudiantes saldrán a la vida con ganas de triunfar llevando en el corazón los colores azulino, celeste y blanco que identifican a la institución.',
+        'Este himno ha sido instrumentado para que una banda sinfónica interprete, claro está con el permiso y autorización del autor de la música que hoy por hoy sigue apoyando a la institución.',
+        'Cada vez que se entona este himno en las ceremonias internas los corazones de los cataínos laten más fuerte porque se ha convertido en un emblema de la institución.',
+        'Hoy se canta con emoción y júbilo, y las veces que se celebran los aniversarios, tanto estudiantes y exalumnos vibran de emoción y cantan con entusiasmo este himno que identifica a todo cataíno.',
+      ),
+      {
+        tipo: 'imagen',
+        imagen: { url: UP + '2023/09/himno.png', alt: 'Partitura original del Himno Oficial al Colegio Adventista «Túpac Amaru», escrita a máquina, con el coro y las estrofas.', ancho: 576, alto: 867 },
+        pie: 'Partitura original del himno',
+        transcripcion: [
+          'Himno oficial al Colegio Adventista «Túpac Amaru».',
+          'Coro: Entonemos canto de alegría al Colegio sacrosanto. A Túpac Amaru, templo del saber, faro de la juventud y cristiandad.',
+          'Estrofas: Por los siglos y siglos enhiesta, impartiendo la ciencia y virtud; los aymaras y quechuas te forjaron para ser un fanal del saber. Practicando la unión fraternal con Cristo en el corazón, anunciando el Evangelio y redimiendo hasta el fin.',
+          'Alma mater bendito venimos, con amor, esperanza y fe, de salir de tus aulas triunfantes preparados al fin para bien. En mi pecho llevo tus colores como la cumbre de Huayna Roque; adelante vamos, C.A.T.A., eficientes en la labor.',
+          'Autor de la letra: Prof. Ricardo Apaza Paucar. Autor de la música: Prof. Basilio Chambi Quispe.',
+        ],
+      },
+      {
+        tipo: 'imagen',
+        imagen: { url: UP + '2023/09/lema.png', alt: 'Oficio escrito a máquina, del 18 de julio de 1987, con la opinión del jurado del concurso de música del himno.', ancho: 546, alto: 867 },
+        pie: 'Oficio del jurado del concurso de música (1987)',
+        transcripcion: [
+          'Juliaca, 18 de julio de 1987.',
+          'Señor Prof. Ricardo Mamani Flores, Director del Colegio Particular Adventista «Túpac Amaru». Ciudad.',
+          'Asunto: Nominación de Jurado. Ref.: Su Oficio Nro. 036-87/DCATAJ.',
+          'En atención a su Oficio de la referencia, en primer término, debo agradecerle el honor de que fui objeto con esta nominación.',
+          'En segundo lugar quiero suplicarle que me disculpe usted la inasistencia al evento de tanta trascendencia, organizado con tan noble propósito.',
+          'Sin embargo, si es que fuera valedera mi opinión, con respecto a los trabajos presentados por los dignos concursantes, le hago saber lo siguiente:',
+          'A mi juicio, la composición que más se adapta a los criterios que me indica usted en su oficio de la referencia, es la composición presentada por B.CH.Q, claro está que ustedes podrían darle el tiempo necesario para que, luego de esta fecha, corrija algunos pasajes (que son muy pocos) y, así se consiga una estructura que permita su cabal interpretación; me estoy refiriendo a los elementos constantes como el ritmo, la métrica y el tiempo; y, también para que permita la combinación sonora de voces e instrumentos, cuando se cante el Himno al Colegio con el marco musical de su Banda de Música, orquesta, etc.',
+          'En cuanto a las otras composiciones, no declaro que haya un segundo, tercero o cuarto lugar; pues, todas me merecen los elogios del caso por su esfuerzo; quizá en algunos casos no lo hayan escrito tal cual correspondía a su inspiración y en algunos que se haya abusado muy seguidamente de un fragmento, etc. etc.',
+          'En cuanto a la composición de D.T.CH., no opino puesto que no tiene la letra aprobada por ustedes, según afirma en otro concurso realizado anteriormente.',
+          'Es todo cuanto tengo que opinar sobre las composiciones y mi participación como jurado.',
+          'Aprovecho de la ocasión para testimoniarles los sentimientos de consideración distinguida.',
+          'Atentamente, Fernando Montes Granados, L.E. 02381073.',
+          'Incl./ Las 5 copias de las composiciones presentadas.',
+        ],
+      },
+      { tipo: 'destacado', rotulo: 'Lema de la institución', texto: 'Servir con fe y sabiduría' },
+      t(null, 'El lema del Colegio Adventista «Túpac Amaru» ha sido establecida con la finalidad de grabar en la mente y en los corazones de los estudiantes, docentes, padres de familia y con ese propósito cabe indicar que:'),
+      vinetas(null, [
+        ['Servir', 'Significa que el trabajo que se haga siendo estudiantes como docentes debe ser de servicio. Y servir se hace con humildad tal como Jesús nos enseña en su palabra.'],
+        ['Con fe', 'Los conocimientos que se adquieran, los valores que se impartan en esta institución deben realizarse con la confianza en Dios, fe y esperanza de que las metas que se tracen se puedan alcanzar con éxito.'],
+        ['Y sabiduría', 'Salomón pidió sabiduría de Dios y el mensaje que se quiere plasmar en la mente de los estudiantes es que todas las cosas se hagan diferenciando lo que es el bien y lo que es el mal, actuando y trabajando con prudencia.'],
+      ]),
+    ],
+  },
+  'consejo-directivo': {
+    slug: 'consejo-directivo',
+    titulo: 'Consejo Directivo',
+    bajada: null,
+    bloques: [
+      {
+        tipo: 'mensaje',
+        titulo: 'Querida comunidad CATA:',
+        parrafos: [
+          'Es un honor dirigirme a ustedes como Presidente del Consejo Directivo de esta Institución donde educar es formar para la vida… y para la eternidad. En el Colegio Adventista CATA, nos diferencia una misión clara: formar ciudadanos íntegros y abnegados con principios cristianos, listos para impactar en su entorno y también prepararlos para la graduación celestial.',
+          'Aquí no solo desarrollamos habilidades y conocimientos, educamos el carácter, guiados por principios y valores cristianos. Cada clase y proyecto es una oportunidad para modelar líderes con un propósito de vida, que sean luz en sus hogares y reflejo del amor de Dios en el mundo.',
+          'A nuestros estudiantes: ¡están llamados a brillar con fe y propósito!',
+          'A los padres: gracias por confiar en nuestra propuesta de valor que se refleja en nuestra misión educativa con sentido eterno.',
+          'Y a los docentes: ustedes son los que siembren la semilla cuyos frutos se reflejan en las experiencias de liderazgo y que trascienden en el tiempo.',
+          'En CATA, preparamos para esta vida… y para la vida eterna.',
+        ],
+        firma: { nombre: 'Alfredo Chambi Quispe', detalle: 'Presidente del Consejo Directivo' },
+        foto: foto400('2025/11/29.png'),
+      },
+      {
+        tipo: 'personas',
+        titulo: 'Integrantes',
+        personas: [
+          persona('chambi', 'Alfredo Chambi Quispe', 'Presidente', '2025/11/29.png'),
+          persona('canazaca', 'Leonidas Cañazaca Vargas', 'Vicepresidente', '2025/11/23.png'),
+          persona('mamani-flores', 'Fanny Mariela Mamani Flores', 'Secretaria', '2025/11/24.png'),
+          persona('sonco', 'Flor Dina Sonco Paricanaza', 'Tesorera', '2025/11/26.png'),
+          persona('cuela', 'Leoncio Cuela Mamani', 'Vocal', '2025/11/27.png'),
+          persona('huanca', 'Carlos Huanca Mamani', 'Vocal', '2025/11/30.png'),
+          persona('puma', 'Ruben Puma Corimanya', 'Pastor', '2025/11/25.png'),
+          persona('sumi', 'Roger Sumi Huaman', 'Anciano consejero', '2025/11/28.png'),
+        ],
+      },
+    ],
+  },
+  administracion: {
+    slug: 'administracion',
+    titulo: 'Administración',
+    bajada: null,
+    bloques: [
+      {
+        tipo: 'personas',
+        titulo: null,
+        personas: [
+          persona('lanza', 'Fredy Lanza Umiña', 'Director general', '2024/08/1v.png'),
+          persona('apaza-sosa', 'Dino Apaza Sosa', 'Administrador', '2024/08/2.png'),
+          persona('alca', 'Karen Alca Apaza', 'Contador(a)', '2024/08/3.png'),
+          persona('cotrina', 'José Cotrina Alvarado', 'Capellanía', '2024/08/4.png'),
+          persona('mamani-tarqui-e', 'Elias Mamani Tarqui', 'Psicología', '2024/08/5.png'),
+          persona('aliaga', 'Elisa Aliaga Salcedo', 'Director académico general', '2024/08/6.png'),
+          persona('coa', 'Kelia Coa Mamani', 'Director académico inicial y primaria', '2024/08/7.png'),
+          persona('apaza-apaza', 'Edwin Apaza Apaza', 'Director académico secundaria', '2024/08/8.png'),
+          persona('huahuacondori', 'Ademer Huahuacondori Aranda', 'Director académico Jerusalén', '2024/08/9.png'),
+          persona('mamani-tarqui-m', 'Mary Mamani Tarqui', 'Caja', '2024/08/10.png'),
+          persona('condori', 'Luz Condori Quispe', 'Secretaria general', '2024/08/11.png'),
+          persona('mamani-valera', 'Griselda Mamani Valera', 'Auxiliar de contabilidad', '2024/08/12.png'),
+          persona('incahuanaco', 'Ismael Incahuanaco Mamani', 'TIC', '2024/08/13.png'),
+          persona('mamani-apaza', 'Guillermo Mamani Apaza', 'Director de gestión de calidad', '2024/09/FT-GM.png'),
+          persona('casildo', 'Yaritza Casildo Chanducas', 'Asistente de operaciones', '2024/08/15.png'),
+        ],
+      },
+    ],
+  },
+  organigrama: {
+    slug: 'organigrama',
+    titulo: 'Organigrama',
+    bajada: 'La estructura de la institución.',
+    bloques: [
+      t('Datos de prueba', 'Esta estructura es de prueba: se armó solo con los cargos que el colegio publica en Consejo Directivo y Administración, para mostrar cómo se verá el organigrama. El organigrama oficial está publicado como un diseño en Canva, que no se puede leer como texto; el colegio debe enviar su estructura.'),
+      {
+        tipo: 'organigrama',
+        titulo: 'Estructura de prueba',
+        imagen: null,
+        enlace: { etiqueta: 'Ver el organigrama publicado en Canva', url: 'https://www.canva.com/design/DAGgVOmdYZE/H-06nqgjCBDwERaxRbq_gw/view', externo: true },
+        raiz: {
+          cargo: 'Consejo Directivo',
+          detalle: 'Asociación Educativa Colegio Adventista Túpac Amaru',
+          hijos: [
+            {
+              cargo: 'Dirección General',
+              detalle: null,
+              hijos: [
+                { cargo: 'Administración', detalle: null, hijos: [{ cargo: 'Contabilidad', detalle: null, hijos: [] }, { cargo: 'Caja', detalle: null, hijos: [] }, { cargo: 'TIC', detalle: null, hijos: [] }, { cargo: 'Operaciones', detalle: null, hijos: [] }] },
+                { cargo: 'Dirección Académica General', detalle: null, hijos: [{ cargo: 'Dirección Académica de Inicial y Primaria', detalle: null, hijos: [] }, { cargo: 'Dirección Académica de Secundaria', detalle: null, hijos: [] }, { cargo: 'Dirección Académica Jerusalén', detalle: null, hijos: [] }] },
+                { cargo: 'Secretaría General', detalle: null, hijos: [] },
+                { cargo: 'Gestión de Calidad', detalle: null, hijos: [] },
+                { cargo: 'Capellanía', detalle: null, hijos: [] },
+                { cargo: 'Psicología', detalle: null, hijos: [] },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  },
+}
+const SLUGS_INSTITUCION = Object.keys(paginasNosotros)
+const nosotrosIndice = {
+  titulo: 'Nosotros',
+  bajada: 'Formar ciudadanos íntegros y abnegados para esta vida y la eternidad.',
+  paginas: [
+    { slug: 'mision-y-vision', resumen: 'Formar ciudadanos íntegros y abnegados para esta vida y la eternidad.' },
+    { slug: 'resena-historica', resumen: 'Desde la IASD Villa Hermosa, organizada en 1967 en el Barrio Túpac Amaru.' },
+    { slug: 'emblema', resumen: 'Las manos abiertas, la Biblia abierta, la llama encendida y los laureles.' },
+    { slug: 'himno', resumen: '«Entonemos canto de alegría, cataínos de esperanza».' },
+    { slug: 'consejo-directivo', resumen: 'Representa a la Asociación Educativa Colegio Adventista Túpac Amaru.' },
+    { slug: 'administracion', resumen: 'Dirección general, administración, direcciones académicas y áreas de apoyo.' },
+    { slug: 'organigrama', resumen: 'La estructura de la institución.' },
+  ],
+}
+escribir('tipico', 'nosotros', { data: nosotrosIndice })
+for (const [slugN, d] of Object.entries(paginasNosotros)) escribir('tipico', `nosotros-pagina--${slugN}`, { data: d })
+
+// Audio de prueba: un tono de 2 segundos, para comprobar el reproductor (el colegio no publica el audio del himno)
+{
+  const hz = 8000
+  const n = hz * 2
+  const wav = Buffer.alloc(44 + n)
+  wav.write('RIFF', 0); wav.writeUInt32LE(36 + n, 4); wav.write('WAVE', 8); wav.write('fmt ', 12)
+  wav.writeUInt32LE(16, 16); wav.writeUInt16LE(1, 20); wav.writeUInt16LE(1, 22); wav.writeUInt32LE(hz, 24)
+  wav.writeUInt32LE(hz, 28); wav.writeUInt16LE(1, 32); wav.writeUInt16LE(8, 34); wav.write('data', 36); wav.writeUInt32LE(n, 40)
+  for (let i = 0; i < n; i++) wav[44 + i] = 128 + Math.round(40 * Math.sin((2 * Math.PI * 440 * i) / hz) * Math.min(1, (n - i) / 800))
+  fs.writeFileSync(path.join(dirImg, 'himno-prueba.wav'), wav)
+}
+
+// corto
+escribir('corto', 'nosotros', { data: { titulo: 'Nosotros', bajada: null, paginas: [] } })
+escribir('corto', 'nosotros-pagina--mision-y-vision', { data: { slug: 'mision-y-vision', titulo: 'Misión', bajada: null, bloques: [{ tipo: 'destacado', rotulo: 'Misión', texto: 'Educar.' }] } })
+escribir('corto', 'nosotros-pagina--consejo-directivo', { data: { slug: 'consejo-directivo', titulo: 'Consejo', bajada: null, bloques: [{ tipo: 'personas', titulo: null, personas: [persona('a', 'Ana', 'Vocal', null)] }] } })
+
+// largo: todos los tipos de bloque, al máximo
+const himnoLargo = {
+  ...paginasNosotros.himno,
+  titulo: 'Himno oficial del Colegio Adventista Túpac Amaru de la ciudad de Juliaca',
+  bajada: textoLargo,
+  bloques: [
+    { tipo: 'audio', titulo: 'Escucha el himno (audio de prueba)', url: MEDIOS + 'himno-prueba.wav', formato: 'audio/wav', descripcion: 'Audio de prueba: un tono de dos segundos para comprobar el reproductor. El colegio no ha publicado una grabación del himno.' },
+    ...paginasNosotros.himno.bloques,
+    { tipo: 'enlaces', titulo: 'Documentos de prueba', enlaces: [
+      { etiqueta: 'Partitura completa del himno para banda sinfónica, con todas las voces e instrumentos', url: 'https://cata.edu.pe/', descripcion: textoLargo, formato: 'pdf' },
+      { etiqueta: 'Presentación', url: 'https://www.canva.com/', descripcion: null, formato: 'presentacion' },
+      { etiqueta: 'Hoja de cálculo de prueba', url: 'https://docs.google.com/', descripcion: null, formato: 'hoja' },
+      { etiqueta: 'Documento de prueba', url: 'https://docs.google.com/', descripcion: null, formato: 'documento' },
+      { etiqueta: 'Página web', url: 'https://cata.edu.pe/', descripcion: null, formato: 'web' },
+    ] },
+  ],
+}
+escribir('largo', 'nosotros', { data: { ...nosotrosIndice, titulo: 'Nosotros: conoce la institución, su gestión y sus documentos', bajada: textoLargo, paginas: nosotrosIndice.paginas.map((p) => ({ ...p, resumen: textoLargo })) } })
+escribir('largo', 'nosotros-pagina--himno', { data: himnoLargo })
+escribir('largo', 'nosotros-pagina--administracion', { data: { ...paginasNosotros.administracion, bloques: [{ tipo: 'personas', titulo: 'Personal administrativo y de apoyo de todas las sedes del colegio', personas: Array.from({ length: 40 }, (_, i) => persona(`p${i}`, 'Nombre de prueba muy largo Apellido Paterno Apellido Materno', 'Cargo de prueba con un nombre largo: Dirección Académica de Inicial y Primaria de la Sede Central', i % 3 ? '2024/08/2.png' : null)) }] } })
+const nodoLargo = (n) => ({ cargo: `Cargo de prueba de nivel ${n} con un nombre largo que ocupa varias líneas`, detalle: n % 2 ? 'Nombre de prueba Apellido Apellido' : null, hijos: n < 5 ? Array.from({ length: n === 1 ? 1 : 3 }, () => nodoLargo(n + 1)) : [] })
+escribir('largo', 'nosotros-pagina--organigrama', { data: { ...paginasNosotros.organigrama, bloques: [{ tipo: 'organigrama', titulo: 'Organigrama de prueba con cinco niveles', imagen: img('panoramica', 'Organigrama de prueba en imagen; la misma estructura está en la lista que sigue.'), enlace: { etiqueta: 'Ver el organigrama completo', url: 'https://cata.edu.pe/', externo: true }, raiz: nodoLargo(1) }] } })
+
+// sin-foto: sin fotos de personas ni imágenes
+const sinImagenes = (p) => ({ ...p, bloques: p.bloques.filter((b) => b.tipo !== 'imagen').map((b) => (b.tipo === 'personas' ? { ...b, personas: b.personas.map((x) => ({ ...x, foto: null })) } : b.tipo === 'mensaje' ? { ...b, foto: null } : b)) })
+for (const slugN of ['emblema', 'himno', 'consejo-directivo', 'administracion']) escribir('sin-foto', `nosotros-pagina--${slugN}`, { data: sinImagenes(paginasNosotros[slugN]) })
+
+// alt-vacio
+for (const slugN of ['emblema', 'himno', 'consejo-directivo', 'administracion']) escribir('alt-vacio', `nosotros-pagina--${slugN}`, { data: altVacio(paginasNosotros[slugN]) })
+
+// vacio: páginas sin bloques
+escribir('vacio', 'nosotros', { data: { ...nosotrosIndice, bajada: null, paginas: [] } })
+for (const slugN of SLUGS_INSTITUCION) escribir('vacio', `nosotros-pagina--${slugN}`, { data: { ...paginasNosotros[slugN], bajada: null, bloques: [] } })
+
 console.log('ok')

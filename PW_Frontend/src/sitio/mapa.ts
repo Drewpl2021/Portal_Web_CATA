@@ -51,6 +51,15 @@ export const NOSOTROS: GrupoMenu[] = [
   },
 ]
 
+/**
+ * Grupos de Nosotros cuyas subpáginas ya se muestran con el layout de contenido. Las de los demás grupos
+ * llevan a la página «en construcción» hasta que se construyan (segunda tanda: Gestión y Documentos).
+ */
+export const GRUPOS_NOSOTROS_PUBLICADOS = ['Institución']
+
+export const subpaginaPublicada = (ruta: string) =>
+  NOSOTROS.some((g) => GRUPOS_NOSOTROS_PUBLICADOS.includes(g.titulo) && g.enlaces.some((e) => e.ruta === ruta))
+
 export const MENU: ItemMenu[] = [
   { etiqueta: 'Inicio', ruta: '/' },
   { etiqueta: 'Proyectos', ruta: '/proyectos' },

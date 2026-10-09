@@ -8,6 +8,8 @@ import Cabecera from './Cabecera'
 import Contacto from './paginas/Contacto'
 import Inicio from './paginas/Inicio'
 import Matricula from './paginas/Matricula'
+import Nosotros from './paginas/Nosotros'
+import NosotrosPagina from './paginas/NosotrosPagina'
 import Pendiente from './paginas/Pendiente'
 import PropuestaEducativa from './paginas/PropuestaEducativa'
 import ProyectoDetalle from './paginas/ProyectoDetalle'
@@ -24,6 +26,22 @@ export default function Layout() {
   useLayoutEffect(() => {
     document.documentElement.classList.add('f-anim')
     return () => document.documentElement.classList.remove('f-anim')
+  }, [])
+
+  // Foco nunca tapado (WCAG 2.4.11): si el elemento enfocado queda en parte bajo la cabecera fija,
+  // el navegador no desplaza la página porque lo considera visible. Aquí se corrige ese caso.
+  useEffect(() => {
+    const alEnfocar = (e: FocusEvent) => {
+      const el = e.target
+      if (!(el instanceof HTMLElement) || el.closest('.f-cab') || el.classList.contains('skip-link') || el.id === 'contenido') return
+      const cabecera = document.querySelector('.f-cab__barra')?.getBoundingClientRect()
+      if (!cabecera) return
+      const arriba = el.getBoundingClientRect().top
+      const margen = 16
+      if (arriba < cabecera.bottom + margen) window.scrollBy({ top: arriba - cabecera.bottom - margen, behavior: 'instant' })
+    }
+    document.addEventListener('focusin', alEnfocar)
+    return () => document.removeEventListener('focusin', alEnfocar)
   }, [])
 
   // Cada página nueva empieza arriba y, si se llegó navegando, con el foco en su contenido.
@@ -55,6 +73,8 @@ export default function Layout() {
           <Routes location={ubicacion} key={ubicacion.pathname}>
             <Route index element={pagina(<Inicio />)} />
             <Route path="proyectos" element={pagina(<Proyectos />)} />
+            <Route path="nosotros" element={pagina(<Nosotros />)} />
+            <Route path="nosotros/:slug" element={pagina(<NosotrosPagina />)} />
             <Route path="proyectos/:slug" element={pagina(<ProyectoDetalle />)} />
             <Route path="propuesta-educativa" element={pagina(<PropuestaEducativa />)} />
             <Route path="matricula" element={pagina(<Matricula />)} />

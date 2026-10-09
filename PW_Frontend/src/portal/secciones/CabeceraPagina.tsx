@@ -36,12 +36,14 @@ interface Props {
   foto?: Imagen | null
   /** Datos breves bajo la bajada (categoría, estado, fecha…). */
   meta?: ReactNode
+  /** Más baja: para subpáginas de contenido, donde lo importante empieza debajo. */
+  compacta?: boolean
 }
 
 // Cabecera celeste de las páginas internas (Matrícula, Contacto, Proyectos): titular, barras, bajada y botones.
 // A la derecha, una composición de proporción fija: una placa marina inclinada con un rótulo y un valor
 // grande, y el recorte de un estudiante delante; o bien una foto enmarcada.
-export default function CabeceraPagina({ idTitulo, titulo, bajada, acciones, placa, figura: figuraApi, foto: fotoApi = null, meta }: Props) {
+export default function CabeceraPagina({ idTitulo, titulo, bajada, acciones, placa, figura: figuraApi, foto: fotoApi = null, meta, compacta = false }: Props) {
   const seccion = useRef<HTMLElement>(null)
   const reducir = useReducedMotion()
   const interna = useRutaInterna()
@@ -72,7 +74,7 @@ export default function CabeceraPagina({ idTitulo, titulo, bajada, acciones, pla
   return (
     <section
       ref={seccion}
-      className={`f-hero f-hero--pagina${conComposicion || foto ? '' : ' f-hero--solo-texto'}`}
+      className={`f-hero f-hero--pagina${compacta ? ' f-hero--compacta' : ''}${conComposicion || foto ? '' : ' f-hero--solo-texto'}`}
       aria-labelledby={idTitulo}
     >
       <motion.div className="f-hero__franjas" aria-hidden="true" style={reducir ? undefined : { transform: tFranjas }}>

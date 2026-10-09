@@ -1,4 +1,4 @@
-// Tipos del contrato de la API pública del portal (docs/API_CONTRACT.md, v2.3).
+// Tipos del contrato de la API pública del portal (docs/API_CONTRACT.md, v2.4).
 // Todos los campos llegan siempre; los opcionales valen null.
 
 /** Fecha ISO 8601 sin hora: "2026-10-08". */
@@ -349,6 +349,79 @@ export interface Proyecto extends ProyectoResumen {
   descripcion: string[]
   secciones: SeccionProyecto[]
   galeria: Imagen[]
+}
+
+// GET /v1/nosotros
+export interface ResumenSubpagina {
+  /** Slug de la subpágina: «mision-y-vision». */
+  slug: string
+  resumen: string
+}
+
+export interface Nosotros {
+  titulo: string
+  bajada: string | null
+  /** Una frase por subpágina, para las tarjetas del índice. Las que no estén solo muestran su nombre. */
+  paginas: ResumenSubpagina[]
+}
+
+// GET /v1/nosotros/paginas/{slug}: página de contenido armada con bloques
+export interface Firma {
+  nombre: string
+  /** Cargo o descripción: «Exprofesor del CATA». */
+  detalle: string | null
+}
+
+export interface Persona {
+  id: string
+  nombre: string
+  cargo: string
+  foto: Imagen | null
+}
+
+export interface NodoOrganigrama {
+  cargo: string
+  /** Nombre de quien ocupa el cargo u otra aclaración. */
+  detalle: string | null
+  hijos: NodoOrganigrama[]
+}
+
+export const FORMATOS_ENLACE = ['pdf', 'web', 'hoja', 'presentacion', 'documento'] as const
+export type FormatoEnlace = (typeof FORMATOS_ENLACE)[number]
+
+export const TIPOS_AUDIO = ['audio/mpeg', 'audio/mp4', 'audio/ogg', 'audio/wav'] as const
+export type TipoAudio = (typeof TIPOS_AUDIO)[number]
+
+export type Bloque =
+  | { tipo: 'texto'; titulo: string | null; parrafos: string[]; firma: Firma | null }
+  | { tipo: 'destacado'; rotulo: string; texto: string }
+  | {
+      tipo: 'lista'
+      titulo: string | null
+      /** vinetas: lista simple. tarjetas: placas con título, texto y fuente. */
+      estilo: 'vinetas' | 'tarjetas'
+      items: { titulo: string | null; texto: string; fuente: string | null }[]
+    }
+  | { tipo: 'hitos'; titulo: string | null; items: { fecha: string; texto: string }[] }
+  | { tipo: 'imagen'; imagen: Imagen; pie: string | null; transcripcion: string[] | null }
+  | { tipo: 'personas'; titulo: string | null; personas: Persona[] }
+  | { tipo: 'mensaje'; titulo: string | null; parrafos: string[]; firma: Firma; foto: Imagen | null }
+  | { tipo: 'letra'; titulo: string | null; partes: { titulo: string; versos: string[] }[] }
+  | { tipo: 'audio'; titulo: string; url: string; formato: TipoAudio; descripcion: string | null }
+  | { tipo: 'organigrama'; titulo: string | null; imagen: Imagen | null; enlace: Enlace | null; raiz: NodoOrganigrama }
+  | {
+      tipo: 'enlaces'
+      titulo: string | null
+      enlaces: { etiqueta: string; url: string; descripcion: string | null; formato: FormatoEnlace }[]
+    }
+
+export type TipoBloque = Bloque['tipo']
+
+export interface PaginaContenido {
+  slug: string
+  titulo: string
+  bajada: string | null
+  bloques: Bloque[]
 }
 
 // Sobres de respuesta

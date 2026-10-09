@@ -1783,6 +1783,14 @@
   min-height: clamp(30rem, 72svh, 46rem);
 }
 
+.f-hero--compacta {
+  min-height: clamp(22rem, 48svh, 32rem);
+}
+
+.f-hero--compacta .f-placa-cab {
+  width: min(100%, 30rem);
+}
+
 /*
   Año del proceso: composición de proporción fija (5:4). La placa, el número y el recorte
   se ubican en % del bloque y el número se mide en cqw, así todo escala junto.
@@ -3376,6 +3384,942 @@ html.f-anim .f-cronograma:not([data-visto])::before {
     justify-self: center;
     width: min(100%, 30rem);
     margin-bottom: 2.5rem;
+  }
+}
+
+/* ═════════ Nosotros: índice ═════════ */
+
+.f-nosotros__columnas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  align-items: start;
+  gap: 1.5rem;
+}
+
+.f-columna {
+  position: relative;
+  padding: 1.75rem 1.25rem 1.25rem;
+  border-radius: 0.125rem;
+  background: var(--celeste-lavado);
+}
+
+.f-columna::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 1.25rem;
+  width: 3.5rem;
+  height: 0.3125rem;
+  background: var(--dorado);
+}
+
+.f-columna__cabeza {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.f-columna__titulo {
+  font-stretch: 125%;
+  font-weight: 900;
+  font-size: clamp(1.35rem, 2vw, 1.6rem);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.f-columna__lista {
+  display: grid;
+  gap: 0.625rem;
+}
+
+.f-subpagina {
+  position: relative;
+  display: grid;
+  gap: 0.25rem;
+  min-height: 3.5rem;
+  padding: 0.875rem 3rem 0.875rem 1rem;
+  border-radius: 0.25rem;
+  background: var(--blanco);
+  color: var(--marino);
+  text-decoration: none;
+  transition: translate 200ms var(--ease-salida);
+}
+
+.f-subpagina__nombre {
+  font-weight: 800;
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+
+.f-subpagina__pronto {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0 0.375rem;
+  border: 0.0625rem solid currentColor;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  vertical-align: 0.1em;
+}
+
+.f-subpagina__resumen {
+  font-size: 0.93rem;
+  line-height: 1.4;
+  color: var(--marino-suave);
+}
+
+.f-subpagina__flecha {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  translate: 0 -50%;
+  transition: transform 200ms var(--ease-salida);
+}
+
+/* ═════════ Subpáginas de contenido (layout reutilizable) ═════════ */
+
+/* Migas: la franja marina del índice de página, con barras entre niveles */
+.f-migas__lista {
+  gap: 0.25rem 0.75rem;
+}
+
+.f-migas__lista li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.f-migas__lista li + li::before {
+  content: '/' / '';
+  font-weight: 800;
+  color: var(--dorado);
+}
+
+.f-migas__grupo,
+.f-migas__actual {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  font-stretch: 112%;
+  font-weight: 800;
+  font-size: 0.98rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.f-migas__grupo {
+  color: var(--marino-lavado);
+}
+
+.f-migas__actual {
+  color: var(--dorado);
+}
+
+/* Contenido a la izquierda y el menú del grupo a la derecha (en el orden del documento) */
+.f-contenido__rejilla {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 16rem;
+  align-items: start;
+  gap: clamp(2rem, 5vw, 4.5rem);
+}
+
+.f-contenido__cuerpo {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 3.75rem);
+  min-width: 0;
+}
+
+.f-lateral {
+  position: sticky;
+  top: calc(var(--f-alto) + 2rem);
+  padding: 1.5rem 1rem 1rem;
+  border-radius: 0.125rem;
+  background: var(--celeste-lavado);
+}
+
+.f-lateral::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 1rem;
+  width: 3.5rem;
+  height: 0.3125rem;
+  background: var(--dorado);
+}
+
+.f-lateral__titulo {
+  margin: 0 0 0.75rem 0.75rem;
+  font-stretch: 112%;
+  font-weight: 850;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.f-lateral__lista {
+  display: grid;
+  gap: 0.125rem;
+}
+
+.f-lateral__enlace {
+  display: flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.25rem;
+  color: var(--marino);
+  font-weight: 650;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+.f-lateral__enlace[aria-current='page'] {
+  background: var(--marino);
+  color: var(--blanco);
+  font-weight: 800;
+  box-shadow: inset 0 -0.25rem 0 var(--dorado);
+}
+
+/* Bloques */
+.f-bloque__titulo {
+  margin-bottom: 1.25rem;
+}
+
+.f-prosa {
+  display: grid;
+  gap: 1rem;
+  max-width: 68ch;
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.f-prosa .f-bloque__titulo {
+  margin-bottom: 0.25rem;
+}
+
+.f-firma {
+  position: relative;
+  display: grid;
+  margin-top: 0.75rem;
+  padding-top: 1rem;
+  line-height: 1.4;
+}
+
+.f-firma::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3.5rem;
+  height: 0.1875rem;
+  background: var(--dorado);
+}
+
+.f-firma__nombre {
+  font-weight: 800;
+}
+
+.f-firma__detalle {
+  color: var(--marino-suave);
+}
+
+/* Destacados: placas marinas inclinadas, lado a lado */
+.f-destacados {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  gap: 1.5rem;
+}
+
+.f-destacado {
+  position: relative;
+  isolation: isolate;
+  padding: clamp(1.75rem, 3vw, 2.5rem) clamp(1.75rem, 3vw, 2.75rem);
+  color: var(--blanco);
+}
+
+.f-destacado::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 0.25rem;
+  background: var(--marino);
+  box-shadow: inset 0 -0.375rem 0 var(--dorado);
+  transform: skewX(-4deg);
+}
+
+.f-destacado__rotulo {
+  margin-bottom: 0.875rem;
+  font-stretch: 125%;
+  font-weight: 900;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--dorado);
+}
+
+.f-destacado__texto {
+  font-stretch: 112%;
+  font-weight: 800;
+  font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.f-lista--bloque {
+  max-width: 52rem;
+}
+
+.f-lista__fuente {
+  color: var(--marino-suave);
+}
+
+/* Tarjetas de texto (valores, símbolos) */
+.f-tarjetas-texto {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: 1.25rem;
+}
+
+.f-tarjeta-texto {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.75rem 1.5rem 1.5rem;
+  border-radius: 0.125rem;
+  background: var(--celeste-lavado);
+}
+
+.f-tarjeta-texto::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 1.5rem;
+  width: 3.5rem;
+  height: 0.3125rem;
+  background: var(--dorado);
+}
+
+.f-tarjeta-texto__titulo {
+  font-stretch: 125%;
+  font-weight: 900;
+  font-size: 1.35rem;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.f-tarjeta-texto__texto {
+  line-height: 1.6;
+}
+
+.f-tarjeta-texto__fuente {
+  margin-top: auto;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--marino-suave);
+}
+
+.f-tarjeta-texto__fuente::before {
+  content: '— ';
+}
+
+/* Hitos: la pista del cronograma de Matrícula, con la fecha escrita en la placa */
+.f-hitos .f-hito {
+  grid-template-columns: 9rem minmax(0, 1fr);
+}
+
+.f-hitos.f-cronograma::before {
+  left: 4.5rem;
+}
+
+.f-hitos__fecha {
+  font-stretch: 125%;
+  font-weight: 900;
+  font-size: 1.5rem;
+  line-height: 1.05;
+  padding: 0.875rem 0.5rem;
+}
+
+.f-hitos__fecha--larga {
+  font-stretch: 112%;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.f-hitos__texto {
+  padding-top: 0.75rem;
+  line-height: 1.55;
+}
+
+/* Imágenes del contenido, con transcripción opcional */
+.f-figura-api {
+  display: grid;
+  justify-items: start;
+  gap: 0.75rem;
+  max-width: 28rem;
+}
+
+.f-figura-api .imagen {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.125rem;
+}
+
+.f-figura-api__pie {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--marino-suave);
+}
+
+.f-transcripcion__resumen {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-color: var(--dorado);
+  text-decoration-thickness: 0.1875rem;
+  text-underline-offset: 0.35em;
+  cursor: pointer;
+}
+
+.f-transcripcion__texto {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 68ch;
+  margin-top: 0.5rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 0.25rem;
+  background: var(--celeste-lavado);
+  line-height: 1.6;
+}
+
+.f-transcripcion[open] .f-transcripcion__texto {
+  animation: f-desliza 200ms var(--ease-salida);
+}
+
+/* Personas */
+.f-personas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 12rem), 1fr));
+  gap: 2.25rem 1.25rem;
+}
+
+.f-persona {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: 0.375rem;
+  text-align: center;
+}
+
+.f-persona__foto {
+  width: 9rem;
+  aspect-ratio: 1;
+  margin: 0.5rem;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--celeste-lavado);
+  box-shadow:
+    0 0 0 0.25rem var(--blanco),
+    0 0 0 0.5rem var(--dorado);
+}
+
+.f-persona__foto--grande {
+  width: 12rem;
+}
+
+.f .f-persona__foto .imagen {
+  height: 100%;
+  border-radius: 50%;
+}
+
+.f-persona__iniciales {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  background: var(--marino);
+  color: var(--dorado);
+  font-stretch: 125%;
+  font-weight: 900;
+  font-size: 2.2rem;
+}
+
+.f-persona__nombre {
+  margin-top: 0.75rem;
+  font-stretch: 112%;
+  font-weight: 850;
+  font-size: 1.05rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.f-persona__cargo {
+  font-size: 0.97rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--marino-suave);
+}
+
+/* Mensaje firmado: foto y carta */
+.f-mensaje {
+  display: grid;
+  grid-template-columns: 13rem minmax(0, 1fr);
+  align-items: start;
+  gap: 2.5rem;
+}
+
+.f-mensaje--sin-foto {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.f-mensaje__carta {
+  padding: clamp(1.75rem, 4vw, 3rem);
+  border-radius: 0.25rem;
+  background: var(--celeste-lavado);
+}
+
+.f-mensaje__comillas {
+  margin-bottom: 0.5rem;
+  color: var(--dorado);
+}
+
+.f-mensaje__saludo {
+  margin-bottom: 1rem;
+  font-weight: 800;
+  font-size: 1.25rem;
+}
+
+/* Letra del himno: el coro arriba en una placa marina, las estrofas debajo */
+.f-letra {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+  gap: 1.25rem;
+}
+
+.f-letra__parte {
+  position: relative;
+  padding: 1.75rem 1.75rem 2rem;
+  border-radius: 0.125rem;
+  background: var(--celeste-lavado);
+}
+
+.f-letra__parte::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 1.75rem;
+  width: 3.5rem;
+  height: 0.3125rem;
+  background: var(--dorado);
+}
+
+.f-letra__parte--coro {
+  grid-column: 1 / -1;
+  background: var(--marino);
+  color: var(--blanco);
+}
+
+.f-letra__titulo {
+  margin-bottom: 0.875rem;
+  font-stretch: 125%;
+  font-weight: 900;
+  font-size: 1.5rem;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.f-letra__parte--coro .f-letra__titulo {
+  color: var(--dorado);
+}
+
+.f-letra__versos {
+  display: grid;
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+.f-letra__parte--coro .f-letra__versos {
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+.f-letra__verso {
+  display: block;
+}
+
+/* Audio: placa marina con el reproductor nativo */
+.f-audio {
+  --foco: var(--dorado);
+  display: grid;
+  gap: 1rem;
+  max-width: 40rem;
+  padding: 1.5rem;
+  border-radius: 0.25rem;
+  background: var(--marino);
+  color: var(--blanco);
+}
+
+.f-audio__titulo {
+  display: block;
+  font-stretch: 112%;
+  font-weight: 850;
+  font-size: 1.15rem;
+  text-transform: uppercase;
+}
+
+.f-audio__descripcion {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.95rem;
+  color: var(--marino-lavado);
+}
+
+.f-audio__control {
+  width: 100%;
+}
+
+.f-audio .f-enlace {
+  color: var(--blanco);
+}
+
+/* Organigrama como árbol: cada cargo con una línea que lo une a su superior */
+.f-organigrama__ayuda {
+  margin-bottom: 1.25rem;
+  font-weight: 600;
+  color: var(--marino-suave);
+}
+
+.f-organigrama__imagen {
+  max-width: 52rem;
+  margin-bottom: 1.5rem;
+}
+
+.f-arbol,
+.f-arbol__hijos {
+  display: grid;
+  gap: 0.625rem;
+}
+
+.f-arbol__hijos {
+  margin-top: 0.625rem;
+  padding-left: 2.75rem;
+}
+
+.f-arbol__item {
+  position: relative;
+}
+
+.f-arbol__hijos > .f-arbol__item::before {
+  content: '';
+  position: absolute;
+  top: 1.5rem;
+  left: -1.5rem;
+  width: 1.5rem;
+  border-top: 0.1875rem solid var(--celeste);
+}
+
+.f-arbol__hijos > .f-arbol__item::after {
+  content: '';
+  position: absolute;
+  top: -0.625rem;
+  bottom: 0;
+  left: -1.5rem;
+  border-left: 0.1875rem solid var(--celeste);
+}
+
+.f-arbol__hijos > .f-arbol__item:last-child::after {
+  bottom: auto;
+  height: 2.125rem;
+}
+
+.f-arbol__nodo {
+  display: inline-grid;
+  gap: 0.125rem;
+  max-width: 100%;
+  padding: 0.625rem 1rem;
+  border: 0.125rem solid var(--marino);
+  border-radius: 0.25rem;
+  background: var(--blanco);
+}
+
+.f-arbol__item--raiz > .f-arbol__nodo {
+  background: var(--marino);
+  color: var(--blanco);
+  box-shadow: inset 0 -0.25rem 0 var(--dorado);
+}
+
+.f-arbol__cargo {
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.f-arbol__detalle {
+  font-size: 0.9rem;
+  color: var(--marino-suave);
+}
+
+.f-arbol__item--raiz > .f-arbol__nodo .f-arbol__detalle {
+  color: var(--marino-lavado);
+}
+
+.f-organigrama__enlace {
+  margin-top: 1.5rem;
+}
+
+/* Documentos y enlaces */
+.f-documentos {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.f-documento {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-radius: 0.25rem;
+  background: var(--celeste-lavado);
+}
+
+.f-documento__icono {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.25rem;
+  background: var(--marino);
+  color: var(--dorado);
+}
+
+.f-documento__enlace {
+  font-weight: 800;
+  font-size: 1.05rem;
+  line-height: 1.3;
+  color: var(--marino);
+  text-decoration: none;
+}
+
+.f-documento__enlace::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.f-documento__enlace:focus-visible {
+  outline: none;
+}
+
+.f-documento:has(.f-documento__enlace:focus-visible) {
+  outline: 3px solid var(--marino);
+  outline-offset: 0.25rem;
+}
+
+.f-documento__descripcion {
+  margin-top: 0.25rem;
+  font-size: 0.95rem;
+  color: var(--marino-suave);
+}
+
+.f-documento__formato {
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.25rem;
+  background: var(--dorado);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.f-documento__flecha {
+  transition: transform 200ms var(--ease-salida);
+}
+
+/* Anterior y siguiente, sobre celeste */
+.f-pasar {
+  --f-fondo: var(--celeste);
+  --foco: var(--blanco);
+  padding: clamp(3rem, 6vw, 4.5rem) 0;
+  background: var(--celeste);
+}
+
+.f-pasar__interior {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem 2rem;
+}
+
+.f-pasar__enlace {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-content: center;
+  gap: 0.5rem;
+  min-height: 7rem;
+  padding: 1.5rem 1.75rem;
+  color: var(--marino);
+  text-decoration: none;
+  transition: transform 160ms var(--ease-salida);
+}
+
+.f-pasar__enlace::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 0.25rem;
+  background: var(--blanco);
+  box-shadow: inset 0 -0.375rem 0 var(--dorado);
+  transform: skewX(-6deg);
+}
+
+.f-pasar__enlace--siguiente {
+  justify-items: end;
+  text-align: right;
+}
+
+.f-pasar__enlace:active {
+  transform: scale(0.98);
+}
+
+.f-pasar__enlace:focus-visible {
+  outline-offset: 0.375rem;
+}
+
+.f-pasar__rotulo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-weight: 800;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--marino-suave);
+}
+
+.f-pasar__rotulo svg {
+  transition: transform 200ms var(--ease-salida);
+}
+
+.f-pasar__nombre {
+  font-stretch: 125%;
+  font-weight: 900;
+  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .f-subpagina:hover {
+    translate: 0.25rem 0;
+  }
+
+  .f-subpagina:hover .f-subpagina__flecha {
+    transform: translateX(0.1875rem);
+  }
+
+  .f-lateral__enlace:not([aria-current='page']):hover {
+    background: var(--blanco);
+  }
+
+  .f-documento:hover .f-documento__flecha {
+    transform: translate(0.1875rem, -0.1875rem);
+  }
+
+  .f-pasar__enlace--anterior:hover .f-pasar__rotulo svg {
+    transform: translateX(-0.1875rem);
+  }
+
+  .f-pasar__enlace--siguiente:hover .f-pasar__rotulo svg {
+    transform: translateX(0.1875rem);
+  }
+
+  .f-transcripcion__resumen:hover {
+    color: var(--celeste-hondo);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .f-transcripcion[open] .f-transcripcion__texto {
+    animation: none;
+  }
+
+  .f-subpagina:hover,
+  .f-subpagina:hover .f-subpagina__flecha,
+  .f-documento:hover .f-documento__flecha,
+  .f-pasar__enlace:hover .f-pasar__rotulo svg {
+    translate: none;
+    transform: none;
+  }
+
+  .f-subpagina,
+  .f-subpagina__flecha,
+  .f-documento__flecha,
+  .f-pasar__enlace,
+  .f-pasar__rotulo svg {
+    transition: none;
+  }
+}
+
+@media (max-width: 899px) {
+  .f-contenido__rejilla {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .f-lateral {
+    position: static;
+  }
+
+  .f-mensaje {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: start;
+  }
+
+  .f-pasar__interior {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .f-documento {
+    grid-template-columns: 3rem minmax(0, 1fr);
+  }
+
+  .f-documento__formato {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .f-documento__flecha {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .f-hitos .f-hito {
+    grid-template-columns: 6.5rem minmax(0, 1fr);
+  }
+
+  .f-hitos.f-cronograma::before {
+    left: 3.25rem;
+  }
+
+  .f-arbol__hijos {
+    padding-left: 1.75rem;
+  }
+
+  .f-arbol__hijos > .f-arbol__item::before {
+    left: -1rem;
+    width: 1rem;
+  }
+
+  .f-arbol__hijos > .f-arbol__item::after {
+    left: -1rem;
   }
 }
 

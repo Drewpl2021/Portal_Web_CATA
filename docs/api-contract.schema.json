@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "API pública del portal CATA 2.3 (docs/API_CONTRACT.md)",
+  "title": "API pública del portal CATA 2.4 (docs/API_CONTRACT.md)",
   "description": "Cuerpo de respuesta 200 de cada endpoint. Generado desde PW_Frontend/src/api/esquemas.ts; no editar a mano.",
   "definitions": {
     "GET /v1/sitio": {
@@ -2289,6 +2289,926 @@
             "descripcion",
             "secciones",
             "galeria"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "GET /v1/nosotros": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "titulo": {
+              "type": "string"
+            },
+            "bajada": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "paginas": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "slug": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9-]+$"
+                  },
+                  "resumen": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "slug",
+                  "resumen"
+                ],
+                "additionalProperties": false
+              },
+              "maxItems": 20
+            }
+          },
+          "required": [
+            "titulo",
+            "bajada",
+            "paginas"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "GET /v1/nosotros/paginas/{slug}": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "slug": {
+              "type": "string",
+              "pattern": "^[a-z0-9-]+$"
+            },
+            "titulo": {
+              "type": "string"
+            },
+            "bajada": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "bloques": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "tipo": {
+                        "type": "string",
+                        "const": "texto"
+                      },
+                      "titulo": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "parrafos": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "minItems": 1,
+                        "maxItems": 20
+                      },
+                      "firma": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "nombre": {
+                                "type": "string"
+                              },
+                              "detalle": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "nombre",
+                              "detalle"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "tipo",
+                      "titulo",
+                      "parrafos",
+                      "firma"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "tipo": {
+                        "type": "string",
+                        "const": "destacado"
+                      },
+                      "rotulo": {
+                        "type": "string"
+                      },
+                      "texto": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "tipo",
+                      "rotulo",
+                      "texto"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "tipo": {
+                        "type": "string",
+                        "const": "lista"
+                      },
+                      "titulo": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "estilo": {
+                        "type": "string",
+                        "enum": [
+                          "vinetas",
+                          "tarjetas"
+                        ]
+                      },
+                      "items": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "titulo": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "texto": {
+                              "type": "string"
+                            },
+                            "fuente": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "titulo",
+                            "texto",
+                            "fuente"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "minItems": 1,
+                        "maxItems": 20
+                      }
+                    },
+                    "required": [
+                      "tipo",
+                      "titulo",
+                      "estilo",
+                      "items"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "tipo": {
+                        "type": "string",
+                        "const": "hitos"
+                      },
+                      "titulo": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "items": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "fecha": {
+                              "type": "string"
+                            },
+                            "texto": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "fecha",
+                            "texto"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "minItems": 1,
+                        "maxItems": 20
+                      }
+                    },
+                    "required": [
+                      "tipo",
+                      "titulo",
+                      "items"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "tipo": {
+                        "type": "string",
+                        "const": "imagen"
+                      },
+                      "imagen": {
+                        "type": "object",
+                        "properties": {
+                          "url": {
+                            "type": "string",
+                            "format": "uri",
+                            "pattern": "^https:\\/\\/"
+                          },
+                          "alt": {
+                            "type": "string"
+                          },
+                          "ancho": {
+                            "anyOf": [
+                              {
+                                "type": "integer",
+                                "exclusiveMinimum": 0
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "alto": {
+                            "anyOf": [
+                              {
+                                "type": "integer",
+                                "exclusiveMinimum": 0
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "url",
+                          "alt",
+                          "ancho",
+                          "alto"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "pie": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "transcripcion": {
+                        "anyOf": [
+                          {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "minItems": 1,
+                            "maxItems": 20
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "tipo",
+                      "imagen",
+                      "pie",
+                      "transcripcion"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "tipo": {
+                        "type": "string",
+                        "const": "personas"
+                      },
+                      "titulo": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "personas": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "nombre": {
+                              "type": "string"
+                            },
+                            "cargo": {
+                              "type": "string"
+                            },
+                            "foto": {
+                              "anyOf": [
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "url": {
+                                      "type": "string",
+                                      "format": "uri",
+                                      "pattern": "^https:\\/\\/"
+                                    },
+                                    "alt": {
+                                      "type": "string"
+                                    },
+                                    "ancho": {
+                                      "anyOf": [
+                                        {
+                                          "type": "integer",
+                                          "exclusiveMinimum": 0
+                                        },
+                                        {
+                                          "type": "null"
+                                        }
+                                      ]
+                                    },
+                                    "alto": {
+                                      "anyOf": [
+                                        {
+                                          "type": "integer",
+                                          "exclusiveMinimum": 0
+                                        },
+                                        {
+                                          "type": "null"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "required": [
+                                    "url",
+                                    "alt",
+                                    "ancho",
+                                    "alto"
+                                  ],
+                                  "additionalProperties": false
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "nombre",
+                            "cargo",
+                            "foto"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "minItems": 1,
+                        "maxItems": 40
+                      }
+                    },
+                    "required": [
+                      "tipo",
+                      "titulo",
+                      "personas"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "tipo": {
+                        "type": "string",
+                        "const": "mensaje"
+                      },
+                      "titulo": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "parrafos": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "minItems": 1,
+                        "maxItems": 12
+                      },
+                      "firma": {
+                        "type": "object",
+                        "properties": {
+                          "nombre": {
+                            "type": "string"
+                          },
+                          "detalle": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "nombre",
+                          "detalle"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "foto": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "url": {
+                                "type": "string",
+                                "format": "uri",
+                                "pattern": "^https:\\/\\/"
+                              },
+                              "alt": {
+                                "type": "string"
+                              },
+                              "ancho": {
+                                "anyOf": [
+                                  {
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
+                              "alto": {
+                                "anyOf": [
+                                  {
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              }
+                            },
+                            "required": [
+                              "url",
+                              "alt",
+                              "ancho",
+                              "alto"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "tipo",
+                      "titulo",
+                      "parrafos",
+                      "firma",
+                      "foto"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "tipo": {
+                        "type": "string",
+                        "const": "letra"
+                      },
+                      "titulo": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "partes": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "titulo": {
+                              "type": "string"
+                            },
+                            "versos": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "minItems": 1,
+                              "maxItems": 16
+                            }
+                          },
+                          "required": [
+                            "titulo",
+                            "versos"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "minItems": 1,
+                        "maxItems": 12
+                      }
+                    },
+                    "required": [
+                      "tipo",
+                      "titulo",
+                      "partes"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "tipo": {
+                        "type": "string",
+                        "const": "audio"
+                      },
+                      "titulo": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri",
+                        "pattern": "^https:\\/\\/"
+                      },
+                      "formato": {
+                        "type": "string",
+                        "enum": [
+                          "audio/mpeg",
+                          "audio/mp4",
+                          "audio/ogg",
+                          "audio/wav"
+                        ]
+                      },
+                      "descripcion": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "tipo",
+                      "titulo",
+                      "url",
+                      "formato",
+                      "descripcion"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "tipo": {
+                        "type": "string",
+                        "const": "organigrama"
+                      },
+                      "titulo": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "imagen": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "url": {
+                                "type": "string",
+                                "format": "uri",
+                                "pattern": "^https:\\/\\/"
+                              },
+                              "alt": {
+                                "type": "string"
+                              },
+                              "ancho": {
+                                "anyOf": [
+                                  {
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
+                              "alto": {
+                                "anyOf": [
+                                  {
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              }
+                            },
+                            "required": [
+                              "url",
+                              "alt",
+                              "ancho",
+                              "alto"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "enlace": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "etiqueta": {
+                                "type": "string"
+                              },
+                              "url": {
+                                "type": "string",
+                                "format": "uri",
+                                "pattern": "^https:\\/\\/"
+                              },
+                              "externo": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "etiqueta",
+                              "url",
+                              "externo"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "raiz": {
+                        "type": "object",
+                        "properties": {
+                          "cargo": {
+                            "type": "string"
+                          },
+                          "detalle": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "hijos": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "cargo": {
+                                  "type": "string"
+                                },
+                                "detalle": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "hijos": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "cargo": {
+                                        "type": "string"
+                                      },
+                                      "detalle": {
+                                        "type": [
+                                          "string",
+                                          "null"
+                                        ]
+                                      },
+                                      "hijos": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "cargo": {
+                                              "type": "string"
+                                            },
+                                            "detalle": {
+                                              "type": [
+                                                "string",
+                                                "null"
+                                              ]
+                                            },
+                                            "hijos": {
+                                              "type": "array",
+                                              "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                  "cargo": {
+                                                    "type": "string"
+                                                  },
+                                                  "detalle": {
+                                                    "type": [
+                                                      "string",
+                                                      "null"
+                                                    ]
+                                                  },
+                                                  "hijos": {
+                                                    "type": "array",
+                                                    "items": {
+                                                      "not": {}
+                                                    },
+                                                    "maxItems": 0
+                                                  }
+                                                },
+                                                "required": [
+                                                  "cargo",
+                                                  "detalle",
+                                                  "hijos"
+                                                ],
+                                                "additionalProperties": false
+                                              },
+                                              "maxItems": 12
+                                            }
+                                          },
+                                          "required": [
+                                            "cargo",
+                                            "detalle",
+                                            "hijos"
+                                          ],
+                                          "additionalProperties": false
+                                        },
+                                        "maxItems": 12
+                                      }
+                                    },
+                                    "required": [
+                                      "cargo",
+                                      "detalle",
+                                      "hijos"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  "maxItems": 12
+                                }
+                              },
+                              "required": [
+                                "cargo",
+                                "detalle",
+                                "hijos"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "maxItems": 12
+                          }
+                        },
+                        "required": [
+                          "cargo",
+                          "detalle",
+                          "hijos"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "required": [
+                      "tipo",
+                      "titulo",
+                      "imagen",
+                      "enlace",
+                      "raiz"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "tipo": {
+                        "type": "string",
+                        "const": "enlaces"
+                      },
+                      "titulo": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "enlaces": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "etiqueta": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string",
+                              "format": "uri",
+                              "pattern": "^https:\\/\\/"
+                            },
+                            "descripcion": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "formato": {
+                              "type": "string",
+                              "enum": [
+                                "pdf",
+                                "web",
+                                "hoja",
+                                "presentacion",
+                                "documento"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "etiqueta",
+                            "url",
+                            "descripcion",
+                            "formato"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "minItems": 1,
+                        "maxItems": 30
+                      }
+                    },
+                    "required": [
+                      "tipo",
+                      "titulo",
+                      "enlaces"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "maxItems": 30
+            }
+          },
+          "required": [
+            "slug",
+            "titulo",
+            "bajada",
+            "bloques"
           ],
           "additionalProperties": false
         }

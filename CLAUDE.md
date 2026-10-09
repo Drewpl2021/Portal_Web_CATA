@@ -27,6 +27,8 @@ Public website for the school CATA (Colegio Adventista Túpac Amaru, Juliaca).
 - `npm run dev`: local development; uses mock data unless `VITE_API_URL` is set.
 - `npm run build`: production. **Fails if `VITE_API_URL` is not set**, so test data is never published. With the API set, the mock JSON is excluded from the bundle.
 - `npm run build:demo`: deliberately builds a version with mock data and the visible «Datos de prueba» strip, even if `VITE_API_URL` is set.
+- **Run every npm command from `PW_Frontend/`**: the repository root has no `package.json`. Dev server: `cd "F:/CATA/Portal Web/PW_Frontend" && npm run dev -- --port 5173 --strictPort`, in the background; it is ready when `curl http://localhost:5173/` returns 200.
+- When the dev server is stopped by killing its `node` process (for example `Stop-Process -Force` on the process listening on 5173), the background task reports «exit code 127». That is the kill, not a failed start: check the task log for `VITE … ready`. With `--strictPort`, a start fails only if another server is still holding port 5173; stop that one first.
 
 ## Site structure
 

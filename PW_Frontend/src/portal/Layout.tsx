@@ -7,6 +7,7 @@ import TransicionPagina, { pedirFocoEnPaginaNueva } from '../sitio/TransicionPag
 import Cabecera from './Cabecera'
 import Contacto from './paginas/Contacto'
 import Inicio from './paginas/Inicio'
+import Logros from './paginas/Logros'
 import Matricula from './paginas/Matricula'
 import Nosotros from './paginas/Nosotros'
 import NosotrosPagina from './paginas/NosotrosPagina'
@@ -79,6 +80,7 @@ export default function Layout() {
             <Route path="propuesta-educativa" element={pagina(<PropuestaEducativa />)} />
             <Route path="matricula" element={pagina(<Matricula />)} />
             <Route path="contacto" element={pagina(<Contacto />)} />
+            <Route path="logros" element={pagina(<Logros />)} />
             <Route path="*" element={pagina(<Pendiente titulo={tituloDeRuta(ubicacion.pathname)} />, 'f-pendiente')} />
           </Routes>
         </AnimatePresence>

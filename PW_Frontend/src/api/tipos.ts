@@ -1,4 +1,4 @@
-// Tipos del contrato de la API pública del portal (docs/API_CONTRACT.md, v2.5).
+// Tipos del contrato de la API pública del portal (docs/API_CONTRACT.md, v2.6).
 // Todos los campos llegan siempre; los opcionales valen null.
 
 /** Fecha ISO 8601 sin hora: "2026-10-08". */
@@ -444,6 +444,31 @@ export interface Docente {
 export interface Docentes {
   niveles: NivelDocente[]
   docentes: Docente[]
+}
+
+// GET /v1/logros
+export const CATEGORIAS_LOGRO = ['academico', 'deportivo', 'artistico', 'institucional'] as const
+export type CategoriaLogro = (typeof CATEGORIAS_LOGRO)[number]
+
+export interface Logro {
+  id: string
+  titulo: string
+  categoria: CategoriaLogro
+  /** Año del logro. null = sin año publicado. */
+  anio: number | null
+  /** Nivel o grupo: «Secundaria», «Banda sinfónica». */
+  nivel: string | null
+  descripcion: string | null
+  foto: Imagen | null
+  /** Se muestra arriba, entre los logros destacados. */
+  destacado: boolean
+}
+
+export interface Logros {
+  titulo: string
+  bajada: string | null
+  cifras: Cifra[]
+  logros: Logro[]
 }
 
 // Sobres de respuesta

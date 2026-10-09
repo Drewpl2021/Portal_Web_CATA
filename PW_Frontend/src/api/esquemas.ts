@@ -1,7 +1,7 @@
 // Validación en tiempo de ejecución de cada respuesta, según docs/API_CONTRACT.md.
 // Si la API cambia un tipo, la sección muestra su estado de error en vez de romper la página.
 import { z } from 'zod'
-import { CATEGORIAS_BANNER, ESTADOS_PROYECTO, ESTADOS_VACANTE, FORMATOS_ENLACE, PAGINAS_SOLICITUD, REDES, SECCIONES, TIPOS_AUDIO } from './tipos'
+import { CATEGORIAS_BANNER, CATEGORIAS_LOGRO, ESTADOS_PROYECTO, ESTADOS_VACANTE, FORMATOS_ENLACE, PAGINAS_SOLICITUD, REDES, SECCIONES, TIPOS_AUDIO } from './tipos'
 import type * as T from './tipos'
 
 const texto = z.string()
@@ -315,6 +315,26 @@ export const esquemaDocentes = z
   })
   .refine((d) => d.docentes.every((x) => d.niveles.some((n) => n.id === x.nivel)), 'Cada docente debe usar un nivel de la lista')
 
+export const esquemaLogros = z.object({
+  titulo: texto,
+  bajada: textoONulo,
+  cifras: esquemaCifras,
+  logros: z
+    .array(
+      z.object({
+        id: texto,
+        titulo: texto,
+        categoria: z.enum(CATEGORIAS_LOGRO),
+        anio: z.number().int().min(1900).max(2100).nullable(),
+        nivel: textoONulo,
+        descripcion: textoONulo,
+        foto: imagen.nullable(),
+        destacado: z.boolean(),
+      }),
+    )
+    .max(200),
+})
+
 export const sobre = <S extends z.ZodTypeAny>(data: S) => z.object({ data })
 export const sobrePaginado = <S extends z.ZodTypeAny>(data: S) => z.object({ data, meta: esquemaMeta })
 
@@ -342,3 +362,4 @@ coincide<Igual<z.infer<typeof esquemaProyecto>, T.Proyecto>>()
 coincide<Igual<z.infer<typeof esquemaNosotros>, T.Nosotros>>()
 coincide<Igual<z.infer<typeof esquemaPaginaContenido>, T.PaginaContenido>>()
 coincide<Igual<z.infer<typeof esquemaDocentes>, T.Docentes>>()
+coincide<Igual<z.infer<typeof esquemaLogros>, T.Logros>>()

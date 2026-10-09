@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "API pública del portal CATA 2.5 (docs/API_CONTRACT.md)",
+  "title": "API pública del portal CATA 2.6 (docs/API_CONTRACT.md)",
   "description": "Cuerpo de respuesta 200 de cada endpoint. Generado desde PW_Frontend/src/api/esquemas.ts; no editar a mano.",
   "definitions": {
     "GET /v1/sitio": {
@@ -3340,6 +3340,180 @@
           "required": [
             "niveles",
             "docentes"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "data"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "GET /v1/logros": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "titulo": {
+              "type": "string"
+            },
+            "bajada": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "cifras": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "valor": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "sufijo": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "etiqueta": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "valor",
+                  "sufijo",
+                  "etiqueta"
+                ],
+                "additionalProperties": false
+              },
+              "maxItems": 4
+            },
+            "logros": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "titulo": {
+                    "type": "string"
+                  },
+                  "categoria": {
+                    "type": "string",
+                    "enum": [
+                      "academico",
+                      "deportivo",
+                      "artistico",
+                      "institucional"
+                    ]
+                  },
+                  "anio": {
+                    "anyOf": [
+                      {
+                        "type": "integer",
+                        "minimum": 1900,
+                        "maximum": 2100
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "nivel": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "descripcion": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "foto": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "url": {
+                            "type": "string",
+                            "format": "uri",
+                            "pattern": "^https:\\/\\/"
+                          },
+                          "alt": {
+                            "type": "string"
+                          },
+                          "ancho": {
+                            "anyOf": [
+                              {
+                                "type": "integer",
+                                "exclusiveMinimum": 0
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "alto": {
+                            "anyOf": [
+                              {
+                                "type": "integer",
+                                "exclusiveMinimum": 0
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "url",
+                          "alt",
+                          "ancho",
+                          "alto"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "destacado": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "id",
+                  "titulo",
+                  "categoria",
+                  "anio",
+                  "nivel",
+                  "descripcion",
+                  "foto",
+                  "destacado"
+                ],
+                "additionalProperties": false
+              },
+              "maxItems": 200
+            }
+          },
+          "required": [
+            "titulo",
+            "bajada",
+            "cifras",
+            "logros"
           ],
           "additionalProperties": false
         }

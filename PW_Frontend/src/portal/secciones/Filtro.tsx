@@ -43,8 +43,8 @@ export default function Filtro({
   activa: string | null
   alElegir: (id: string | null) => void
   total: number
-  /** Texto del resultado, que se anuncia al cambiar: «2 proyectos en Tecnología». */
-  resultado: string
+  /** Texto del resultado, que se anuncia al cambiar: «2 proyectos en Tecnología». Sin él, no se muestra (p. ej. con dos filtros y un solo resultado). */
+  resultado?: string
 }) {
   const id = useId()
   return (
@@ -70,9 +70,11 @@ export default function Filtro({
           </ul>
         </div>
       )}
-      <p className="f-filtro__resultado" aria-live="polite">
-        {resultado}
-      </p>
+      {resultado !== undefined && (
+        <p className="f-filtro__resultado" aria-live="polite">
+          {resultado}
+        </p>
+      )}
     </>
   )
 }

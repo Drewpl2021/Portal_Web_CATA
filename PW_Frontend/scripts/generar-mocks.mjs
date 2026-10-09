@@ -1078,4 +1078,63 @@ escribir('largo', 'nosotros-pagina--instrumentos-de-gestion', { data: {
   ] }],
 } })
 
+
+// ── Logros ──
+// cata.edu.pe no publica ningún logro concreto (concurso, puesto o año). Lo que sí publica son reconocimientos
+// institucionales (Reseña Histórica): son los únicos que van en «tipico». Los logros encontrados en otras fuentes
+// están en LOGROS_POR_VERIFICAR, con su fuente, listos para pasar a «tipico» cuando el colegio los confirme.
+const logro = (id, titulo, categoria, anio, nivel, descripcion, destacado = false, foto = null) => ({ id, titulo, categoria, anio, nivel, descripcion, foto, destacado })
+const LOGROS_CONFIRMADOS = [
+  logro('rd-primaria', 'Reconocimiento del nivel primaria', 'institucional', 1971, 'Primaria', 'Resolución Directoral Regional N° 457, del 7 de mayo de 1971.'),
+  logro('rd-secundaria', 'Reconocimiento del nivel secundaria', 'institucional', 1982, 'Secundaria', 'R.D.Z. N° 104-DZE-J, del 25 de marzo de 1982.'),
+  logro('rd-inicial', 'Reconocimiento del nivel inicial', 'institucional', 1998, 'Inicial', 'R.D. N° 6954-DREP, del 3 de diciembre de 1998.'),
+  logro('rd-promotora', 'Reconocimiento de la promotora AE-CATA', 'institucional', 2000, null, 'La R.D. N° 4609-DREP-2000 reconoce a la Asociación Educativa Colegio Adventista Túpac Amaru como promotora de la institución.'),
+  logro('sgce', 'Equipo docente monitoreado por la certificadora SGCE', 'institucional', null, null, 'El equipo docente está capacitado y monitoreado por la certificadora de calidad internacional SGCE.'),
+  logro('upeu', 'Convenio con la Universidad Peruana Unión', 'institucional', null, null, 'Convenio de apoyo mutuo celebrado con la Universidad Peruana Unión.'),
+]
+// Fuentes: blog «Historia del Colegio Adventista Tupac Amaru» (luisroquequispe.wordpress.com, 2012), Diario Correo
+// (18/07/2011), 7Días (09/07/2025) y UGEL San Román (12/09/2022). Ver docs/PENDIENTES.md.
+const porVerificar = (fuente) => `Por verificar. Fuente: ${fuente}.`
+const BLOG = 'blog «Historia del Colegio Adventista Tupac Amaru» (2012)'
+const LOGROS_POR_VERIFICAR = [
+  logro('pv-banda-2025', '2.º lugar, categoría sinfónica, XXX Concurso Nacional de Bandas Escolares de Música (por verificar)', 'artistico', 2025, 'Banda sinfónica', porVerificar('7Días, 9 de julio de 2025; concurso en Concepción'), true),
+  logro('pv-banda-2011', 'Subcampeón del XIX Concurso Nacional de Bandas Sinfónicas Escolares (por verificar)', 'artistico', 2011, 'Banda sinfónica', porVerificar('Diario Correo, 18 de julio de 2011; concurso en Concepción, Huancayo'), true),
+  logro('pv-banda-2010', '1.er lugar, concurso de bandas sinfónicas de la UGEL San Román (por verificar)', 'artistico', 2010, 'Banda sinfónica', porVerificar(BLOG)),
+  logro('pv-banda-2009-esfa', '1.er puesto, concurso de bandas de la Escuela Superior de Formación Artística Puno (por verificar)', 'artistico', 2009, 'Banda', porVerificar(BLOG)),
+  logro('pv-banda-2009', '1.er puesto, concurso de bandas sinfónicas de la UGEL San Román (por verificar)', 'artistico', 2009, 'Banda sinfónica', porVerificar(BLOG)),
+  logro('pv-banda-2008', '1.er puesto, concurso de bandas sinfónicas de la UGEL San Román (por verificar)', 'artistico', 2008, 'Banda sinfónica', porVerificar(BLOG)),
+  logro('pv-banda-2007-ugel', '1.er puesto, concurso de bandas sinfónicas de la UGEL San Román (por verificar)', 'artistico', 2007, 'Banda sinfónica', porVerificar(BLOG)),
+  logro('pv-banda-2007-huancane', '1.er puesto, concurso de bandas sinfónicas en la provincia de Huancané (por verificar)', 'artistico', 2007, 'Banda sinfónica', porVerificar(BLOG)),
+  logro('pv-banda-2006', 'Medalla de honor al mérito como mejor banda, UGEL San Román (por verificar)', 'artistico', 2006, 'Banda', porVerificar(BLOG)),
+  logro('pv-eureka-2022', '3.er lugar, Feria Eureka 2022, etapa UGEL San Román, nivel primario (por verificar)', 'academico', 2022, 'Primaria', porVerificar('UGEL San Román, 12 de septiembre de 2022. Proyecto: jabón líquido bactericida a partir de matico')),
+  logro('pv-excelencia', '«Colegio Excelencia» de la UGEL Juliaca, en tres oportunidades (por verificar)', 'institucional', null, null, porVerificar(`${BLOG}. No indica los años`)),
+  logro('pv-fencyt', 'Participación en la Feria Escolar Nacional FENCYT desde 1996 (por verificar)', 'academico', null, 'Secundaria', porVerificar(`${BLOG}: «tres veces organizadora de la fase regional» y «tres veces participante en la final nacional en Lima y Pozuzo», sin años`)),
+]
+const logrosTipico = {
+  titulo: 'Logros',
+  bajada: 'Los profesores y estudiantes cataínos son los principales actores de la historia académica del colegio.',
+  // Cifras que salen de lo publicado: los años desde 1971 y los tres niveles reconocidos por resolución directoral.
+  cifras: [
+    { id: 'anios', valor: 55, sufijo: null, etiqueta: 'años de vida institucional' },
+    { id: 'niveles', valor: 3, sufijo: null, etiqueta: 'niveles reconocidos por resolución directoral' },
+  ],
+  logros: LOGROS_CONFIRMADOS,
+}
+escribir('tipico', 'logros', { data: logrosTipico })
+escribir('corto', 'logros', { data: { titulo: 'Logros', bajada: null, cifras: [], logros: [logro('l1', 'Reconocimiento', 'institucional', null, null, null)] } })
+escribir('largo', 'logros', { data: {
+  ...logrosTipico,
+  titulo: 'Logros y reconocimientos del Colegio Adventista Túpac Amaru',
+  bajada: textoLargo,
+  cifras: [...logrosTipico.cifras, { id: 'pv', valor: LOGROS_POR_VERIFICAR.length, sufijo: null, etiqueta: 'logros por verificar en esta vista de prueba, con un texto largo de etiqueta' }],
+  logros: [
+    ...LOGROS_POR_VERIFICAR.map((l, i) => (i < 2 ? { ...l, foto: img('noticia-1', 'Foto de prueba: la banda sinfónica en el concurso') } : l)),
+    ...LOGROS_CONFIRMADOS,
+    logro('largo-1', 'Logro de prueba con un título muy largo para comprobar que la tarjeta se acomoda en varias líneas sin cortarse', 'deportivo', 2024, 'Secundaria · Selección de vóley de damas de la Sede Central', textoLargo, false, img('nivel-secundaria', 'Foto de prueba')),
+  ],
+} })
+escribir('sin-foto', 'logros', { data: logrosTipico })
+escribir('alt-vacio', 'logros', { data: logrosTipico })
+escribir('vacio', 'logros', { data: { ...logrosTipico, bajada: null, cifras: [], logros: [] } })
+
 console.log('ok')

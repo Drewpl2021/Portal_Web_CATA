@@ -1,0 +1,82 @@
+{
+  "data": {
+    "titulo": "Logros",
+    "bajada": "Los profesores y estudiantes cataínos son los principales actores de la historia académica del colegio.",
+    "cifras": [
+      {
+        "id": "anios",
+        "valor": 55,
+        "sufijo": null,
+        "etiqueta": "años de vida institucional"
+      },
+      {
+        "id": "niveles",
+        "valor": 3,
+        "sufijo": null,
+        "etiqueta": "niveles reconocidos por resolución directoral"
+      }
+    ],
+    "logros": [
+      {
+        "id": "rd-primaria",
+        "titulo": "Reconocimiento del nivel primaria",
+        "categoria": "institucional",
+        "anio": 1971,
+        "nivel": "Primaria",
+        "descripcion": "Resolución Directoral Regional N° 457, del 7 de mayo de 1971.",
+        "foto": null,
+        "destacado": false
+      },
+      {
+        "id": "rd-secundaria",
+        "titulo": "Reconocimiento del nivel secundaria",
+        "categoria": "institucional",
+        "anio": 1982,
+        "nivel": "Secundaria",
+        "descripcion": "R.D.Z. N° 104-DZE-J, del 25 de marzo de 1982.",
+        "foto": null,
+        "destacado": false
+      },
+      {
+        "id": "rd-inicial",
+        "titulo": "Reconocimiento del nivel inicial",
+        "categoria": "institucional",
+        "anio": 1998,
+        "nivel": "Inicial",
+        "descripcion": "R.D. N° 6954-DREP, del 3 de diciembre de 1998.",
+        "foto": null,
+        "destacado": false
+      },
+      {
+        "id": "rd-promotora",
+        "titulo": "Reconocimiento de la promotora AE-CATA",
+        "categoria": "institucional",
+        "anio": 2000,
+        "nivel": null,
+        "descripcion": "La R.D. N° 4609-DREP-2000 reconoce a la Asociación Educativa Colegio Adventista Túpac Amaru como promotora de la institución.",
+        "foto": null,
+        "destacado": false
+      },
+      {
+        "id": "sgce",
+        "titulo": "Equipo docente monitoreado por la certificadora SGCE",
+        "categoria": "institucional",
+        "anio": null,
+        "nivel": null,
+        "descripcion": "El equipo docente está capacitado y monitoreado por la certificadora de calidad internacional SGCE.",
+        "foto": null,
+        "destacado": false
+      },
+      {
+        "id": "upeu",
+        "titulo": "Convenio con la Universidad Peruana Unión",
+        "categoria": "institucional",
+        "anio": null,
+        "nivel": null,
+        "descripcion": "Convenio de apoyo mutuo celebrado con la Universidad Peruana Unión.",
+        "foto": null,
+        "destacado": false
+      }
+    ]
+  }
+}

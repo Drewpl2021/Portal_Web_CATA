@@ -1,0 +1,233 @@
+{
+  "data": {
+    "titulo": "Logros y reconocimientos del Colegio Adventista Túpac Amaru",
+    "bajada": "Texto de prueba que llega al máximo recomendado del contrato para comprobar que el bloque se acomoda en varias líneas sin cortarse ni tapar a los demás elementos de la página, incluso en las pantallas más pequeñas.",
+    "cifras": [
+      {
+        "id": "anios",
+        "valor": 55,
+        "sufijo": null,
+        "etiqueta": "años de vida institucional"
+      },
+      {
+        "id": "niveles",
+        "valor": 3,
+        "sufijo": null,
+        "etiqueta": "niveles reconocidos por resolución directoral"
+      },
+      {
+        "id": "pv",
+        "valor": 12,
+        "sufijo": null,
+        "etiqueta": "logros por verificar en esta vista de prueba, con un texto largo de etiqueta"
+      }
+    ],
+    "logros": [
+      {
+        "id": "pv-banda-2025",
+        "titulo": "2.º lugar, categoría sinfónica, XXX Concurso Nacional de Bandas Escolares de Música (por verificar)",
+        "categoria": "artistico",
+        "anio": 2025,
+        "nivel": "Banda sinfónica",
+        "descripcion": "Por verificar. Fuente: 7Días, 9 de julio de 2025; concurso en Concepción.",
+        "foto": {
+          "url": "https://medios.prueba.cata.edu.pe/noticia-1.svg",
+          "alt": "Foto de prueba: la banda sinfónica en el concurso",
+          "ancho": 1200,
+          "alto": 800
+        },
+        "destacado": true
+      },
+      {
+        "id": "pv-banda-2011",
+        "titulo": "Subcampeón del XIX Concurso Nacional de Bandas Sinfónicas Escolares (por verificar)",
+        "categoria": "artistico",
+        "anio": 2011,
+        "nivel": "Banda sinfónica",
+        "descripcion": "Por verificar. Fuente: Diario Correo, 18 de julio de 2011; concurso en Concepción, Huancayo.",
+        "foto": {
+          "url": "https://medios.prueba.cata.edu.pe/noticia-1.svg",
+          "alt": "Foto de prueba: la banda sinfónica en el concurso",
+          "ancho": 1200,
+          "alto": 800
+        },
+        "destacado": true
+      },
+      {
+        "id": "pv-banda-2010",
+        "titulo": "1.er lugar, concurso de bandas sinfónicas de la UGEL San Román (por verificar)",
+        "categoria": "artistico",
+        "anio": 2010,
+        "nivel": "Banda sinfónica",
+        "descripcion": "Por verificar. Fuente: blog «Historia del Colegio Adventista Tupac Amaru» (2012).",
+        "foto": null,
+        "destacado": false
+      },
+      {
+        "id": "pv-banda-2009-esfa",
+        "titulo": "1.er puesto, concurso de bandas de la Escuela Superior de Formación Artística Puno (por verificar)",
+        "categoria": "artistico",
+        "anio": 2009,
+        "nivel": "Banda",
+        "descripcion": "Por verificar. Fuente: blog «Historia del Colegio Adventista Tupac Amaru» (2012).",
+        "foto": null,
+        "destacado": false
+      },
+      {
+        "id": "pv-banda-2009",
+        "titulo": "1.er puesto, concurso de bandas sinfónicas de la UGEL San Román (por verificar)",
+        "categoria": "artistico",
+        "anio": 2009,
+        "nivel": "Banda sinfónica",
+        "descripcion": "Por verificar. Fuente: blog «Historia del Colegio Adventista Tupac Amaru» (2012).",
+        "foto": null,
+        "destacado": false
+      },
+      {
+        "id": "pv-banda-2008",
+        "titulo": "1.er puesto, concurso de bandas sinfónicas de la UGEL San Román (por verificar)",
+        "categoria": "artistico",
+        "anio": 2008,
+        "nivel": "Banda sinfónica",
+        "descripcion": "Por verificar. Fuente: blog «Historia del Colegio Adventista Tupac Amaru» (2012).",
+        "foto": null,
+        "destacado": false
+      },
+      {
+        "id": "pv-banda-2007-ugel",
+        "titulo": "1.er puesto, concurso de bandas sinfónicas de la UGEL San Román (por verificar)",
+        "categoria": "artistico",
+        "anio": 2007,
+        "nivel": "Banda sinfónica",
+        "descripcion": "Por verificar. Fuente: blog «Historia del Colegio Adventista Tupac Amaru» (2012).",
+        "foto": null,
+        "destacado": false
+      },
+      {
+        "id": "pv-banda-2007-huancane",
+        "titulo": "1.er puesto, concurso de bandas sinfónicas en la provincia de Huancané (por verificar)",
+        "categoria": "artistico",
+        "anio": 2007,
+        "nivel": "Banda sinfónica",
+        "descripcion": "Por verificar. Fuente: blog «Historia del Colegio Adventista Tupac Amaru» (2012).",
+        "foto": null,
+        "destacado": false
+      },
+      {
+        "id": "pv-banda-2006",
+        "titulo": "Medalla de honor al mérito como mejor banda, UGEL San Román (por verificar)",
+        "categoria": "artistico",
+        "anio": 2006,
+        "nivel": "Banda",
+        "descripcion": "Por verificar. Fuente: blog «Historia del Colegio Adventista Tupac Amaru» (2012).",
+        "foto": null,
+        "destacado": false
+      },
+      {
+        "id": "pv-eureka-2022",
+        "titulo": "3.er lugar, Feria Eureka 2022, etapa UGEL San Román, nivel primario (por verificar)",
+        "categoria": "academico",
+        "anio": 2022,
+        "nivel": "Primaria",
+        "descripcion": "Por verificar. Fuente: UGEL San Román, 12 de septiembre de 2022. Proyecto: jabón líquido bactericida a partir de matico.",
+        "foto": null,
+        "destacado": false
+      },
+      {
+        "id": "pv-excelencia",
+        "titulo": "«Colegio Excelencia» de la UGEL Juliaca, en tres oportunidades (por verificar)",
+        "categoria": "institucional",
+        "anio": null,
+        "nivel": null,
+        "descripcion": "Por verificar. Fuente: blog «Historia del Colegio Adventista Tupac Amaru» (2012). No indica los años.",
+        "foto": null,
+        "destacado": false
+      },
+      {
+        "id": "pv-fencyt",
+        "titulo": "Participación en la Feria Escolar Nacional FENCYT desde 1996 (por verificar)",
+        "categoria": "academico",
+        "anio": null,
+        "nivel": "Secundaria",
+        "descripcion": "Por verificar. Fuente: blog «Historia del Colegio Adventista Tupac Amaru» (2012): «tres veces organizadora de la fase regional» y «tres veces participante en la final nacional en Lima y Pozuzo», sin años.",
+        "foto": null,
+        "destacado": false
+      },
+      {
+        "id": "rd-primaria",
+        "titulo": "Reconocimiento del nivel primaria",
+        "categoria": "institucional",
+        "anio": 1971,
+        "nivel": "Primaria",
+        "descripcion": "Resolución Directoral Regional N° 457, del 7 de mayo de 1971.",
+        "foto": null,
+        "destacado": false
+      },
+      {
+        "id": "rd-secundaria",
+        "titulo": "Reconocimiento del nivel secundaria",
+        "categoria": "institucional",
+        "anio": 1982,
+        "nivel": "Secundaria",
+        "descripcion": "R.D.Z. N° 104-DZE-J, del 25 de marzo de 1982.",
+        "foto": null,
+        "destacado": false
+      },
+      {
+        "id": "rd-inicial",
+        "titulo": "Reconocimiento del nivel inicial",
+        "categoria": "institucional",
+        "anio": 1998,
+        "nivel": "Inicial",
+        "descripcion": "R.D. N° 6954-DREP, del 3 de diciembre de 1998.",
+        "foto": null,
+        "destacado": false
+      },
+      {
+        "id": "rd-promotora",
+        "titulo": "Reconocimiento de la promotora AE-CATA",
+        "categoria": "institucional",
+        "anio": 2000,
+        "nivel": null,
+        "descripcion": "La R.D. N° 4609-DREP-2000 reconoce a la Asociación Educativa Colegio Adventista Túpac Amaru como promotora de la institución.",
+        "foto": null,
+        "destacado": false
+      },
+      {
+        "id": "sgce",
+        "titulo": "Equipo docente monitoreado por la certificadora SGCE",
+        "categoria": "institucional",
+        "anio": null,
+        "nivel": null,
+        "descripcion": "El equipo docente está capacitado y monitoreado por la certificadora de calidad internacional SGCE.",
+        "foto": null,
+        "destacado": false
+      },
+      {
+        "id": "upeu",
+        "titulo": "Convenio con la Universidad Peruana Unión",
+        "categoria": "institucional",
+        "anio": null,
+        "nivel": null,
+        "descripcion": "Convenio de apoyo mutuo celebrado con la Universidad Peruana Unión.",
+        "foto": null,
+        "destacado": false
+      },
+      {
+        "id": "largo-1",
+        "titulo": "Logro de prueba con un título muy largo para comprobar que la tarjeta se acomoda en varias líneas sin cortarse",
+        "categoria": "deportivo",
+        "anio": 2024,
+        "nivel": "Secundaria · Selección de vóley de damas de la Sede Central",
+        "descripcion": "Texto de prueba que llega al máximo recomendado del contrato para comprobar que el bloque se acomoda en varias líneas sin cortarse ni tapar a los demás elementos de la página, incluso en las pantallas más pequeñas.",
+        "foto": {
+          "url": "https://medios.prueba.cata.edu.pe/nivel-secundaria.svg",
+          "alt": "Foto de prueba",
+          "ancho": 1200,
+          "alto": 800
+        },
+        "destacado": false
+      }
+    ]
+  }
+}

@@ -14,6 +14,7 @@ import {
   esquemaContacto,
   esquemaDocentes,
   esquemaHero,
+  esquemaLogros,
   esquemaGrados,
   esquemaNiveles,
   esquemaNoticias,
@@ -44,6 +45,7 @@ import type {
   Docentes,
   GrupoGrados,
   Hero,
+  Logros,
   ListaNoticias,
   Niveles,
   QuienesSomos,
@@ -78,6 +80,7 @@ type Recurso =
   | 'nosotros'
   | 'nosotros-pagina'
   | 'docentes'
+  | 'logros'
 
 export class ErrorDatos extends Error {
   constructor(
@@ -271,4 +274,8 @@ export async function obtenerPaginaNosotros(slug: string): Promise<PaginaConteni
 
 export async function obtenerDocentes(): Promise<Docentes> {
   return (await leer('docentes', '/v1/docentes', sobre(esquemaDocentes))).data
+}
+
+export async function obtenerLogros(): Promise<Logros> {
+  return (await leer('logros', '/v1/logros', sobre(esquemaLogros))).data
 }

@@ -3058,7 +3058,8 @@ html.f-anim .f-cronograma:not([data-visto])::before {
   gap: 0.5rem;
 }
 
-.f-meta li {
+.f-meta li,
+.f-meta__item {
   padding: 0.25rem 0.625rem;
   border-radius: 0.25rem;
   background: var(--blanco);
@@ -4354,6 +4355,162 @@ html.f-anim .f-cronograma:not([data-visto])::before {
 
   .f-arbol__hijos > .f-arbol__item::after {
     left: -1rem;
+  }
+}
+
+/* ═════════ Logros ═════════ */
+
+/* Destacados: placas marinas inclinadas, con foto opcional a la derecha */
+.f-destacados-logros .f-titulo,
+.f-logros .f-titulo {
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.f-podio {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.f-podio__item {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  gap: 1.5rem;
+  padding: clamp(1.5rem, 3vw, 2.25rem) clamp(1.5rem, 3.5vw, 2.75rem);
+  color: var(--blanco);
+}
+
+.f-podio__item--foto {
+  grid-template-columns: minmax(0, 1fr) minmax(14rem, 0.7fr);
+}
+
+.f-podio__item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 0.25rem;
+  background: var(--marino);
+  box-shadow: inset 0 -0.375rem 0 var(--dorado);
+  transform: skewX(-4deg);
+}
+
+.f-podio__texto {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.f-podio__meta {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 800;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--dorado);
+}
+
+.f-podio__titulo {
+  font-stretch: 125%;
+  font-weight: 900;
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  line-height: 1.05;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.f-podio__descripcion {
+  max-width: 60ch;
+  color: var(--marino-lavado);
+}
+
+.f-podio__foto {
+  clip-path: polygon(8% 0, 100% 0, 92% 100%, 0 100%);
+}
+
+/* Lista con dos filtros */
+.f-filtros {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.f-logros__lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+  gap: 1.25rem;
+}
+
+.f-logro {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 0.125rem;
+  background: var(--celeste-lavado);
+}
+
+.f-logro::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 1.5rem;
+  z-index: 3;
+  width: 3.5rem;
+  height: 0.3125rem;
+  background: var(--dorado);
+}
+
+.f-logro .imagen {
+  clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%);
+  background: var(--blanco);
+}
+
+.f-logro__texto {
+  display: grid;
+  align-content: start;
+  gap: 0.75rem;
+  padding: 1.75rem 1.5rem 1.5rem;
+}
+
+.f-logro__cabeza {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.875rem;
+}
+
+.f-logro__anio {
+  font-stretch: 125%;
+  font-weight: 900;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.f-logro__titulo {
+  font-stretch: 112%;
+  font-weight: 850;
+  font-size: 1.15rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.f-logro__descripcion {
+  font-size: 0.97rem;
+  color: var(--marino-suave);
+}
+
+@media (max-width: 899px) {
+  .f-podio__item--foto {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .f-podio__item::before {
+    transform: skewX(-2deg);
   }
 }
 

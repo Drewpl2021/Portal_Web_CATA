@@ -11,6 +11,7 @@ import {
   esquemaContacto,
   esquemaDocentes,
   esquemaHero,
+  esquemaLogros,
   esquemaGrados,
   esquemaNiveles,
   esquemaNoticias,
@@ -47,6 +48,7 @@ const ESQUEMAS = {
   nosotros: sobre(esquemaNosotros),
   'nosotros-pagina': sobre(esquemaPaginaContenido),
   docentes: sobre(esquemaDocentes),
+  logros: sobre(esquemaLogros),
 } as const
 
 const archivos = import.meta.glob<unknown>('./mock/*/*.json', { eager: true, import: 'default' })
@@ -141,6 +143,19 @@ describe('el contrato rechaza respuestas inválidas', () => {
     const pagina = (peso: unknown) => ({ slug: 'x', titulo: 't', bajada: null, bloques: [{ tipo: 'enlaces', titulo: null, enlaces: [{ ...enlace, peso }] }] })
     expect(esquemaPaginaContenido.safeParse(pagina(0)).success).toBe(false)
     expect(esquemaPaginaContenido.safeParse(pagina(1_250_000)).success).toBe(true)
+  })
+
+  it('rechaza un logro de categoría desconocida o con un año imposible', () => {
+    const logro = { id: '1', titulo: 't', anio: 2011, nivel: null, descripcion: null, foto: null, destacado: false }
+    const base = { titulo: 'Logros', bajada: null, cifras: [] }
+    expect(esquemaLogros.safeParse({ ...base, logros: [{ ...logro, categoria: 'musical' }] }).success).toBe(false)
+    expect(esquemaLogros.safeParse({ ...base, logros: [{ ...logro, categoria: 'artistico', anio: 211 }] }).success).toBe(false)
+    expect(esquemaLogros.safeParse({ ...base, logros: [{ ...logro, categoria: 'artistico' }] }).success).toBe(true)
+  })
+
+  it('en típico, los logros publicados no son datos por verificar', () => {
+    const json = JSON.stringify(archivos['./mock/tipico/logros.json'])
+    expect(json).not.toMatch(/por verificar/i)
   })
 
   it('rechaza una red social desconocida', () => {

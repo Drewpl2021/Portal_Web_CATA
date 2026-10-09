@@ -5443,6 +5443,11 @@ html.f-anim [data-revelar='carriles']:not([data-visto]) > * {
     transform: translate(0, -50%);
     pointer-events: auto;
   }
+
+  /* Pasando de una red a otra dentro de la barra: sin animación, como los tooltips sucesivos */
+  .f-barra-redes[data-recorriendo] .f-barra-redes__nombre {
+    transition-duration: 0ms;
+  }
 }
 
 @keyframes f-red-entra {

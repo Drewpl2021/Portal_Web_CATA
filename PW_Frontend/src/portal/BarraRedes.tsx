@@ -116,6 +116,12 @@ export default function BarraRedes() {
   }, [tapa, bajando])
   // Escape recoge el nombre que se abrió al pasar el mouse (WCAG 1.4.13); se rearma al entrar o salir el mouse, o con el foco.
   const [recogida, setRecogida] = useState(false)
+  // Como en los tooltips: el primer nombre se desliza; al pasar a otra red sin salir de la barra,
+  // los siguientes aparecen al instante (recorrer la columna no debe sentirse lento).
+  // data-recorriendo se pone poco después del primer hover, cuando su transición ya corre (cambiar
+  // la duración no corta una transición en curso): así el primero se anima y los siguientes, que
+  // encuentran la marca puesta, aparecen al instante. Va directo al DOM, sin volver a renderizar.
+  const recorrido = useRef<number | null>(null)
   useEffect(() => {
     const alPulsar = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setRecogida(true)
@@ -135,7 +141,12 @@ export default function BarraRedes() {
       data-oculta={bajando || tapa === true || undefined}
       data-recogida={recogida || undefined}
       onPointerEnter={() => setRecogida(false)}
-      onPointerLeave={() => setRecogida(false)}
+      onPointerLeave={() => {
+        setRecogida(false)
+        if (recorrido.current !== null) window.clearTimeout(recorrido.current)
+        recorrido.current = null
+        barra.current?.removeAttribute('data-recorriendo')
+      }}
       onFocus={() => {
         setRecogida(false)
         setMostrada(true)
@@ -144,7 +155,17 @@ export default function BarraRedes() {
       <ul>
         {r.datos.redes.map((red, i) => (
           <li key={red.red} style={{ '--i': i, '--marca': MARCAS[red.red].color } as CSSProperties}>
-            <a className="f-barra-redes__enlace" href={red.url} target="_blank" rel="noreferrer">
+            <a
+              className="f-barra-redes__enlace"
+              href={red.url}
+              target="_blank"
+              rel="noreferrer"
+              onPointerEnter={(e) => {
+                if (e.pointerType !== 'mouse') return
+                if (recorrido.current !== null) return
+                recorrido.current = window.setTimeout(() => barra.current?.setAttribute('data-recorriendo', ''), 50)
+              }}
+            >
               <span className="f-barra-redes__nombre">
                 {MARCAS[red.red].nombre}
                 {red.aclaracion && (

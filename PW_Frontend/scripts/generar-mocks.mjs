@@ -321,8 +321,10 @@ escribir('largo', 'sedes', {
     mapaEmbedUrl: i === 7 ? null : MAPAS[sedes[i % 4].id],
   })),
 })
+// Seis, las que caben en la primera página: así `meta.total` coincide con lo que trae el archivo y el
+// ejemplo se puede cargar entero en el módulo (antes decía 23 y solo traía 6).
 escribir('largo', 'noticias', lista(
-  Array.from({ length: 23 }, (_, i) => ({
+  Array.from({ length: 6 }, (_, i) => ({
     id: `n${i + 1}`,
     slug: `noticia-larga-${i + 1}`,
     tipo: i % 2 ? 'noticia' : 'comunicado',

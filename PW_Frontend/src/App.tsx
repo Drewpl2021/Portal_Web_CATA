@@ -6,7 +6,8 @@ import Layout from './portal/Layout'
 export default function App() {
   return (
     <MotionConfig reducedMotion="user">
-      <BrowserRouter>
+      {/* basename: el sitio también funciona en una subcarpeta (base en vite.config.ts) */}
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <Routes>
           <Route path="/*" element={<Layout />} />
         </Routes>

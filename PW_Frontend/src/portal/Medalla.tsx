@@ -36,7 +36,7 @@ export default function Medalla({
           </textPath>
         </text>
       </svg>
-      <img src="/brand/emblema-cata-192.png" alt="" width="96" height="96" />
+      <img src={`${import.meta.env.BASE_URL}brand/emblema-cata-192.png`} alt="" width="96" height="96" />
     </div>
   )
 }

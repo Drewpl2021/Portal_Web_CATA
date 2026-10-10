@@ -10,7 +10,7 @@ import { useRutaInterna } from '../sitio/BaseRuta'
 import { ListaRedes } from './BarraRedes'
 
 const SALIDA = [0.23, 1, 0.32, 1] as const
-const EMBLEMA = '/brand/emblema-cata-192.png'
+const EMBLEMA = `${import.meta.env.BASE_URL}brand/emblema-cata-192.png`
 
 // Al terminar, Motion limpia el transform para no dejar capas ni bloques contenedores sueltos.
 const entra = (y: number, retraso = 0, duracion = 0.22) => ({

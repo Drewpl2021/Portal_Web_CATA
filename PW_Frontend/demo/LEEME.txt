@@ -1,0 +1,40 @@
+PORTAL WEB CATA - VERSIÓN DE DEMOSTRACIÓN
+==========================================
+
+Qué es
+------
+Es una demostración del nuevo portal web del Colegio Adventista Túpac Amaru,
+para presentar la propuesta. Funciona sola, con DATOS DE PRUEBA:
+
+- No está conectada al sistema del colegio (RR.HH.) ni a ninguna base de datos.
+  Nada de lo que se ve aquí se puede editar ni se guarda.
+- Las fotos marcadas «Foto de prueba», los docentes de prueba y los datos con
+  el aviso «por confirmar» NO son información real ni confirmada.
+- Algunas fotos y documentos se muestran desde la web actual del colegio
+  (cata.edu.pe) y otras páginas externas: hace falta conexión a internet.
+- El formulario «Solicitar información» solo abre WhatsApp; no envía datos a
+  ningún servidor.
+
+Cómo subirla por cPanel (GoDaddy)
+---------------------------------
+1. Entrar a cPanel > Administrador de archivos (File Manager).
+2. Abrir la carpeta public_html/PW (créela si no existe). Esta demo está
+   preparada para la dirección https://cata.edu.pe/PW/.
+3. Activar «Mostrar archivos ocultos» (Settings > Show Hidden Files), para
+   ver el archivo .htaccess.
+4. Subir portal-cata-demo.zip con «Cargar» (Upload).
+5. Clic derecho sobre el zip > «Extraer» (Extract), en esa misma carpeta.
+   Deben quedar index.html, .htaccess y las carpetas assets, brand y mock
+   directamente dentro de la carpeta, no dentro de otra subcarpeta.
+6. Borrar el zip y abrir https://cata.edu.pe/PW/ en el navegador.
+
+El archivo .htaccess es necesario: permite recargar la página o abrir un
+enlace directo (por ejemplo https://cata.edu.pe/PW/matricula) sin que
+aparezca un error 404.
+
+Importante: esta demo solo funciona en la carpeta /PW/ del dominio
+(https://cata.edu.pe/PW/). Todas sus direcciones internas empiezan con /PW/.
+Si se mueve a la raíz del dominio (https://cata.edu.pe/) o a otra carpeta,
+dará error 404 en los archivos: hay que cambiar la carpeta base (el valor
+«base», BASE_DEMO en vite.config.ts) y generarla de nuevo. Pedirlo al
+equipo del portal.

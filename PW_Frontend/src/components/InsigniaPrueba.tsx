@@ -12,11 +12,17 @@ const NOMBRES: Record<(typeof ESCENARIOS)[number], string> = {
   error: 'Error en todo',
 }
 
-// Visible siempre que la página use los JSON locales, para que nadie los confunda con contenido publicado.
+// En desarrollo, visible siempre que la página use los JSON locales, para que nadie los confunda con
+// contenido publicado. En la demo (npm run build:demo), que se usa para presentar la propuesta, se
+// oculta: confunde en una presentación. Ahí aparece solo con ?pruebas en la dirección. Las marcas
+// «Foto de prueba» y los avisos de datos por confirmar siguen a la vista en los dos casos.
+const EN_LA_DEMO = import.meta.env.MODE === 'demo'
+const visible = !EN_LA_DEMO || (typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('pruebas'))
+
 export default function InsigniaPrueba() {
   const id = useId()
   const [abierta, setAbierta] = useState(false)
-  if (origen.tipo !== 'local') return null
+  if (origen.tipo !== 'local' || !visible) return null
 
   const cambiar = (escenario: string) => {
     const url = new URL(window.location.href)

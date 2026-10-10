@@ -12,11 +12,9 @@
         "alto": 700
       },
       "imagenMovil": null,
-      "puntoFocal": {
-        "x": 50,
-        "y": 50
-      },
-      "alineacion": "izquierda",
+      "puntoFocal": null,
+      "textoEnImagen": false,
+      "ladoAccion": "izquierda",
       "accion": null
     }
   ]

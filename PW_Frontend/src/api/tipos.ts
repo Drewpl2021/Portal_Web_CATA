@@ -1,4 +1,4 @@
-// Tipos del contrato de la API pública del portal (docs/API_CONTRACT.md, v2.10).
+// Tipos del contrato de la API pública del portal (docs/API_CONTRACT.md, v2.12).
 // Todos los campos llegan siempre; los opcionales valen null.
 
 /** Fecha ISO 8601 sin hora: "2026-10-08". */
@@ -89,14 +89,16 @@ export interface Banner {
   categoria: CategoriaBanner
   titulo: string
   fecha: Fecha | null
-  /** Imagen de escritorio, apaisada (≈ 1900 × 700). */
+  /** Imagen de escritorio, apaisada, a todo el ancho. En 1900 × 700 se ve completa; si su proporción es otra, se recorta alrededor de puntoFocal. */
   imagen: Imagen
-  /** Imagen vertical opcional para móvil (4:5). Sin ella, se recorta la de escritorio en el punto focal. */
+  /** Imagen vertical opcional para móvil (4:5). Se usa en móvil solo si todos los banners la traen. */
   imagenMovil: Imagen | null
-  /** Punto focal en porcentaje (0–100) para recortar la imagen de escritorio. */
+  /** Punto que debe quedar a la vista si hay que recortar, en porcentaje (0–100). null = centro. */
   puntoFocal: { x: number; y: number } | null
-  /** Lado donde va el texto, para no tapar el texto propio de un afiche. */
-  alineacion: 'izquierda' | 'derecha'
+  /** true = el afiche ya trae escritos su título y su fecha: el portal no los repite a la vista (solo el botón). */
+  textoEnImagen: boolean
+  /** Esquina inferior donde va el botón, sobre el afiche: la que no tape su texto ni sus datos de contacto. */
+  ladoAccion: 'izquierda' | 'derecha'
   accion: AccionHero | null
 }
 

@@ -152,6 +152,11 @@ const grados = [
 
 const lista = (items, limite = 6) => ({ data: items.slice(0, limite), meta: { pagina: 1, limite, total: items.length } })
 
+// Los cinco afiches del colegio ya traen escritos su título (su alt lo repite): textoEnImagen true,
+// así el portal muestra solo el botón. Los escenarios corto y largo prueban también el texto a la vista.
+// ladoAccion: la esquina inferior libre de cada afiche, medida en sus píxeles (alto libre al pie, de 700):
+// matrículas izq. 72 (der. 41: WhatsApp); bienvenida izq. 47 (teléfono y web), der. decorativa;
+// líderes izq. 143; bus izq. 39 (redes), der. foto del bus. Son 1900 × 700: no se recortan (puntoFocal null).
 const banner = {
   matriculas: {
     id: 'b-matriculas',
@@ -160,8 +165,9 @@ const banner = {
     fecha: '2026-01-05',
     imagen: { url: UP + '2025/01/4.png', alt: 'Afiche: Matrículas abiertas 2026. Inicial, Primaria, Secundaria. Informes por WhatsApp al 986322833, www.cata.edu.pe. Un niño con el uniforme del colegio sonríe a la derecha.', ancho: 1900, alto: 700 },
     imagenMovil: null,
-    puntoFocal: { x: 82, y: 40 },
-    alineacion: 'derecha',
+    puntoFocal: null,
+    textoEnImagen: true,
+    ladoAccion: 'izquierda',
     accion: { etiqueta: 'Ver requisitos', destino: { tipo: 'pagina', ruta: '/matricula' } },
   },
   bienvenida: {
@@ -171,8 +177,9 @@ const banner = {
     fecha: '2026-03-02',
     imagen: { url: UP + '2025/01/5.png', alt: 'Afiche: Bienvenido de nuevo al colegio. El mejor lugar: CATA 2026. Infórmate al 986322833, www.cata.edu.pe. Síguenos en Facebook, Twitter, YouTube e Instagram.', ancho: 1900, alto: 700 },
     imagenMovil: null,
-    puntoFocal: { x: 30, y: 50 },
-    alineacion: 'derecha',
+    puntoFocal: null,
+    textoEnImagen: true,
+    ladoAccion: 'derecha',
     accion: { etiqueta: 'Contáctanos', destino: { tipo: 'pagina', ruta: '/contacto' } },
   },
   lideres: {
@@ -182,8 +189,9 @@ const banner = {
     fecha: null,
     imagen: { url: UP + '2025/01/2.png', alt: 'Afiche: Líderes que dejan huella. Cuatro estudiantes sonríen en el auditorio del colegio bajo el letrero Bienvenidos. Cita: «La obra de la verdadera educación consiste en desarrollar las facultades físicas, mentales y espirituales del estudiante, preparándolo para el gozo del servicio en este mundo y para un gozo superior en el mundo venidero.» Elena G. White. Facebook: colegiocatajuliaca.', ancho: 1900, alto: 700 },
     imagenMovil: null,
-    puntoFocal: { x: 58, y: 45 },
-    alineacion: 'derecha',
+    puntoFocal: null,
+    textoEnImagen: true,
+    ladoAccion: 'izquierda',
     accion: null,
   },
   anio: {
@@ -193,8 +201,9 @@ const banner = {
     fecha: '2026-01-05',
     imagen: { url: UP + '2025/12/Banner-CATA.png', alt: 'Banner con las letras CATA, el emblema del colegio, el año 2026 y la dirección www.cata.edu.pe.', ancho: 1900, alto: 700 },
     imagenMovil: null,
-    puntoFocal: { x: 50, y: 50 },
-    alineacion: 'izquierda',
+    puntoFocal: null,
+    textoEnImagen: true,
+    ladoAccion: 'izquierda',
     accion: null,
   },
   bus: {
@@ -204,22 +213,23 @@ const banner = {
     fecha: '2026-02-20',
     imagen: { url: UP + '2025/01/3.png', alt: 'Afiche: ¡Bienvenidos Cataínos! «Un líder cataíno en cada hogar». Bus escolar del colegio con el logo CATA y las palabras Integridad, Abnegación e Innovación. Íconos de Facebook, YouTube y WhatsApp.', ancho: 1900, alto: 700 },
     imagenMovil: null,
-    puntoFocal: { x: 70, y: 50 },
-    alineacion: 'izquierda',
+    puntoFocal: null,
+    textoEnImagen: true,
+    ladoAccion: 'derecha',
     accion: null,
   },
 }
 
 escribir('tipico', 'sitio', { data: sitio })
 escribir('tipico', 'banners', { data: [banner.matriculas, banner.bienvenida, banner.lideres] })
-escribir('corto', 'banners', { data: [{ ...banner.anio, titulo: 'CATA 2026', fecha: null }] })
+escribir('corto', 'banners', { data: [{ ...banner.anio, titulo: 'CATA 2026', fecha: null, textoEnImagen: false }] })
 escribir('largo', 'banners', { data: [
-  { ...banner.matriculas, titulo: 'Proceso de matrícula 2027: inscripciones abiertas para inicial, primaria y secundaria en todas las sedes', accion: { etiqueta: 'Conoce todos los requisitos de admisión', destino: { tipo: 'pagina', ruta: '/matricula' } } },
+  { ...banner.matriculas, textoEnImagen: false, titulo: 'Proceso de matrícula 2027: inscripciones abiertas para inicial, primaria y secundaria en todas las sedes', accion: { etiqueta: 'Conoce todos los requisitos de admisión', destino: { tipo: 'pagina', ruta: '/matricula' } } },
   banner.bienvenida,
   banner.lideres,
   banner.anio,
   banner.bus,
-  { id: 'b-prueba', categoria: 'evento', titulo: 'Imagen de prueba panorámica para comprobar el recorte con punto focal', fecha: '2026-09-28', imagen: img('panoramica', 'Foto de prueba: imagen panorámica'), imagenMovil: img('quienes-somos', 'Foto de prueba: versión vertical para móvil'), puntoFocal: { x: 50, y: 50 }, alineacion: 'izquierda', accion: { etiqueta: 'Ver más', destino: { tipo: 'url', url: 'https://cata.edu.pe/', externo: true } } },
+  { id: 'b-prueba', categoria: 'evento', titulo: 'Imagen de prueba panorámica, más ancha que la proporción del carrusel: se recorta en su punto focal', fecha: '2026-09-28', imagen: img('panoramica', 'Foto de prueba: imagen panorámica'), imagenMovil: img('quienes-somos', 'Foto de prueba: versión vertical para móvil'), puntoFocal: { x: 50, y: 40 }, textoEnImagen: false, ladoAccion: 'izquierda', accion: { etiqueta: 'Ver más', destino: { tipo: 'url', url: 'https://cata.edu.pe/', externo: true } } },
 ] })
 escribir('vacio', 'banners', { data: [] })
 escribir('alt-vacio', 'banners', { data: [banner.matriculas, banner.bienvenida, banner.lideres].map((b) => ({ ...b, imagen: { ...b.imagen, alt: '' } })) })

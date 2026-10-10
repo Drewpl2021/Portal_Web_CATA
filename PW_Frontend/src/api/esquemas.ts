@@ -69,7 +69,8 @@ export const esquemaBanners = z
       imagen,
       imagenMovil: imagen.nullable(),
       puntoFocal: z.object({ x: z.number().min(0).max(100), y: z.number().min(0).max(100) }).nullable(),
-      alineacion: z.enum(['izquierda', 'derecha']),
+      textoEnImagen: z.boolean(),
+      ladoAccion: z.enum(['izquierda', 'derecha']),
       accion: accion.nullable(),
     }),
   )

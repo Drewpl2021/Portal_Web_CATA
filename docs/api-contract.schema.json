@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "API pública del portal CATA 2.10 (docs/API_CONTRACT.md)",
+  "title": "API pública del portal CATA 2.12 (docs/API_CONTRACT.md)",
   "description": "Cuerpo de respuesta 200 de cada endpoint. Generado desde PW_Frontend/src/api/esquemas.ts; no editar a mano.",
   "definitions": {
     "GET /v1/sitio": {
@@ -345,7 +345,10 @@
                   }
                 ]
               },
-              "alineacion": {
+              "textoEnImagen": {
+                "type": "boolean"
+              },
+              "ladoAccion": {
                 "type": "string",
                 "enum": [
                   "izquierda",
@@ -450,7 +453,8 @@
               "imagen",
               "imagenMovil",
               "puntoFocal",
-              "alineacion",
+              "textoEnImagen",
+              "ladoAccion",
               "accion"
             ],
             "additionalProperties": false

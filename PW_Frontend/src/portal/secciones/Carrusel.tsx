@@ -46,9 +46,13 @@ const prefiereReducir = () =>
 
 function CarruselListo({ banners }: { banners: Banner[] }) {
   const varios = banners.length > 1
-  // Con «reducir movimiento» las diapositivas se funden en vez de deslizarse.
-  const [reducido] = useState(prefiereReducir)
-  const [vista, api] = useEmblaCarousel({ loop: varios, watchDrag: varios, duration: 28 }, reducido ? [Fade()] : [])
+  // La versión vertical para móvil se usa solo si todos los banners la traen: así todas las
+  // diapositivas tienen la misma proporción y el carrusel no cambia de alto al avanzar.
+  const conMovil = banners.every((b) => b.imagenMovil)
+  // Las diapositivas se funden (Fade) y la imagen entrante se asienta desde un poco más cerca
+  // (escala en portal.css): un cambio suave, con algo de profundidad. Con «reducir movimiento»
+  // queda solo el fundido.
+  const [vista, api] = useEmblaCarousel({ loop: varios, watchDrag: varios, duration: 30 }, [Fade()])
   const raiz = useRef<HTMLElement>(null)
 
   const [actual, setActual] = useState(0)
@@ -106,7 +110,7 @@ function CarruselListo({ banners }: { banners: Banner[] }) {
   return (
     <section
       ref={raiz}
-      className="f-carrusel"
+      className={['f-carrusel', varios && 'f-carrusel--varios', conMovil && 'f-carrusel--con-movil'].filter(Boolean).join(' ')}
       aria-roledescription="carrusel"
       aria-label="Novedades del colegio"
       onKeyDown={alTeclear}
@@ -120,45 +124,53 @@ function CarruselListo({ banners }: { banners: Banner[] }) {
         {/* Mientras avanza solo, los cambios no se anuncian; detenido, se anuncian con cortesía. */}
         <div className="f-carrusel__pista" aria-live={avanza ? 'off' : 'polite'}>
           {banners.map((b, i) => (
-            <Diapositiva key={b.id} banner={b} indice={i} total={banners.length} activa={i === actual} />
+            <Diapositiva key={b.id} banner={b} indice={i} total={banners.length} activa={i === actual} conMovil={conMovil} />
           ))}
         </div>
       </div>
 
+      {/* Desde 1100 px flotan sobre el afiche: flechas a los lados, indicadores y pausa abajo al
+          centro, en la franja libre del pie (medida en los afiches). Debajo, en una fila propia. */}
       {varios && (
         <div className="f-carrusel__controles">
-          <button type="button" className="f-carrusel__boton" onClick={() => api?.scrollPrev()} aria-label="Novedad anterior">
-            <ChevronLeft size={22} strokeWidth={2.5} aria-hidden="true" />
+          <button type="button" className="f-carrusel__boton f-carrusel__boton--anterior" onClick={() => api?.scrollPrev()} aria-label="Novedad anterior">
+            <ChevronLeft strokeWidth={2.5} aria-hidden="true" />
           </button>
-          <div className="f-carrusel__puntos">
-            {banners.map((b, i) => (
-              <button
-                key={b.id}
-                type="button"
-                className="f-punto"
-                onClick={() => ir(i)}
-                aria-label={`Ir a la novedad ${i + 1} de ${banners.length}: ${b.titulo}`}
-                aria-current={i === actual ? 'true' : undefined}
-              >
-                <span className="f-punto__pista" aria-hidden="true">
-                  {i === actual && (
-                    <span
-                      key={ciclo}
-                      className="f-punto__barra"
-                      data-corriendo={avanza || undefined}
-                      style={{ '--avance': `${AVANCE_MS}ms` } as CSSProperties}
-                    />
-                  )}
-                </span>
-              </button>
-            ))}
+          <div className="f-carrusel__indicadores">
+            <div className="f-carrusel__puntos">
+              {banners.map((b, i) => (
+                <button
+                  key={b.id}
+                  type="button"
+                  className="f-punto"
+                  onClick={() => ir(i)}
+                  aria-label={`Ir a la novedad ${i + 1} de ${banners.length}: ${b.titulo}`}
+                  aria-current={i === actual ? 'true' : undefined}
+                >
+                  <span className="f-punto__pista" aria-hidden="true">
+                    {i === actual && (
+                      <span
+                        key={ciclo}
+                        className="f-punto__barra"
+                        data-corriendo={avanza || undefined}
+                        style={{ '--avance': `${AVANCE_MS}ms` } as CSSProperties}
+                      />
+                    )}
+                  </span>
+                </button>
+              ))}
+            </div>
+            <button
+              type="button"
+              className="f-carrusel__pausa"
+              onClick={() => setReproduciendo((v) => !v)}
+              aria-label={reproduciendo ? 'Pausar' : 'Reproducir'}
+            >
+              {reproduciendo ? <Pause strokeWidth={2.5} aria-hidden="true" /> : <Play strokeWidth={2.5} aria-hidden="true" />}
+            </button>
           </div>
-          <button type="button" className="f-carrusel__boton" onClick={() => api?.scrollNext()} aria-label="Novedad siguiente">
-            <ChevronRight size={22} strokeWidth={2.5} aria-hidden="true" />
-          </button>
-          <button type="button" className="f-carrusel__pausa" onClick={() => setReproduciendo((v) => !v)}>
-            {reproduciendo ? <Pause size={18} strokeWidth={2.5} aria-hidden="true" /> : <Play size={18} strokeWidth={2.5} aria-hidden="true" />}
-            <span>{reproduciendo ? 'Pausar' : 'Reproducir'}</span>
+          <button type="button" className="f-carrusel__boton f-carrusel__boton--siguiente" onClick={() => api?.scrollNext()} aria-label="Novedad siguiente">
+            <ChevronRight strokeWidth={2.5} aria-hidden="true" />
           </button>
         </div>
       )}
@@ -166,8 +178,28 @@ function CarruselListo({ banners }: { banners: Banner[] }) {
   )
 }
 
-function Diapositiva({ banner: b, indice, total, activa }: { banner: Banner; indice: number; total: number; activa: boolean }) {
+// El afiche va a todo el ancho, pegado a la cabecera. En su proporción (1900 × 700) se ve completo;
+// si trae otra, se recorta alrededor de su punto focal. Encima solo va el botón, con fondo sólido, en
+// la esquina inferior que indique ladoAccion (la que no tapa el texto del afiche). Si el banner no
+// trae su texto escrito (textoEnImagen: false), el título y la fecha van en una placa marina sólida
+// junto al botón. Por debajo de 1100 px el afiche es demasiado bajo para poner algo encima: el texto
+// y el botón pasan debajo, sobre el mismo marino de la sección siguiente.
+function Diapositiva({
+  banner: b,
+  indice,
+  total,
+  activa,
+  conMovil,
+}: {
+  banner: Banner
+  indice: number
+  total: number
+  activa: boolean
+  conMovil: boolean
+}) {
+  const movil = conMovil ? b.imagenMovil : null
   const foco = b.puntoFocal ?? { x: 50, y: 50 }
+  const conTexto = !b.textoEnImagen
   return (
     <div
       className={`f-banner${activa ? ' f-banner--activa' : ''}`}
@@ -177,46 +209,56 @@ function Diapositiva({ banner: b, indice, total, activa }: { banner: Banner; ind
       // Las novedades que no se ven no reciben foco ni se leen.
       {...(activa ? {} : { inert: '' })}
     >
-      <img
-        className={`f-banner__imagen${b.imagenMovil ? ' f-banner__imagen--escritorio' : ''}`}
-        src={b.imagen.url}
-        alt={b.imagen.alt}
-        width={b.imagen.ancho ?? undefined}
-        height={b.imagen.alto ?? undefined}
-        style={{ objectPosition: `${foco.x}% ${foco.y}%` }}
-        loading={indice === 0 ? 'eager' : 'lazy'}
-        decoding="async"
-      />
-      {b.imagenMovil && (
+      {/* Encabezado de la diapositiva para el lector de pantalla, aunque no se vea (el alt repite el afiche) */}
+      {!conTexto && <h2 className="visually-hidden">{b.titulo}</h2>}
+      <div className="f-banner__marco">
         <img
-          className="f-banner__imagen f-banner__imagen--movil"
-          src={b.imagenMovil.url}
-          alt={b.imagenMovil.alt}
-          width={b.imagenMovil.ancho ?? undefined}
-          height={b.imagenMovil.alto ?? undefined}
-          loading="lazy"
+          className={`f-banner__imagen${movil ? ' f-banner__imagen--escritorio' : ''}`}
+          src={b.imagen.url}
+          alt={b.imagen.alt}
+          width={b.imagen.ancho ?? undefined}
+          height={b.imagen.alto ?? undefined}
+          style={{ objectPosition: `${foco.x}% ${foco.y}%` }}
+          loading={indice === 0 ? 'eager' : 'lazy'}
           decoding="async"
         />
-      )}
-      <div className={`f-banner__placa f-banner__placa--${b.alineacion}`}>
-        <h2 className="f-banner__titulo">{b.titulo}</h2>
-        <p className="f-banner__meta">
-          {CATEGORIA[b.categoria]}
-          {b.fecha && (
-            <>
-              <span aria-hidden="true"> · </span>
-              <time dateTime={b.fecha}>{fechaLegible(b.fecha)}</time>
-            </>
-          )}
-        </p>
-        {b.accion && (
-          <EnlaceDestino destino={b.accion.destino} className="f-boton f-boton--oro f-banner__accion">
-            <span className="f-boton__texto">
-              {b.accion.etiqueta} <ArrowRight size={18} strokeWidth={2.5} aria-hidden="true" />
-            </span>
-          </EnlaceDestino>
+        {movil && (
+          <img
+            className="f-banner__imagen f-banner__imagen--movil"
+            src={movil.url}
+            alt={movil.alt}
+            width={movil.ancho ?? undefined}
+            height={movil.alto ?? undefined}
+            loading="lazy"
+            decoding="async"
+          />
         )}
       </div>
+      {(conTexto || b.accion) && (
+        <div className={`f-banner__capa f-banner__capa--${b.ladoAccion}`}>
+          {conTexto && (
+            <div className="f-banner__placa">
+              <h2 className="f-banner__titulo">{b.titulo}</h2>
+              <p className="f-banner__meta">
+                {CATEGORIA[b.categoria]}
+                {b.fecha && (
+                  <>
+                    <span aria-hidden="true"> · </span>
+                    <time dateTime={b.fecha}>{fechaLegible(b.fecha)}</time>
+                  </>
+                )}
+              </p>
+            </div>
+          )}
+          {b.accion && (
+            <EnlaceDestino destino={b.accion.destino} className="f-boton f-boton--oro f-banner__accion">
+              <span className="f-boton__texto">
+                {b.accion.etiqueta} <ArrowRight strokeWidth={2.5} aria-hidden="true" />
+              </span>
+            </EnlaceDestino>
+          )}
+        </div>
+      )}
     </div>
   )
 }

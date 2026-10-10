@@ -12,11 +12,9 @@
         "alto": 700
       },
       "imagenMovil": null,
-      "puntoFocal": {
-        "x": 82,
-        "y": 40
-      },
-      "alineacion": "derecha",
+      "puntoFocal": null,
+      "textoEnImagen": false,
+      "ladoAccion": "izquierda",
       "accion": {
         "etiqueta": "Conoce todos los requisitos de admisión",
         "destino": {
@@ -37,11 +35,9 @@
         "alto": 700
       },
       "imagenMovil": null,
-      "puntoFocal": {
-        "x": 30,
-        "y": 50
-      },
-      "alineacion": "derecha",
+      "puntoFocal": null,
+      "textoEnImagen": true,
+      "ladoAccion": "derecha",
       "accion": {
         "etiqueta": "Contáctanos",
         "destino": {
@@ -62,11 +58,9 @@
         "alto": 700
       },
       "imagenMovil": null,
-      "puntoFocal": {
-        "x": 58,
-        "y": 45
-      },
-      "alineacion": "derecha",
+      "puntoFocal": null,
+      "textoEnImagen": true,
+      "ladoAccion": "izquierda",
       "accion": null
     },
     {
@@ -81,11 +75,9 @@
         "alto": 700
       },
       "imagenMovil": null,
-      "puntoFocal": {
-        "x": 50,
-        "y": 50
-      },
-      "alineacion": "izquierda",
+      "puntoFocal": null,
+      "textoEnImagen": true,
+      "ladoAccion": "izquierda",
       "accion": null
     },
     {
@@ -100,17 +92,15 @@
         "alto": 700
       },
       "imagenMovil": null,
-      "puntoFocal": {
-        "x": 70,
-        "y": 50
-      },
-      "alineacion": "izquierda",
+      "puntoFocal": null,
+      "textoEnImagen": true,
+      "ladoAccion": "derecha",
       "accion": null
     },
     {
       "id": "b-prueba",
       "categoria": "evento",
-      "titulo": "Imagen de prueba panorámica para comprobar el recorte con punto focal",
+      "titulo": "Imagen de prueba panorámica, más ancha que la proporción del carrusel: se recorta en su punto focal",
       "fecha": "2026-09-28",
       "imagen": {
         "url": "https://medios.prueba.cata.edu.pe/panoramica.svg",
@@ -126,9 +116,10 @@
       },
       "puntoFocal": {
         "x": 50,
-        "y": 50
+        "y": 40
       },
-      "alineacion": "izquierda",
+      "textoEnImagen": false,
+      "ladoAccion": "izquierda",
       "accion": {
         "etiqueta": "Ver más",
         "destino": {

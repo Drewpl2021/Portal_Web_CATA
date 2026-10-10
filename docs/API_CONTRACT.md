@@ -1,6 +1,10 @@
 # Contrato de la API pública del portal CATA
 
-**Versión del contrato:** 2.10 · **Fecha:** 2026-10-09
+**Versión del contrato:** 2.12 · **Fecha:** 2026-10-09
+
+**Cambios de la 2.12:** el carrusel de Inicio (§3.2) se rediseña: el afiche va a todo el ancho, sin marco ni franja, y el botón, las flechas y los indicadores flotan sobre él, en las zonas bajas libres del afiche. Vuelve `puntoFocal` (para afiches de otra proporción, que se recortan) y se agrega `ladoAccion`, la esquina inferior donde va el botón: la que no tape el texto ni los datos de contacto del afiche.
+
+**Cambios de la 2.11:** en `GET /v1/portada/banners` (§3.2), el portal ya no pone nada encima del afiche: lo muestra **completo, sin recortes**, y el título, la fecha y el botón van en una franja marina debajo. Por eso se eliminan `puntoFocal` y `alineacion`, y se agrega `textoEnImagen`: si el afiche ya trae escritos su título y su fecha, el portal no los repite y en la franja deja solo el botón.
 
 **Cambios de la 2.10:** las redes sociales pasan de `GET /v1/contacto` a `GET /v1/sitio` (§3.1), porque ahora se muestran en todas las páginas (barra flotante, menú móvil y pie) además de en Contacto. `RedSocial` suma la red `"whatsapp"` y el campo `aclaracion`, para marcar a la vista una dirección aún no confirmada. Hasta 8 redes, sin repetir ninguna. `GET /v1/contacto` ya no tiene `redes`.
 
@@ -135,7 +139,7 @@ Toda imagen se envía como objeto, nunca como texto suelto:
 | Foto de nivel | 3:2 | 1200 × 800 |
 | Foto de Quiénes somos | 4:5 (vertical) | 1200 × 1500 |
 | Foto de noticia | 3:2 | 1200 × 800 |
-| Banner del carrusel, escritorio | ≈ 1900:700, recortada en el punto focal | 1920 × 708 |
+| Banner del carrusel, escritorio | 1900:700 a todo el ancho; otra proporción se recorta en el punto focal | 1920 × 708 |
 | Banner del carrusel, móvil | 4:5 | 1080 × 1350 |
 | Recorte de la cabecera de Matrícula | ≈ 1:2, PNG transparente, completo | 500 × 1000 |
 
@@ -262,12 +266,13 @@ El carrusel de la primera sección de Inicio, justo debajo de la cabecera y a to
 |---|---|---|---|---|
 | `id` | string | no | — | |
 | `categoria` | `"aviso"` \| `"matricula"` \| `"evento"` \| `"noticia"` | no | — | Se muestra junto a la fecha, debajo del título. |
-| `titulo` | string | no | 80 | Texto real del banner. El portal lo escribe sobre la imagen, en una placa marina de contraste garantizado. |
+| `titulo` | string | no | 80 | Texto real del banner. Con `textoEnImagen: false`, el portal lo muestra en una placa marina sólida junto al botón. Siempre nombra la diapositiva en los indicadores y para los lectores de pantalla. |
 | `fecha` | fecha \| null | sí | — | `AAAA-MM-DD`. Opcional. |
-| `imagen` | `Imagen` | no | — | Imagen de escritorio, apaisada. Proporción en pantalla ≈ 1900:700. Mínimo 1920 × 708 px. |
-| `imagenMovil` | `Imagen` \| null | sí | — | Imagen vertical para pantallas de hasta 700 px de ancho, proporción 4:5, mínimo 1080 × 1350 px. Si es `null`, el portal recorta la de escritorio alrededor de `puntoFocal`. |
-| `puntoFocal` | `{ x, y }` \| null | sí | — | Punto que debe quedar a la vista al recortar, en porcentaje (0 a 100) desde la esquina superior izquierda. `null` = centro (50, 50). |
-| `alineacion` | `"izquierda"` \| `"derecha"` | no | — | Lado donde el portal pone el título y el botón. Elijan el lado que **no** tape el texto propio de la imagen. |
+| `imagen` | `Imagen` | no | — | Imagen de escritorio, a todo el ancho de la pantalla. Proporción **1900:700**, mínimo 1920 × 708 px: en esa proporción se ve completa. Si trae otra, se recorta alrededor de `puntoFocal`. **Diseño del afiche:** dejen libre de texto y datos el pie (el 10 % inferior del alto): ahí van el botón, a un lado, y los indicadores, al centro. |
+| `imagenMovil` | `Imagen` \| null | sí | — | Imagen vertical para pantallas de hasta 700 px de ancho, proporción 4:5, mínimo 1080 × 1350 px. El portal la usa **solo si todos los banners la traen** (así el carrusel no cambia de alto); si no, en móvil muestra completa la de escritorio, que en un celular se ve pequeña. Recomendada. |
+| `puntoFocal` | `{ x, y }` \| null | sí | — | Punto que debe quedar a la vista si hay que recortar la imagen (porque su proporción no es 1900:700), en porcentaje (0 a 100) desde la esquina superior izquierda. `null` = centro. |
+| `textoEnImagen` | boolean | no | — | `true` si el afiche ya trae escritos su título y su fecha: el portal no los repite y sobre el afiche pone solo el botón (el título sigue disponible para lectores de pantalla). `false`: título, categoría y fecha van en una placa marina sólida junto al botón. |
+| `ladoAccion` | `"izquierda"` \| `"derecha"` | no | — | Esquina inferior del afiche donde va el botón. Elijan la que **no** tape el texto ni los datos de contacto del afiche (por ejemplo, si el WhatsApp está abajo a la izquierda, `"derecha"`). |
 | `accion` | `AccionHero` \| null | sí | — | Botón opcional (`etiqueta` + `destino`). |
 
 **Afiches con texto incluido (requisito WCAG 2.2 AA):** si la imagen es un afiche o banner que trae texto escrito (títulos, fechas, teléfonos, direcciones, redes), su `alt` debe **repetir todo ese texto**, no solo describir la imagen. Ejemplo: «Afiche: Matrículas abiertas 2026. Inicial, Primaria, Secundaria. Informes por WhatsApp al 986322833, www.cata.edu.pe.» Lo mismo vale para `imagenMovil`. En este caso el `alt` puede pasar de los 150 caracteres recomendados.
@@ -275,6 +280,8 @@ El carrusel de la primera sección de Inicio, justo debajo de la cabecera y a to
 **Comportamiento del carrusel en el portal**, para que el colegio sepa qué esperar:
 - 0 banners: la sección desaparece sin dejar hueco.
 - 1 banner: se muestra fijo, sin flechas, indicadores ni avance.
+- Desde 1100 px de ancho, el botón flota en la esquina inferior de `ladoAccion`, las flechas a los lados (centradas en el alto) y los indicadores con la pausa abajo al centro. Su tamaño crece con el ancho de la pantalla, igual que el afiche, así ocupan siempre la misma franja del pie.
+- Por debajo de 1100 px el afiche es demasiado bajo para poner algo encima: el texto, el botón y los controles van debajo de él.
 - 2 o más: avanza solo cada 6 segundos, con flechas, indicadores y un botón visible de Pausar/Reproducir. Se detiene con el mouse encima, con el foco del teclado dentro o con la pestaña oculta. Funciona con las flechas del teclado y con arrastre táctil. Para quien tiene activado «reducir movimiento», no avanza solo y cambia con un fundido.
 
 ```json
@@ -287,8 +294,9 @@ El carrusel de la primera sección de Inicio, justo debajo de la cabecera y a to
       "fecha": "2026-01-05",
       "imagen": { "url": "https://cata.edu.pe/wp-content/uploads/2025/01/4.png", "alt": "Afiche: Matrículas abiertas 2026. Inicial, Primaria, Secundaria. Informes por WhatsApp al 986322833, www.cata.edu.pe. Un niño con el uniforme del colegio sonríe a la derecha.", "ancho": 1900, "alto": 700 },
       "imagenMovil": null,
-      "puntoFocal": { "x": 82, "y": 40 },
-      "alineacion": "derecha",
+      "puntoFocal": null,
+      "textoEnImagen": true,
+      "ladoAccion": "izquierda",
       "accion": { "etiqueta": "Ver requisitos", "destino": { "tipo": "pagina", "ruta": "/matricula" } }
     }
   ]

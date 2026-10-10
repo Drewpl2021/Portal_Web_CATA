@@ -242,11 +242,18 @@ describe('el contrato rechaza respuestas inválidas', () => {
     expect(esquemaHero.safeParse(cabecera).success).toBe(false)
   })
 
-  it('rechaza un banner con punto focal fuera de 0–100 o sin alineación válida', () => {
+  it('banner: valida textoEnImagen, ladoAccion y el punto focal (0–100)', () => {
     const imagen = { url: 'https://x.pe/a.jpg', alt: '', ancho: null, alto: null }
-    const base = { id: '1', categoria: 'aviso', titulo: 't', fecha: null, imagen, imagenMovil: null, accion: null }
-    expect(esquemaBanners.safeParse([{ ...base, puntoFocal: { x: 120, y: 50 }, alineacion: 'izquierda' }]).success).toBe(false)
-    expect(esquemaBanners.safeParse([{ ...base, puntoFocal: null, alineacion: 'centro' }]).success).toBe(false)
-    expect(esquemaBanners.safeParse([{ ...base, puntoFocal: null, alineacion: 'derecha' }]).success).toBe(true)
+    const base = { id: '1', categoria: 'aviso', titulo: 't', fecha: null, imagen, imagenMovil: null, accion: null, puntoFocal: null, textoEnImagen: true, ladoAccion: 'izquierda' }
+    expect(esquemaBanners.safeParse([base]).success).toBe(true)
+    expect(esquemaBanners.safeParse([{ ...base, textoEnImagen: 'sí' }]).success).toBe(false)
+    expect(esquemaBanners.safeParse([{ ...base, ladoAccion: 'centro' }]).success).toBe(false)
+    expect(esquemaBanners.safeParse([{ ...base, puntoFocal: { x: 120, y: 50 } }]).success).toBe(false)
+    expect(esquemaBanners.safeParse([{ ...base, puntoFocal: { x: 30, y: 60 } }]).success).toBe(true)
+  })
+
+  it('en típico, los afiches que traen su título escrito lo marcan con textoEnImagen', () => {
+    const banners = (archivos['./mock/tipico/banners.json'] as { data: { textoEnImagen: boolean }[] }).data
+    expect(banners.every((b) => b.textoEnImagen)).toBe(true)
   })
 })

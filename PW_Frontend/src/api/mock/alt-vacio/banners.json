@@ -12,11 +12,9 @@
         "alto": 700
       },
       "imagenMovil": null,
-      "puntoFocal": {
-        "x": 82,
-        "y": 40
-      },
-      "alineacion": "derecha",
+      "puntoFocal": null,
+      "textoEnImagen": true,
+      "ladoAccion": "izquierda",
       "accion": {
         "etiqueta": "Ver requisitos",
         "destino": {
@@ -37,11 +35,9 @@
         "alto": 700
       },
       "imagenMovil": null,
-      "puntoFocal": {
-        "x": 30,
-        "y": 50
-      },
-      "alineacion": "derecha",
+      "puntoFocal": null,
+      "textoEnImagen": true,
+      "ladoAccion": "derecha",
       "accion": {
         "etiqueta": "Contáctanos",
         "destino": {
@@ -62,11 +58,9 @@
         "alto": 700
       },
       "imagenMovil": null,
-      "puntoFocal": {
-        "x": 58,
-        "y": 45
-      },
-      "alineacion": "derecha",
+      "puntoFocal": null,
+      "textoEnImagen": true,
+      "ladoAccion": "izquierda",
       "accion": null
     }
   ]

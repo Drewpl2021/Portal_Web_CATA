@@ -71,7 +71,11 @@ const htaccess = (base: string): Plugin => {
 // caída de la API no deje el sitio sin menú, se descarga al compilar (sin API, se toma el de los datos de
 // prueba), se valida y entra en el paquete como valor inicial (virtual:navegacion-inicial); en el
 // navegador se vuelve a pedir y reemplaza a este. Así ningún texto queda escrito a mano en el código.
-const navegacionInicial = (apiUrl: string): Plugin => {
+//
+// NAVEGACION_URL (opcional, sin prefijo VITE_: no entra al paquete) toma la navegación de otra API con el
+// mismo contrato, por ejemplo una local, cuando la de producción todavía no responde al compilar. El
+// paquete sigue leyendo VITE_API_URL en el navegador; solo cambia el valor inicial del menú.
+const navegacionInicial = (apiUrl: string, desde = apiUrl): Plugin => {
   const ID = 'virtual:navegacion-inicial'
   // Convención de Vite para los módulos virtuales: el id resuelto empieza con el carácter nulo.
   const RESUELTO = `${String.fromCharCode(0)}${ID}`
@@ -84,9 +88,9 @@ const navegacionInicial = (apiUrl: string): Plugin => {
     },
     async buildStart() {
       let cuerpo: unknown
-      const origen = apiUrl ? `${apiUrl}/v1/navegacion` : 'src/api/mock/tipico/navegacion.json'
+      const origen = desde ? `${desde}/v1/navegacion` : 'src/api/mock/tipico/navegacion.json'
       try {
-        if (apiUrl) {
+        if (desde) {
           const res = await fetch(origen, { headers: { Accept: 'application/json' } })
           if (!res.ok) throw new Error(`respondió ${res.status}`)
           cuerpo = await res.json()
@@ -106,6 +110,8 @@ const navegacionInicial = (apiUrl: string): Plugin => {
     load: (id) => (id === RESUELTO ? `export default ${JSON.stringify(navegacion)}` : null),
   }
 }
+
+const sinBarra = (url?: string) => (url ?? '').trim().replace(/\/+$/, '')
 
 export default defineConfig(({ command, mode, isPreview }) => {
   const env = loadEnv(mode, process.cwd(), 'VITE_')
@@ -136,7 +142,7 @@ export default defineConfig(({ command, mode, isPreview }) => {
 
   return {
     base,
-    plugins: [react(), htaccess(base), navegacionInicial(demo ? '' : (env.VITE_API_URL ?? '').trim().replace(/\/+$/, '')), ...(demo ? [] : [sinMediosDePrueba()])],
+    plugins: [react(), htaccess(base), navegacionInicial(demo ? '' : sinBarra(env.VITE_API_URL), demo ? '' : sinBarra(process.env.NAVEGACION_URL) || sinBarra(env.VITE_API_URL)), ...(demo ? [] : [sinMediosDePrueba()])],
     // La demo siempre usa los datos locales, aunque el entorno tenga VITE_API_URL.
     define: demo ? { 'import.meta.env.VITE_API_URL': JSON.stringify('') } : {},
   }

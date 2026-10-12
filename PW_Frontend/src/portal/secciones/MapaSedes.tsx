@@ -4,6 +4,7 @@ import { obtenerSedes } from '../../api/servicios'
 import type { Sede } from '../../api/tipos'
 import { Cargando, ErrorCarga } from '../../components/EstadoSeccion'
 import { useRecurso } from '../../hooks/useRecurso'
+import { useMapa } from '../../sitio/mapa'
 import { enlaceMapa } from '../../lib/formato'
 import { Revelar } from '../movimiento'
 
@@ -12,6 +13,7 @@ const proveedor = (url: string) => (url.includes('openstreetmap.org') ? 'OpenStr
 // Mapa de las sedes. No se carga nada de terceros hasta que la persona pulsa «Mostrar el mapa»:
 // así la página no pierde velocidad y Google no recibe la visita sin permiso.
 export default function MapaSedes({ seleccion, alElegir }: { seleccion: string | null; alElegir: (id: string) => void }) {
+  const { titulos } = useMapa()
   const r = useRecurso('sedes', obtenerSedes)
 
   return (
@@ -19,7 +21,7 @@ export default function MapaSedes({ seleccion, alElegir }: { seleccion: string |
       <div className="f-seccion__interior">
         <h2 className="f-titulo f-titulo--blanco" id="f-mapa-titulo">
           <Revelar como="span" efecto="titulo" className="f-barrido">
-            Ubícanos
+            {titulos.contacto.mapa}
           </Revelar>
         </h2>
         {r.estado === 'cargando' && <Cargando que="el mapa" lineas={3} conTitulo={false} className="f-cargando--claro" />}

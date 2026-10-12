@@ -44,7 +44,7 @@
   - **Personal Docente** (nueva, en Institución tras Administración y en el mega menú): docentes por nivel con filtro en la dirección; datos de prueba
   - **Administración** organizada en cinco secciones por área
   - las siete subpáginas de Institución con los textos de cata.edu.pe: Misión y Visión, Reseña Histórica (más una línea de tiempo con sus fechas), Emblema, Himno (letra en texto, partitura y oficio de 1987 con su transcripción), Consejo Directivo (mensaje del presidente y 8 integrantes con foto), Administración (15 personas con foto) y Organigrama
-  - layout reutilizable `PaginaContenido` con bloques: la segunda tanda solo necesita añadir su grupo a `GRUPOS_NOSOTROS_PUBLICADOS` (`src/sitio/mapa.ts`) y sus datos
+  - layout reutilizable `PaginaContenido` con bloques: desde la 2.13, una subpágina nueva solo necesita estar en un grupo de `/v1/navegacion` y tener sus bloques; no hace falta tocar el código
 - **Barra de redes sociales** (en todas las páginas): las redes llegan de `/v1/sitio`, así el colegio las agrega o quita sin tocar el código. Desde 1360 px de ancho, una barra vertical fija en el borde derecho, en el margen que deja la página (no tapa contenido ni controles); al pasar el mouse o con el foco, cada placa muestra el nombre de la red; se retira al bajar y vuelve al subir. Por debajo de 1360 px no hay nada flotante: las redes están en el menú móvil y, en todos los anchos, en el pie («Síguenos»). Cada placa usa el color de su marca con el icono blanco a 4.5:1 o más (YouTube, WhatsApp e Instagram, oscurecidos lo justo).
 - **Foco nunca tapado:** si un elemento enfocado con el teclado queda en parte bajo la cabecera fija, la página se desplaza para mostrarlo.
 - **Componentes compartidos por las páginas internas:** `CabeceraPagina`, `IndicePagina` y `SolicitudInformacion`. El formulario recibe la página (`matricula` o `contacto`) y usa su propio mensaje de WhatsApp.
@@ -57,9 +57,10 @@
   - las composiciones se agrupan en contenedores de proporción fija
 - **Eliminadas:** las propuestas A, B y C y la portada antigua «Tablero de ruta».
 
-### Contrato de la API (versión 2.12)
+### Contrato de la API (versión 2.13)
 
 - `docs/API_CONTRACT.md` y su JSON Schema `docs/api-contract.schema.json` (`npm run esquema`).
+- **Cambios de la 2.13:** el menú, los grupos de Nosotros, los títulos y botones de cada página, el cierre de Inicio y las etiquetas del formulario salen de la API (`/v1/navegacion`, `/v1/portada/cierre`, `etiquetas` en `/v1/solicitud`, `nombreEnLineas` en `/v1/sitio`). El build descarga `/v1/navegacion` y se detiene si no responde.
 - **Cambios de la 2.12:** carrusel a todo el ancho con controles flotantes; vuelve `puntoFocal` y se agrega `ladoAccion` (esquina del botón).
 - **Cambios de la 2.11:** banners sin `puntoFocal` ni `alineacion` (el afiche se ve completo y el texto va debajo); nuevo `textoEnImagen`.
 - **Cambios de la 2.10:** las redes pasan de `/v1/contacto` a `/v1/sitio`; `RedSocial` suma `"whatsapp"` y `aclaracion`.
@@ -202,7 +203,7 @@
    - **PDF accesibles:** todos los PDF que publique el colegio deben tener texto seleccionable, no estar escaneados como imagen. Si alguno está escaneado, hay que pedir la versión original o pasarle OCR antes de publicarlo
    - **Fotos de personas:** las de Consejo Directivo y Administración son las que publica cata.edu.pe; confirmar que el personal está vigente (las de Administración son de 2024)
 6. **Prueba manual con teclado y lector de pantalla** (NVDA en Windows, TalkBack en Android), sobre todo del carrusel, las pestañas de Matrícula, el mapa de Contacto, el filtro de Proyectos, el himno y el organigrama de Nosotros, el formulario y el foco al cambiar de página. axe no cubre todo WCAG 2.2 AA ni puede medir el contraste del texto sobre imágenes; por eso el texto del carrusel va sobre una placa marina sólida.
-7. **Entregar el contrato 2.12 al equipo de RR.HH.** Enviar `docs/API_CONTRACT.md` y `docs/api-contract.schema.json`. Los endpoints de Matrícula, Contacto, Proyectos, Nosotros (con su página de contenido por bloques), Personal Docente y Logros, los campos nuevos de `Sede` y los mensajes por página de `/v1/solicitud` son una propuesta del portal: hay que acordarlos con RR.HH. antes de que los implementen. Además, acordar:
+7. **Entregar el contrato 2.13 al equipo de RR.HH.** Enviar `docs/API_CONTRACT.md` y `docs/api-contract.schema.json`. Los endpoints de Matrícula, Contacto, Proyectos, Nosotros (con su página de contenido por bloques), Personal Docente y Logros, los campos nuevos de `Sede` y los mensajes por página de `/v1/solicitud` son una propuesta del portal: hay que acordarlos con RR.HH. antes de que los implementen. Además, acordar:
    - la URL base
    - el dominio de pruebas para CORS
    - quién avisa cuando el contrato cambie
@@ -218,4 +219,4 @@
 
 ## Siguiente paso
 
-El mapa del sitio está completo. **Enviar al colegio `docs/SOLICITUD_AL_COLEGIO.md`**: reúne, en lenguaje no técnico y con casillas para marcar, todo lo que el colegio debe corregir en cata.edu.pe (empezando por retirar el PDF de Innova Schools), entregar (fotos, documentos, autorizaciones), confirmar (logros, licenciamiento, matrícula, himno, organigrama, docentes, Cubicol…) y aprobar. En paralelo, entregar el contrato 2.12 a RR.HH. (pendiente 7). Cuando el colegio responda, actualizar los datos y marcar aquí lo resuelto.
+El mapa del sitio está completo. **Enviar al colegio `docs/SOLICITUD_AL_COLEGIO.md`**: reúne, en lenguaje no técnico y con casillas para marcar, todo lo que el colegio debe corregir en cata.edu.pe (empezando por retirar el PDF de Innova Schools), entregar (fotos, documentos, autorizaciones), confirmar (logros, licenciamiento, matrícula, himno, organigrama, docentes, Cubicol…) y aprobar. En paralelo, entregar el contrato 2.13 a RR.HH. (pendiente 7). Cuando el colegio responda, actualizar los datos y marcar aquí lo resuelto.

@@ -26,6 +26,8 @@ import {
   esquemaQuienesSomos,
   esquemaSedes,
   esquemaSitio,
+  esquemaNavegacion,
+  esquemaCierre,
   sobre,
   sobrePaginado,
 } from './esquemas'
@@ -58,6 +60,8 @@ const ESQUEMAS = {
   'propuesta-niveles': sobre(esquemaNivelesPropuesta),
   'propuesta-academia': sobre(esquemaAcademia),
   'propuesta-plataformas': sobre(esquemaPlataformas),
+  navegacion: sobre(esquemaNavegacion),
+  cierre: sobre(esquemaCierre),
 } as const
 
 const archivos = import.meta.glob<unknown>('./mock/*/*.json', { eager: true, import: 'default' })
@@ -119,7 +123,8 @@ describe('el contrato rechaza respuestas inválidas', () => {
   })
 
   it('rechaza dos mensajes de WhatsApp para la misma página', () => {
-    const base = { titulo: 't', texto: null, mensajeWhatsapp: 'm' }
+    const etiquetas = { nombre: 'n', grado: 'g', gradoEjemplo: 'e', gradoElegir: 'x', boton: 'b' }
+    const base = { titulo: 't', texto: null, mensajeWhatsapp: 'm', etiquetas }
     const m = { pagina: 'contacto', mensaje: 'x' }
     expect(esquemaSolicitud.safeParse({ ...base, mensajesPorPagina: [m, m] }).success).toBe(false)
     expect(esquemaSolicitud.safeParse({ ...base, mensajesPorPagina: [m] }).success).toBe(true)

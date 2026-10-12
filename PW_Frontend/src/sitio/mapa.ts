@@ -1,5 +1,11 @@
-// Mapa del sitio, igual al de la web actual (cata.edu.pe).
-// Las rutas son estructura del portal y viven en el código; el contenido de cada página llega de la API.
+// Mapa del sitio (contrato 2.13, GET /v1/navegacion).
+// Las rutas son estructura del portal y viven en el código; los nombres del menú, los grupos de Nosotros
+// y los títulos de cada página llegan de la API, como el resto del contenido.
+import { useMemo } from 'react'
+import navegacionInicial from 'virtual:navegacion-inicial'
+import { obtenerNavegacion } from '../api/servicios'
+import type { Navegacion, PaginaMenu, TitulosPaginas } from '../api/tipos'
+import { useRecurso } from '../hooks/useRecurso'
 
 export interface EnlaceMenu {
   etiqueta: string
@@ -7,76 +13,89 @@ export interface EnlaceMenu {
 }
 
 export interface GrupoMenu {
+  id: string
   titulo: string
   enlaces: EnlaceMenu[]
 }
 
 export interface ItemMenu {
+  pagina: PaginaMenu
   etiqueta: string
   ruta: string
-  /** Solo Nosotros: se abre como mega menú en tres columnas. */
+  /** Solo Nosotros, y solo si tiene grupos: se abre como mega menú. */
   grupos?: GrupoMenu[]
 }
 
-export const NOSOTROS: GrupoMenu[] = [
-  {
-    titulo: 'Institución',
-    enlaces: [
-      { etiqueta: 'Misión y Visión', ruta: '/nosotros/mision-y-vision' },
-      { etiqueta: 'Reseña Histórica', ruta: '/nosotros/resena-historica' },
-      { etiqueta: 'Emblema', ruta: '/nosotros/emblema' },
-      { etiqueta: 'Himno', ruta: '/nosotros/himno' },
-      { etiqueta: 'Consejo Directivo', ruta: '/nosotros/consejo-directivo' },
-      { etiqueta: 'Administración', ruta: '/nosotros/administracion' },
-      { etiqueta: 'Personal Docente', ruta: '/nosotros/personal-docente' },
-      { etiqueta: 'Organigrama', ruta: '/nosotros/organigrama' },
-    ],
-  },
-  {
-    titulo: 'Gestión',
-    enlaces: [
-      { etiqueta: 'Procesos', ruta: '/nosotros/procesos' },
-      { etiqueta: 'Planificación Anual', ruta: '/nosotros/planificacion-anual' },
-      { etiqueta: 'Planes de Mejora', ruta: '/nosotros/planes-de-mejora' },
-      { etiqueta: 'Evaluación Docente', ruta: '/nosotros/evaluacion-docente' },
-      { etiqueta: 'Acreditación', ruta: '/nosotros/acreditacion' },
-    ],
-  },
-  {
-    titulo: 'Documentos',
-    enlaces: [
-      { etiqueta: 'Instrumentos de Gestión', ruta: '/nosotros/instrumentos-de-gestion' },
-      { etiqueta: 'Manual de Identidad', ruta: '/nosotros/manual-de-identidad' },
-      { etiqueta: 'Planificador Inteligente EVA', ruta: '/nosotros/planificador-eva' },
-    ],
-  },
-]
+/** La ruta de cada página del menú: el contrato solo dice qué página es. */
+export const RUTAS: Record<PaginaMenu, string> = {
+  inicio: '/',
+  proyectos: '/proyectos',
+  nosotros: '/nosotros',
+  'propuesta-educativa': '/propuesta-educativa',
+  matricula: '/matricula',
+  logros: '/logros',
+  contacto: '/contacto',
+}
+
+export const rutaDeSubpagina = (slug: string) => `/nosotros/${slug}`
+
+export interface Mapa {
+  menu: ItemMenu[]
+  nosotros: GrupoMenu[]
+  pie: Navegacion['pie']
+  titulos: TitulosPaginas
+  /** El nombre de una página en el menú; vacío si el colegio la sacó del menú. */
+  etiquetaDe: (pagina: PaginaMenu) => string
+  /** false mientras la navegación de la compilación espera la del navegador: aún puede cambiar. */
+  definitivo: boolean
+}
+
+export function armarMapa(n: Navegacion, definitivo: boolean): Mapa {
+  const nosotros: GrupoMenu[] = n.nosotros.map((g) => ({
+    id: g.id,
+    titulo: g.titulo,
+    enlaces: g.paginas.map((p) => ({ etiqueta: p.etiqueta, ruta: rutaDeSubpagina(p.slug) })),
+  }))
+  const menu: ItemMenu[] = n.menu.map((m) => ({
+    pagina: m.pagina,
+    etiqueta: m.etiqueta,
+    ruta: RUTAS[m.pagina],
+    ...(m.pagina === 'nosotros' && nosotros.length > 0 ? { grupos: nosotros } : {}),
+  }))
+  return {
+    menu,
+    nosotros,
+    pie: n.pie,
+    titulos: n.titulos,
+    etiquetaDe: (pagina) => n.menu.find((m) => m.pagina === pagina)?.etiqueta ?? '',
+    definitivo,
+  }
+}
+
+const INICIAL = armarMapa(navegacionInicial, false)
 
 /**
- * Grupos de Nosotros cuyas subpáginas se muestran con el layout de contenido. Un grupo que no esté aquí
- * lleva a la página «en construcción».
+ * El mapa del sitio. Empieza con la navegación que se descargó al compilar (así el menú nunca falta,
+ * aunque la API no responda) y la reemplaza por la del navegador en cuanto llega: un cambio hecho en
+ * el panel se ve sin volver a compilar.
  */
-export const GRUPOS_NOSOTROS_PUBLICADOS = ['Institución', 'Gestión', 'Documentos']
-
-export const subpaginaPublicada = (ruta: string) =>
-  NOSOTROS.some((g) => GRUPOS_NOSOTROS_PUBLICADOS.includes(g.titulo) && g.enlaces.some((e) => e.ruta === ruta))
-
-export const MENU: ItemMenu[] = [
-  { etiqueta: 'Inicio', ruta: '/' },
-  { etiqueta: 'Proyectos', ruta: '/proyectos' },
-  { etiqueta: 'Nosotros', ruta: '/nosotros', grupos: NOSOTROS },
-  { etiqueta: 'Propuesta Educativa', ruta: '/propuesta-educativa' },
-  { etiqueta: 'Matrícula', ruta: '/matricula' },
-  { etiqueta: 'Logros', ruta: '/logros' },
-  { etiqueta: 'Contacto', ruta: '/contacto' },
-]
+export function useMapa(): Mapa {
+  const r = useRecurso('navegacion', obtenerNavegacion)
+  const datos = r.estado === 'listo' ? r.datos : null
+  const terminado = r.estado !== 'cargando'
+  return useMemo(() => (datos ? armarMapa(datos, true) : terminado ? { ...INICIAL, definitivo: true } : INICIAL), [datos, terminado])
+}
 
 /** Una ruta está activa si es la misma o una subruta (Nosotros). Inicio solo coincide exacto. */
 export const estaActiva = (ruta: string, actual: string, inicio = '/') =>
   ruta === '/' ? actual === inicio : actual === ruta || actual.startsWith(`${ruta}/`)
 
-/** Título de una página a partir de su ruta relativa (sin la base de la propuesta). */
-export function tituloDeRuta(ruta: string): string {
-  const todos = [...MENU, ...NOSOTROS.flatMap((g) => g.enlaces)]
-  return todos.find((e) => e.ruta === ruta)?.etiqueta ?? 'Página no encontrada'
+/** El número de sedes en letras, para los títulos con {n}: «Cuatro sedes en San Román». */
+const NUMEROS = ['cero', 'una', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho']
+
+export function conNumero(plantilla: string, n: number): string {
+  const palabra = NUMEROS[n] ?? String(n)
+  return plantilla.replace(/\{n\}/g, (_, posicion: number) =>
+    posicion === 0 ? palabra.charAt(0).toUpperCase() + palabra.slice(1) : palabra,
+  )
 }

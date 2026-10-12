@@ -1,7 +1,8 @@
-import { rmSync, writeFileSync } from 'node:fs'
+import { readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { defineConfig, loadEnv, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
+import { esquemaNavegacion, sobre } from './src/api/esquemas'
 
 // Modo de build que genera a propósito una versión con los datos de prueba (npm run build:demo).
 const MODO_DEMO = 'demo'
@@ -66,6 +67,46 @@ const htaccess = (base: string): Plugin => {
   }
 }
 
+// Contrato 2.13: el menú, los grupos de Nosotros y los títulos llegan de GET /v1/navegacion. Para que una
+// caída de la API no deje el sitio sin menú, se descarga al compilar (sin API, se toma el de los datos de
+// prueba), se valida y entra en el paquete como valor inicial (virtual:navegacion-inicial); en el
+// navegador se vuelve a pedir y reemplaza a este. Así ningún texto queda escrito a mano en el código.
+const navegacionInicial = (apiUrl: string): Plugin => {
+  const ID = 'virtual:navegacion-inicial'
+  // Convención de Vite para los módulos virtuales: el id resuelto empieza con el carácter nulo.
+  const RESUELTO = `${String.fromCharCode(0)}${ID}`
+  let raiz = ''
+  let navegacion: unknown = null
+  return {
+    name: 'navegacion-inicial',
+    configResolved(c) {
+      raiz = c.root
+    },
+    async buildStart() {
+      let cuerpo: unknown
+      const origen = apiUrl ? `${apiUrl}/v1/navegacion` : 'src/api/mock/tipico/navegacion.json'
+      try {
+        if (apiUrl) {
+          const res = await fetch(origen, { headers: { Accept: 'application/json' } })
+          if (!res.ok) throw new Error(`respondió ${res.status}`)
+          cuerpo = await res.json()
+        } else {
+          cuerpo = JSON.parse(readFileSync(resolve(raiz, origen), 'utf8'))
+        }
+      } catch (e) {
+        throw new Error(`No se pudo leer la navegación del sitio (${origen}): ${(e as Error).message}. Sin ella el sitio quedaría sin menú.`)
+      }
+      const r = sobre(esquemaNavegacion).safeParse(cuerpo)
+      if (!r.success) {
+        throw new Error(`La navegación de ${origen} no cumple el contrato: ${JSON.stringify(r.error.issues.slice(0, 3))}`)
+      }
+      navegacion = r.data.data
+    },
+    resolveId: (id) => (id === ID ? RESUELTO : null),
+    load: (id) => (id === RESUELTO ? `export default ${JSON.stringify(navegacion)}` : null),
+  }
+}
+
 export default defineConfig(({ command, mode, isPreview }) => {
   const env = loadEnv(mode, process.cwd(), 'VITE_')
   const demo = mode === MODO_DEMO
@@ -95,7 +136,7 @@ export default defineConfig(({ command, mode, isPreview }) => {
 
   return {
     base,
-    plugins: [react(), htaccess(base), ...(demo ? [] : [sinMediosDePrueba()])],
+    plugins: [react(), htaccess(base), navegacionInicial(demo ? '' : (env.VITE_API_URL ?? '').trim().replace(/\/+$/, '')), ...(demo ? [] : [sinMediosDePrueba()])],
     // La demo siempre usa los datos locales, aunque el entorno tenga VITE_API_URL.
     define: demo ? { 'import.meta.env.VITE_API_URL': JSON.stringify('') } : {},
   }

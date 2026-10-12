@@ -8,3 +8,9 @@ interface ImportMetaEnv {
   /** Retraso simulado en milisegundos para los datos de prueba. */
   readonly VITE_MOCK_RETRASO?: string
 }
+
+// La navegación del sitio que se descargó al compilar (vite.config.ts): el valor inicial del menú.
+declare module 'virtual:navegacion-inicial' {
+  const navegacion: import('./api/tipos').Navegacion
+  export default navegacion
+}

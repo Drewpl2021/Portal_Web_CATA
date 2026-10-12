@@ -4,41 +4,42 @@ import { ArrowDown, ArrowRight } from 'lucide-react'
 import { obtenerNosotros, obtenerSitio } from '../../api/servicios'
 import { useRecurso } from '../../hooks/useRecurso'
 import { useRutaInterna } from '../../sitio/BaseRuta'
-import { NOSOTROS } from '../../sitio/mapa'
+import { useMapa } from '../../sitio/mapa'
 import { Revelar } from '../movimiento'
 import CabeceraPagina, { CabeceraCargando, CabeceraError } from '../secciones/CabeceraPagina'
 import Cierre from '../secciones/Cierre'
 
-// Índice de Nosotros: las tres columnas del mega menú (Institución, Gestión, Documentos), cada una con
-// sus subpáginas. Las columnas y rutas son estructura del sitio (mapa.ts); las frases llegan de la API.
+// Índice de Nosotros: las columnas del mega menú (Institución, Gestión, Documentos), cada una con sus
+// subpáginas. Las columnas llegan de /v1/navegacion y las frases de /v1/nosotros.
 export default function Nosotros() {
   const r = useRecurso('nosotros', obtenerNosotros)
   const sitio = useRecurso('sitio', obtenerSitio)
   const interna = useRutaInterna()
+  const { nosotros, titulos, etiquetaDe } = useMapa()
   const resumenDe = (ruta: string) =>
     r.estado === 'listo' ? (r.datos.paginas.find((p) => `/nosotros/${p.slug}` === ruta)?.resumen ?? null) : null
 
   return (
     <>
       {r.estado === 'cargando' && <CabeceraCargando />}
-      {r.estado === 'error' && <CabeceraError titulo="Nosotros" reintentar={r.reintentar} />}
+      {r.estado === 'error' && <CabeceraError titulo={etiquetaDe('nosotros')} reintentar={r.reintentar} />}
       {r.estado === 'listo' && (
         <CabeceraPagina
           idTitulo="f-nosotros-titulo"
           titulo={r.datos.titulo}
           bajada={r.datos.bajada}
-          acciones={[{ href: '#secciones', etiqueta: 'Conócenos', icono: <ArrowDown size={20} strokeWidth={2.5} aria-hidden="true" />, estilo: 'oro' }]}
-          placa={sitio.estado === 'listo' ? { rotulo: 'Desde', valor: String(sitio.datos.anioFundacion) } : null}
+          acciones={[{ href: '#secciones', etiqueta: titulos.nosotros.accion, icono: <ArrowDown size={20} strokeWidth={2.5} aria-hidden="true" />, estilo: 'oro' }]}
+          placa={sitio.estado === 'listo' ? { rotulo: titulos.nosotros.rotuloAnio, valor: String(sitio.datos.anioFundacion) } : null}
           figura={null}
         />
       )}
 
-      {/* Las columnas no dependen de la API: se muestran aunque las frases no carguen. */}
+      {/* Las columnas no esperan a las frases: se muestran aunque /v1/nosotros no cargue. */}
       <section className="f-seccion f-nosotros" id="secciones" aria-label="Secciones de Nosotros">
         <div className="f-seccion__interior">
           <Revelar efecto="escalonado" className="f-nosotros__columnas">
-            {NOSOTROS.map((g, i) => (
-              <section key={g.titulo} className="f-columna" aria-labelledby={`f-columna-${i}`} style={{ '--i': i } as CSSProperties}>
+            {nosotros.map((g, i) => (
+              <section key={g.id} className="f-columna" aria-labelledby={`f-columna-${i}`} style={{ '--i': i } as CSSProperties}>
                 <div className="f-columna__cabeza">
                   <span className="f-ficha__numero f-columna__numero" aria-hidden="true">
                     {String(i + 1).padStart(2, '0')}

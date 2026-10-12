@@ -1,4 +1,4 @@
-// Tipos del contrato de la API pública del portal (docs/API_CONTRACT.md, v2.12).
+// Tipos del contrato de la API pública del portal (docs/API_CONTRACT.md, v2.13).
 // Todos los campos llegan siempre; los opcionales valen null.
 
 /** Fecha ISO 8601 sin hora: "2026-10-08". */
@@ -45,7 +45,10 @@ export interface Direccion {
 // GET /v1/sitio
 export interface Sitio {
   nombre: string
+  /** La sigla de la marca en la cabecera: «CATA». */
   nombreCorto: string
+  /** Cómo se parte el nombre junto a la sigla, en una o dos líneas: «Colegio Adventista», «Túpac Amaru». */
+  nombreEnLineas: string[]
   subtitulo: string | null
   ciudad: string
   anioFundacion: number
@@ -305,6 +308,20 @@ export interface SolicitudInformacion {
   mensajeWhatsapp: string
   /** Un mensaje por página, como máximo uno para cada una. */
   mensajesPorPagina: MensajePagina[]
+  etiquetas: EtiquetasSolicitud
+}
+
+export interface EtiquetasSolicitud {
+  /** «Tu nombre». */
+  nombre: string
+  /** «Grado de interés». */
+  grado: string
+  /** Ejemplo del campo cuando el grado se escribe a mano: «Por ejemplo: 1.er grado de primaria». */
+  gradoEjemplo: string
+  /** Primera opción del selector: «Elige un grado». */
+  gradoElegir: string
+  /** «Escribir por WhatsApp». */
+  boton: string
 }
 
 // GET /v1/contacto
@@ -562,6 +579,97 @@ export interface Plataforma {
   funciones: { titulo: string; texto: string }[]
   enlace: Enlace | null
   aclaracion: string | null
+}
+
+// GET /v1/navegacion: el menú, los grupos de Nosotros, el pie y los títulos de cada página
+export const PAGINAS_MENU = ['inicio', 'proyectos', 'nosotros', 'propuesta-educativa', 'matricula', 'logros', 'contacto'] as const
+export type PaginaMenu = (typeof PAGINAS_MENU)[number]
+
+export interface ItemMenu {
+  /** Vocabulario cerrado: la ruta la pone el portal. */
+  pagina: PaginaMenu
+  etiqueta: string
+}
+
+export interface SubpaginaMenu {
+  slug: string
+  etiqueta: string
+}
+
+export interface GrupoNosotros {
+  id: string
+  /** «Institución». */
+  titulo: string
+  paginas: SubpaginaMenu[]
+}
+
+export interface Navegacion {
+  /** En el orden del menú. La página que no está no sale en el menú, pero su dirección sigue funcionando. */
+  menu: ItemMenu[]
+  /** Las columnas de Nosotros: mega menú, índice de Nosotros y pie. Una subpágina que no está aquí no se abre. */
+  nosotros: GrupoNosotros[]
+  /** Títulos de las columnas del pie; `redes` también titula «Síguenos» en el menú móvil. */
+  pie: { colegio: string; nosotros: string; contacto: string; redes: string }
+  titulos: TitulosPaginas
+}
+
+/** Títulos de sección, botones y rótulos de cada página. En los que llevan {n}, el portal pone el número en letras. */
+export interface TitulosPaginas {
+  inicio: {
+    quienesSomos: string
+    verHistoria: string
+    emblema: string
+    niveles: string
+    verPropuesta: string
+    /** Mientras cargan las sedes, si fallan o si no hay ninguna: «Sedes». */
+    sedes: string
+    /** «{n} sedes en San Román». */
+    sedesVarias: string
+    sedesUna: string
+    noticias: string
+  }
+  nosotros: { accion: string; rotuloAnio: string }
+  propuestaEducativa: { pilares: string; rotuloPilar: string; niveles: string; plataformas: string }
+  matricula: {
+    accionPrincipal: string
+    accionSecundaria: string
+    rotuloAnio: string
+    procesos: string
+    vacantes: string
+    preguntarGrado: string
+    fechas: string
+    preguntas: string
+  }
+  contacto: {
+    accionPrincipal: string
+    accionSecundaria: string
+    rotuloWhatsapp: string
+    sedes: string
+    sedesUna: string
+    mapa: string
+    redes: string
+  }
+  proyectos: {
+    accion: string
+    contacto: string
+    rotulo: string
+    rotuloUno: string
+    lista: string
+    sobre: string
+    galeria: string
+    otros: string
+    volver: string
+    verTodos: string
+  }
+  logros: { accion: string; rotulo: string; rotuloUno: string; destacados: string; todos: string }
+}
+
+// GET /v1/portada/cierre
+export interface Cierre {
+  /** El texto completo: «¿Quieres conocer CATA?». */
+  titulo: string
+  /** 0 a 2: el primero es el botón dorado y el segundo, el blanco. */
+  acciones: AccionHero[]
 }
 
 // Sobres de respuesta

@@ -4,6 +4,7 @@ import { obtenerVacantes } from '../../api/servicios'
 import type { EstadoVacante, VacantesNivel } from '../../api/tipos'
 import { Cargando, ErrorCarga } from '../../components/EstadoSeccion'
 import { useRecurso } from '../../hooks/useRecurso'
+import { useMapa } from '../../sitio/mapa'
 import { fechaLegible } from '../../lib/formato'
 import { Contador, Revelar } from '../movimiento'
 
@@ -17,6 +18,7 @@ const ESTADO: Record<EstadoVacante, string> = {
 // Niveles y vacantes como carriles inclinados sobre el campo celeste, igual que los niveles de Inicio.
 // El estado siempre se dice con texto; el número solo aparece si el colegio lo publica.
 export default function VacantesMatricula() {
+  const { titulos } = useMapa()
   const r = useRecurso('matricula-vacantes', obtenerVacantes)
 
   return (
@@ -25,7 +27,7 @@ export default function VacantesMatricula() {
         <div className="f-seccion__cabeza">
           <h2 className="f-titulo f-titulo--blanco" id="f-vacantes-titulo">
             <Revelar como="span" efecto="titulo" className="f-barrido">
-              Niveles y vacantes
+              {titulos.matricula.vacantes}
             </Revelar>
           </h2>
           {r.estado === 'listo' && r.datos.actualizado && (
@@ -49,7 +51,7 @@ export default function VacantesMatricula() {
             <div className="f-vacantes__accion">
               <a href="#solicitar" className="f-boton f-boton--oro">
                 <span className="f-boton__texto">
-                  Preguntar por un grado <MessageCircle size={20} strokeWidth={2.5} aria-hidden="true" />
+                  {titulos.matricula.preguntarGrado} <MessageCircle size={20} strokeWidth={2.5} aria-hidden="true" />
                 </span>
               </a>
             </div>

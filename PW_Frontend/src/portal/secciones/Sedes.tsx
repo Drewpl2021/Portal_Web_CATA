@@ -4,22 +4,22 @@ import { obtenerSedes } from '../../api/servicios'
 import { Cargando, ErrorCarga } from '../../components/EstadoSeccion'
 import Imagen from '../../components/Imagen'
 import { useRecurso } from '../../hooks/useRecurso'
+import { conNumero, useMapa } from '../../sitio/mapa'
 import { enlaceMapa, enlaceTel } from '../../lib/formato'
 import { Revelar } from '../movimiento'
 
-const NUMEROS = ['Ninguna', 'Una', 'Dos', 'Tres', 'Cuatro', 'Cinco', 'Seis', 'Siete', 'Ocho']
-
 export default function SedesFinal() {
+  const { titulos } = useMapa()
   const r = useRecurso('sedes', obtenerSedes)
-  const titulo =
-    r.estado === 'listo' && r.datos.length > 1 ? `${NUMEROS[r.datos.length] ?? r.datos.length} sedes en San Román` : 'Sedes'
+  const n = r.estado === 'listo' ? r.datos.length : 0
+  const titulo = n > 1 ? conNumero(titulos.inicio.sedesVarias, n) : n === 1 ? titulos.inicio.sedesUna : titulos.inicio.sedes
 
   return (
     <section className="f-seccion f-sedes" aria-labelledby="f-sedes-titulo">
       <div className="f-seccion__interior">
         <h2 className="f-titulo" id="f-sedes-titulo">
           <Revelar como="span" efecto="titulo" className="f-barrido">
-            {r.estado === 'listo' && r.datos.length === 1 ? 'Sede' : titulo}
+            {titulo}
           </Revelar>
         </h2>
         {r.estado === 'cargando' && <Cargando que="las sedes" lineas={4} conTitulo={false} />}

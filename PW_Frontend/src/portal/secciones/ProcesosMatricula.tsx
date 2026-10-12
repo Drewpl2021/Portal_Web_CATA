@@ -4,12 +4,14 @@ import { obtenerProcesosMatricula } from '../../api/servicios'
 import type { ProcesoMatricula } from '../../api/tipos'
 import { Cargando, ErrorCarga } from '../../components/EstadoSeccion'
 import { useRecurso } from '../../hooks/useRecurso'
+import { useMapa } from '../../sitio/mapa'
 import { ItemsVerificados } from '../contenido/Bloques'
 import { Revelar } from '../movimiento'
 
 // Pasos, requisitos y documentos de cada proceso (estudiantes nuevos, regulares…).
 // Con más de un proceso, se eligen con pestañas; cada pestaña muestra sus pasos como una pista numerada.
 export default function ProcesosMatricula() {
+  const { titulos } = useMapa()
   const r = useRecurso('matricula-procesos', obtenerProcesosMatricula)
 
   return (
@@ -17,7 +19,7 @@ export default function ProcesosMatricula() {
       <div className="f-seccion__interior">
         <h2 className="f-titulo" id="f-procesos-titulo">
           <Revelar como="span" efecto="titulo" className="f-barrido">
-            Pasos y requisitos
+            {titulos.matricula.procesos}
           </Revelar>
         </h2>
         {r.estado === 'cargando' && <Cargando que="el proceso de matrícula" lineas={5} conTitulo={false} />}

@@ -71,6 +71,7 @@ const REDES_TIPICO = [
 const sitio = {
   nombre: 'Colegio Adventista Túpac Amaru',
   nombreCorto: 'CATA',
+  nombreEnLineas: ['Colegio Adventista', 'Túpac Amaru'],
   subtitulo: 'Inicial · Primaria · Secundaria',
   ciudad: 'Juliaca',
   anioFundacion: 1971,
@@ -254,7 +255,7 @@ escribir('tipico', 'noticias', lista(noticias))
 escribir('tipico', 'grados', { data: grados })
 
 // ── corto: lo mínimo que el contrato permite ──
-escribir('corto', 'sitio', { data: { ...sitio, redes: REDES_TIPICO.slice(0, 2), subtitulo: null, promotora: null, direccion: { linea: 'Jr. Moquegua 852', referencia: null, distrito: null } } })
+escribir('corto', 'sitio', { data: { ...sitio, nombreEnLineas: ['Colegio CATA'], redes: REDES_TIPICO.slice(0, 2), subtitulo: null, promotora: null, direccion: { linea: 'Jr. Moquegua 852', referencia: null, distrito: null } } })
 escribir('corto', 'propuesta-cabecera', { data: { titulo: 'Bienvenidos', bajada: null, figuras: [], accionPrincipal: { etiqueta: 'Matrícula', destino: { tipo: 'pagina', ruta: '/matricula' } }, accionSecundaria: null } })
 escribir('corto', 'quienes-somos', { data: { titulo: 'Desde 1971.', parrafos: ['Colegio adventista en Juliaca.'], foto: null, simbolos: [{ nombre: 'Llama', significado: 'Luz.' }] } })
 escribir('corto', 'niveles', { data: { titulo: 'Niveles', propuestaUrl: null, items: [{ id: 'i', nombre: 'Inicial', rango: null, sede: null, reconocimiento: null, foto: null }] } })
@@ -270,6 +271,7 @@ escribir('largo', 'sitio', {
   data: {
     ...sitio,
     nombre: 'Colegio Particular Adventista Túpac Amaru de la Ciudad de Juliaca',
+    nombreEnLineas: ['Colegio Particular Adventista', 'Túpac Amaru de Juliaca, Puno'],
     subtitulo: 'Educación inicial, primaria y secundaria con cosmovisión cristiana desde mil novecientos setenta y uno',
     direccion: { linea: 'Jirón Moquegua número 852, cercado de la ciudad de Juliaca', referencia: 'Frente al Mercado Internacional Túpac Amaru, a media cuadra de la avenida principal', distrito: 'Juliaca, provincia de San Román, departamento de Puno' },
     promotora: 'Asociación Educativa Colegio Adventista Túpac Amaru, promotora reconocida por R.D. N° 4609-DREP-2000',
@@ -466,6 +468,13 @@ const solicitud = {
     { pagina: 'matricula', mensaje: 'Hola, soy {nombre}. Quisiera información sobre la matrícula para {grado}.' },
     { pagina: 'contacto', mensaje: 'Hola, soy {nombre}. Tengo una consulta para el colegio sobre {grado}.' },
   ],
+  etiquetas: {
+    nombre: 'Tu nombre',
+    grado: 'Grado de interés',
+    gradoEjemplo: 'Por ejemplo: 1.er grado de primaria',
+    gradoElegir: 'Elige un grado',
+    boton: 'Escribir por WhatsApp',
+  },
 }
 escribir('tipico', 'matricula-cabecera', { data: cabeceraMatricula })
 escribir('tipico', 'matricula-procesos', { data: procesos })
@@ -479,7 +488,7 @@ escribir('corto', 'matricula-procesos', { data: [{ id: 'n', nombre: 'Nuevos', re
 escribir('corto', 'matricula-vacantes', { data: { actualizado: null, nota: null, niveles: [{ id: 'i', nivel: 'Inicial', detalle: null, estado: 'disponible', vacantes: 12 }] } })
 escribir('corto', 'matricula-fechas', { data: { nota: null, items: [{ id: 'f', titulo: 'Matrícula', inicio: '2027-01-04', fin: null, detalle: null }] } })
 escribir('corto', 'matricula-preguntas', { data: [{ id: 'p', pregunta: '¿Edad?', respuesta: 'Cumplida al 31 de marzo.' }] })
-escribir('corto', 'solicitud', { data: { titulo: 'Informes', texto: null, mensajeWhatsapp: 'Hola, soy {nombre}. Me interesa {grado}.', mensajesPorPagina: [] } })
+escribir('corto', 'solicitud', { data: { titulo: 'Informes', texto: null, mensajeWhatsapp: 'Hola, soy {nombre}. Me interesa {grado}.', mensajesPorPagina: [], etiquetas: { nombre: 'Nombre', grado: 'Grado', gradoEjemplo: '1.er grado', gradoElegir: 'Elige', boton: 'Enviar' } } })
 
 const textoLargo = 'Texto de prueba que llega al máximo recomendado del contrato para comprobar que el bloque se acomoda en varias líneas sin cortarse ni tapar a los demás elementos de la página, incluso en las pantallas más pequeñas.'
 escribir('largo', 'matricula-cabecera', { data: { ...cabeceraMatricula, titulo: 'Proceso de matrícula y admisión para estudiantes nuevos y regulares', bajada: 'Requisitos, documentos, pasos, fechas y vacantes para matricular a tu hijo o hija en inicial, primaria o secundaria en cualquiera de las cuatro sedes del colegio en la provincia de San Román.' } })
@@ -499,7 +508,7 @@ escribir('largo', 'matricula-vacantes', { data: { actualizado: '2026-10-05', not
 ] } })
 escribir('largo', 'matricula-fechas', { data: { nota: textoLargo, items: Array.from({ length: 12 }, (_, i) => ({ id: `f${i}`, titulo: `Actividad de prueba número ${i + 1} del cronograma de matrícula con un nombre largo`, inicio: `2026-${String(11 + Math.floor(i / 6)).padStart(2, '0')}-${String(2 + (i % 6) * 4).padStart(2, '0')}`, fin: i % 2 ? `2027-02-${String(10 + i).padStart(2, '0')}` : null, detalle: i % 3 ? textoLargo : null })) } })
 escribir('largo', 'matricula-preguntas', { data: Array.from({ length: 15 }, (_, i) => ({ id: `p${i}`, pregunta: `Pregunta de prueba número ${i + 1}: ¿qué pasa si la pregunta es tan larga que ocupa dos o tres líneas en un teléfono?`, respuesta: `${textoLargo} ${textoLargo}` })) })
-escribir('largo', 'solicitud', { data: { titulo: 'Solicitar información sobre el proceso de matrícula y admisión', texto: textoLargo, mensajeWhatsapp: 'Hola, mi nombre es {nombre}. Quisiera recibir información completa sobre el colegio, sus sedes, niveles y propuesta educativa para {grado}. Muchas gracias.', mensajesPorPagina: [{ pagina: 'matricula', mensaje: 'Hola, mi nombre es {nombre}. Quisiera recibir información completa sobre el proceso de matrícula, los requisitos, las fechas y las vacantes para {grado}. Muchas gracias.' }, { pagina: 'contacto', mensaje: 'Hola, mi nombre es {nombre}. Quisiera hacer una consulta al colegio y que me indiquen el horario de atención de la secretaría para {grado}. Muchas gracias.' }] } })
+escribir('largo', 'solicitud', { data: { titulo: 'Solicitar información sobre el proceso de matrícula y admisión', texto: textoLargo, mensajeWhatsapp: 'Hola, mi nombre es {nombre}. Quisiera recibir información completa sobre el colegio, sus sedes, niveles y propuesta educativa para {grado}. Muchas gracias.', mensajesPorPagina: [{ pagina: 'matricula', mensaje: 'Hola, mi nombre es {nombre}. Quisiera recibir información completa sobre el proceso de matrícula, los requisitos, las fechas y las vacantes para {grado}. Muchas gracias.' }, { pagina: 'contacto', mensaje: 'Hola, mi nombre es {nombre}. Quisiera hacer una consulta al colegio y que me indiquen el horario de atención de la secretaría para {grado}. Muchas gracias.' }], etiquetas: { nombre: 'Nombre y apellidos del apoderado', grado: 'Grado y nivel que le interesan', gradoEjemplo: 'Por ejemplo: 1.er grado de primaria en la Sede Central', gradoElegir: 'Elige el grado que te interesa', boton: 'Escribir al colegio por WhatsApp' } } })
 
 escribir('sin-foto', 'matricula-cabecera', { data: { ...cabeceraMatricula, figura: null } })
 escribir('alt-vacio', 'matricula-cabecera', { data: altVacio(cabeceraMatricula) })
@@ -1316,5 +1325,151 @@ escribir('vacio', 'propuesta-pilares', { data: { introduccion: null, cifras: [],
 escribir('vacio', 'propuesta-niveles', { data: [] })
 escribir('vacio', 'propuesta-academia', { data: { ...academiaTipico, descripcion: null, aclaracion: null, universidades: [] } })
 escribir('vacio', 'propuesta-plataformas', { data: [] })
+
+// ── Navegación y cierre de Inicio (2.13): los textos que antes estaban en el código del portal ──
+const pagina = (slug, etiqueta) => ({ slug, etiqueta })
+const navegacion = {
+  menu: [
+    { pagina: 'inicio', etiqueta: 'Inicio' },
+    { pagina: 'proyectos', etiqueta: 'Proyectos' },
+    { pagina: 'nosotros', etiqueta: 'Nosotros' },
+    { pagina: 'propuesta-educativa', etiqueta: 'Propuesta Educativa' },
+    { pagina: 'matricula', etiqueta: 'Matrícula' },
+    { pagina: 'logros', etiqueta: 'Logros' },
+    { pagina: 'contacto', etiqueta: 'Contacto' },
+  ],
+  nosotros: [
+    {
+      id: 'institucion',
+      titulo: 'Institución',
+      paginas: [
+        pagina('mision-y-vision', 'Misión y Visión'),
+        pagina('resena-historica', 'Reseña Histórica'),
+        pagina('emblema', 'Emblema'),
+        pagina('himno', 'Himno'),
+        pagina('consejo-directivo', 'Consejo Directivo'),
+        pagina('administracion', 'Administración'),
+        pagina('personal-docente', 'Personal Docente'),
+        pagina('organigrama', 'Organigrama'),
+      ],
+    },
+    {
+      id: 'gestion',
+      titulo: 'Gestión',
+      paginas: [
+        pagina('procesos', 'Procesos'),
+        pagina('planificacion-anual', 'Planificación Anual'),
+        pagina('planes-de-mejora', 'Planes de Mejora'),
+        pagina('evaluacion-docente', 'Evaluación Docente'),
+        pagina('acreditacion', 'Acreditación'),
+      ],
+    },
+    {
+      id: 'documentos',
+      titulo: 'Documentos',
+      paginas: [
+        pagina('instrumentos-de-gestion', 'Instrumentos de Gestión'),
+        pagina('manual-de-identidad', 'Manual de Identidad'),
+        pagina('planificador-eva', 'Planificador Inteligente EVA'),
+      ],
+    },
+  ],
+  pie: { colegio: 'El colegio', nosotros: 'Nosotros', contacto: 'Contacto', redes: 'Síguenos' },
+  titulos: {
+    inicio: {
+      quienesSomos: 'Quiénes somos',
+      verHistoria: 'Conoce nuestra historia',
+      emblema: 'Lo que dice el emblema',
+      niveles: 'Niveles',
+      verPropuesta: 'Ver la propuesta educativa',
+      sedes: 'Sedes',
+      sedesVarias: '{n} sedes en San Román',
+      sedesUna: 'Sede',
+      noticias: 'Noticias y comunicados',
+    },
+    nosotros: { accion: 'Conócenos', rotuloAnio: 'Desde' },
+    propuestaEducativa: { pilares: 'Nuestros pilares', rotuloPilar: 'Pilar', niveles: 'Por niveles', plataformas: 'Plataformas digitales' },
+    matricula: {
+      accionPrincipal: 'Solicitar información',
+      accionSecundaria: 'Ver requisitos',
+      rotuloAnio: 'Matrícula',
+      procesos: 'Pasos y requisitos',
+      vacantes: 'Niveles y vacantes',
+      preguntarGrado: 'Preguntar por un grado',
+      fechas: 'Fechas',
+      preguntas: 'Preguntas frecuentes',
+    },
+    contacto: {
+      accionPrincipal: 'Solicitar información',
+      accionSecundaria: 'Ver sedes',
+      rotuloWhatsapp: 'WhatsApp',
+      sedes: 'Nuestras sedes',
+      sedesUna: 'Nuestra sede',
+      mapa: 'Ubícanos',
+      redes: 'Síguenos',
+    },
+    proyectos: {
+      accion: 'Ver proyectos',
+      contacto: 'Contáctanos',
+      rotulo: 'Proyectos',
+      rotuloUno: 'Proyecto',
+      lista: 'Nuestros proyectos',
+      sobre: 'Sobre el proyecto',
+      galeria: 'Galería',
+      otros: 'Más proyectos',
+      volver: 'Todos los proyectos',
+      verTodos: 'Ver todos los proyectos',
+    },
+    logros: { accion: 'Ver los logros', rotulo: 'Logros', rotuloUno: 'Logro', destacados: 'Destacados', todos: 'Todos los logros' },
+  },
+}
+const cierre = {
+  titulo: '¿Quieres conocer CATA?',
+  acciones: [
+    { etiqueta: 'Proceso de matrícula', destino: { tipo: 'pagina', ruta: '/matricula' } },
+    { etiqueta: 'Contáctanos', destino: { tipo: 'pagina', ruta: '/contacto' } },
+  ],
+}
+escribir('tipico', 'navegacion', { data: navegacion })
+escribir('tipico', 'cierre', { data: cierre })
+
+// corto: menú de tres páginas, un solo grupo de Nosotros con una página y títulos de una palabra (la más larga).
+const enUnaPalabra = (o) =>
+  JSON.parse(JSON.stringify(o, (k, v) => (typeof v === 'string' ? (v.includes('{n}') ? '{n} sedes' : v.split(' ').reduce((a, b) => (b.length > a.length ? b : a))) : v)))
+escribir('corto', 'navegacion', { data: {
+  menu: [{ pagina: 'inicio', etiqueta: 'Inicio' }, { pagina: 'matricula', etiqueta: 'Matrícula' }, { pagina: 'contacto', etiqueta: 'Contacto' }],
+  nosotros: [{ id: 'institucion', titulo: 'Institución', paginas: [pagina('mision-y-vision', 'Misión')] }],
+  pie: enUnaPalabra(navegacion.pie),
+  titulos: enUnaPalabra(navegacion.titulos),
+} })
+escribir('corto', 'cierre', { data: { titulo: '¿Nos visitas?', acciones: [] } })
+
+// largo: cada texto en su máximo recomendado y las 16 subpáginas repartidas en cuatro grupos.
+const alMaximo = (texto, max) => (texto.length >= max ? texto : `${texto} de prueba con un texto largo para comprobar el ajuste en pantalla`.slice(0, max).trim())
+const MAXIMOS = { accion: 32, accionPrincipal: 32, accionSecundaria: 32, contacto: 32, volver: 32, verTodos: 32, verHistoria: 32, verPropuesta: 32, preguntarGrado: 32, rotuloAnio: 20, rotuloPilar: 20, rotuloWhatsapp: 20, rotulo: 20, rotuloUno: 20 }
+const titulosLargos = JSON.parse(JSON.stringify(navegacion.titulos, (k, v) => (typeof v === 'string' ? alMaximo(v, MAXIMOS[k] ?? 60) : v)))
+const todas = navegacion.nosotros.flatMap((g) => g.paginas)
+escribir('largo', 'navegacion', { data: {
+  menu: navegacion.menu.map((m) => ({ ...m, etiqueta: alMaximo(m.etiqueta, 24) })),
+  nosotros: [
+    { id: 'institucion', titulo: alMaximo('Institución', 30), paginas: todas.slice(0, 4) },
+    { id: 'gobierno', titulo: alMaximo('Gobierno y personal', 30), paginas: todas.slice(4, 8) },
+    { id: 'gestion', titulo: alMaximo('Gestión', 30), paginas: todas.slice(8, 13) },
+    { id: 'documentos', titulo: alMaximo('Documentos', 30), paginas: todas.slice(13).map((p) => ({ ...p, etiqueta: alMaximo(p.etiqueta, 40) })) },
+  ],
+  pie: JSON.parse(JSON.stringify(navegacion.pie, (k, v) => (typeof v === 'string' ? alMaximo(v, 30) : v))),
+  titulos: titulosLargos,
+} })
+escribir('largo', 'cierre', { data: {
+  titulo: alMaximo('¿Quieres conocer el Colegio Adventista Túpac Amaru?', 60),
+  acciones: [
+    { etiqueta: 'Conoce el proceso de matrícula 2027', destino: { tipo: 'pagina', ruta: '/matricula' } },
+    { etiqueta: 'Escríbenos o visítanos en nuestras sedes', destino: { tipo: 'pagina', ruta: '/contacto' } },
+  ],
+} })
+
+// vacio: sin grupos de Nosotros y el cierre solo con su título.
+escribir('vacio', 'navegacion', { data: { ...navegacion, nosotros: [] } })
+escribir('vacio', 'cierre', { data: { ...cierre, acciones: [] } })
 
 console.log('ok')

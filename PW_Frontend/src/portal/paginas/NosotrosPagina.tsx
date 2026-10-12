@@ -1,21 +1,26 @@
 import { useParams } from 'react-router-dom'
 import { obtenerPaginaNosotros } from '../../api/servicios'
-import { NOSOTROS, subpaginaPublicada, tituloDeRuta } from '../../sitio/mapa'
+import { RUTAS, rutaDeSubpagina, useMapa } from '../../sitio/mapa'
 import EquipoDocente from '../contenido/EquipoDocente'
-import PaginaContenido from '../contenido/PaginaContenido'
-import Pendiente from './Pendiente'
+import PaginaContenido, { PaginaNoEncontrada } from '../contenido/PaginaContenido'
+import { CabeceraCargando } from '../secciones/CabeceraPagina'
 
-// Subpágina de Nosotros. Las de los grupos publicados usan el layout de contenido;
-// un grupo que no esté publicado sigue «en construcción». Personal Docente suma la lista de docentes.
+// Subpágina de Nosotros, con el layout de contenido. Solo se abren las que están en los grupos de
+// /v1/navegacion: una que el colegio sacó del menú (o dejó en borrador) muestra «Página no encontrada».
+// Personal Docente suma la lista de docentes.
 export default function NosotrosPagina() {
   const { slug = '' } = useParams()
-  const ruta = `/nosotros/${slug}`
-  const grupo = NOSOTROS.find((g) => g.enlaces.some((e) => e.ruta === ruta))
+  const mapa = useMapa()
+  const ruta = rutaDeSubpagina(slug)
+  const grupo = mapa.nosotros.find((g) => g.enlaces.some((e) => e.ruta === ruta))
+  const padre = { etiqueta: mapa.etiquetaDe('nosotros') || mapa.pie.nosotros, ruta: RUTAS.nosotros }
 
-  if (!grupo || !subpaginaPublicada(ruta)) return <Pendiente titulo={tituloDeRuta(ruta)} />
+  // Una subpágina que no está en la navegación de la compilación puede ser nueva: se espera a la del
+  // navegador antes de decir que no existe.
+  if (!grupo) return mapa.definitivo ? <PaginaNoEncontrada padre={padre} /> : <CabeceraCargando />
   return (
     <PaginaContenido
-      padre={{ etiqueta: 'Nosotros', ruta: '/nosotros' }}
+      padre={padre}
       grupo={grupo}
       ruta={ruta}
       clave={`nosotros:${slug}`}

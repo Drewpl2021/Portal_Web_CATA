@@ -29,6 +29,8 @@ import {
   esquemaQuienesSomos,
   esquemaSedes,
   esquemaSitio,
+  esquemaNavegacion,
+  esquemaCierre,
   sobre,
   sobrePaginado,
 } from './esquemas'
@@ -59,6 +61,8 @@ import type {
   QuienesSomos,
   Sede,
   Sitio,
+  Navegacion,
+  Cierre,
 } from './tipos'
 
 const API_URL = (import.meta.env.VITE_API_URL ?? '').trim().replace(/\/+$/, '')
@@ -93,6 +97,8 @@ type Recurso =
   | 'propuesta-niveles'
   | 'propuesta-academia'
   | 'propuesta-plataformas'
+  | 'navegacion'
+  | 'cierre'
 
 export class ErrorDatos extends Error {
   constructor(
@@ -193,6 +199,16 @@ async function leer<S extends z.ZodTypeAny>(
 
 export async function obtenerSitio(): Promise<Sitio> {
   return (await leer('sitio', '/v1/sitio', sobre(esquemaSitio))).data
+}
+
+// El menú, los grupos de Nosotros, el pie y los títulos de cada página (2.13). Lo usan todas las páginas;
+// para que una caída no deje el sitio sin menú, el build trae una copia (ver src/sitio/mapa.ts).
+export async function obtenerNavegacion(): Promise<Navegacion> {
+  return (await leer('navegacion', '/v1/navegacion', sobre(esquemaNavegacion))).data
+}
+
+export async function obtenerCierre(): Promise<Cierre> {
+  return (await leer('cierre', '/v1/portada/cierre', sobre(esquemaCierre))).data
 }
 
 export async function obtenerBanners(): Promise<Banner[]> {

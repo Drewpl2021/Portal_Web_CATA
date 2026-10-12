@@ -1,6 +1,8 @@
 # Contrato de la API pública del portal CATA
 
-**Versión del contrato:** 2.12 · **Fecha:** 2026-10-09 · Hay una propuesta para la 2.13 en revisión: ver §7.
+**Versión del contrato:** 2.13 · **Fecha:** 2026-10-12
+
+**Cambios de la 2.13:** todo lo que el portal muestra como contenido sale ahora de la API; en su código quedan solo las rutas y los textos de interfaz (§3.27). Dos endpoints nuevos: `GET /v1/navegacion` (§3.27: el menú, los grupos de Nosotros con sus subpáginas, los títulos del pie y los títulos, botones y rótulos de cada página) y `GET /v1/portada/cierre` (§3.28: el cierre de Inicio). `GET /v1/solicitud` (§3.15) suma `etiquetas`, y `GET /v1/sitio` (§3.1), `nombreEnLineas`. Una subpágina de Nosotros nueva ya no necesita código: basta con sumarla a un grupo de `/v1/navegacion`; la que no está en ningún grupo muestra «Página no encontrada». Como el módulo todavía no servía al portal en producción, las rutas siguen bajo `/v1` y los dos se publican juntos.
 
 **Cambios de la 2.12:** el carrusel de Inicio (§3.2) se rediseña: el afiche va a todo el ancho, sin marco ni franja, y el botón, las flechas y los indicadores flotan sobre él, en las zonas bajas libres del afiche. Vuelve `puntoFocal` (para afiches de otra proporción, que se recortan) y se agrega `ladoAccion`, la esquina inferior donde va el botón: la que no tape el texto ni los datos de contacto del afiche.
 
@@ -179,6 +181,7 @@ Valores válidos de `seccion`: `"quienes-somos"`, `"niveles"`, `"sedes"`, `"noti
 | Método y ruta | Devuelve en `data` | Sección del portal |
 |---|---|---|
 | `GET /v1/sitio` | `Sitio` | Cabecera, contacto, pie |
+| `GET /v1/navegacion` | `Navegacion` | Menú, grupos de Nosotros, títulos del pie y títulos de cada página (todas las páginas) |
 | `GET /v1/portada/banners` | `Banner[]` | Carrusel de Inicio (primera sección) |
 | `GET /v1/quienes-somos` | `QuienesSomos` | Quiénes somos |
 | `GET /v1/niveles` | `Niveles` | Niveles |
@@ -187,6 +190,7 @@ Valores válidos de `seccion`: `"quienes-somos"`, `"niveles"`, `"sedes"`, `"noti
 | `GET /v1/grados` | `GrupoGrados[]` | Selector de grado de Solicitar información (Matrícula y Contacto) |
 | `GET /v1/propuesta-educativa/cabecera` | `Hero` | Cabecera de la página Propuesta Educativa |
 | `GET /v1/portada/cifras` | `Cifra[]` | Cifras destacadas de Inicio |
+| `GET /v1/portada/cierre` | `Cierre` | Cierre de Inicio (también al final de Nosotros, Proyectos y Logros) |
 | `GET /v1/matricula/cabecera` | `CabeceraMatricula` | Cabecera de Matrícula |
 | `GET /v1/matricula/procesos` | `ProcesoMatricula[]` | Pasos, requisitos y documentos |
 | `GET /v1/matricula/vacantes` | `Vacantes` | Niveles y vacantes |
@@ -207,7 +211,12 @@ Valores válidos de `seccion`: `"quienes-somos"`, `"niveles"`, `"sedes"`, `"noti
 
 Cada sección del portal carga su endpoint por separado. Si uno falla, esa sección muestra su error y el resto sigue funcionando.
 
-**Excepción importante: `/v1/sitio`.** Lo usan la cabecera (nombre y botón del portal académico), el título oculto de Inicio, la medalla, el estado vacío de noticias, el cierre, el formulario «Solicitar información» y la placa de WhatsApp de Contacto (número de WhatsApp), el pie (contactos, dirección y redes) y las redes sociales (barra flotante, menú móvil y «Síguenos» de Contacto). Si `/v1/sitio` falla, todas esas partes quedan sin datos a la vez. Es el endpoint que más conviene mantener disponible y rápido.
+**Excepciones importantes: `/v1/sitio` y `/v1/navegacion`.**
+
+- `/v1/sitio` lo usan la cabecera (sigla, nombre y botón del portal académico), el título oculto de Inicio, la medalla, el estado vacío de noticias, el formulario «Solicitar información» y la placa de WhatsApp de Contacto (número de WhatsApp), el pie (contactos, dirección y redes) y las redes sociales (barra flotante, menú móvil y «Síguenos» de Contacto). Si falla, todas esas partes quedan sin datos a la vez.
+- `/v1/navegacion` lo usan todas las páginas: el menú, los títulos de sección y los botones. Para que una caída no deje el sitio sin menú, el portal **lo descarga al compilarse** (`npm run build`) y lo usa como valor inicial; en el navegador lo vuelve a pedir y, si llega, reemplaza al de la compilación. Si al compilar no responde o no cumple el contrato, **el build se detiene**.
+
+Son los dos endpoints que más conviene mantener disponibles y rápidos.
 
 ---
 
@@ -220,7 +229,8 @@ Datos generales del colegio.
 | Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
 |---|---|---|---|---|
 | `nombre` | string | no | 80 | «Colegio Adventista Túpac Amaru». |
-| `nombreCorto` | string | no | 20 | «CATA». |
+| `nombreCorto` | string | no | 20 | «CATA»: la sigla de la marca en la cabecera. |
+| `nombreEnLineas` | string[] | no | 1 a 2, 30 c/u | Cómo se parte el nombre junto a la sigla en la cabecera: `["Colegio Adventista", "Túpac Amaru"]`. Mientras carga `/v1/sitio`, la cabecera muestra un esqueleto en su lugar. |
 | `subtitulo` | string \| null | sí | 90 | Línea bajo el nombre. Ej.: «Inicial · Primaria · Secundaria». |
 | `ciudad` | string | no | 40 | «Juliaca». |
 | `anioFundacion` | integer | no | — | `1971`. |
@@ -240,6 +250,7 @@ Datos generales del colegio.
   "data": {
     "nombre": "Colegio Adventista Túpac Amaru",
     "nombreCorto": "CATA",
+    "nombreEnLineas": ["Colegio Adventista", "Túpac Amaru"],
     "subtitulo": "Inicial · Primaria · Secundaria",
     "ciudad": "Juliaca",
     "anioFundacion": 1971,
@@ -499,6 +510,8 @@ Las opciones del selector de grado del formulario «Solicitar información» de 
 
 **`GrupoGrados`**: `nivel` (string, máx. 24) y `opciones` (string[], 1 a 8 elementos, máx. 24 cada uno).
 
+El portal muestra cada opción, y la pone en el mensaje de WhatsApp, como «{opción} ({nivel})», con el nivel tal como llega: «1.er grado (Primaria)», «Música (Talleres)». No arma una frase con «de», porque no todos los niveles la admiten.
+
 ```json
 {
   "data": [
@@ -646,6 +659,9 @@ Textos del formulario «Solicitar información», que aparece al final de Matrí
 | `texto` | string \| null | sí | 200 | Frase bajo el título. |
 | `mensajeWhatsapp` | string | no | 300 | Plantilla **general** del mensaje. Se usa en las páginas que no tienen una propia. Usa `{nombre}` y `{grado}`, que el portal reemplaza. |
 | `mensajesPorPagina` | `{ pagina, mensaje }[]` | no | 0 a 2 | Una plantilla por página: `pagina` es `"matricula"` o `"contacto"` y `mensaje` (máx. 300) usa `{nombre}` y `{grado}`. Como máximo una por página. `[]` = todas usan la general. |
+| `etiquetas` | `EtiquetasSolicitud` | no | — | Los textos del formulario (ver abajo). |
+
+**`EtiquetasSolicitud`** (todos string y obligatorios): `nombre` (máx. 30: «Tu nombre»), `grado` (máx. 30: «Grado de interés»), `gradoEjemplo` (máx. 60: «Por ejemplo: 1.er grado de primaria», el ejemplo del campo cuando el grado se escribe a mano porque `/v1/grados` falló o está vacío), `gradoElegir` (máx. 30: «Elige un grado», la primera opción del selector) y `boton` (máx. 32: «Escribir por WhatsApp»). Los mensajes de validación y el aviso de privacidad del formulario son interfaz y siguen en el portal.
 
 ```json
 {
@@ -656,7 +672,14 @@ Textos del formulario «Solicitar información», que aparece al final de Matrí
     "mensajesPorPagina": [
       { "pagina": "matricula", "mensaje": "Hola, soy {nombre}. Quisiera información sobre la matrícula para {grado}." },
       { "pagina": "contacto", "mensaje": "Hola, soy {nombre}. Tengo una consulta para el colegio sobre {grado}." }
-    ]
+    ],
+    "etiquetas": {
+      "nombre": "Tu nombre",
+      "grado": "Grado de interés",
+      "gradoEjemplo": "Por ejemplo: 1.er grado de primaria",
+      "gradoElegir": "Elige un grado",
+      "boton": "Escribir por WhatsApp"
+    }
   }
 }
 ```
@@ -756,7 +779,7 @@ El detalle de un proyecto. Devuelve un `Proyecto`: todos los campos de `Proyecto
 
 ### 3.19 `GET /v1/nosotros`
 
-El índice de Nosotros. Las tres columnas (Institución, Gestión, Documentos) y sus subpáginas son la estructura del sitio y viven en el portal, igual que el menú; la API solo pone los textos.
+El índice de Nosotros: su cabecera y una frase por subpágina. Las columnas (Institución, Gestión, Documentos) y sus subpáginas salen de `GET /v1/navegacion` (§3.27): el índice se muestra aunque este endpoint falle, solo sin las frases.
 
 | Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
 |---|---|---|---|---|
@@ -764,7 +787,7 @@ El índice de Nosotros. Las tres columnas (Institución, Gestión, Documentos) y
 | `bajada` | string \| null | sí | 200 | |
 | `paginas` | `{ slug, resumen }[]` | no | 0 a 20 | Una frase (máx. 140) por subpágina, para su tarjeta. Las que no estén muestran solo su nombre. |
 
-**Slugs de las subpáginas** (fijos, son las direcciones del sitio):
+**Slugs de las subpáginas:** `a-z`, `0-9` y `-`. Cada uno es la dirección `/nosotros/{slug}`. El portal abre solo los que están en algún grupo de `/v1/navegacion`; cualquier otro muestra «Página no encontrada». La única con plantilla propia es `personal-docente`, que suma la lista de `/v1/docentes`. Los ejemplos traen las 16 de cata.edu.pe:
 - Institución: `mision-y-vision`, `resena-historica`, `emblema`, `himno`, `consejo-directivo`, `administracion`, `personal-docente`, `organigrama`.
 - Gestión: `procesos`, `planificacion-anual`, `planes-de-mejora`, `evaluacion-docente`, `acreditacion`.
 - Documentos: `instrumentos-de-gestion`, `manual-de-identidad`, `planificador-eva`.
@@ -880,6 +903,93 @@ Devuelve `NivelPropuesta[]` (0 a 6): `id`, `nombre` (máx. 40), `rango` (string 
 
 Devuelve `Plataforma[]` (0 a 8): `id`, `nombre` (máx. 40), `descripcion` (string \| null, máx. 300), `funciones` (0 a 8: `titulo` máx. 40 y `texto` máx. 200, qué ofrece a quién), `enlace` (`Enlace` \| null) y `aclaracion` (string \| null: «Descripción por confirmar»).
 
+### 3.27 `GET /v1/navegacion`
+
+El menú, los grupos de Nosotros con sus subpáginas, los títulos del pie y los títulos de sección, botones y rótulos de cada página, en una sola respuesta. Lo usan todas las páginas; el portal trae además una copia de la compilación (ver §2).
+
+**La línea entre contenido e interfaz.** Todo lo que es contenido llega por la API; en el código del portal quedan solo las rutas y la interfaz:
+
+| Contenido: lo envía la API | Interfaz: se queda en el código del portal |
+|---|---|
+| Nombres del menú, de los grupos y de las subpáginas de Nosotros | «Reintentar» y los mensajes de error de carga |
+| Títulos de sección de cada página y del pie | Estados vacíos («… se publicarán pronto», «No hay logros con esos filtros», «Página no encontrada») |
+| Botones de las cabeceras y sus rótulos («Conócenos», «Desde») | Etiquetas de accesibilidad («(se abre en otra pestaña)», «Novedad anterior», «Pausar»), «Saltar al contenido», «Anterior» y «Siguiente» |
+| Cierre de Inicio: título y botones (§3.28) | Vocabulario cerrado del contrato: categorías de banners y de logros, estados de vacantes, nombres de redes, décadas y «Sin año» |
+| Etiquetas, ejemplo y botón del formulario de solicitud (§3.15) | Mensajes de validación del formulario, su aviso de privacidad y el aviso de cookies del mapa |
+| Las líneas del nombre en la marca de la cabecera (§3.1) | Las rutas del sitio (`/matricula`, `/nosotros/{slug}`…) |
+
+| Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
+|---|---|---|---|---|
+| `menu` | `ItemMenu[]` | no | 1 a 7 | En el orden del menú. Cada página aparece una vez como máximo; la que no está no sale en el menú ni en el pie, pero su dirección sigue funcionando. |
+| `nosotros` | `GrupoNosotros[]` | no | 0 a 4 | Las columnas de Nosotros: mega menú, índice de Nosotros y pie (el pie muestra el primer grupo). `[]` = Nosotros es un enlace simple y sus subpáginas no se abren. |
+| `pie` | `{ colegio, nosotros, contacto, redes }` | no | 30 c/u | Títulos de las columnas del pie. `redes` también titula «Síguenos» en el menú móvil. |
+| `titulos` | `TitulosPaginas` | no | — | Ver abajo. |
+
+**`ItemMenu`**: `pagina` (`"inicio"` \| `"proyectos"` \| `"nosotros"` \| `"propuesta-educativa"` \| `"matricula"` \| `"logros"` \| `"contacto"`; vocabulario cerrado, porque la ruta la pone el portal) y `etiqueta` (máx. 24). Si los nombres no caben en la barra (ni en dos líneas cada uno), el portal usa el menú de hamburguesa también en pantallas anchas.
+
+**`GrupoNosotros`**: `id` (`a-z`, `0-9` y `-`; único), `titulo` (máx. 30: «Institución») y `paginas` (1 a 12 elementos `{ slug, etiqueta }`; `etiqueta` máx. 40). Cada `slug` aparece una sola vez en todo `nosotros`. Las subpáginas en borrador no se envían, y un grupo sin ninguna tampoco.
+
+**`TitulosPaginas`**: un objeto por página. Todos los campos son `string` y obligatorios, con un máximo de 60 caracteres salvo que se indique otro (botones y enlaces, 32; rótulos, 20). En `sedesVarias`, el portal reemplaza `{n}` por el número de sedes en letras («Cuatro», con mayúscula solo al principio).
+
+| Página | Campos (valor de los ejemplos) |
+|---|---|
+| `inicio` | `quienesSomos` («Quiénes somos»), `verHistoria` (32: «Conoce nuestra historia», enlace a la reseña histórica, que solo aparece si `resena-historica` está en `nosotros`), `emblema` («Lo que dice el emblema»), `niveles` («Niveles», si `/v1/niveles` falla), `verPropuesta` (32: «Ver la propuesta educativa»), `sedes` («Sedes», mientras cargan, si fallan o si no hay), `sedesVarias` («{n} sedes en San Román»), `sedesUna` («Sede»), `noticias` («Noticias y comunicados») |
+| `nosotros` | `accion` (32: «Conócenos»), `rotuloAnio` (20: «Desde») |
+| `propuestaEducativa` | `pilares` («Nuestros pilares»), `rotuloPilar` (20: «Pilar», sobre el número de cada pilar), `niveles` («Por niveles»), `plataformas` («Plataformas digitales») |
+| `matricula` | `accionPrincipal` (32: «Solicitar información»), `accionSecundaria` (32: «Ver requisitos»), `rotuloAnio` (20: «Matrícula»), `procesos` («Pasos y requisitos»), `vacantes` («Niveles y vacantes»), `preguntarGrado` (32: «Preguntar por un grado»), `fechas` («Fechas»), `preguntas` («Preguntas frecuentes») |
+| `contacto` | `accionPrincipal` (32: «Solicitar información»), `accionSecundaria` (32: «Ver sedes»), `rotuloWhatsapp` (20: «WhatsApp»), `sedes` («Nuestras sedes»), `sedesUna` («Nuestra sede»), `mapa` («Ubícanos»), `redes` («Síguenos») |
+| `proyectos` | `accion` (32: «Ver proyectos»), `contacto` (32: «Contáctanos»), `rotulo` y `rotuloUno` (20: «Proyectos» y «Proyecto»), `lista` («Nuestros proyectos»), `sobre` («Sobre el proyecto»), `galeria` («Galería»), `otros` («Más proyectos»), `volver` (32: «Todos los proyectos»), `verTodos` (32: «Ver todos los proyectos») |
+| `logros` | `accion` (32: «Ver los logros»), `rotulo` y `rotuloUno` (20: «Logros» y «Logro»), `destacados` («Destacados»), `todos` («Todos los logros») |
+
+El índice de Matrícula y el de Contacto usan los mismos títulos que sus secciones (y `accionPrincipal` para «Solicitar información»). Los títulos que ya llegan por su propio endpoint no se repiten aquí: las cabeceras, el `titulo` de Nosotros, Proyectos, Logros y Contacto, el de la academia y `solicitud.titulo`.
+
+```json
+{
+  "data": {
+    "menu": [
+      { "pagina": "inicio", "etiqueta": "Inicio" },
+      { "pagina": "proyectos", "etiqueta": "Proyectos" },
+      { "pagina": "nosotros", "etiqueta": "Nosotros" }
+    ],
+    "nosotros": [
+      {
+        "id": "institucion",
+        "titulo": "Institución",
+        "paginas": [
+          { "slug": "mision-y-vision", "etiqueta": "Misión y Visión" },
+          { "slug": "resena-historica", "etiqueta": "Reseña Histórica" }
+        ]
+      }
+    ],
+    "pie": { "colegio": "El colegio", "nosotros": "Nosotros", "contacto": "Contacto", "redes": "Síguenos" },
+    "titulos": { "inicio": { "quienesSomos": "Quiénes somos", "…": "…" }, "…": "…" }
+  }
+}
+```
+
+El ejemplo completo está en `PW_Frontend/src/api/mock/tipico/navegacion.json`.
+
+### 3.28 `GET /v1/portada/cierre`
+
+La última sección de Inicio, que también cierra Nosotros, Proyectos y Logros. Va aparte, como los demás bloques de Inicio: si falla, solo esa sección muestra su error.
+
+| Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
+|---|---|---|---|---|
+| `titulo` | string | no | 60 | «¿Quieres conocer CATA?». El texto completo, sin plantilla. |
+| `acciones` | `AccionHero[]` | no | 0 a 2 | El primero es el botón dorado y el segundo, el blanco. `[]` = solo el título. |
+
+```json
+{
+  "data": {
+    "titulo": "¿Quieres conocer CATA?",
+    "acciones": [
+      { "etiqueta": "Proceso de matrícula", "destino": { "tipo": "pagina", "ruta": "/matricula" } },
+      { "etiqueta": "Contáctanos", "destino": { "tipo": "pagina", "ruta": "/contacto" } }
+    ]
+  }
+}
+```
+
 ## 4. Lo que el portal hace con cada caso
 
 Esto sirve para que el módulo sepa qué pasa con lo que publica.
@@ -904,6 +1014,11 @@ Esto sirve para que el módulo sepa qué pasa con lo que publica.
 | Subpágina de Nosotros sin bloques | «El contenido de esta página se publicará pronto», con el menú del grupo y «Anterior / Siguiente». |
 | Proyecto inexistente (`404`) | «Proyecto no encontrado», con enlace a la lista. Cualquier otro error muestra «Reintentar». |
 | Matrícula: falla `/v1/sitio` | El formulario muestra su error con «Reintentar», porque no tiene el número de WhatsApp. |
+| Falla `/v1/navegacion` | El portal sigue con la navegación que descargó al compilarse; nada muestra error. |
+| Subpágina de Nosotros que no está en ningún grupo de `/v1/navegacion` (o en borrador) | No sale en el menú, y su dirección muestra «Página no encontrada». |
+| `nosotros: []` | Nosotros es un enlace simple, sin mega menú, y el pie no muestra su columna. |
+| Los nombres del menú no caben en la barra | El portal usa el menú de hamburguesa también en pantallas anchas. |
+| Falla `/v1/portada/cierre` | Solo el cierre muestra su error con «Reintentar». |
 
 ---
 
@@ -917,97 +1032,5 @@ El portal trae datos de prueba que cumplen este contrato en `PW_Frontend/src/api
 
 - `tipico/`: contenido real del colegio.
 - Escenarios que solo cambian algunos archivos: `corto/`, `largo/`, `sin-foto/`, `alt-vacio/` y `vacio/`. El carrusel tiene 3 banners en `tipico/`, 1 en `corto/`, 6 en `largo/` y ninguno en `vacio/`. Matrícula tiene datos en `tipico/`, `corto/`, `largo/` y `vacio/`, y su cabecera además en `sin-foto/` y `alt-vacio/`. En `tipico/`, los requisitos, documentos y pasos son los de los afiches de cata.edu.pe; el año es el de los afiches publicados (2026), las fechas son de prueba y las vacantes dicen «consultar». Contacto tiene datos en todos los escenarios. En `tipico/`, sedes y redes son las de cata.edu.pe; el colegio no publica correos ni horarios, así que van vacíos, y los mapas son búsquedas de cada dirección, que el colegio debe reemplazar por las de «Insertar un mapa». Proyectos tiene datos en los seis escenarios; los detalles se guardan como `proyecto--{slug}.json`. En `tipico/`, los dos proyectos y sus textos son los que publica cata.edu.pe (Gastronomía e Industrias Alimentarias, y Robótica, Impresiones 3D y Computación); las fotos son de prueba, y niveles, estado y fecha van vacíos porque no están publicados. Nosotros tiene datos en los seis escenarios; las subpáginas se guardan como `nosotros-pagina--{slug}.json`. En `tipico/`, las siete páginas de Institución usan los textos y fotos de cata.edu.pe, salvo el árbol del organigrama, que es de prueba y lo dice (el publicado es un diseño de Canva). El himno no tiene audio publicado; `largo/` trae un tono de prueba para el reproductor. Gestión y Documentos enlazan a los diseños de Canva y a la hoja de cálculo que publica cata.edu.pe; `largo/instrumentos-de-gestion` trae archivos de prueba con peso. El personal docente es de prueba en todos los escenarios (el colegio aún no envía la lista). En Propuesta Educativa, `tipico/` usa los textos de cata.edu.pe (los cuatro pilares, la educación adventista, los niveles, las universidades y ciclos de la academia y el iCRM); los precios y fechas de la academia, que son de 2022-2023, solo están en `largo/`, como datos de prueba. En Logros, `tipico/` trae 24 logros confirmados, cada uno con su fuente: los seis reconocimientos que publica cata.edu.pe, doce de la Banda Sinfónica, otros cinco institucionales (entre ellos «Colegio Excelencia» y las ferias FENCYT) y la trayectoria en concursos académicos; los datos que no se conocen van en `null` y dos llevan `aclaracion` («Año por confirmar», «Años por confirmar»). `largo/` suma los cuatro que el colegio aún no confirma, marcados «por confirmar» con su fuente, y uno de prueba con textos largos. Las noticias de `largo/` son seis, las de la primera página, y `meta.total` dice 6.
+- `navegacion.json` y `cierre.json` traen en `tipico/` los textos que el portal tenía en su código hasta la 2.12. `corto/` deja un menú de tres páginas y un grupo de Nosotros con una página; `largo/` lleva cada texto a su máximo y reparte las 16 subpáginas en cuatro grupos; `vacio/` no tiene grupos y el cierre va sin botones.
 - Las pruebas automáticas (`npm test` en `PW_Frontend/`) validan todos esos archivos contra este contrato.
-
----
-
-## 7. Pendiente para v2.13 (propuesta en revisión, sin implementar)
-
-> **Estado:** propuesta. Nada de esta sección rige todavía: el portal y el módulo siguen en la 2.12. Se implementa cuando los 26 endpoints actuales funcionen en el módulo, y entonces se cambian el portal y el módulo a la vez.
-
-### 7.1 Por qué
-
-Todo lo que el portal muestra como **contenido** debe poder cambiarse desde el panel del módulo, sin tocar código. Hoy el portal todavía tiene escritos en su código los nombres del menú y de las subpáginas de Nosotros (`src/sitio/mapa.ts`), los títulos de sección, el cierre de Inicio y las etiquetas del formulario «Solicitar información».
-
-**La línea entre contenido e interfaz:**
-
-| Contenido: lo envía la API (desde la 2.13) | Interfaz: se queda en el código del portal |
-|---|---|
-| Nombres del menú, de los grupos y de las subpáginas de Nosotros | «Reintentar» y los mensajes de error de carga |
-| Títulos de sección de cada página y del pie | Estados vacíos («… se publicarán pronto», «No hay logros con esos filtros», «Página no encontrada») |
-| Botones de las cabeceras y sus rótulos («Conócenos», «Desde») | Etiquetas de accesibilidad («(se abre en otra pestaña)», «Novedad anterior», «Pausar») |
-| Cierre de Inicio: título y botones | Vocabulario cerrado del contrato: categorías de banners y de logros, estados de vacantes, nombres de redes, décadas y «Sin año» |
-| Etiquetas, ejemplo y botón del formulario de solicitud | Mensajes de validación del formulario, su aviso de privacidad y el aviso de cookies del mapa |
-| Las dos líneas del nombre en la marca de la cabecera | Las rutas del sitio (`/matricula`, `/nosotros/{slug}`…) |
-
-### 7.2 Nuevo `GET /v1/navegacion`
-
-El menú, los grupos de Nosotros con sus subpáginas, los títulos del pie y los **títulos de sección de cada página** (`titulos`, §7.3), en una sola respuesta. Lo usan todas las páginas, igual que `/v1/sitio`.
-
-| Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
-|---|---|---|---|---|
-| `menu` | `ItemMenu[]` | no | 1 a 7 | En el orden del menú. Cada página aparece una vez como máximo; la que no está no sale en el menú, pero su dirección sigue funcionando. |
-| `nosotros` | `GrupoNosotros[]` | no | 0 a 4 | Las columnas de Nosotros: mega menú, índice de Nosotros y pie. |
-| `pie` | `{ colegio, nosotros, contacto, redes }` | no | 30 c/u | Títulos de las columnas del pie. `redes` también titula «Síguenos» en el menú móvil. |
-| `titulos` | `TitulosPaginas` | no | — | Ver §7.3. |
-
-**`ItemMenu`**: `pagina` (`"inicio"` \| `"proyectos"` \| `"nosotros"` \| `"propuesta-educativa"` \| `"matricula"` \| `"logros"` \| `"contacto"`; vocabulario cerrado, porque la ruta la pone el portal) y `etiqueta` (máx. 24).
-
-**`GrupoNosotros`**: `id` (`a-z`, `0-9` y `-`), `titulo` (máx. 30: «Institución») y `paginas` (1 a 12 elementos `{ slug, etiqueta }`; `etiqueta` máx. 40). El `slug` sigue la regla de §3.19 y cada uno aparece una sola vez en todo `nosotros`.
-
-- **Una subpágina nueva no necesita código.** Toda subpágina de Nosotros se arma con bloques (§3.20), así que un `slug` nuevo en `nosotros` se muestra en `/nosotros/{slug}` con `GET /v1/nosotros/paginas/{slug}`. La única con plantilla propia sigue siendo `personal-docente`.
-- **Quitar una subpágina** de `nosotros` la saca del menú, y su dirección muestra «Página no encontrada».
-- La lista fija de `src/sitio/mapa.ts` y `GRUPOS_NOSOTROS_PUBLICADOS` desaparecen del portal.
-
-**Si falla:** es el segundo endpoint crítico, junto con `/v1/sitio`. Para que una caída no deje el sitio sin menú, el portal **descarga `/v1/navegacion` al compilarse** (`npm run build`) y lo usa como valor inicial; en el navegador lo vuelve a pedir y, si llega, reemplaza al de la compilación. Así el texto nunca está escrito a mano en el código, y un cambio hecho en el panel se ve sin volver a compilar.
-
-### 7.3 `titulos`: un objeto por página
-
-Todos los campos son `string` y obligatorios, con un máximo de 60 caracteres salvo que se indique otro. En un título con `{n}`, el portal reemplaza `{n}` por un número.
-
-| Página | Campos (valor actual en el código) |
-|---|---|
-| `inicio` | `quienesSomos` («Quiénes somos»), `emblema` («Lo que dice el emblema»), `niveles` («Niveles»), `sedes` («{n} sedes en San Román»), `sedesUna` («Sede», cuando hay una sola), `noticias` («Noticias y comunicados») |
-| `nosotros` | `accion` (botón de la cabecera, máx. 32: «Conócenos»), `rotuloAnio` (placa con el año de fundación, máx. 20: «Desde») |
-| `propuestaEducativa` | `pilares` («Nuestros pilares»), `niveles` («Por niveles»), `plataformas` («Plataformas digitales»). El título de la academia ya llega en §3.25. |
-| `matricula` | `procesos` («Pasos y requisitos»), `vacantes` («Niveles y vacantes»), `fechas` («Fechas»), `preguntas` («Preguntas frecuentes») |
-| `contacto` | `sedes` («Nuestras sedes»), `sedesUna` («Nuestra sede»), `mapa` («Ubícanos»), `redes` («Síguenos»), `accionPrincipal` (máx. 32: «Solicitar información»), `accionSecundaria` (máx. 32: «Ver sedes»), `rotuloWhatsapp` (máx. 20: «WhatsApp»). El índice de la página usa estos mismos títulos. |
-| `proyectos` | `sobre` («Sobre el proyecto»), `galeria` («Galería»), `otros` («Más proyectos»), `volver` (máx. 32: «Todos los proyectos»), `verTodos` (máx. 32: «Ver todos los proyectos») |
-| `logros` | `destacados` («Destacados»), `todos` («Todos los logros»), `accion` (máx. 32: «Ver los logros»), `rotulo` y `rotuloUno` (máx. 20: «Logros» y «Logro») |
-
-Los títulos que ya llegan por su propio endpoint no se repiten aquí: las cabeceras, el `titulo` de Nosotros, Proyectos, Logros y Contacto, el de la academia y `solicitud.titulo`.
-
-### 7.4 Nuevo `GET /v1/portada/cierre`
-
-La última sección de Inicio. Va aparte, como los demás bloques de Inicio: si falla, solo esa sección muestra su error.
-
-| Campo | Tipo | ¿Puede ser null? | Máx. | Descripción |
-|---|---|---|---|---|
-| `titulo` | string | no | 60 | «¿Quieres conocer CATA?». El texto completo, sin plantilla. |
-| `acciones` | `AccionHero[]` | no | 0 a 2 | El primero es el botón dorado y el segundo, el blanco (hoy «Proceso de matrícula» y «Contáctanos»). `[]` = solo el título. |
-
-### 7.5 Cambios en endpoints existentes
-
-**`GET /v1/solicitud` (§3.15) suma `etiquetas`**, obligatorio:
-
-| Campo | Máx. | Valor actual en el código |
-|---|---|---|
-| `nombre` | 30 | «Tu nombre» |
-| `grado` | 30 | «Grado de interés» |
-| `gradoEjemplo` | 60 | «Por ejemplo: 1.er grado de primaria» (cuando el grado se escribe a mano) |
-| `gradoElegir` | 30 | «Elige un grado» (primera opción del selector) |
-| `boton` | 32 | «Escribir por WhatsApp» |
-
-**`GET /v1/sitio` (§3.1) suma `nombreEnLineas`** (`string[]`, 1 a 2 elementos, máx. 30 cada uno): cómo se parte el nombre junto a la sigla en la marca de la cabecera («Colegio Adventista» y «Túpac Amaru»). La sigla sigue siendo `nombreCorto`.
-
-Además, mientras carga `/v1/sitio`, el portal deja de mostrar «Colegio Adventista Túpac Amaru» como valor provisional (en el pie y en el título oculto de Inicio) y muestra el esqueleto, como en las demás secciones.
-
-### 7.6 Compatibilidad
-
-Los cambios de §7.5 agregan campos a respuestas existentes, y el portal rechaza los campos que no conoce (`additionalProperties: false` en el esquema). Como el módulo todavía no sirve al portal en producción, se aplica lo mismo que en la 2.0: **las rutas siguen bajo `/v1`** y el módulo y el portal se publican juntos. Una vez que el portal lea la API en producción, un cambio así exigirá `/v2`.
-
-### 7.7 Al implementarla
-
-1. **Portal:** actualizar `tipos.ts` y `esquemas.ts`, regenerar `api-contract.schema.json` y los mocks de los seis escenarios (con los textos que hoy están en el código), descargar `/v1/navegacion` al compilar y quitar los textos fijos de §7.1.
-2. **Módulo:** copiar el esquema y los mocks nuevos a `tests/Fixtures/portal/`, y servir los endpoints desde las tablas ya preparadas: `portal_paginas` (`grupo`, `nombre`, `orden`) y `portal_secciones` (`navegacion`, `titulos`, `portada-cierre`).
-3. **Este documento:** subir la versión a 2.13 en el encabezado y repartir esta sección en §2 y §3.

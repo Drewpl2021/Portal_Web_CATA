@@ -3,8 +3,9 @@ import { ArrowUpRight, MapPin, MessageCircle, Phone } from 'lucide-react'
 import { obtenerSitio } from '../../api/servicios'
 import { useRecurso } from '../../hooks/useRecurso'
 import { enlaceMapa, enlaceTel, enlaceWhatsapp } from '../../lib/formato'
-import { MENU, NOSOTROS } from '../../sitio/mapa'
+import { useMapa } from '../../sitio/mapa'
 import { useRutaInterna } from '../../sitio/BaseRuta'
+import { Cargando } from '../../components/EstadoSeccion'
 import { ListaRedes } from '../BarraRedes'
 import Medalla from '../Medalla'
 
@@ -12,6 +13,8 @@ import Medalla from '../Medalla'
 export default function PieFinal() {
   const r = useRecurso('sitio', obtenerSitio)
   const interna = useRutaInterna()
+  const mapa = useMapa()
+  const nosotros = mapa.nosotros[0]
   const sitio = r.estado === 'listo' ? r.datos : null
   const anio = new Date().getFullYear()
 
@@ -19,8 +22,14 @@ export default function PieFinal() {
     <footer className="f-pie">
       <div className="f-pie__interior">
         <div className="f-pie__marca">
-          <Medalla nombre={sitio?.nombre ?? 'Colegio Adventista Túpac Amaru'} anio={sitio?.anioFundacion ?? null} className="f-pie__medalla" />
-          <p className="f-pie__nombre">{sitio?.nombre ?? 'Colegio Adventista Túpac Amaru'}</p>
+          {sitio ? (
+            <>
+              <Medalla nombre={sitio.nombre} anio={sitio.anioFundacion} className="f-pie__medalla" />
+              <p className="f-pie__nombre">{sitio.nombre}</p>
+            </>
+          ) : (
+            <Cargando que="los datos del colegio" lineas={2} conTitulo={false} className="f-cargando--claro f-pie__cargando" />
+          )}
           {sitio && (
             <p className="f-pie__lema">
               {[sitio.subtitulo, `${sitio.ciudad}, desde ${sitio.anioFundacion}`].filter(Boolean).join(' · ')}
@@ -37,9 +46,9 @@ export default function PieFinal() {
         </div>
 
         <nav className="f-pie__columna" aria-labelledby="f-pie-sitio">
-          <h2 id="f-pie-sitio">El colegio</h2>
+          <h2 id="f-pie-sitio">{mapa.pie.colegio}</h2>
           <ul>
-            {MENU.filter((m) => !m.grupos).map((m) => (
+            {mapa.menu.filter((m) => m.pagina !== 'nosotros').map((m) => (
               <li key={m.ruta}>
                 <Link to={interna(m.ruta)}>{m.etiqueta}</Link>
               </li>
@@ -47,19 +56,22 @@ export default function PieFinal() {
           </ul>
         </nav>
 
-        <nav className="f-pie__columna" aria-labelledby="f-pie-nosotros">
-          <h2 id="f-pie-nosotros">Nosotros</h2>
-          <ul>
-            {NOSOTROS[0]!.enlaces.map((e) => (
-              <li key={e.ruta}>
-                <Link to={interna(e.ruta)}>{e.etiqueta}</Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        {/* El primer grupo de Nosotros (Institución); sin grupos, la columna no se muestra. */}
+        {nosotros && (
+          <nav className="f-pie__columna" aria-labelledby="f-pie-nosotros">
+            <h2 id="f-pie-nosotros">{mapa.pie.nosotros}</h2>
+            <ul>
+              {nosotros.enlaces.map((e) => (
+                <li key={e.ruta}>
+                  <Link to={interna(e.ruta)}>{e.etiqueta}</Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
 
         <div className="f-pie__columna">
-          <h2>Contacto</h2>
+          <h2>{mapa.pie.contacto}</h2>
           {sitio ? (
             <ul className="f-pie__contacto">
               <li>
@@ -100,7 +112,7 @@ export default function PieFinal() {
           {sitio && sitio.redes.length > 0 && (
             <>
               <h2 className="f-pie__subtitulo" id="f-pie-redes">
-                Síguenos
+                {mapa.pie.redes}
               </h2>
               <ListaRedes redes={sitio.redes} className="f-lista-redes--pie" />
             </>
@@ -110,7 +122,9 @@ export default function PieFinal() {
 
       <div className="f-pie__base">
         <p>
-          © {anio} {sitio?.nombre ?? 'Colegio Adventista Túpac Amaru'}.{sitio?.promotora && ` ${sitio.promotora}.`}
+          © {anio}
+          {sitio && ` ${sitio.nombre}.`}
+          {sitio?.promotora && ` ${sitio.promotora}.`}
         </p>
       </div>
     </footer>

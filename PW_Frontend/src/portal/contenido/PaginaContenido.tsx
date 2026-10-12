@@ -5,7 +5,7 @@ import { ErrorDatos } from '../../api/servicios'
 import type { PaginaContenido as Pagina } from '../../api/tipos'
 import { useRecurso } from '../../hooks/useRecurso'
 import { useRutaInterna } from '../../sitio/BaseRuta'
-import type { GrupoMenu } from '../../sitio/mapa'
+import { useMapa, type GrupoMenu } from '../../sitio/mapa'
 import CabeceraPagina, { CabeceraCargando, CabeceraError } from '../secciones/CabeceraPagina'
 import Bloques from './Bloques'
 
@@ -25,7 +25,7 @@ interface Props {
 
 // Layout reutilizable para subpáginas de contenido: cabecera con el grupo y la posición, migas,
 // bloques de contenido con el menú del grupo a un lado, y anterior/siguiente al final.
-// Para una página nueva basta con añadirla al mapa del sitio y servir sus bloques desde la API.
+// Para una página nueva basta con sumarla a un grupo de Nosotros en el panel y cargar sus bloques.
 export default function PaginaContenido({ padre, grupo, ruta, clave, cargar, extra }: Props) {
   const r = useRecurso(clave, cargar)
   const indice = grupo.enlaces.findIndex((e) => e.ruta === ruta)
@@ -33,18 +33,7 @@ export default function PaginaContenido({ padre, grupo, ruta, clave, cargar, ext
 
   if (r.estado === 'cargando') return <CabeceraCargando />
   if (r.estado === 'error') {
-    if (r.error instanceof ErrorDatos && r.error.noEncontrado) {
-      return (
-        <CabeceraPagina
-          idTitulo="f-contenido-titulo"
-          titulo="Página no encontrada"
-          bajada={`Puede que el enlace esté mal escrito. Vuelve a ${padre.etiqueta} para ver todas sus páginas.`}
-          acciones={[{ href: padre.ruta, interna: true, etiqueta: padre.etiqueta, icono: <ArrowLeft size={20} strokeWidth={2.5} aria-hidden="true" />, estilo: 'oro' }]}
-          placa={null}
-          figura={null}
-        />
-      )
-    }
+    if (r.error instanceof ErrorDatos && r.error.noEncontrado) return <PaginaNoEncontrada padre={padre} />
     return <CabeceraError titulo={actual.etiqueta} reintentar={r.reintentar} />
   }
 
@@ -81,16 +70,33 @@ export default function PaginaContenido({ padre, grupo, ruta, clave, cargar, ext
   )
 }
 
+/** Una subpágina que no existe, o que no está en el menú: invita a volver a la página padre. */
+export function PaginaNoEncontrada({ padre }: { padre: Props['padre'] }) {
+  return (
+    <CabeceraPagina
+      idTitulo="f-contenido-titulo"
+      titulo="Página no encontrada"
+      bajada={`Puede que el enlace esté mal escrito. Vuelve a ${padre.etiqueta} para ver todas sus páginas.`}
+      acciones={[{ href: padre.ruta, interna: true, etiqueta: padre.etiqueta, icono: <ArrowLeft size={20} strokeWidth={2.5} aria-hidden="true" />, estilo: 'oro' }]}
+      placa={null}
+      figura={null}
+    />
+  )
+}
+
 function Migas({ padre, grupo, actual }: { padre: { etiqueta: string; ruta: string }; grupo: string; actual: string }) {
   const interna = useRutaInterna()
+  const inicio = useMapa().etiquetaDe('inicio')
   return (
     <nav className="f-indice f-migas" aria-label="Ruta de navegación">
       <ol className="f-indice__lista f-migas__lista">
-        <li>
-          <Link className="f-indice__enlace" to={interna('/')}>
-            Inicio
-          </Link>
-        </li>
+        {inicio && (
+          <li>
+            <Link className="f-indice__enlace" to={interna('/')}>
+              {inicio}
+            </Link>
+          </li>
+        )}
         <li>
           <Link className="f-indice__enlace" to={interna(padre.ruta)}>
             {padre.etiqueta}

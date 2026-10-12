@@ -2,7 +2,6 @@ import { lazy, Suspense, useEffect, useLayoutEffect, useRef } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'motion/react'
 import InsigniaPrueba from '../components/InsigniaPrueba'
-import { tituloDeRuta } from '../sitio/mapa'
 import TransicionPagina, { pedirFocoEnPaginaNueva } from '../sitio/TransicionPagina'
 import BarraRedes from './BarraRedes'
 import Cabecera from './Cabecera'
@@ -86,7 +85,7 @@ export default function Layout() {
             <Route path="matricula" element={pagina(<Matricula />)} />
             <Route path="contacto" element={pagina(<Contacto />)} />
             <Route path="logros" element={pagina(<Logros />)} />
-            <Route path="*" element={pagina(<Pendiente titulo={tituloDeRuta(ubicacion.pathname)} />, 'f-pendiente')} />
+            <Route path="*" element={pagina(<Pendiente titulo="Página no encontrada" />, 'f-pendiente')} />
           </Routes>
         </AnimatePresence>
         <Pie />

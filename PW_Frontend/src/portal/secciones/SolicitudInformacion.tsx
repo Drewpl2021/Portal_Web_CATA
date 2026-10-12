@@ -1,10 +1,11 @@
 import { useId, useRef, useState, type FormEvent } from 'react'
 import { AlertCircle, ArrowUpRight } from 'lucide-react'
 import { obtenerGrados, obtenerSitio, obtenerSolicitud } from '../../api/servicios'
-import type { PaginaSolicitud, SolicitudInformacion as TextosSolicitud, Telefono } from '../../api/tipos'
+import type { EtiquetasSolicitud, PaginaSolicitud, SolicitudInformacion as TextosSolicitud, Telefono } from '../../api/tipos'
 import { Cargando, ErrorCarga } from '../../components/EstadoSeccion'
 import { useRecurso } from '../../hooks/useRecurso'
-import { enlaceWhatsapp, rellenarPlantilla } from '../../lib/formato'
+import { enlaceWhatsapp, gradoParaMensaje, rellenarPlantilla } from '../../lib/formato'
+import { useMapa } from '../../sitio/mapa'
 import { Revelar } from '../movimiento'
 
 // «Solicitar información» (Matrícula y Contacto): título sobre el celeste y el formulario en una placa marina.
@@ -13,7 +14,9 @@ import { Revelar } from '../movimiento'
 export default function SolicitudInformacion({ pagina }: { pagina: PaginaSolicitud }) {
   const solicitud = useRecurso('solicitud', obtenerSolicitud)
   const sitio = useRecurso('sitio', obtenerSitio)
-  const titulo = solicitud.estado === 'listo' ? solicitud.datos.titulo : 'Solicitar información'
+  const { titulos } = useMapa()
+  // Mientras llegan los textos del formulario, el mismo nombre que el botón que lleva hasta aquí.
+  const titulo = solicitud.estado === 'listo' ? solicitud.datos.titulo : titulos[pagina].accionPrincipal
 
   return (
     <section className="f-seccion f-cierre f-solicitud" id="solicitar" aria-labelledby="f-solicitud-titulo">
@@ -44,7 +47,7 @@ export default function SolicitudInformacion({ pagina }: { pagina: PaginaSolicit
             <ErrorCarga que="el número de WhatsApp del colegio" reintentar={sitio.reintentar} className="f-error--claro" />
           )}
           {solicitud.estado === 'listo' && sitio.estado === 'listo' && (
-            <Formulario plantilla={plantillaDe(solicitud.datos, pagina)} whatsapp={sitio.datos.whatsapp} />
+            <Formulario plantilla={plantillaDe(solicitud.datos, pagina)} etiquetas={solicitud.datos.etiquetas} whatsapp={sitio.datos.whatsapp} />
           )}
         </div>
       </div>
@@ -55,7 +58,7 @@ export default function SolicitudInformacion({ pagina }: { pagina: PaginaSolicit
 const plantillaDe = (s: TextosSolicitud, pagina: PaginaSolicitud) =>
   s.mensajesPorPagina.find((m) => m.pagina === pagina)?.mensaje ?? s.mensajeWhatsapp
 
-function Formulario({ plantilla, whatsapp }: { plantilla: string; whatsapp: Telefono }) {
+function Formulario({ plantilla, etiquetas, whatsapp }: { plantilla: string; etiquetas: EtiquetasSolicitud; whatsapp: Telefono }) {
   const id = useId()
   const grados = useRecurso('grados', obtenerGrados)
   const [nombre, setNombre] = useState('')
@@ -94,7 +97,7 @@ function Formulario({ plantilla, whatsapp }: { plantilla: string; whatsapp: Tele
   return (
     <form className="f-formulario__cuerpo" onSubmit={enviar} noValidate>
       <div className="f-campo">
-        <label htmlFor={`${id}-nombre`}>Tu nombre</label>
+        <label htmlFor={`${id}-nombre`}>{etiquetas.nombre}</label>
         <input
           ref={campoNombre}
           id={`${id}-nombre`}
@@ -111,14 +114,14 @@ function Formulario({ plantilla, whatsapp }: { plantilla: string; whatsapp: Tele
       </div>
 
       <div className="f-campo">
-        <label htmlFor={`${id}-grado`}>Grado de interés</label>
+        <label htmlFor={`${id}-grado`}>{etiquetas.grado}</label>
         {grados.estado === 'error' || (grados.estado === 'listo' && grados.datos.length === 0) ? (
           // Sin la lista de grados, la familia lo escribe.
           <input
             ref={campoGrado}
             id={`${id}-grado`}
             name="grado"
-            placeholder="Por ejemplo: 1.er grado de primaria"
+            placeholder={etiquetas.gradoEjemplo}
             value={grado}
             onChange={(e) => {
               setGrado(e.target.value)
@@ -140,14 +143,16 @@ function Formulario({ plantilla, whatsapp }: { plantilla: string; whatsapp: Tele
             {...errorDe('grado')}
           >
             <option value="" disabled>
-              {grados.estado === 'cargando' ? 'Cargando grados…' : 'Elige un grado'}
+              {grados.estado === 'cargando' ? 'Cargando grados…' : etiquetas.gradoElegir}
             </option>
             {grados.estado === 'listo' &&
               grados.datos.map((g) => (
                 <optgroup key={g.nivel} label={g.nivel}>
+                  {/* Con su nivel también a la vista: cerrado, el selector no muestra el grupo, y «1.er grado»
+                      puede ser de primaria o de secundaria. */}
                   {g.opciones.map((o) => (
-                    <option key={o} value={`${o} de ${g.nivel.toLowerCase()}`}>
-                      {o} de {g.nivel.toLowerCase()}
+                    <option key={o} value={gradoParaMensaje(o, g.nivel)}>
+                      {gradoParaMensaje(o, g.nivel)}
                     </option>
                   ))}
                 </optgroup>
@@ -159,7 +164,7 @@ function Formulario({ plantilla, whatsapp }: { plantilla: string; whatsapp: Tele
 
       <button className="f-boton f-boton--oro f-formulario__enviar" type="submit">
         <span className="f-boton__texto">
-          Escribir por WhatsApp <ArrowUpRight size={20} strokeWidth={2.5} aria-hidden="true" />
+          {etiquetas.boton} <ArrowUpRight size={20} strokeWidth={2.5} aria-hidden="true" />
         </span>
         <span className="visually-hidden"> (se abre en otra pestaña)</span>
       </button>

@@ -1,15 +1,78 @@
-import { useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'motion/react'
 import { ArrowUpRight, ChevronDown } from 'lucide-react'
 import { obtenerSitio } from '../api/servicios'
 import { useRecurso } from '../hooks/useRecurso'
-import { MENU, NOSOTROS, estaActiva } from '../sitio/mapa'
+import { estaActiva, useMapa } from '../sitio/mapa'
 import { useNavegacion } from '../sitio/useNavegacion'
 import { useRutaInterna } from '../sitio/BaseRuta'
 import { ListaRedes } from './BarraRedes'
 
 const SALIDA = [0.23, 1, 0.32, 1] as const
+
+/**
+ * Si el menú de escritorio no cabe: llega a la marca o al botón de la plataforma académica, o algún
+ * nombre necesita más de dos líneas. Los nombres llegan de la API, así que su largo no se conoce.
+ */
+function menuNoCabe(barra: HTMLElement): boolean {
+  const lista = barra.querySelector<HTMLElement>('.f-nav__lista')
+  // Oculto en pantallas angostas: ahí ya se usa el menú de hamburguesa.
+  if (!lista || lista.offsetParent === null) return false
+  const primero = lista.firstElementChild
+  const ultimo = lista.lastElementChild
+  if (!primero || !ultimo) return false
+  // Entre la marca y el botón de la plataforma (o el borde de la barra, si no hay plataforma).
+  const marca = barra.querySelector(':scope > .f-cab__marca')
+  const portal = barra.querySelector(':scope > .f-portal-academico')
+  const izquierda = marca ? marca.getBoundingClientRect().right : barra.getBoundingClientRect().left
+  const derecha = portal ? portal.getBoundingClientRect().left : barra.getBoundingClientRect().right
+  if (primero.getBoundingClientRect().left < izquierda - 1 || ultimo.getBoundingClientRect().right > derecha + 1) return true
+  return Array.from(lista.querySelectorAll<HTMLElement>('.f-nav__texto')).some((texto) => {
+    const estilo = getComputedStyle(texto)
+    const linea = parseFloat(estilo.lineHeight) || parseFloat(estilo.fontSize) * 1.2
+    return texto.getBoundingClientRect().height > linea * 2.5
+  })
+}
+
+/**
+ * true cuando el menú de escritorio no cabe y hay que usar el de hamburguesa también en pantallas anchas.
+ * Se mide con el menú a la vista; si no cabe, se recuerda el ancho de ventana en que pasó y se vuelve a
+ * probar solo cuando la ventana es más ancha que ese (o cambian los nombres): así no hay vaivén.
+ */
+function useMenuApretado(barra: React.RefObject<HTMLElement | null>, firma: string) {
+  const [apretado, setApretado] = useState(false)
+  const umbral = useRef(0)
+
+  useLayoutEffect(() => {
+    umbral.current = 0
+    setApretado(false)
+  }, [firma])
+
+  useLayoutEffect(() => {
+    const medir = () => {
+      if (umbral.current) {
+        if (window.innerWidth > umbral.current) {
+          umbral.current = 0
+          setApretado(false)
+        }
+        return
+      }
+      if (barra.current && menuNoCabe(barra.current)) {
+        umbral.current = window.innerWidth
+        setApretado(true)
+      }
+    }
+    medir()
+    const observador = new ResizeObserver(medir)
+    if (barra.current) observador.observe(barra.current)
+    // Con la tipografía ya cargada los nombres cambian de ancho.
+    document.fonts?.ready.then(medir)
+    return () => observador.disconnect()
+  }, [barra, apretado, firma])
+
+  return apretado
+}
 const EMBLEMA = `${import.meta.env.BASE_URL}brand/emblema-cata-192.png`
 
 // Al terminar, Motion limpia el transform para no dejar capas ni bloques contenedores sueltos.
@@ -27,38 +90,57 @@ export default function Cabecera({ base = '' }: { base?: string }) {
   const nav = useNavegacion()
   const interna = useRutaInterna()
   const sitio = useRecurso('sitio', obtenerSitio)
+  const mapa = useMapa()
   // Solo un enlace a la plataforma académica: el portal no replica su inicio de sesión ni pide datos.
   const portal = sitio.estado === 'listo' ? sitio.datos.portalAcademico : null
   const redes = sitio.estado === 'listo' ? sitio.datos.redes : []
   const relativa = nav.ruta.slice(base.length) || '/'
-  const activo = MENU.find((m) => estaActiva(m.ruta, relativa))?.ruta ?? null
+  const activo = mapa.menu.find((m) => estaActiva(m.ruta, relativa))?.ruta ?? null
   const [senalado, setSenalado] = useState<string | null>(null)
   const marcado = senalado ?? activo
+  const barra = useRef<HTMLDivElement>(null)
+  const apretado = useMenuApretado(barra, mapa.menu.map((m) => m.etiqueta).join('|'))
+
+  // Si el menú de escritorio vuelve a caber con el de hamburguesa abierto, este se cierra.
+  const { abierto: movilAbierto, cerrar: cerrarMovil } = nav.movil
+  useEffect(() => {
+    if (!apretado && movilAbierto && window.matchMedia('(min-width: 1100px)').matches) cerrarMovil()
+  }, [apretado, movilAbierto, cerrarMovil])
 
   return (
-    <header className="f-cab">
-      <div className="f-cab__barra">
+    <header className="f-cab" data-apretado={apretado || undefined}>
+      <div className="f-cab__barra" ref={barra}>
         <Link to={interna('/')} className="f-cab__marca">
           <img src={EMBLEMA} alt="" width="48" height="48" />
-          <span className="f-cab__sigla">CATA</span>
-          <span className="f-cab__nombre">
-            Colegio Adventista
-            <br />
-            Túpac Amaru
-          </span>
+          {sitio.estado === 'listo' ? (
+            <>
+              <span className="f-cab__sigla">{sitio.datos.nombreCorto}</span>
+              <span className="f-cab__nombre">
+                {sitio.datos.nombreEnLineas.map((linea, i) => (
+                  <span key={i}>{linea}</span>
+                ))}
+              </span>
+            </>
+          ) : (
+            // Mientras llega el nombre del colegio, el esqueleto ocupa su lugar.
+            <span className="f-cab__nombre f-cab__nombre--cargando" aria-hidden="true">
+              <span />
+              <span />
+            </span>
+          )}
           <span className="visually-hidden">, ir a Inicio</span>
         </Link>
 
         <nav className="f-nav" aria-label="Principal">
           <ul className="f-nav__lista" onPointerLeave={() => setSenalado(null)}>
-            {MENU.map((item) => {
+            {mapa.menu.map((item) => {
               const esActivo = item.ruta === activo
               return (
                 <li key={item.ruta} onPointerEnter={() => setSenalado(item.ruta)}>
                   {item.grupos ? (
                     <>
                       <button type="button" className="f-nav__enlace" data-activo={esActivo || undefined} {...nav.mega.boton}>
-                        {item.etiqueta}
+                        <span className="f-nav__texto">{item.etiqueta}</span>
                         <ChevronDown className="f-nav__flecha" size={16} strokeWidth={2.5} aria-hidden="true" />
                       </button>
                       <AnimatePresence>
@@ -76,9 +158,9 @@ export default function Cabecera({ base = '' }: { base?: string }) {
                             exit={{ opacity: 0, transform: 'translateY(-6px)', transition: { duration: 0.14, ease: SALIDA } }}
                           >
                             <div className="f-mega__interior">
-                              {NOSOTROS.map((g, i) => (
+                              {item.grupos.map((g, i) => (
                                 <motion.section
-                                  key={g.titulo}
+                                  key={g.id}
                                   className="f-mega__grupo"
                                   aria-labelledby={`f-mega-${i}`}
                                   {...entra(10, 0.04 + i * 0.05)}
@@ -109,7 +191,7 @@ export default function Cabecera({ base = '' }: { base?: string }) {
                     </>
                   ) : (
                     <Link to={interna(item.ruta)} className="f-nav__enlace" aria-current={esActivo ? 'page' : undefined}>
-                      {item.etiqueta}
+                      <span className="f-nav__texto">{item.etiqueta}</span>
                     </Link>
                   )}
                   {marcado === item.ruta && (
@@ -158,13 +240,13 @@ export default function Cabecera({ base = '' }: { base?: string }) {
           >
             <nav aria-label="Principal (móvil)">
               <ul className="f-movil__lista">
-                {MENU.map((item, i) => (
+                {mapa.menu.map((item, i) => (
                   <motion.li key={item.ruta} {...entra(12, 0.03 + i * 0.035, 0.24)}>
                     {item.grupos ? (
                       <div className="f-movil__grupo">
                         <h2 className="f-movil__enlace">{item.etiqueta}</h2>
                         {item.grupos.map((g) => (
-                          <div key={g.titulo} className="f-movil__subgrupo">
+                          <div key={g.id} className="f-movil__subgrupo">
                             <h3>{g.titulo}</h3>
                             <ul>
                               {g.enlaces.map((e) => (
@@ -197,7 +279,7 @@ export default function Cabecera({ base = '' }: { base?: string }) {
               {/* En pantallas sin barra flotante, las redes viven aquí y en el pie. */}
               {redes.length > 0 && (
                 <div className="f-movil__redes">
-                  <h2 className="f-movil__subtitulo">Síguenos</h2>
+                  <h2 className="f-movil__subtitulo">{mapa.pie.redes}</h2>
                   <ListaRedes redes={redes} />
                 </div>
               )}

@@ -59,3 +59,10 @@ export function pesoLegible(bytes: number) {
   if (bytes < 1024 * 1024) return `${formatoKB.format(Math.max(1, bytes / 1024))} KB`
   return `${formatoMB.format(bytes / (1024 * 1024))} MB`
 }
+
+/**
+ * Cómo se muestra y llega al mensaje de WhatsApp un grado del formulario: la opción y, entre paréntesis,
+ * su nivel tal como lo escribe el colegio: «1.er grado (Primaria)», «Música (Talleres)». No se arma una
+ * frase con «de», porque no todos los niveles la admiten («Música de talleres»).
+ */
+export const gradoParaMensaje = (opcion: string, nivel: string) => `${opcion} (${nivel})`

@@ -4,10 +4,12 @@ import { obtenerNivelesPropuesta } from '../../api/servicios'
 import { Cargando, ErrorCarga } from '../../components/EstadoSeccion'
 import Imagen from '../../components/Imagen'
 import { useRecurso } from '../../hooks/useRecurso'
+import { useMapa } from '../../sitio/mapa'
 import { Revelar } from '../movimiento'
 
 // Niveles en detalle con los carriles de Inicio: nombre, descripción, rasgos, talleres y foto.
 export default function NivelesPropuesta() {
+  const { titulos } = useMapa()
   const r = useRecurso('propuesta-niveles', obtenerNivelesPropuesta)
 
   return (
@@ -15,7 +17,7 @@ export default function NivelesPropuesta() {
       <div className="f-seccion__interior">
         <h2 className="f-titulo f-titulo--blanco" id="f-niveles-propuesta-titulo">
           <Revelar como="span" efecto="titulo" className="f-barrido">
-            Por niveles
+            {titulos.propuestaEducativa.niveles}
           </Revelar>
         </h2>
         {r.estado === 'cargando' && <Cargando que="los niveles" lineas={4} conTitulo={false} className="f-cargando--claro" />}

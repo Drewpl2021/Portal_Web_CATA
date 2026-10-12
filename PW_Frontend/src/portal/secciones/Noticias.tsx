@@ -4,12 +4,14 @@ import { obtenerNoticias, obtenerSitio } from '../../api/servicios'
 import { Cargando, ErrorCarga } from '../../components/EstadoSeccion'
 import Imagen from '../../components/Imagen'
 import { useRecurso } from '../../hooks/useRecurso'
+import { useMapa } from '../../sitio/mapa'
 import { atributosExterno, enlaceTel, enlaceWhatsapp, fechaLegible } from '../../lib/formato'
 import { Revelar } from '../movimiento'
 
 const LIMITE = 6
 
 export default function NoticiasFinal() {
+  const { titulos } = useMapa()
   const r = useRecurso('noticias', () => obtenerNoticias(LIMITE))
   const sitio = useRecurso('sitio', obtenerSitio)
 
@@ -18,7 +20,7 @@ export default function NoticiasFinal() {
       <div className="f-seccion__interior">
         <h2 className="f-titulo" id="f-noticias-titulo">
           <Revelar como="span" efecto="titulo" className="f-barrido">
-            Noticias y comunicados
+            {titulos.inicio.noticias}
           </Revelar>
         </h2>
         {r.estado === 'cargando' && <Cargando que="las noticias" lineas={4} conTitulo={false} />}

@@ -3,6 +3,7 @@ import { Info } from 'lucide-react'
 import { obtenerFechasMatricula } from '../../api/servicios'
 import { Cargando, ErrorCarga } from '../../components/EstadoSeccion'
 import { useRecurso } from '../../hooks/useRecurso'
+import { useMapa } from '../../sitio/mapa'
 import { etapaDe, partesFecha, rangoLegible } from '../../lib/formato'
 import { Revelar } from '../movimiento'
 
@@ -10,6 +11,7 @@ const ETAPA = { 'en-curso': 'En curso', pasada: 'Terminó', proxima: null } as c
 
 // Cronograma: una pista vertical con el día en una placa marina y el periodo escrito completo al lado.
 export default function FechasMatricula() {
+  const { titulos } = useMapa()
   const r = useRecurso('matricula-fechas', obtenerFechasMatricula)
 
   return (
@@ -17,7 +19,7 @@ export default function FechasMatricula() {
       <div className="f-seccion__interior">
         <h2 className="f-titulo" id="f-fechas-titulo">
           <Revelar como="span" efecto="titulo" className="f-barrido">
-            Fechas
+            {titulos.matricula.fechas}
           </Revelar>
         </h2>
         {r.estado === 'cargando' && <Cargando que="las fechas" lineas={4} conTitulo={false} />}

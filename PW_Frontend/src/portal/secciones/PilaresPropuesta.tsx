@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react'
 import { obtenerPilares } from '../../api/servicios'
 import { Cargando, ErrorCarga } from '../../components/EstadoSeccion'
 import { useRecurso } from '../../hooks/useRecurso'
+import { useMapa } from '../../sitio/mapa'
 import { Revelar } from '../movimiento'
 import { FranjaCifras } from './Cifras'
 
@@ -14,6 +15,7 @@ export function CifrasPropuesta() {
 
 // Introducción y los pilares, como las placas marinas de Misión y Visión, con sus aspectos en etiquetas.
 export default function PilaresPropuesta() {
+  const { titulos } = useMapa()
   const r = useRecurso('propuesta-pilares', obtenerPilares)
 
   return (
@@ -21,7 +23,7 @@ export default function PilaresPropuesta() {
       <div className="f-seccion__interior">
         <h2 className="f-titulo" id="f-pilares-titulo">
           <Revelar como="span" efecto="titulo" className="f-barrido">
-            Nuestros pilares
+            {titulos.propuestaEducativa.pilares}
           </Revelar>
         </h2>
         {r.estado === 'cargando' && <Cargando que="los pilares" lineas={4} conTitulo={false} />}
@@ -43,7 +45,7 @@ export default function PilaresPropuesta() {
                 {r.datos.pilares.map((p, i) => (
                   <li key={p.id} className="f-destacado" style={{ '--i': i } as CSSProperties}>
                     <p className="f-destacado__rotulo" aria-hidden="true">
-                      Pilar {String(i + 1).padStart(2, '0')}
+                      {titulos.propuestaEducativa.rotuloPilar} {String(i + 1).padStart(2, '0')}
                     </p>
                     <h3 className="f-destacado__texto">{p.titulo}</h3>
                     <p className="f-pilar__texto">{p.texto}</p>

@@ -1,7 +1,7 @@
 // Validación en tiempo de ejecución de cada respuesta, según docs/API_CONTRACT.md.
 // Si la API cambia un tipo, la sección muestra su estado de error en vez de romper la página.
 import { z } from 'zod'
-import { CATEGORIAS_BANNER, CATEGORIAS_LOGRO, MODALIDADES_CICLO, ESTADOS_PROYECTO, ESTADOS_VACANTE, FORMATOS_ENLACE, PAGINAS_SOLICITUD, REDES, SECCIONES, TIPOS_AUDIO } from './tipos'
+import { CATEGORIAS_BANNER, CATEGORIAS_LOGRO, MODALIDADES_CICLO, ESTADOS_PROYECTO, ESTADOS_VACANTE, FORMATOS_ENLACE, PAGINAS_MENU, PAGINAS_SOLICITUD, REDES, SECCIONES, TIPOS_AUDIO } from './tipos'
 import type * as T from './tipos'
 
 const texto = z.string()
@@ -43,6 +43,7 @@ const redSocial = z.object({ red: z.enum(REDES), cuenta: z.string().min(1).max(6
 export const esquemaSitio = z.object({
   nombre: texto,
   nombreCorto: texto,
+  nombreEnLineas: z.array(z.string().min(1)).min(1).max(2),
   subtitulo: textoONulo,
   ciudad: texto,
   anioFundacion: z.number().int(),
@@ -205,6 +206,7 @@ export const esquemaSolicitud = z.object({
     .array(z.object({ pagina: z.enum(PAGINAS_SOLICITUD), mensaje: z.string().min(1) }))
     .max(PAGINAS_SOLICITUD.length)
     .refine((l) => new Set(l.map((m) => m.pagina)).size === l.length, 'Un solo mensaje por página'),
+  etiquetas: z.object({ nombre: texto, grado: texto, gradoEjemplo: texto, gradoElegir: texto, boton: texto }),
 })
 
 // Proyectos
@@ -407,6 +409,46 @@ export const esquemaPlataformas = z
   )
   .max(8)
 
+// Navegación (2.13): el menú, los grupos de Nosotros, el pie y los títulos de cada página
+const titulos = <K extends string>(...campos: K[]) =>
+  z.object(Object.fromEntries(campos.map((c) => [c, texto])) as Record<K, typeof texto>)
+
+export const esquemaTitulos = z.object({
+  inicio: titulos('quienesSomos', 'verHistoria', 'emblema', 'niveles', 'verPropuesta', 'sedes', 'sedesVarias', 'sedesUna', 'noticias'),
+  nosotros: titulos('accion', 'rotuloAnio'),
+  propuestaEducativa: titulos('pilares', 'rotuloPilar', 'niveles', 'plataformas'),
+  matricula: titulos('accionPrincipal', 'accionSecundaria', 'rotuloAnio', 'procesos', 'vacantes', 'preguntarGrado', 'fechas', 'preguntas'),
+  contacto: titulos('accionPrincipal', 'accionSecundaria', 'rotuloWhatsapp', 'sedes', 'sedesUna', 'mapa', 'redes'),
+  proyectos: titulos('accion', 'contacto', 'rotulo', 'rotuloUno', 'lista', 'sobre', 'galeria', 'otros', 'volver', 'verTodos'),
+  logros: titulos('accion', 'rotulo', 'rotuloUno', 'destacados', 'todos'),
+})
+
+export const esquemaNavegacion = z.object({
+  menu: z
+    .array(z.object({ pagina: z.enum(PAGINAS_MENU), etiqueta: texto }))
+    .min(1)
+    .max(PAGINAS_MENU.length)
+    .refine((l) => new Set(l.map((m) => m.pagina)).size === l.length, 'Cada página aparece una vez en el menú'),
+  nosotros: z
+    .array(
+      z.object({
+        id: slug,
+        titulo: texto,
+        paginas: z.array(z.object({ slug, etiqueta: texto })).min(1).max(12),
+      }),
+    )
+    .max(4)
+    .refine((g) => new Set(g.map((x) => x.id)).size === g.length, 'Cada grupo aparece una vez')
+    .refine((g) => {
+      const slugs = g.flatMap((x) => x.paginas.map((p) => p.slug))
+      return new Set(slugs).size === slugs.length
+    }, 'Cada subpágina aparece una vez'),
+  pie: z.object({ colegio: texto, nosotros: texto, contacto: texto, redes: texto }),
+  titulos: esquemaTitulos,
+})
+
+export const esquemaCierre = z.object({ titulo: texto, acciones: z.array(accion).max(2) })
+
 export const sobre = <S extends z.ZodTypeAny>(data: S) => z.object({ data })
 export const sobrePaginado = <S extends z.ZodTypeAny>(data: S) => z.object({ data, meta: esquemaMeta })
 
@@ -439,3 +481,5 @@ coincide<Igual<z.infer<typeof esquemaPilares>, T.PilaresPropuesta>>()
 coincide<Igual<z.infer<typeof esquemaNivelesPropuesta>, T.NivelPropuesta[]>>()
 coincide<Igual<z.infer<typeof esquemaAcademia>, T.Academia>>()
 coincide<Igual<z.infer<typeof esquemaPlataformas>, T.Plataforma[]>>()
+coincide<Igual<z.infer<typeof esquemaNavegacion>, T.Navegacion>>()
+coincide<Igual<z.infer<typeof esquemaCierre>, T.Cierre>>()

@@ -81,15 +81,36 @@
   color: var(--marino-lavado);
 }
 
+/* Las líneas del nombre llegan de la API (sitio.nombreEnLineas), una o dos. */
+.f-cab__nombre > span {
+  display: block;
+}
+
+/* Mientras carga el sitio: dos líneas de esqueleto en lugar de la sigla y el nombre. */
+.f-cab__nombre--cargando > span {
+  width: 8.5rem;
+  height: 0.7rem;
+  margin: 0.2rem 0;
+  border-radius: 0.25rem;
+  background: color-mix(in srgb, currentColor 14%, transparent);
+  animation: f-latido 1.4s ease-in-out infinite;
+}
+
+.f-cab__nombre--cargando > span:last-child {
+  width: 6rem;
+}
+
 .f-nav {
   flex: 1;
   display: flex;
   justify-content: center;
+  min-width: 0;
   height: 100%;
 }
 
 .f-nav__lista {
   display: flex;
+  min-width: 0;
   height: 100%;
 }
 
@@ -100,7 +121,6 @@
 
 .f-nav__enlace {
   display: inline-flex;
-  white-space: nowrap;
   align-items: center;
   gap: 0.25rem;
   padding: 0 clamp(0.5rem, 0.9vw, 0.875rem);
@@ -114,6 +134,13 @@
   color: var(--blanco);
   text-decoration: none;
   cursor: pointer;
+}
+
+/* Los nombres del menú llegan de la API: uno largo se parte en dos líneas parejas solo si no cabe. */
+.f-nav__texto {
+  line-height: 1.1;
+  text-align: center;
+  text-wrap: balance;
 }
 
 .f-nav__enlace[aria-current='page'],
@@ -3150,6 +3177,11 @@ html.f-anim .f-cronograma:not([data-visto])::before {
   gap: 1.25rem 1.75rem;
 }
 
+/* Cada placa es el contenedor de su nombre: la letra se mide con su ancho (cqi), no con el de la ventana. */
+.f-redes__lista > li {
+  container-type: inline-size;
+}
+
 .f-red {
   position: relative;
   isolation: isolate;
@@ -3188,6 +3220,9 @@ html.f-anim .f-cronograma:not([data-visto])::before {
   font-stretch: 125%;
   font-weight: 900;
   font-size: clamp(1.7rem, 2.6vw, 2.4rem);
+  /* Que el nombre más largo de la lista (--letras) entre en la placa sin llegar a la flecha: el ancho
+     útil es el de la placa (su contenedor) menos los márgenes, y cada letra ocupa hasta 0.97em. */
+  font-size: min(clamp(1.7rem, 2.6vw, 2.4rem), calc((100cqi - 5.25rem) / (var(--letras, 9) * 0.97)));
   line-height: 0.95;
   text-transform: uppercase;
 }
@@ -5151,7 +5186,8 @@ html.f-anim [data-revelar='carriles']:not([data-visto]) > * {
 
   .f-medalla__anillo,
   .f .cargando__titulo,
-  .f .cargando__linea {
+  .f .cargando__linea,
+  .f-cab__nombre--cargando > span {
     animation: none;
   }
 
@@ -5239,6 +5275,24 @@ html.f-anim [data-revelar='carriles']:not([data-visto]) > * {
   .f-cab__barra > .f-portal-academico + .f-hamburguesa {
     margin-left: 0;
   }
+}
+
+/* Si los nombres del menú (de la API) no caben en la barra ni en dos líneas, también en pantallas
+   anchas se usa el menú de hamburguesa. Lo decide Cabecera.tsx midiendo el menú. */
+.f-cab[data-apretado] .f-nav {
+  display: none;
+}
+
+.f-cab[data-apretado] .f-hamburguesa {
+  display: block;
+}
+
+.f-cab[data-apretado] .f-cab__barra > .f-portal-academico {
+  margin-left: auto;
+}
+
+.f-cab[data-apretado] .f-cab__barra > .f-portal-academico + .f-hamburguesa {
+  margin-left: 0;
 }
 
 @media (max-width: 899px) {
@@ -5462,6 +5516,7 @@ html.f-anim [data-revelar='carriles']:not([data-visto]) > * {
 }
 
 .f-red__aclaracion {
+  max-width: 100%;
   margin-top: 0.125rem;
 }
 

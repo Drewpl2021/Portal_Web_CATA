@@ -4,10 +4,15 @@ import { ArrowRight } from 'lucide-react'
 import { obtenerQuienesSomos } from '../../api/servicios'
 import { Cargando, ErrorCarga } from '../../components/EstadoSeccion'
 import { useRecurso } from '../../hooks/useRecurso'
+import { rutaDeSubpagina, useMapa } from '../../sitio/mapa'
 import { useRutaInterna } from '../../sitio/BaseRuta'
 import { FotoParallax, Revelar } from '../movimiento'
 
+const HISTORIA = 'resena-historica'
+
 export default function QuienesFinal() {
+  const { titulos, nosotros } = useMapa()
+  const conHistoria = nosotros.some((g) => g.enlaces.some((e) => e.ruta === rutaDeSubpagina(HISTORIA)))
   const r = useRecurso('quienes-somos', obtenerQuienesSomos)
   const interna = useRutaInterna()
 
@@ -17,7 +22,7 @@ export default function QuienesFinal() {
       {r.estado === 'error' && (
         <>
           <h2 className="f-titulo" id="f-quienes-titulo">
-            Quiénes somos
+            {titulos.inicio.quienesSomos}
           </h2>
           <ErrorCarga que="esta sección" reintentar={r.reintentar} />
         </>
@@ -40,13 +45,16 @@ export default function QuienesFinal() {
             {r.datos.parrafos.map((p, i) => (
               <p key={i}>{p}</p>
             ))}
-            <Link to={interna('/nosotros/resena-historica')} className="f-enlace">
-              Conoce nuestra historia <ArrowRight size={18} aria-hidden="true" />
-            </Link>
+            {/* Solo si la reseña histórica está en el menú de Nosotros: si no, su dirección no abre. */}
+            {conHistoria && (
+              <Link to={interna(rutaDeSubpagina(HISTORIA))} className="f-enlace">
+                {titulos.inicio.verHistoria} <ArrowRight size={18} aria-hidden="true" />
+              </Link>
+            )}
 
             {r.datos.simbolos.length > 0 && (
               <>
-                <h3 className="f-subtitulo">Lo que dice el emblema</h3>
+                <h3 className="f-subtitulo">{titulos.inicio.emblema}</h3>
                 <Revelar como="ul" efecto="escalonado" className="f-simbolos">
                   {r.datos.simbolos.map((s, i) => (
                     <li key={i} className="f-tarjeta f-simbolo" style={{ '--i': i } as CSSProperties}>

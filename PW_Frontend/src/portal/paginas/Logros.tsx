@@ -5,6 +5,7 @@ import type { CategoriaLogro, Logro, Logros as DatosLogros } from '../../api/tip
 import { Cargando, ErrorCarga } from '../../components/EstadoSeccion'
 import Imagen from '../../components/Imagen'
 import { useRecurso } from '../../hooks/useRecurso'
+import { useMapa } from '../../sitio/mapa'
 import { Revelar } from '../movimiento'
 import CabeceraPagina, { CabeceraCargando, CabeceraError } from '../secciones/CabeceraPagina'
 import Cierre from '../secciones/Cierre'
@@ -30,11 +31,12 @@ const ordenar = (logros: Logro[]) =>
 // Logros: cabecera, cifras, destacados y la lista con filtros por categoría y año (en la dirección).
 export default function Logros() {
   const r = useRecurso('logros', obtenerLogros)
+  const { titulos, etiquetaDe } = useMapa()
 
   return (
     <>
       {r.estado === 'cargando' && <CabeceraCargando />}
-      {r.estado === 'error' && <CabeceraError titulo="Logros" reintentar={r.reintentar} />}
+      {r.estado === 'error' && <CabeceraError titulo={etiquetaDe('logros')} reintentar={r.reintentar} />}
       {r.estado === 'listo' && (
         <>
           <CabeceraPagina
@@ -43,12 +45,12 @@ export default function Logros() {
             bajada={r.datos.bajada}
             acciones={
               r.datos.logros.length > 0
-                ? [{ href: '#lista', etiqueta: 'Ver los logros', icono: <ArrowDown size={20} strokeWidth={2.5} aria-hidden="true" />, estilo: 'oro' }]
+                ? [{ href: '#lista', etiqueta: titulos.logros.accion, icono: <ArrowDown size={20} strokeWidth={2.5} aria-hidden="true" />, estilo: 'oro' }]
                 : []
             }
             placa={
               r.datos.logros.length > 0
-                ? { rotulo: r.datos.logros.length === 1 ? 'Logro' : 'Logros', valor: String(r.datos.logros.length).padStart(2, '0') }
+                ? { rotulo: r.datos.logros.length === 1 ? titulos.logros.rotuloUno : titulos.logros.rotulo, valor: String(r.datos.logros.length).padStart(2, '0') }
                 : null
             }
             figura={null}
@@ -62,7 +64,7 @@ export default function Logros() {
         <div className="f-seccion__interior">
           <h2 className="f-titulo" id="f-lista-logros">
             <Revelar como="span" efecto="titulo" className="f-barrido">
-              Todos los logros
+              {titulos.logros.todos}
             </Revelar>
           </h2>
           {r.estado === 'cargando' && <Cargando que="los logros" lineas={5} conTitulo={false} />}
@@ -103,13 +105,14 @@ function FuenteYAclaracion({ logro: l, claro = false }: { logro: Logro; claro?: 
 }
 
 function Destacados({ logros }: { logros: Logro[] }) {
+  const { titulos } = useMapa()
   if (logros.length === 0) return null
   return (
     <section className="f-seccion f-destacados-logros" aria-labelledby="f-destacados-titulo">
       <div className="f-seccion__interior">
         <h2 className="f-titulo" id="f-destacados-titulo">
           <Revelar como="span" efecto="titulo" className="f-barrido">
-            Destacados
+            {titulos.logros.destacados}
           </Revelar>
         </h2>
         <Revelar como="ul" efecto="carriles" className="f-podio">

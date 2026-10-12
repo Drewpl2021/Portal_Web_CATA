@@ -14,9 +14,8 @@ export default function Inicio() {
   const sitio = useRecurso('sitio', obtenerSitio)
   return (
     <>
-      <h1 className="visually-hidden">
-        {sitio.estado === 'listo' ? sitio.datos.nombre : 'Colegio Adventista Túpac Amaru'}
-      </h1>
+      {/* El título oculto de la página: el nombre del colegio, en cuanto llega. */}
+      {sitio.estado === 'listo' && <h1 className="visually-hidden">{sitio.datos.nombre}</h1>}
       <Carrusel />
       <Cifras />
       <Quienes />

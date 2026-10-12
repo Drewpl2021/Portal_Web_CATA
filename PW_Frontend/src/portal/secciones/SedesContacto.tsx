@@ -4,12 +4,14 @@ import { obtenerSedes } from '../../api/servicios'
 import type { Sede } from '../../api/tipos'
 import { Cargando, ErrorCarga } from '../../components/EstadoSeccion'
 import { useRecurso } from '../../hooks/useRecurso'
+import { useMapa } from '../../sitio/mapa'
 import { enlaceMapa, enlaceTel } from '../../lib/formato'
 import { Revelar } from '../movimiento'
 
 // Datos de cada sede en placas: número de sede, dirección, teléfono, correo, horario y cómo llegar.
 // Cada dato falta sin dejar hueco; «Ver en el mapa» lleva al mapa de la página con esa sede elegida.
 export default function SedesContacto({ alVerEnMapa }: { alVerEnMapa: (id: string) => void }) {
+  const { titulos } = useMapa()
   const r = useRecurso('sedes', obtenerSedes)
 
   return (
@@ -17,7 +19,7 @@ export default function SedesContacto({ alVerEnMapa }: { alVerEnMapa: (id: strin
       <div className="f-seccion__interior">
         <h2 className="f-titulo" id="f-sedes-contacto-titulo">
           <Revelar como="span" efecto="titulo" className="f-barrido">
-            {r.estado === 'listo' && r.datos.length === 1 ? 'Nuestra sede' : 'Nuestras sedes'}
+            {r.estado === 'listo' && r.datos.length === 1 ? titulos.contacto.sedesUna : titulos.contacto.sedes}
           </Revelar>
         </h2>
         {r.estado === 'cargando' && <Cargando que="las sedes" lineas={5} conTitulo={false} />}

@@ -3,10 +3,12 @@ import { ArrowUpRight } from 'lucide-react'
 import { obtenerPlataformas } from '../../api/servicios'
 import { Cargando, ErrorCarga } from '../../components/EstadoSeccion'
 import { useRecurso } from '../../hooks/useRecurso'
+import { useMapa } from '../../sitio/mapa'
 import { Revelar } from '../movimiento'
 
 // Plataformas digitales (Cubicol, EVA) en las tarjetas de texto de Nosotros; lo que falta lleva su aclaración.
 export default function PlataformasPropuesta() {
+  const { titulos } = useMapa()
   const r = useRecurso('propuesta-plataformas', obtenerPlataformas)
 
   return (
@@ -14,7 +16,7 @@ export default function PlataformasPropuesta() {
       <div className="f-seccion__interior">
         <h2 className="f-titulo" id="f-plataformas-titulo">
           <Revelar como="span" efecto="titulo" className="f-barrido">
-            Plataformas digitales
+            {titulos.propuestaEducativa.plataformas}
           </Revelar>
         </h2>
         {r.estado === 'cargando' && <Cargando que="las plataformas" lineas={4} conTitulo={false} />}

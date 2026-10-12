@@ -6,19 +6,21 @@ import type { Proyecto, SeccionProyecto } from '../../api/tipos'
 import Imagen from '../../components/Imagen'
 import { useRecurso } from '../../hooks/useRecurso'
 import { useRutaInterna } from '../../sitio/BaseRuta'
+import { useMapa } from '../../sitio/mapa'
 import { Revelar } from '../movimiento'
 import CabeceraPagina, { CabeceraCargando, CabeceraError } from '../secciones/CabeceraPagina'
 import Cierre from '../secciones/Cierre'
 import { ItemsVerificados } from '../contenido/Bloques'
 import TarjetaProyecto, { MetaProyecto } from '../secciones/TarjetaProyecto'
 
-const volver = { href: '/proyectos', interna: true, etiqueta: 'Todos los proyectos', icono: <ArrowLeft size={20} strokeWidth={2.5} aria-hidden="true" />, estilo: 'blanco' as const }
+const volver = (etiqueta: string) => ({ href: '/proyectos', interna: true, etiqueta, icono: <ArrowLeft size={20} strokeWidth={2.5} aria-hidden="true" />, estilo: 'blanco' as const })
 
 // Detalle de un proyecto: cabecera con la foto, descripción, secciones (listas y ejes numerados),
 // galería y otros proyectos. Un slug que no existe muestra «Proyecto no encontrado».
 export default function ProyectoDetalle() {
   const { slug = '' } = useParams()
   const r = useRecurso(`proyecto:${slug}`, () => obtenerProyecto(slug))
+  const { titulos } = useMapa()
 
   if (r.estado === 'cargando') return <CabeceraCargando />
   if (r.estado === 'error') {
@@ -28,18 +30,19 @@ export default function ProyectoDetalle() {
           idTitulo="f-proyecto-titulo"
           titulo="Proyecto no encontrado"
           bajada="Puede que el enlace esté mal escrito o que el proyecto ya no esté publicado."
-          acciones={[{ ...volver, estilo: 'oro' }]}
+          acciones={[{ ...volver(titulos.proyectos.volver), estilo: 'oro' }]}
           placa={null}
           figura={null}
         />
       )
     }
-    return <CabeceraError titulo="Proyecto" reintentar={r.reintentar} />
+    return <CabeceraError titulo={titulos.proyectos.rotuloUno} reintentar={r.reintentar} />
   }
   return <Detalle proyecto={r.datos} />
 }
 
 function Detalle({ proyecto: p }: { proyecto: Proyecto }) {
+  const { titulos } = useMapa()
   return (
     <>
       <CabeceraPagina
@@ -47,7 +50,7 @@ function Detalle({ proyecto: p }: { proyecto: Proyecto }) {
         titulo={p.titulo}
         bajada={p.lema}
         meta={<MetaProyecto categoria={p.categoriaNombre} proyecto={p} claro />}
-        acciones={[volver]}
+        acciones={[volver(titulos.proyectos.volver)]}
         placa={null}
         figura={null}
         foto={p.foto}
@@ -57,7 +60,7 @@ function Detalle({ proyecto: p }: { proyecto: Proyecto }) {
         <div className="f-seccion__interior">
           <h2 className="f-titulo f-titulo--chico" id="f-proyecto-sobre">
             <Revelar como="span" efecto="titulo" className="f-barrido">
-              Sobre el proyecto
+              {titulos.proyectos.sobre}
             </Revelar>
           </h2>
           <div className="f-proyecto-cuerpo__descripcion">
@@ -74,7 +77,7 @@ function Detalle({ proyecto: p }: { proyecto: Proyecto }) {
           <div className="f-seccion__interior">
             <h2 className="f-titulo f-titulo--chico" id="f-galeria-titulo">
               <Revelar como="span" efecto="titulo" className="f-barrido">
-                Galería
+                {titulos.proyectos.galeria}
               </Revelar>
             </h2>
             <Revelar como="ul" efecto="escalonado" className="f-galeria__lista">
@@ -142,6 +145,7 @@ function Secciones({ secciones }: { secciones: SeccionProyecto[] }) {
 function OtrosProyectos({ actual }: { actual: string }) {
   const r = useRecurso('proyectos', obtenerProyectos)
   const interna = useRutaInterna()
+  const { titulos } = useMapa()
   if (r.estado !== 'listo') return null
   const otros = r.datos.proyectos.filter((p) => p.slug !== actual).slice(0, 3)
   if (otros.length === 0) return null
@@ -152,11 +156,11 @@ function OtrosProyectos({ actual }: { actual: string }) {
         <div className="f-seccion__cabeza">
           <h2 className="f-titulo f-titulo--chico" id="f-otros-titulo">
             <Revelar como="span" efecto="titulo" className="f-barrido">
-              Más proyectos
+              {titulos.proyectos.otros}
             </Revelar>
           </h2>
           <Link className="f-enlace" to={interna('/proyectos')}>
-            Ver todos los proyectos
+            {titulos.proyectos.verTodos}
           </Link>
         </div>
         <Revelar como="ul" efecto="escalonado" className="f-proyectos__lista f-proyectos__lista--fijo">

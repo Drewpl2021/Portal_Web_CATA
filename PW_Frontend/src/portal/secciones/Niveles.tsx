@@ -4,11 +4,13 @@ import { obtenerNiveles } from '../../api/servicios'
 import { Cargando, ErrorCarga } from '../../components/EstadoSeccion'
 import Imagen from '../../components/Imagen'
 import { useRecurso } from '../../hooks/useRecurso'
+import { useMapa } from '../../sitio/mapa'
 import { Revelar } from '../movimiento'
 
 // Niveles como carriles de pista: placas inclinadas que se alternan entre marino y blanco
 // sobre el campo celeste, y entran desde la izquierda una tras otra.
 export default function NivelesFinal() {
+  const { titulos } = useMapa()
   const r = useRecurso('niveles', obtenerNiveles)
 
   return (
@@ -18,7 +20,7 @@ export default function NivelesFinal() {
         {r.estado === 'error' && (
           <>
             <h2 className="f-titulo f-titulo--blanco" id="f-niveles-titulo">
-              Niveles
+              {titulos.inicio.niveles}
             </h2>
             <ErrorCarga que="los niveles" reintentar={r.reintentar} className="f-error--claro" />
           </>
@@ -33,7 +35,7 @@ export default function NivelesFinal() {
               </h2>
               {r.datos.propuestaUrl && (
                 <a className="f-enlace f-enlace--blanco" href={r.datos.propuestaUrl} target="_blank" rel="noreferrer">
-                  Ver la propuesta educativa <ArrowUpRight size={20} aria-hidden="true" />
+                  {titulos.inicio.verPropuesta} <ArrowUpRight size={20} aria-hidden="true" />
                   <span className="visually-hidden"> (se abre en otra pestaña)</span>
                 </a>
               )}

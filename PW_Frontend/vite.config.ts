@@ -7,10 +7,10 @@ import { esquemaNavegacion, sobre } from './src/api/esquemas'
 // Modo de build que genera a propósito una versión con los datos de prueba (npm run build:demo).
 const MODO_DEMO = 'demo'
 
-// Carpeta donde está publicada la demo: https://cata.edu.pe/PW/. Si la demo se mueve a la raíz del
-// dominio o a otra carpeta, cambiar este valor (con barra al principio y al final) y volver a
-// generarla. También se puede indicar sin tocar el archivo: VITE_BASE=/otra/ npm run build:demo
-const BASE_DEMO = '/PW/'
+// Carpeta donde se publica el portal (y antes, la demo): https://cata.edu.pe/PW/. Si se mueve a la raíz
+// del dominio o a otra carpeta, cambiar este valor (con barra al principio y al final) y volver a
+// compilar. También se puede indicar sin tocar el archivo: VITE_BASE=/otra/ npm run build
+const BASE_PUBLICADA = '/PW/'
 
 // public/mock tiene las imágenes y el audio de los datos de prueba: solo hacen falta en desarrollo y en la demo.
 const sinMediosDePrueba = (): Plugin => {
@@ -134,11 +134,10 @@ export default defineConfig(({ command, mode, isPreview }) => {
     )
   }
 
-  // Carpeta donde se publica el sitio: la de la demo (BASE_DEMO) en el build de demo y en su vista
-  // previa (vite preview --mode demo); la raíz del dominio en desarrollo y en producción. VITE_BASE
-  // la reemplaza en cualquier modo. El router (basename) y las rutas de los archivos públicos la
-  // siguen con import.meta.env.BASE_URL.
-  const base = env.VITE_BASE?.trim() || (demo && (command === 'build' || isPreview) ? BASE_DEMO : '/')
+  // Carpeta donde se publica el sitio: BASE_PUBLICADA en los builds (producción y demo) y en su vista
+  // previa; la raíz en desarrollo. VITE_BASE la reemplaza en cualquier modo. El router (basename) y las
+  // rutas de los archivos públicos la siguen con import.meta.env.BASE_URL.
+  const base = env.VITE_BASE?.trim() || (command === 'build' || isPreview ? BASE_PUBLICADA : '/')
 
   return {
     base,
